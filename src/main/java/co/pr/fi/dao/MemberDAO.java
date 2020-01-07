@@ -9,4 +9,8 @@ import org.springframework.stereotype.Repository;
 public class MemberDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+
+	public int idCheck(String id) {
+		return sqlSession.selectOne("Member.idcheck",id);
+	}
 }

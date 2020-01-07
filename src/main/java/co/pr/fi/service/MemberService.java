@@ -5,4 +5,6 @@ public interface MemberService {
 
 	void isMember();
 
+	int idCheck(String id);
+
 }

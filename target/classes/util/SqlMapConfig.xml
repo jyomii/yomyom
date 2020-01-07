@@ -4,13 +4,13 @@
 
 <configuration>    
    <typeAliases>
-     <!--  <typeAlias alias="member" type="co.pr.fi.Member"/>-->
+       <typeAlias alias="member" type="co.pr.fi.domain.GUsers"/>
      
    
    </typeAliases>
    
    <mappers>
-   	<!-- 	<mapper resource="sql/member.xml"></mapper>-->
+   	<mapper resource="sql/member.xml"></mapper>
 
    </mappers>
 </configuration>

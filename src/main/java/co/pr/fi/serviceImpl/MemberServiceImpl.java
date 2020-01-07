@@ -19,4 +19,10 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	@Override
+	public int idCheck(String id) {
+
+		return dao.idCheck(id);
+	}
+
 }
