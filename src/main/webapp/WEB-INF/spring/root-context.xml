@@ -2,7 +2,70 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+
+	<!-- 라이브러리를 잘 가져왔으면 아무런 문제 없음. 오라클 연동부분 -->
+   <!-- Root Context: defines shared resources visible to all other web components -->
+   <bean class="org.apache.commons.dbcp.BasicDataSource"
+      id="dataSource" destroy-method="close">
+      <property name="driverClassName"
+         value="oracle.jdbc.driver.OracleDriver" />
+      <property name="url"
+         value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+      <property name="username" value="SCOTT"></property>
+      <property name="password" value="TIGER"></property>
+   </bean>
+
+   <!-- 마이바티스 연동 부분 : 마이바티스 sqlsession을 factory에서 만듬-->
+   <bean class="org.mybatis.spring.SqlSessionFactoryBean"
+      id="sqlSessionFactory">
+      <property ref="dataSource" name="dataSource" />
+      <property name="configLocation"
+         value="classpath:util/SqlMapConfig.xml"></property>
+      <!-- 마이바티스 리소스 설정을 여기서 다 하고 가는 거임 -->
+
+   </bean>
+
+
+   <!--SqlSessionTemplate는 마이바티스 스프링 연동모듈의 핵심이다. 
+      SqlSessionTemplate은 SqlSession을 구현하고 코드에서 SqlSession을 대체하는 역할을 한다.
+      SqlSessionTemplate은 쓰레드에 안전하고 여러개의 DAO나 
+      매퍼에서 공유할 수 있고 필요한 시점에 세션을 닫고 커밋하거나 롤백하는것을 포함한 세션의 생명주기를 관리한다. -->
+   <bean class="org.mybatis.spring.SqlSessionTemplate"
+   id="sqlSessionTemplate">
+   <!-- index : 몇번째 생성자인지 -->
+      <constructor-arg ref="sqlSessionFactory" index="0"></constructor-arg>
+   </bean>
+   
+   
+   <!-- 트랜잭션 처리 -->
+   <bean id="transactionManager"
+   class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <constructor-arg ref="dataSource"></constructor-arg>
+   </bean>
+   
+   
+   
+   
+   
+   <!-- 빈의 이름이 정해져 있습니다. -->
+   <!-- 파일 업로드 설정 id값을 꼭 일치시켜야 합니다.
+       id 값을 다르게 사용하면 public String bbs_write_ok(BbsBean
+        bbsbean) throws Exception{ MultipartFile uploadfile = bbsbean.get
+        ==> NullPointerException 발생 }-->
+        
+   <bean id="multipartResolver"
+   class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   <!-- 1024 * 1024 * 10 bytes : 10MB -->
+   <property name="maxUploadSize" value="10485760"></property>
+
+   </bean>
+
+<!-- maxUploadSize : 한번의 Request로 전달될 수 있는 최대의 크기를 의미합니다.
+name = "maxUploadSize"를 
+지정하지 않으면 기본으로 "-1"이 설정되는데 파일 크기가 무제한이라는 의미입니다.
+ -->
+
+
 </beans>
