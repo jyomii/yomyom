@@ -12,4 +12,11 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	MemberDAO dao;
 
+	@Override
+	public void isMember() {
+	
+		System.out.println("확인중입니다.");
+		
+	}
+
 }
