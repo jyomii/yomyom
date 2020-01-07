@@ -55,7 +55,8 @@ public class Advice {
 	 public void afterReturningLog(Object obj) {
 	    System.out.println("========================");
 	    System.out.println("[AfterReturningAdvice] obj");
-	    System.out.println("ex : " + obj.toString());
+	    if(obj != null)
+	    System.out.println("return : " + obj.toString());
 	    System.out.println("========================");
 	 }
 	
@@ -63,7 +64,7 @@ public class Advice {
 	public void afterThrowingLog(Throwable exp) {
 		System.out.println("=======================");
 		System.out.println("[AfterThrowing] : 비즈니스 로직 수행중 오류가 발생하면 동작합니다.");
-		System.out.println("ex : " + exp.toString());
+		System.out.println("error : " + exp.toString());
 		System.out.println("=======================");
 	}
 

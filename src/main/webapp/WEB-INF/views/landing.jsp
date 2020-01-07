@@ -46,7 +46,7 @@ background: #eee;}
 						<div class="log-reg-area sign">
 							<h2 class="log-title">로그인</h2>
 
-							<form method="post">
+							<form method="post" action="loginprocess">
 								<div class="form-group">
 									<input type="text" id="input" required="required" /> <label
 										class="control-label" for="input">Id</label><i
@@ -64,7 +64,7 @@ background: #eee;}
 								</div>
 							<a href="#" title="" class="forgot-pwd">비밀번호 찾기</a>
 								<div class="submit-btns">
-									<button class="mtr-btn signin" type="button">
+									<button class="mtr-btn signin" type="submit">
 										<span>로그인</span>
 									</button>
 									<button class="mtr-btn signup" type="button">
@@ -264,7 +264,7 @@ background: #eee;}
 	if($(this).hasClass('click_category'))
 		user_check.push($(this).text());
 	else{
-		console.log('여기 왜 안오냐');
+		
 		var idx = user_check.indexOf($(this).text());
 		user_check.splice(idx,1);
 	}
