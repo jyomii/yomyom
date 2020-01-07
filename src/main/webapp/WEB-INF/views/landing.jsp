@@ -8,6 +8,7 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <title>우리사이트 이름 뭐라고하셨죠?</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="icon" href="resources/images/fav.png" type="image/png" sizes="16x16">
 
 <link rel="stylesheet" href="resources/css/main.min.css">
@@ -171,14 +172,13 @@ background: #eee;}
 												<option value="60">60</option>
 
 										</select>
-										</label> <label> 지역 <select name="location">
-												<option value="서울">서울</option>
-												<option value="인천">인천</option>
-												<option value="경기" selected="selected">경기</option>
-												<option value="전남">전남</option>
-												<option value="전북">전북</option>
-												<option value="충북">충북</option>
-
+										</label> 
+				
+										<label> 지역 <select name="location">
+										
+						<c:forEach items="${location}" var="list">
+<option value="${list.locationKey }">${list.SWhere} ${list.DWhere }</option>
+</c:forEach>
 
 										</select>
 										</label>

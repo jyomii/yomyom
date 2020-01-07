@@ -23,6 +23,8 @@ public class MemberController {
 		
 		
 		List<GLocation> list = memberService.getLocationList();
+		
+	
 		m.setViewName("landing");
 		m.addObject("location",list);
 		
