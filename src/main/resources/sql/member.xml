@@ -6,9 +6,13 @@
 
 	<select id="idcheck" parameterType="String" resultType="Integer">
 		select count(*)
-		from GUsers
-		where userId = #{userId}
+		from gusers
+		where userid = #{userid}
 	</select>
 
+
+	<select id="getlocationlist" resultType="location">
+		select * from glocation order by locationkey asc
+	</select>
 
 </mapper>
