@@ -8,6 +8,7 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <title>우리사이트 이름 뭐라고하셨죠?</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="icon" href="resources/images/fav.png" type="image/png" sizes="16x16">
 
 <link rel="stylesheet" href="resources/css/main.min.css">
@@ -171,14 +172,13 @@ background: #eee;}
 												<option value="60">60</option>
 
 										</select>
-										</label> <label> 지역 <select name="location">
-												<option value="서울">서울</option>
-												<option value="인천">인천</option>
-												<option value="경기" selected="selected">경기</option>
-												<option value="전남">전남</option>
-												<option value="전북">전북</option>
-												<option value="충북">충북</option>
-
+										</label> 
+				
+										<label> 지역 <select name="location">
+										
+						<c:forEach items="${location}" var="list">
+<option value="${list.locationKey }">${list.SWhere} ${list.DWhere }</option>
+</c:forEach>
 
 										</select>
 										</label>
@@ -324,6 +324,9 @@ background: #eee;}
 	
 	
 	
+	var checkId= false;
+	var checkPassword= false;
+	
 	$('form:eq(1) input:eq(0)').keyup(function(){
 		
 	    var id = $(this).val();
@@ -346,12 +349,13 @@ background: #eee;}
 				success : function(result){
 					
 					//아이디 없음
-					if(reuslt == 1){
-						
-						
+					if(result == 0){
+						checkId = true;
+						label.text('사용 가능한 아이디입니다.');
 					//아이디 있음
 					}else{
-						
+						checkId = false;
+						label.text('이미 존재하는 아이디입니다.');
 					}
 				}
 				
@@ -361,8 +365,29 @@ background: #eee;}
 			
 		
 		}else{
+			checkId = false;
 			label.text('영숫자로 5글자 이상 12글자 이하로 작성하세요.');
 		
+		}
+	});
+	
+	
+	$('form:eq(1) input:eq(2)').keyup(function(){
+		
+	    var password = $(this).val();
+	  
+		//비밀번호 유효성 검사 5글자 이상, 12글자 이하 영숫자포함
+		var req = /^\w{5,12}$/;
+		
+		
+		var label = $('form:eq(1) label:eq(2)');
+		
+		if(req.test(password)){
+			checkPassword = true;
+			label.text('Password');
+		}else{
+			checkPassword = false;
+			label.text('영숫자로 5글자 이상 12글자 이하로 작성하세요.');
 		}
 	});
 	
