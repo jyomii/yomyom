@@ -509,7 +509,8 @@ ALTER TABLE gusers
         REFERENCES glocation (locationkey);
         
 
-
+ALTER TABLE GUSERS MODIFY (USERPASSWORD VARCHAR2(100));
+                                                 
 CREATE SEQUENCE gusersSEQ
 START WITH 1
 INCREMENT BY 1;
