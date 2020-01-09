@@ -321,39 +321,7 @@ jQuery(document)
 
 					});
 
-					// login & register form
-
-					var join = 0;
-
-					$('button.pre').on("click",function(){
-						if(join != 0)
-						join --;
-						
-						if(join == 1)
-						$('.login-reg-bg').removeClass('detail');
-						if(join == 0)
-						$('.login-reg-bg').removeClass('show');
-						
-						
-						
-						
-					});
-					
-					$('button.signup').on("click", function() {
-						
-						if(join != 2)
-							join++;
-						
-						if (join == 1) {
-							$('.login-reg-bg').addClass('show');
-						} else if (join == 2) {
-							$('.login-reg-bg').addClass('show detail');
-						}
-					
-						return false;
-					});
-
-					
+				
 
 					// ----- count down timer
 					if ($.isFunction($.fn.downCount)) {
