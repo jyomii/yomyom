@@ -2,15 +2,18 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
-<configuration>    
-   <typeAliases>
-       <typeAlias alias="member" type="co.pr.fi.domain.GUsers"/>
-      <typeAlias alias="location" type="co.pr.fi.domain.GLocation"/>
-   
-   </typeAliases>
-   
-   <mappers>
-   	<mapper resource="sql/member.xml"></mapper>
+<configuration>
+	<typeAliases>
+		<typeAlias alias="member" type="co.pr.fi.domain.GUsers" />
+		<typeAlias alias="location" type="co.pr.fi.domain.GLocation" />
+		
+		
+		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />
+			<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
+	</typeAliases>
 
-   </mappers>
+	<mappers>
+		<mapper resource="sql/member.xml"></mapper>
+
+	</mappers>
 </configuration>

@@ -1,12 +1,17 @@
 package co.pr.fi.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.MemberDAO;
+import co.pr.fi.domain.GCategory;
+import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GLocation;
+import co.pr.fi.domain.GUsers;
 import co.pr.fi.service.MemberService;
 
 @Service
@@ -30,8 +35,51 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<GLocation> getLocationList() {
-		
+
 		return dao.getLocationList();
 	}
+
+	@Override
+	public List<GCategory> getDCategory() {
+		
+		return dao.getDCategory();
+	}
+
+	@Override
+	public List<GCategory2> getSCategory() {
+
+		return dao.getSCategory();
+	}
+
+	@Override
+	public int joinUser(GUsers guser) {
+		
+		return dao.joinUser(guser);
+	}
+
+	
+
+	@Override
+	public int insertUserCategory(Map<String, Object> usercategory) {
+		
+		return dao.insertUserCategory(usercategory);
+	}
+
+	@Override
+	public GUsers getUsers(String id) {
+		
+		return dao.getUsers(id);
+	}
+
+	@Override
+	public int updatePassword(String id, String encPassword) {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("password", encPassword);
+		return dao.updatePassword(map);
+	}
+
+	
 
 }
