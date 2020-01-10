@@ -80,6 +80,16 @@ public class MemberServiceImpl implements MemberService {
 		return dao.updatePassword(map);
 	}
 
+	@Override
+	public int checkIdAndEmail(String id, String email) {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("email", email);
+		
+		return dao.checkIdAndEmail(map);
+	}
+
 	
 
 }

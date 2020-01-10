@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>co.pr</groupId>
-	<artifactId>fi</artifactId>
+	<artifactId>fi</artifactId> 
 	<name>finalpro</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
@@ -16,8 +16,18 @@
 	</properties>
 	<dependencies>
 
+ <!-- Java Mail API -->
+	<!-- Mail Lib --> 
 
+<dependency>  
 
+<groupId>javax.mail</groupId>  
+
+<artifactId>mail</artifactId>  
+
+<version>1.4.7</version>  
+
+</dependency> 
 
 <!--스프링시큐리티 web 라이브러리-->
 <dependency>

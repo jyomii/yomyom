@@ -29,4 +29,6 @@ public interface MemberService {
 
 	int updatePassword(String id, String encPassword);
 
+	int checkIdAndEmail(String id, String email);
+
 }

@@ -55,6 +55,12 @@ public class MemberDAO {
 
 	public int updatePassword(Map<String, String> map) {
 		
-		return sqlSession.update("updatePassword",map);
+		return sqlSession.update("Member.updatePassword",map);
+	}
+
+
+
+	public int checkIdAndEmail(Map<String, String> map) {
+		return sqlSession.selectOne("Member.checkIdAndEmail",map);
 	}
 }
