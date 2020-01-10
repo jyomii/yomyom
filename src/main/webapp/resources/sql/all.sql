@@ -1083,3 +1083,10 @@ ALTER TABLE userlikegroup
 ALTER TABLE userlikegroup
     ADD CONSTRAINT FKuserlikegroupgroupkeyg FOREIGN KEY (groupkey)
         REFERENCES ggroup (groupkey);
+                                                 
+                                                 
+                                                 
+CREATE TABLE VISIT (
+        ip varchar2(50),
+        visitdate date
+);
