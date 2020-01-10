@@ -58,10 +58,7 @@ public class MemberController {
 		return m;
 	}
 
-	@GetMapping("/home")
-	public String home() {
-		return "home";
-	}
+	
 
 	// 여기도 트랜잭션 추가
 	@ResponseBody
@@ -189,7 +186,7 @@ public class MemberController {
 
 			res.addCookie(cookie);
 
-			return "redirect:home";
+			return "redirect:admin";
 
 		} else {
 			res.setContentType("text/html; charset=utf-8");
