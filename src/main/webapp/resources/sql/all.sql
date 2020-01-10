@@ -1087,6 +1087,6 @@ ALTER TABLE userlikegroup
                                                  
                                                  
 CREATE TABLE VISIT (
-        ip varchar2(50),
+        id varchar2(50),
         visitdate date
 );
