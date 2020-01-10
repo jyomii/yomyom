@@ -18,6 +18,9 @@
 <link rel="stylesheet" href="resources/css/color.css">
 <link rel="stylesheet" href="resources/css/responsive.css">
 <style>
+.forgot-pwd{
+
+cursor: pointer;}
 .tab-content li {
 	cursor: pointer;
 }
@@ -113,7 +116,9 @@
 
 							<form method="post" action="loginprocess">
 								<div class="form-group">
-									<input type="text" id="input" required="required" name="id" />
+									<input type="text" id="input" required="required" name="id"
+									<c:if test="${!empty saveid}"> value=${saveid}</c:if>
+									 />
 									<label class="control-label" for="input">Id</label><i
 										class="mtrl-select"></i>
 								</div>
@@ -123,8 +128,10 @@
 										class="mtrl-select"></i>
 								</div>
 								<div class="checkbox">
-									<label> <input type="checkbox" checked="checked"
-										name="rememberme" /><i class="check-box"></i>아이디 기억하기
+									<label> <input type="checkbox" 
+										<c:if test="${!empty saveid}">checked</c:if>
+									
+										name="rememberme" value="ok" /><i class="check-box"></i>아이디 기억하기
 									</label>
 								</div>
 								<a data-toggle="modal" data-target="#exampleModal" class="forgot-pwd">비밀번호 찾기</a>
@@ -613,6 +620,7 @@
 <script src="resources/js/main.min.js"></script>
 <script src="resources/js/script.js"></script>
 <script>
+
 	var user_check = new Array();
 
 	//관심 카테고리로 무엇을 선택했는지 Array user_check에 Object 형으로 담는다.
@@ -803,14 +811,26 @@
 			data : $(this).serialize(),
 			method: "get",
 			success : function(result){
-				alert(result);
+				
+				switch(result){
+				case 0 : 
+					alert("해당 정보가 없습니다.");
+
+					break;
+				case 1 : 
+					alert("이메일 발송을 완료하였습니다.");	
+					break;
+				case 2 : 
+					alert("이메일 발송에 실패했습니다.");
+					break;
+				}
 			}
 			
 		});
+	
+		
+		
 		return false;
-		
-		
-		
 		
 		
 	});

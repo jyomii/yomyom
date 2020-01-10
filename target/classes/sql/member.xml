@@ -5,35 +5,44 @@
 
 
 	<update id="updatePassword" parameterType="Map">
-		update gusers set USERPASSWORD= #{password} where userid = #{id}
+		update gusers set
+		USERPASSWORD= #{password} where userid = #{id}
 	</update>
 
+	<select id="checkIdAndEmail" parameterType="Map"
+		resultType="int">
+		select count(*) from gusers where userid = #{id} and useremail = #{email}
+	</select>
 
 	<select id="idcheck" parameterType="String" resultType="Integer">
-		select count(*)
+		select
+		count(*)
 		from gusers
 		where userid = #{userid}
 	</select>
-	
+
 	<select id="getUsers" resultType="member">
-		select * from gusers where userid = #{id}
+		select * from gusers where
+		userid = #{id}
 	</select>
-	
+
 	<insert id="joinUser" parameterType="member">
-		insert into  gusers values(gusersSEQ.nextval,#{userId},#{userPassword},
+		insert into gusers
+		values(gusersSEQ.nextval,#{userId},#{userPassword},
 		null,null,#{userAge},#{userLocation},#{gender},#{userEmail},
 		sysdate,'N','Y','0',null)
 	</insert>
-	
-	<insert id="insertcategory" parameterType="Map" >
-	<selectKey order="BEFORE" keyProperty="userkey" resultType="int">
-		select userkey from gusers where userid= #{id}
-	</selectKey>
+
+	<insert id="insertcategory" parameterType="Map">
+		<selectKey order="BEFORE" keyProperty="userkey"
+			resultType="int">
+			select userkey from gusers where userid= #{id}
+		</selectKey>
 		insert all
-	<foreach item="item" index="index" collection="list">
-		into gusercategory values(#{userkey},#{item})
-	</foreach>
-	select * from dual
+		<foreach item="item" index="index" collection="list">
+			into gusercategory values(#{userkey},#{item})
+		</foreach>
+		select * from dual
 	</insert>
 
 
@@ -41,14 +50,15 @@
 
 
 	<select id="getlocationlist" resultType="location">
-		select * from glocation order by locationkey asc
+		select * from glocation
+		order by locationkey asc
 	</select>
 
 	<select id="getdcategory" resultType="dcategory">
 		SELECT * FROM gcategory
 	</select>
-	
-		<select id="getscategory" resultType="scategory">
+
+	<select id="getscategory" resultType="scategory">
 		SELECT * FROM gcategory2
 	</select>
 </mapper>
