@@ -4,9 +4,15 @@
 <mapper namespace="Member">
 
 
+
+	<insert id="insertVisit" parameterType="visit">
+	insert into visit values(#{ip},sysdate)
+	</insert>
+	
+
 	<update id="updatePassword" parameterType="Map">
 		update gusers set
-		USERPASSWORD= #{password} where userid = #{id}
+		USERPASSWORD= #{password} where userid = #{id} 
 	</update>
 
 	<select id="checkIdAndEmail" parameterType="Map"

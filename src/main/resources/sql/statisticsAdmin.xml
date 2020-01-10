@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="statisticsAdmin">
+
+
+	<select id="getStatisticsAge" resultType="statisticsAge">
+	select agevalue age, count(*) value from gusers, gage where agekey = userage group by agevalue
+	</select>
+	
+	<select id="getStatisticsLocation" resultType="statisticsLocation">
+	select swhere location, count(userlocation) value from glocation,gusers where 
+	locationkey = userlocation group by swhere
+	</select>
+	
+	
+	<select id="getStatisticsJoinDate" resultType="statisticsJoinDate">
+	  <![CDATA[ 
+	  select rownum, joindate, value from (SELECT to_char(userjoindate,'mm-dd') joindate,
+	count(*) value FROM GUSERS group by to_char(userjoindate,'mm-dd') 
+	order by to_char(userjoindate,'mm-dd') DESC) 
+	where rownum <= 7   
+	]]>
+	</select>
+	
+	<select id="getStatisticsCategory" resultType="statisticsCategory">
+	 <![CDATA[ 
+	select category, value from (select scategoryname category, count(scategoryname) 
+	value from gcategory2,ggroup where CATEGORYKEY = SCATEGORYKEY 
+	group by scategoryname order by count(scategoryname) desc) 
+	where rownum <10
+	]]>
+	</select>
+
+	
+	
+	
+
+
+</mapper>

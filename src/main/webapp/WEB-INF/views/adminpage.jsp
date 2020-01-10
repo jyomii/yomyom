@@ -9,7 +9,7 @@
     <meta name="keywords" content="" />
 	<title>Winku Social Network Toolkit</title>
     <link rel="icon" href="resources/images/fav.png" type="image/png" sizes="16x16"> 
-    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <link rel="stylesheet" href="resources/css/main.min.css">
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="resources/css/color.css">
@@ -735,12 +735,303 @@
 			</form>
 		</div><!-- side panel -->		
 	
-	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="resources/js/main.min.js"></script>
+	<script src="resources/js/main.min.js"></script>
 	 <script src="resources/js/echarts.min.js"></script>
     <script src="resources/js/world.js"></script>
 	<script src="resources/js/custom.js"></script>
 	<script src="resources/js/script.js"></script>
+	<script>
+	
+	
+	
+	
+	//연령대 분포수
+	var arraynameAge = new Array();
+	
+	var arrayAge = new Array();
+	<c:forEach items="${age}" var="item">
+		
+	arrayAge.push({
+			value: '${item.value}', 
+			name: '${item.age}'+'대'
+		  });
+		
+	arraynameAge.push('${item.age}'+'대');
 
+	</c:forEach>
+	
+	
+	
+	
+	//관리자 - 연령대 분포 수 
+	if ($('#echart_pie').length ){  
+	  
+	  var echartPie = echarts.init(document.getElementById('echart_pie'));
+
+	  echartPie.setOption({
+		tooltip: {
+		  trigger: 'item',
+		  formatter: "{a} <br/>{b} : {c} ({d}%)"
+		},
+		legend: {
+		  x: 'center',
+		  y: 'bottom',
+		  data: arraynameAge
+		},
+		toolbox: {
+		  show: true,
+		  feature: {
+			magicType: {
+			  show: true,
+			  type: ['pie', 'funnel'],
+			  option: {
+				funnel: {
+				  x: '25%',
+				  width: '50%',
+				  funnelAlign: 'left',
+				  max: 1548
+				}
+			  }
+			},
+			restore: {
+			  show: true,
+			  title: "Restore"
+			},
+			saveAsImage: {
+			  show: true,
+			  title: "Save Image"
+			}
+		  }
+		},
+		calculable: true,
+		series: [{
+		  name: '연령대',
+		  type: 'pie',
+		  radius: '55%',
+		  center: ['50%', '48%'],
+		  data: arrayAge
+		}]
+	  });
+
+	  var dataStyle = {
+		normal: {
+		  label: {
+			show: false
+		  },
+		  labelLine: {
+			show: false
+		  }
+		}
+	  };
+
+	  var placeHolderStyle = {
+		normal: {
+		  color: 'rgba(0,0,0,0)',
+		  label: {
+			show: false
+		  },
+		  labelLine: {
+			show: false
+		  }
+		},
+		emphasis: {
+		  color: 'rgba(0,0,0,0)'
+		}
+	  };
+
+	} 
+	
+	
+	
+	
+	//지역 분포수
+	var arrayname = new Array();
+	
+	var array = new Array();
+	<c:forEach items="${location}" var="item">
+		
+		array.push({
+			value: '${item.value}', 
+			name: '${item.location}'
+		  });
+		
+		arrayname.push('${item.location}');
+
+	</c:forEach>
+		
+	//관리자 - 지역 분포수
+	if ($('#echart_pie2').length ){ 
+			  
+			  var echartPieCollapse = echarts.init(document.getElementById('echart_pie2'));
+			  
+			  echartPieCollapse.setOption({
+				tooltip: {
+				  trigger: 'item',
+				  formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+				  x: 'center',
+				  y: 'bottom',
+				  data: arrayname
+				},
+				toolbox: {
+				  show: true,
+				  feature: {
+					magicType: {
+					  show: true,
+					  type: ['pie', 'funnel']
+					},
+					restore: {
+					  show: true,
+					  title: "Restore"
+					},
+					saveAsImage: {
+					  show: true,
+					  title: "Save Image"
+					}
+				  }
+				},
+				calculable: true,
+				series: [{
+				  name: 'Area Mode',
+				  type: 'pie',
+				  radius: [25, 90],
+				  center: ['50%', 170],
+				  roseType: 'area',
+				  x: '50%',
+				  max: 40,
+				  sort: 'ascending',
+				  data: array
+				}]
+			  });
+
+			}
+	
+	
+	
+	
+	//일간 가입자 수
+	var arraynamejoindate = new Array();
+	
+	var arrayvaluejoindate = new Array();
+	<c:forEach items="${joindate}" var="item">
+		
+	arraynamejoindate.push('${item.joindate}');
+		
+	arrayvaluejoindate.push('${item.value}');
+
+	</c:forEach>
+	
+	
+	
+	  //echart Bar
+	  
+	if ($('#mainb').length ){
+	  
+		  var echartBar = echarts.init(document.getElementById('mainb'));
+
+		  echartBar.setOption({
+			
+			tooltip: {
+			  trigger: 'axis'
+			},
+			legend: {
+			  data: ['가입자 수']
+			},
+			toolbox: {
+			  show: false
+			},
+			calculable: false,
+			xAxis: [{
+			  type: 'category',
+			  data: arraynamejoindate
+			}],
+			yAxis: [{
+			  type: 'value'
+			}],
+			series: [{
+			  name: '가입자 수',
+			  type: 'bar',
+			  data: arrayvaluejoindate,
+			  markPoint: {
+				data: [{
+				  type: 'max',
+				  name: '???'
+				}, {
+				  type: 'min',
+				  name: '???'
+				}]
+			  },
+			  markLine: {
+				data: [{
+				  type: 'average',
+				  name: '가입자 수'
+				}]
+			  }
+			}]
+		  });
+
+	}
+	  
+	  
+	  
+	  
+	
+	//카테고리 만들어진 수
+	var arraynamecategory = new Array();
+	
+	var arrayvaluecategory = new Array();
+	
+	<c:forEach items="${category}" var="item">
+		
+	arraynamecategory.push('${item.category}');
+		
+	arrayvaluecategory.push('${item.value}');
+
+	</c:forEach>
+	
+
+	
+	if ($('#echart_bar_horizontal').length ){ 
+		  
+		  var echartBar = echarts.init(document.getElementById('echart_bar_horizontal'));
+
+		  echartBar.setOption({
+			
+			tooltip: {
+			  trigger: 'axis'
+			},
+			legend: {
+			  x: 100,
+			  data: ['모임 수']
+			},
+			toolbox: {
+			  show: true,
+			  feature: {
+				saveAsImage: {
+				  show: true,
+				  title: "Save Image"
+				}
+			  }
+			},
+			calculable: true,
+			xAxis: [{
+			  type: 'value',
+			  boundaryGap: [0, 0.01]
+			}],
+			yAxis: [{
+			  type: 'category',
+			  data: arraynamecategory
+			}],
+			series: [{
+			  name: '모임 수',
+			  type: 'bar',
+			  data: arrayvaluecategory
+			}]
+		  });
+
+		}
+	</script>
 </body>	
 
 </html>
