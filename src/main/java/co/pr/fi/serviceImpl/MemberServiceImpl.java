@@ -90,6 +90,13 @@ public class MemberServiceImpl implements MemberService {
 		return dao.checkIdAndEmail(map);
 	}
 
+	@Override
+	public void insertVisit(String remoteAddr) {
+		dao.insertVisit(remoteAddr);
+		
+	}
+
+	
 	
 
 }
