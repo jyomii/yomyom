@@ -64,7 +64,5 @@ public class MemberDAO {
 		return sqlSession.selectOne("Member.checkIdAndEmail",map);
 	}
 
-	public void insertVisit(String remoteAddr) {
-		sqlSession.insert("Member.insertVisit",remoteAddr);
-	}
+
 }

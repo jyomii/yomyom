@@ -16,8 +16,8 @@
 		<level value="trace" />
 	</logger>
 	
-	<!-- statisticsAdmin -->
-	<logger name="statisticsAdmin">
+	<!-- Admin -->
+	<logger name="Admin">
 		<level value="trace" />
 	</logger>
 	

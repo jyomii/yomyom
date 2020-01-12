@@ -451,11 +451,11 @@
 										<ul class="naves">
 											<li>
 												<i class="ti-clipboard"></i>
-												<a href="adminpage.html" title="">통계</a>
+												<a href="admin" title="">통계</a>
 											</li>
 											<li>
 												<i class="fas fa-user"></i>
-												<a href="adminpage2.html" title="">회원</a>
+												<a href="adminusers?page=1&type=0" title="">회원</a>
 											</li>
 											<li>
 												<i class="fas fa-users"></i>
@@ -484,24 +484,6 @@
 									<div class="messages">
 										<h5 class="f-title"><i class="fa fa-line-chart"></i>통계 </span></h5>
 										<div class="insight-box">
-											<div class="x_panel">
-												<div class="x_title">
-													<h2>방문자 수</h2>
-												</div>
-												<ul class="toolbox">
-												  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-												  </li>
-												
-												  <li><a class="close-link"><i class="fa fa-close"></i></a>
-												  </li>
-												</ul>
-												<div class="x_content">
-													<div id="main"></div>
-											  </div>
-											</div>
-											
-										
-											
 											
 											<div class="x_panel">
 											  <div class="x_title">
@@ -738,7 +720,7 @@
 	<script src="resources/js/main.min.js"></script>
 	 <script src="resources/js/echarts.min.js"></script>
     <script src="resources/js/world.js"></script>
-	<script src="resources/js/custom.js"></script>
+	<!-- <script src="resources/js/custom.js"></script>-->
 	<script src="resources/js/script.js"></script>
 	<script>
 	

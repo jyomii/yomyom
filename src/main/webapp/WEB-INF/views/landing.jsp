@@ -18,9 +18,10 @@
 <link rel="stylesheet" href="resources/css/color.css">
 <link rel="stylesheet" href="resources/css/responsive.css">
 <style>
-.forgot-pwd{
+.forgot-pwd {
+	cursor: pointer;
+}
 
-cursor: pointer;}
 .tab-content li {
 	cursor: pointer;
 }
@@ -28,7 +29,6 @@ cursor: pointer;}
 .click_category {
 	background: #eee;
 }
-
 
 .modal-backdrop {
 	z-index: -1;
@@ -45,7 +45,6 @@ cursor: pointer;}
 	top: 50%;
 	margin: 0 auto;
 }
-
 
 #header {
 	position: relative;
@@ -115,11 +114,22 @@ cursor: pointer;}
 							<h2 class="log-title">로그인</h2>
 
 							<form method="post" action="loginprocess">
+
+								<div class="form-group">
+
+									<button class="mtr-btn"
+										style="background: #fef01b; color: #556677; border: 0; width: 100%;"
+										onclick="location.href='kakao'">
+										<img src="resources/images/kakao-talk.png"
+											style="width: 30px; height: 30px; float: left;">카카오톡으로
+										1초만에 시작하기
+									</button>
+								</div>
+								<p style="text-align: center;">또는</p>
 								<div class="form-group">
 									<input type="text" id="input" required="required" name="id"
-									<c:if test="${!empty saveid}"> value=${saveid}</c:if>
-									 />
-									<label class="control-label" for="input">Id</label><i
+										<c:if test="${!empty saveid}"> value=${saveid}</c:if> /> <label
+										class="control-label" for="input">Id</label><i
 										class="mtrl-select"></i>
 								</div>
 								<div class="form-group">
@@ -127,23 +137,30 @@ cursor: pointer;}
 									<label class="control-label" for="input">Password</label><i
 										class="mtrl-select"></i>
 								</div>
-								<div class="checkbox">
-									<label> <input type="checkbox" 
-										<c:if test="${!empty saveid}">checked</c:if>
-									
-										name="rememberme" value="ok" /><i class="check-box"></i>아이디 기억하기
-									</label>
-								</div>
-								<a data-toggle="modal" data-target="#exampleModal" class="forgot-pwd">비밀번호 찾기</a>
-								<div class="submit-btns">
-									<button class="mtr-btn signin" type="submit">
+								<div class="form-group">
+									<button class="mtr-btn signin" type="submit"
+										style="width: 100%;">
 										<span>로그인</span>
 									</button>
-									<button class="mtr-btn signup" type="button">
-										<span>회원가입</span>
-									</button>
+
+								</div>
+								<div class="checkbox">
+									<label> <input type="checkbox"
+										<c:if test="${!empty saveid}">checked</c:if> name="rememberme"
+										value="ok" /><i class="check-box"></i>아이디 기억하기
+									</label>
+								</div>
+
+								<div class="checkbox" style="float: right;">
+									<a class="forgot-pwd signup"> 회원가입 </a> <a data-toggle="modal"
+										data-target="#exampleModal" class="forgot-pwd">비밀번호 찾기</a>
 								</div>
 							</form>
+
+
+
+
+
 						</div>
 						<div class="log-reg-area reg">
 							<h2 class="log-title">회원가입</h2>
@@ -576,7 +593,7 @@ cursor: pointer;}
 
 
 
-<!-- Modal -->
+	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -589,37 +606,98 @@ cursor: pointer;}
 					</button>
 				</div>
 				<div class="modal-body widget">
-				<form class="passwordsearch">
-				<p>임시 비밀번호를 발급하여 해당 이메일로 보내드립니다.</p>
-				
-					<div class="form-group">
-									<input type="text" required="required" name="id"  placeholder="가입했던 아이디를 입력해주세요."/> <i
-										class="mtrl-select"></i>
-								</div>
+					<form class="passwordsearch">
+						<p>임시 비밀번호를 발급하여 해당 이메일로 보내드립니다.</p>
 
-								
-								<div class="form-group">
-									<input type="text" required="required" name="email" placeholder="가입했던 이메일을 입력해주세요."/> <i
-										class="mtrl-select"></i>
-								</div>
-								
-								<button type="submit" class="btn btn-primary"
-							>확인</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">닫기</button>
-							</form>	
+						<div class="form-group">
+							<input type="text" required="required" name="id"
+								placeholder="가입했던 아이디를 입력해주세요." /> <i class="mtrl-select"></i>
+						</div>
+
+
+						<div class="form-group">
+							<input type="text" required="required" name="email"
+								placeholder="가입했던 이메일을 입력해주세요." /> <i class="mtrl-select"></i>
+						</div>
+
+						<button type="submit" class="btn btn-primary">확인</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+					</form>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
-	
+
 
 </body>
 
 <script src="resources/js/main.min.js"></script>
 <script src="resources/js/script.js"></script>
 <script>
+	//sns 회원가입일 경우
+	var logintype = "${logintype }";
+	var loginid = "${id }";
+
+	//이전 다음 체크
+	var join = 0;
+
+	if (logintype && loginid) {
+
+		//회원가입 페이지가 첫 페이지가 되어야함
+		join = 1;
+		$('.login-reg-bg').addClass('show');
+		$('.log-title:eq(1)').text("SNS 회원가입");
+		$('.log-title:eq(1)').next().text("추후 SNS 계정으로 로그인 합니다.");
+
+		//아이디, 비밀번호 입력칸 숨김
+		$('.log-reg-area:eq(1) .form-group:eq(0)').css("display", 'none');
+		$('.log-reg-area:eq(1) .form-group:eq(1)').css("display", 'none');
+		$('.log-reg-area:eq(1) .form-group:eq(2)').css("display", 'none');
+	}
+
+	$('button.pre').on("click", function() {
+		if (join != 0)
+			join--;
+
+		if (join == 1)
+			$('.login-reg-bg').removeClass('detail');
+		if (join == 0) {
+
+			if (logintype && loginid) {
+
+				alert('sns 가입이 취소됩니다.');
+				location.href = "login";
+			} else {
+				$('.login-reg-bg').removeClass('show');
+			}
+
+		}
+
+	});
+
+	$('.signup').on("click", function() {
+
+		if (join != 2)
+			join++;
+
+		if (join == 1) {
+
+			$('.login-reg-bg').addClass('show');
+		} else if (join == 2) {
+			//기본정보가 잘 입력되어있는지 확인
+			var check = joinDefaultCheck();
+
+			if (check)
+				$('.login-reg-bg').addClass('show detail');
+			else
+				join--;
+
+		}
+
+		return false;
+	});
 
 	var user_check = new Array();
 
@@ -721,7 +799,8 @@ cursor: pointer;}
 	});
 
 	$('form:eq(1) input:eq(2)')
-			.keyup(function() {
+			.keyup(
+					function() {
 
 						var email = $(this).val();
 
@@ -741,155 +820,124 @@ cursor: pointer;}
 						}
 					});
 
-	//이전 다음 체크
-	var join = 0;
-
-	$('button.pre').on("click", function() {
-		if (join != 0)
-			join--;
-
-		if (join == 1)
-			$('.login-reg-bg').removeClass('detail');
-		if (join == 0)
-			$('.login-reg-bg').removeClass('show');
-
-	});
-
-	$('button.signup').on("click", function() {
-
-		if (join != 2)
-			join++;
-
-		if (join == 1) {
-
-			$('.login-reg-bg').addClass('show');
-		} else if (join == 2) {
-			//기본정보가 잘 입력되어있는지 확인
-			var check = joinDefaultCheck();
-
-			if (check)
-				$('.login-reg-bg').addClass('show detail');
-			else
-				join--;
-
-		}
-
-		return false;
-	});
-
 	//기본정보 잘 입력되어있는지 확인
 	function joinDefaultCheck() {
 
-		if (!checkId) {
-			alert('id가 올바르지 않습니다.');
-			$('form:eq(1) input:eq(0)').focus();
-			return false;
-		}
-		if (!checkPassword) {
-			alert('password가 올바르지 않습니다.');
-			$('form:eq(1) input:eq(1)').focus();
-			return false;
-		}
+		if (!logintype && !loginid) {
 
-		if (!checkEmail) {
-			alert('email이 올바르지 않습니다.');
-			$('form:eq(1) input:eq(2)').focus();
-			return false;
-		}
+			if (!checkId) {
+				alert('id가 올바르지 않습니다.');
+				$('form:eq(1) input:eq(0)').focus();
+				return false;
+			}
+			if (!checkPassword) {
+				alert('password가 올바르지 않습니다.');
+				$('form:eq(1) input:eq(1)').focus();
+				return false;
+			}
 
+			if (!checkEmail) {
+				alert('email이 올바르지 않습니다.');
+				$('form:eq(1) input:eq(2)').focus();
+				return false;
+			}
+		}
 		return true;
 	}
 
-	
-	
-	
-	$('.passwordsearch').submit(function(){
-		
-		
+	$('.passwordsearch').submit(function() {
+
 		$.ajax({
-			url: "passwordsearch",
+			url : "passwordsearch",
 			data : $(this).serialize(),
-			method: "get",
-			success : function(result){
-				
-				switch(result){
-				case 0 : 
+			method : "get",
+			success : function(result) {
+
+				switch (result) {
+				case 0:
 					alert("해당 정보가 없습니다.");
 
 					break;
-				case 1 : 
-					alert("이메일 발송을 완료하였습니다.");	
+				case 1:
+					alert("이메일 발송을 완료하였습니다.");
 					break;
-				case 2 : 
+				case 2:
 					alert("이메일 발송에 실패했습니다.");
 					break;
 				}
 			}
-			
+
 		});
-	
-		
-		
+
 		return false;
-		
-		
+
 	});
-	
+
 	//회원가입 버튼 클릭 시
-	$('#join').click(function() {
+	$('#join').click(
+			function() {
 
-		//관심 목록 선택 수 확인
-		if (user_check.length < 2) {
+				//관심 목록 선택 수 확인
+				if (user_check.length < 2) {
 
-			alert("관심 카테고리를 2개 이상 선택해주세요.");
-			return false;
+					alert("관심 카테고리를 2개 이상 선택해주세요.");
+					return false;
 
-		} else {
+				} else {
 
-			var categorykey = new Array();
+					var categorykey = new Array();
 
-			//scategorykey
-			for (var j = 0; j < user_check.length; j++) {
-				categorykey.push(user_check[j].skey);
-				console.log(categorykey[j]);
-			}
+					//scategorykey
+					for (var j = 0; j < user_check.length; j++) {
+						categorykey.push(user_check[j].skey);
+						console.log(categorykey[j]);
+					}
 
-			var object = {
+					var object = {
 
-				"id" : $('form:eq(1) input:eq(0)').val(),
+						"gender" : $('input[name="gender"]:checked').val(),
+						"age" : $('select[name="age"]').val(),
+						"location" : $('select[name="location"]').val(),
+						"categorykey" : categorykey
 
-				"password" : $('form:eq(1) input:eq(1)').val(),
-				"email" : $('form:eq(1) input:eq(2)').val(),
-				"gender" : $('input[name="gender"]:checked').val(),
-				"age" : $('select[name="age"]').val(),
-				"location" : $('select[name="location"]').val(),
-				"categorykey" : categorykey
+					};
 
-			};
-
-			$.ajax({
-
-				method : "post",
-				url : "joinProcess",
-				data : object,
-				success : function(result) {
-
-					if (result == 1) {
-
-						alert("회원가입되었습니다.");
-						location.href="login";
+					/*로그인 타입에 따라서 object의 값이 달라짐*/
+					if (!logintype && !loginid) {
+						object.id = $('form:eq(1) input:eq(0)').val(),
+								object.logintype = "0", object.password = $(
+										'form:eq(1) input:eq(1)').val(),
+								object.email = $('form:eq(1) input:eq(2)')
+										.val();
 
 					} else {
-						alert("회원가입에 실패했습니다.");
+
+						object.id = loginid, object.logintype = logintype,
+								object.password = "", object.email = "";
 					}
+
+					console.log(object);
+
+					$.ajax({
+
+						method : "post",
+						url : "joinProcess",
+						data : object,
+						success : function(result) {
+
+							if (result == 1) {
+
+								alert("회원가입되었습니다.");
+								location.href = "login";
+
+							} else {
+								alert("회원가입에 실패했습니다.");
+							}
+						}
+
+					});
+
 				}
-
 			});
-			
-			
-			
-
-		}
-	});
 </script>
 </html>
