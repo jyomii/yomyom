@@ -32,6 +32,4 @@ public interface MemberService {
 	int checkIdAndEmail(String id, String email);
 
 
-	void insertVisit(String remoteAddr);
-
 }

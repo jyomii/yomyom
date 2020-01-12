@@ -5,11 +5,6 @@
 
 
 
-	<insert id="insertVisit" parameterType="visit">
-	insert into visit values(#{ip},sysdate)
-	</insert>
-	
-
 	<update id="updatePassword" parameterType="Map">
 		update gusers set
 		USERPASSWORD= #{password} where userid = #{id} 
@@ -36,7 +31,7 @@
 		insert into gusers
 		values(gusersSEQ.nextval,#{userId},#{userPassword},
 		null,null,#{userAge},#{userLocation},#{gender},#{userEmail},
-		sysdate,'N','Y','0',null)
+		sysdate,'N','Y','0',null,#{logintype})
 	</insert>
 
 	<insert id="insertcategory" parameterType="Map">

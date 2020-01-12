@@ -24,14 +24,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.service.MemberService;
+import co.pr.fi.serviceImpl.KakaoAPI;
 
 @Controller
 public class MemberController {
@@ -39,41 +42,120 @@ public class MemberController {
 	MemberService memberService;
 
 	@Autowired
+	private KakaoAPI kakao;
+
+	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 
-	@GetMapping("/login")
-	public ModelAndView login(ModelAndView m, HttpServletRequest request) {
+	@RequestMapping(value = "/kokoalogout")
+	public String logout(HttpSession session) {
+		kakao.kakaoLogout((String) session.getAttribute("access_Token"));
+		session.removeAttribute("access_Token");
+		session.removeAttribute("logintype");
+		session.removeAttribute("id");
+		return "index";
+	}
+	
 
+	
+	@GetMapping("/kakao")
+	public void kakao(HttpServletResponse resp) throws IOException {
+		
+		PrintWriter out = resp.getWriter();
+		out.println("<script>"
+				+ "location.href='"
+				+"https://kauth.kakao.com/oauth/authorize?client_id=b8f7119441a046a5ba3c105d595803dd"
+				+ "&redirect_uri=http://localhost:8088/fi/kokoalogin&response_type=code';"
+				+ "</script>");
+		out.close();
+		
+		
+	}
+
+	@GetMapping("/kokoalogin")
+	public String kakao(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "code", required = false) String code, HttpSession session, RedirectAttributes rttr,
+			HttpServletResponse resp) throws IOException {
+
+		if (code != null) {
+			String access_Token = kakao.getAccessToken(code);
+			HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
+			System.out.println("login Controller : " + userInfo);
+
+			String id = (String) userInfo.get("id");
+
+			// 해당 고유 id가 DB 테이블에서 존재하는지 확인
+			int checkId = memberService.idCheck(id);
+
+			// 있으면 바로 로그인
+			if (checkId == 1) {
+				session.setAttribute("id", id);
+				session.setAttribute("logintype", 1); // 0: 일반 1: kakao 2: naver 3. facebook
+				session.setAttribute("access_token", access_Token);
+
+				return "redirect:admin";
+
+			} else {
+				// 1회성 파라미터 전달용
+				rttr.addFlashAttribute("id", id);
+				rttr.addFlashAttribute("logintype", 1);
+				return "redirect:login";
+			}
+		} else {
+			PrintWriter out = resp.getWriter();
+			out.print("<script>alert('sns 로그인 취소'); history.back();</script>");
+			out.close();
+			return null;
+		}
+
+	}
+
+	@GetMapping("/login")
+	public ModelAndView login(ModelAndView m, HttpServletRequest request, HttpSession session) {
+
+		//임시로 해논거임ㅇㅇ
+		session.invalidate();
 		List<GCategory> dcategory = memberService.getDCategory();
 		List<GCategory2> scategory = memberService.getSCategory();
 
 		Cookie[] getCookiesCookie = request.getCookies();
-		for (Cookie k : getCookiesCookie)
-			m.addObject(k.getName(), k.getValue());
-
+		if (getCookiesCookie != null)
+			for (Cookie k : getCookiesCookie)
+				m.addObject(k.getName(), k.getValue());
+		
 		m.addObject("dcategory", dcategory);
 		m.addObject("scategory", scategory);
 		m.setViewName("landing");
+	//	m.setViewName("exampleMap");
 		return m;
 	}
-
-	
 
 	// 여기도 트랜잭션 추가
 	@ResponseBody
 	@PostMapping("/joinProcess")
-	public int joinProcess(String id, String password, String email, String gender, String age, String location,
-			@RequestParam(value = "categorykey[]") List<Integer> categorykey) {
+	public int joinProcess(String id, String password, int logintype, String email, String gender, String age,
+			String location, @RequestParam(value = "categorykey[]") List<Integer> categorykey) {
 
-		String encPassword = passwordEncoder.encode(password);
-		System.out.println("encPassword:" + encPassword);
-		System.out.println("encPassword:" + encPassword);
-
-		// 객체 생성
 		GUsers guser = new GUsers();
+
+		if (logintype == 0) {
+
+			// 일반 가입자일 경우 패스워드encoding
+			String encPassword = passwordEncoder.encode(password);
+			System.out.println("encPassword:" + encPassword);
+			System.out.println("encPassword:" + encPassword);
+
+			guser.setUserPassword(encPassword);
+			guser.setUserEmail(email);
+		} else {
+			// SNS 가입자일경우 null 값
+			guser.setUserPassword("null");
+			guser.setUserEmail("null");
+		}
+
+		guser.setLogintype(logintype);
 		guser.setUserId(id);
-		guser.setUserPassword(encPassword);
-		guser.setUserEmail(email);
+
 		guser.setGender(gender);
 		guser.setUserAge(Integer.valueOf(age) / 10); // 나이대 1,2,3,4,5,6 ..
 		guser.setUserLocation(Integer.valueOf(location));
@@ -171,6 +253,8 @@ public class MemberController {
 		if (passwordEncoder.matches(password, user.getUserPassword())) {
 
 			session.setAttribute("id", id);
+			session.setAttribute("logintype", 0); // 0: 일반 1: kakao 2: naver 3. facebook
+
 			Cookie cookie = new Cookie("saveid", id);
 
 			if (remember != null) {

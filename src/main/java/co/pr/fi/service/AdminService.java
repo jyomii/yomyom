@@ -1,9 +1,8 @@
 package co.pr.fi.service;
 
 import java.util.List;
-import java.util.Map;
 
-import co.pr.fi.domain.GLocation;
+import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
@@ -19,5 +18,11 @@ public interface AdminService {
 	List<StatisticsJoinDate> StatisticsJoinDate();
 
 	List<StatisticsCategory> statisticsCategory();
+
+	List<GUsers> getAllUserList(int type, int page, int limit);
+
+	int getListCount(int type);
+
+
 
 }

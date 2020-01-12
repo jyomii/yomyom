@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="statisticsAdmin">
+<mapper namespace="Admin">
 
+		
+	<select id="getAllUserList" parameterType="Map" resultType="member">
+	  <![CDATA[ 
+	SELECT * FROM (
+				SELECT b.*, rownum rnum
+				FROM (SELECT * FROM GUSERS WHERE userstatus = #{type}
+				ORDER BY userjoindate ) b )
+				WHERE RNUM >= #{startrow} and rnum <= #{endrow}
+				]]>
+	</select>
+	
+	<select id="getListCount" parameterType="int" resultType="int">
+	select count(*) from gusers where userStatus = #{type}
+	</select>
+	
 
 	<select id="getStatisticsAge" resultType="statisticsAge">
 	select agevalue age, count(*) value from gusers, gage where agekey = userage group by agevalue

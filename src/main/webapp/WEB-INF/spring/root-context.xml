@@ -7,6 +7,9 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
+
+
+
 	<!-- 라이브러리를 잘 가져왔으면 아무런 문제 없음. 오라클 연동부분 -->
    <!-- Root Context: defines shared resources visible to all other web components -->
    <bean class="org.apache.commons.dbcp.BasicDataSource"
@@ -68,5 +71,27 @@
 name = "maxUploadSize"를 
 지정하지 않으면 기본으로 "-1"이 설정되는데 파일 크기가 무제한이라는 의미입니다.
  -->
+ 
+ 
+ <!--  
+ 
+
+    <bean id="googleConnectionFactory"
+        class="org.springframework.social.google.connect.GoogleConnectionFactory">
+        <constructor-arg
+            value="33703838552-gd4d4lf50ms2e619s3laast4e5dktpki.apps.googleusercontent.com" />
+        <constructor-arg value="IuBPRURhsde-9SIE97unxR0K" />
+    </bean>
+ 
+ 
+    <bean id="googleOAuth2Parameters"
+        class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope"
+            value="email"></property>
+        <property name="redirectUri"
+            value="http://localhost:8088/fi/googlecallback" />
+    </bean>
+ 
+   -->
  
 </beans>
