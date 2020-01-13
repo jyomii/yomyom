@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import co.pr.fi.dao.AdminDAO;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsLocation;
@@ -83,6 +84,12 @@ public class AdminServiceImpl implements AdminService {
 	public List<GUsers> AdminSearchUser(String keyword) {
 	
 		return dao.AdminSearchUser(keyword);
+	}
+
+	@Override
+	public List<PoliceResult> adminPolice() {
+		
+		return dao.adminPolice();
 	}
 
 }

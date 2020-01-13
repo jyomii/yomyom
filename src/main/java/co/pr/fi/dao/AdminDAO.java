@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
@@ -62,6 +63,11 @@ public class AdminDAO {
 	public List<GUsers> AdminSearchUser(String keyword) {
 		
 		return sqlSession.selectList("Admin.AdminSearchUser",keyword);
+	}
+
+	public List<PoliceResult> adminPolice() {
+		
+		return sqlSession.selectList("Admin.AdminPolice");
 	}
 
 }
