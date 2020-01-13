@@ -1035,6 +1035,7 @@ CREATE TABLE userpolice
     policeboardsort    CHAR(1)    NOT NULL, 
     policenumber        NUMBER     NOT NULL, 
     policesort          NUMBER     NOT NULL, 
+    reciveuserKey number,
     CONSTRAINT USERPOLICEPK PRIMARY KEY (policekey)
 );
       
