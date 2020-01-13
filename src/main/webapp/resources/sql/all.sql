@@ -493,7 +493,7 @@ CREATE TABLE gusers
     useroptionadmin    CHAR(1)           NOT NULL, 
     useroptiongroup    CHAR(1)           NOT NULL, 
     userstatus          NUMBER           NOT NULL, 
-    userstatuscode     NVARCHAR2(200)    NULL, 
+    userstatuscode     VARCHAR2(200)    NULL, 
     logintype 			number 			 NOT NULL
     CONSTRAINT GUSERSPK PRIMARY KEY (userkey)
 );
