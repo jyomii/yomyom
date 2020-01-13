@@ -1,5 +1,7 @@
 package co.pr.fi.domain;
 
+import java.sql.Date;
+
 //모임 
 public class GGroup {
 
@@ -42,7 +44,11 @@ public class GGroup {
  // 모임타입 
  private String groupType;
 
- public int getGroupKey() {
+ // 모임 설립일
+ private Date groupDate;
+ 
+
+public int getGroupKey() {
      return groupKey;
  }
 
@@ -145,7 +151,15 @@ public class GGroup {
  public void setGroupType(String groupType) {
      this.groupType = groupType;
  }
+ 
+ public Date getGroupDate() {
+	return groupDate;
+ }
 
+ public void setGroupDate(Date groupDate) {
+	this.groupDate = groupDate;
+ }
+ 
  // GGroup 모델 복사
  public void CopyData(GGroup param)
  {
@@ -162,5 +176,6 @@ public class GGroup {
      this.groupCOrigin = param.getGroupCOrigin();
      this.groupPrivate = param.getGroupPrivate();
      this.groupType = param.getGroupType();
+     this.groupDate = param.getGroupDate();
  }
 }
