@@ -70,6 +70,8 @@ jQuery(document)
 						$(".drop").toggleClass("active");
 					});
 
+					
+					/** 필요할때 각자 스크립트에서 복사해서 쓰면 됨
 					// ===== Search Filter =====//
 					(function($) {
 						// custom css expression for a case-insensitive
@@ -114,7 +116,7 @@ jQuery(document)
 						$(function() {
 							listFilter($("#searchDir"), $("#people-list"));
 						});
-					}(jQuery));
+					}(jQuery));**/
 
 					// progress line for page loader
 					$('body').show();

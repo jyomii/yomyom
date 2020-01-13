@@ -9,16 +9,31 @@ public class UserPolice {
  // 신고한유저키값 
  private int userKey;
 
+ private int reciveuserKey;
+ 
  // 글 종류 
  private String policeBoardSort;
 
  // 글 번호 
  private int policeNumber;
 
+ 
  // 신고종류 
  private int policeSort;
 
- public int getPoliceKey() {
+ 
+ 
+ 
+ 
+ public int getReciveuserKey() {
+	return reciveuserKey;
+}
+
+public void setReciveuserKey(int reciveuserKey) {
+	this.reciveuserKey = reciveuserKey;
+}
+
+public int getPoliceKey() {
      return policeKey;
  }
 
@@ -61,6 +76,7 @@ public class UserPolice {
  // UserPolice 모델 복사
  public void CopyData(UserPolice param)
  {
+	 this.reciveuserKey = param.getReciveuserKey();
      this.policeKey = param.getPoliceKey();
      this.userKey = param.getUserKey();
      this.policeBoardSort = param.getPoliceBoardSort();

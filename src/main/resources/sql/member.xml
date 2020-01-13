@@ -5,14 +5,20 @@
 
 
 
+	<update id="restoreUser">
+		update gusers set USERSTATUS = 0, USERSTATUSCODE =
+		null where userkey = #{key}
+	</update>
+
 	<update id="updatePassword" parameterType="Map">
 		update gusers set
-		USERPASSWORD= #{password} where userid = #{id} 
+		USERPASSWORD= #{password} where userid = #{id}
 	</update>
 
 	<select id="checkIdAndEmail" parameterType="Map"
 		resultType="int">
-		select count(*) from gusers where userid = #{id} and useremail = #{email}
+		select count(*) from gusers where userid = #{id} and
+		useremail = #{email}
 	</select>
 
 	<select id="idcheck" parameterType="String" resultType="Integer">
@@ -41,7 +47,8 @@
 		</selectKey>
 		insert all
 		<foreach item="item" index="index" collection="list">
-			into gusercategory values(#{userkey},#{item})
+			into
+			gusercategory values(#{userkey},#{item})
 		</foreach>
 		select * from dual
 	</insert>
