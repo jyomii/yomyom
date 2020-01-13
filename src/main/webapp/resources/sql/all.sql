@@ -494,7 +494,7 @@ CREATE TABLE gusers
     useroptiongroup    CHAR(1)           NOT NULL, 
     userstatus          NUMBER           NOT NULL, 
     userstatuscode     VARCHAR2(200)    NULL, 
-    logintype 			number 			 NOT NULL
+    logintype 			number 			 NOT NULL,
     CONSTRAINT GUSERSPK PRIMARY KEY (userkey)
 );
 
