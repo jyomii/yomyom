@@ -64,5 +64,11 @@ public class MemberDAO {
 		return sqlSession.selectOne("Member.checkIdAndEmail",map);
 	}
 
+	public int restoreUser(int key) {
+		
+		return sqlSession.update("Member.restoreUser", key);
+	}
+
+
 
 }

@@ -55,21 +55,16 @@ public class MemberController {
 		session.removeAttribute("id");
 		return "index";
 	}
-	
 
-	
 	@GetMapping("/kakao")
 	public void kakao(HttpServletResponse resp) throws IOException {
-		
+
 		PrintWriter out = resp.getWriter();
-		out.println("<script>"
-				+ "location.href='"
-				+"https://kauth.kakao.com/oauth/authorize?client_id=b8f7119441a046a5ba3c105d595803dd"
-				+ "&redirect_uri=http://localhost:8088/fi/kokoalogin&response_type=code';"
-				+ "</script>");
+		out.println("<script>" + "location.href='"
+				+ "https://kauth.kakao.com/oauth/authorize?client_id=b8f7119441a046a5ba3c105d595803dd"
+				+ "&redirect_uri=http://localhost:8088/fi/kokoalogin&response_type=code';" + "</script>");
 		out.close();
-		
-		
+
 	}
 
 	@GetMapping("/kokoalogin")
@@ -85,15 +80,49 @@ public class MemberController {
 			String id = (String) userInfo.get("id");
 
 			// 해당 고유 id가 DB 테이블에서 존재하는지 확인
-			int checkId = memberService.idCheck(id);
+			GUsers checkId = memberService.getUsers(id);
 
 			// 있으면 바로 로그인
-			if (checkId == 1) {
-				session.setAttribute("id", id);
-				session.setAttribute("logintype", 1); // 0: 일반 1: kakao 2: naver 3. facebook
-				session.setAttribute("access_token", access_Token);
+			if (checkId != null) {
 
-				return "redirect:admin";
+				
+				// 일반계정
+				if (checkId.getUserStatus() == 0) {
+					
+					session.setAttribute("id", id);
+					session.setAttribute("logintype", 1); // 0: 일반 1: kakao 2: naver 3. facebook
+					session.setAttribute("access_token", access_Token);
+					
+					return "redirect:admin";
+					// 탈퇴예정
+				}  else if (checkId.getUserStatus() == 1) {
+					// 탈퇴 예정
+					resp.setContentType("text/html; charset=utf-8");
+					PrintWriter out = resp.getWriter();
+					out.println(
+							"<script src='http://code.jquery.com/jquery-latest.min.js'></script><script>var check = confirm('탈퇴 처리중인 계정입니다. 복구하시겠습니까?');"
+									+ "if(check){ " + "$.ajax({url:'restoreUser'," + "data:{'key':" + checkId.getUserKey() + "},"
+									+ "success : function(result){ if(result == 1){alert('복구되었습니다. 다시한번 로그인해주세요.'); }location.href='login';}})" + " } "
+									+ "</script>");
+					out.close();
+					return null;
+				} else if (checkId.getUserStatus() == 2) {
+					// 강제 탈퇴
+					resp.setContentType("text/html; charset=utf-8");
+					PrintWriter out = resp.getWriter();
+					out.println("<script>alert('강제탈되된 계정입니다.');history.back();</script>");
+					out.close();
+					return null;
+				} else {
+					resp.setContentType("text/html; charset=utf-8");
+					PrintWriter out = resp.getWriter();
+					out.println("<script>alert('정지된 계정입니다.');history.back();</script>");
+					out.close();
+					return null;
+				}
+
+
+				
 
 			} else {
 				// 1회성 파라미터 전달용
@@ -113,7 +142,7 @@ public class MemberController {
 	@GetMapping("/login")
 	public ModelAndView login(ModelAndView m, HttpServletRequest request, HttpSession session) {
 
-		//임시로 해논거임ㅇㅇ
+		// 임시로 해논거임ㅇㅇ
 		session.invalidate();
 		List<GCategory> dcategory = memberService.getDCategory();
 		List<GCategory2> scategory = memberService.getSCategory();
@@ -122,11 +151,11 @@ public class MemberController {
 		if (getCookiesCookie != null)
 			for (Cookie k : getCookiesCookie)
 				m.addObject(k.getName(), k.getValue());
-		
+
 		m.addObject("dcategory", dcategory);
 		m.addObject("scategory", scategory);
 		m.setViewName("landing");
-	//	m.setViewName("exampleMap");
+		// m.setViewName("exampleMap");
 		return m;
 	}
 
@@ -241,6 +270,13 @@ public class MemberController {
 		return value;
 	}
 
+	@ResponseBody
+	@GetMapping("/restoreUser")
+	public int restoreUser(int key) {
+
+		return memberService.restoreUser(key);
+	}
+
 	@PostMapping("/loginprocess")
 	public String loginProcess(String id, String password,
 
@@ -249,32 +285,73 @@ public class MemberController {
 
 		// 해당 id 객체 가져오기
 		GUsers user = memberService.getUsers(id);
+		
+		
+		if(user == null) {
+			
+			res.setContentType("text/html; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>alert('정보가 없습니다.');history.back();</script>");
+			out.close();
+
+			return null;
+		}
+		
 		System.out.println("password : " + user.getUserPassword());
 		if (passwordEncoder.matches(password, user.getUserPassword())) {
 
-			session.setAttribute("id", id);
-			session.setAttribute("logintype", 0); // 0: 일반 1: kakao 2: naver 3. facebook
+			if (user.getUserStatus() == 0) {
 
-			Cookie cookie = new Cookie("saveid", id);
+				session.setAttribute("id", id);
+				session.setAttribute("logintype", 0); // 0: 일반 1: kakao 2: naver 3. facebook
 
-			if (remember != null) {
+				Cookie cookie = new Cookie("saveid", id);
 
-				cookie.setMaxAge(60 * 60 * 24);
+				if (remember != null) {
 
-				System.out.println("remember ok ");
+					cookie.setMaxAge(60 * 60 * 24);
+
+					System.out.println("remember ok ");
+				} else {
+					cookie.setMaxAge(0);
+					System.out.println("remember no ");
+				}
+
+				res.addCookie(cookie);
+
+				return "redirect:admin";
+
+			} else if (user.getUserStatus() == 1) {
+				// 탈퇴 예정
+				res.setContentType("text/html; charset=utf-8");
+				PrintWriter out = res.getWriter();
+				out.println(
+						"<script src='http://code.jquery.com/jquery-latest.min.js'></script><script>var check = confirm('탈퇴 처리중인 계정입니다. 복구하시겠습니까?');"
+								+ "if(check){ " + "$.ajax({url:'restoreUser'," + "data:{'key':" + user.getUserKey()
+								+ "},"
+								+ "success : function(result){ if(result == 1){alert('복구되었습니다. 다시한번 로그인해주세요.'); }location.href='login';}})"
+								+ " } " + "</script>");
+				out.close();
+				return null;
+			} else if (user.getUserStatus() == 2) {
+				// 강제 탈퇴
+				res.setContentType("text/html; charset=utf-8");
+				PrintWriter out = res.getWriter();
+				out.println("<script>alert('강제탈되된 계정입니다.');history.back();</script>");
+				out.close();
+				return null;
 			} else {
-				cookie.setMaxAge(0);
-				System.out.println("remember no ");
+				res.setContentType("text/html; charset=utf-8");
+				PrintWriter out = res.getWriter();
+				out.println("<script>alert('정지된 계정입니다.');history.back();</script>");
+				out.close();
+				return null;
 			}
-
-			res.addCookie(cookie);
-
-			return "redirect:admin";
 
 		} else {
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();
-			out.println("<script>alert('아이디 또는 비밀번호를 확인하세요.');history.back();</script>");
+			out.println("<script>alert('비밀번호를 잘못입력하셨습니다.');history.back();</script>");
 			out.close();
 
 			return null;
