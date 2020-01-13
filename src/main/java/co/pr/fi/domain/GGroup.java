@@ -44,7 +44,7 @@ public class GGroup {
  // 모임타입 
  private String groupType;
 
- // 모임 설립일
+ // 모임 설립일,,
  private Date groupDate;
  
 

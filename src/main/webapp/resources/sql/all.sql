@@ -540,7 +540,7 @@ CREATE TABLE ggroup
     CONSTRAINT GGROUPPK PRIMARY KEY (groupkey)
 );
 
--- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행
+-- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
 -- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
 
 
