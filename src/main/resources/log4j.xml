@@ -10,6 +10,17 @@
 		</layout>
 	</appender>
 	
+	
+	<!-- member -->
+	<logger name="Member">
+		<level value="trace" />
+	</logger>
+	
+	<!-- Admin -->
+	<logger name="Admin">
+		<level value="trace" />
+	</logger>
+	
 	<!-- Application Loggers -->
 	<logger name="co.pr.fi">
 		<level value="info" />

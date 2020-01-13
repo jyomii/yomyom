@@ -2972,7 +2972,7 @@ if (typeof NProgress != 'undefined') {
 
 			  
 			  //echart Bar
-			  
+			  /*
 			if ($('#mainb').length ){
 			  
 				  var echartBar = echarts.init(document.getElementById('mainb'), theme);
@@ -3042,7 +3042,7 @@ if (typeof NProgress != 'undefined') {
 				  });
 
 			}
-			  
+			  */
 			  
 			  
 			  
@@ -4009,7 +4009,7 @@ if (typeof NProgress != 'undefined') {
 			} 
 			  
 			   //echart Bar Horizontal
-			  
+			  /*
 			if ($('#echart_bar_horizontal').length ){ 
 			  
 			  var echartBar = echarts.init(document.getElementById('echart_bar_horizontal'), theme);
@@ -4048,10 +4048,10 @@ if (typeof NProgress != 'undefined') {
 				}]
 			  });
 
-			} 
+			} */
 			  
 			   //echart Pie Collapse
-			  
+			  /**
 			if ($('#echart_pie2').length ){ 
 			  
 			  var echartPieCollapse = echarts.init(document.getElementById('echart_pie2'), theme);
@@ -4115,7 +4115,7 @@ if (typeof NProgress != 'undefined') {
 				}]
 			  });
 
-			} 
+			} **/
 			  
 			   //echart Donut
 			  
@@ -4204,8 +4204,13 @@ if (typeof NProgress != 'undefined') {
 
 			} 
 			  
+			
 			   //echart Pie
-			  
+			
+			
+			
+			
+			  /**
 			if ($('#echart_pie').length ){  
 			  
 			  var echartPie = echarts.init(document.getElementById('echart_pie'), theme);
@@ -4296,7 +4301,7 @@ if (typeof NProgress != 'undefined') {
 				}
 			  };
 
-			} 
+			} **/
 			  
 			   //echart Mini Pie
 			  

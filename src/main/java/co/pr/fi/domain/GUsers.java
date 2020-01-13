@@ -8,6 +8,8 @@ public class GUsers {
 	// 유저키값
 	private int userKey;
 
+	private int logintype;
+
 	// 유저아이디
 	private String userId;
 
@@ -42,7 +44,7 @@ public class GUsers {
 	private String userOptionGroup;
 
 	// 상태
-	private String userStatus;
+	private int userStatus;
 
 	// 상태이유
 	private String userStatusCode;
@@ -143,11 +145,11 @@ public class GUsers {
 		this.userOptionGroup = userOptionGroup;
 	}
 
-	public String getUserStatus() {
+	public int getUserStatus() {
 		return userStatus;
 	}
 
-	public void setUserStatus(String userStatus) {
+	public void setUserStatus(int userStatus) {
 		this.userStatus = userStatus;
 	}
 
@@ -157,6 +159,14 @@ public class GUsers {
 
 	public void setUserStatusCode(String userStatusCode) {
 		this.userStatusCode = userStatusCode;
+	}
+
+	public int getLogintype() {
+		return logintype;
+	}
+
+	public void setLogintype(int logintype) {
+		this.logintype = logintype;
 	}
 
 	// GUsers 모델 복사
@@ -170,6 +180,7 @@ public class GUsers {
 		this.userLocation = param.getUserLocation();
 		this.gender = param.getGender();
 		this.userEmail = param.getUserEmail();
+		this.logintype = param.getLogintype();
 		this.userJoinDate = param.getUserJoinDate();
 		this.userOptionAdmin = param.getUserOptionAdmin();
 		this.userOptionGroup = param.getUserOptionGroup();

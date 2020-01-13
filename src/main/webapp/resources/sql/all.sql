@@ -4,7 +4,6 @@
 DROP TABLE userlikegroup;
 DROP SEQUENCE userlikegroupSEQ;
 
-
 DROP TABLE userpolice;
 DROP SEQUENCE userpoliceSEQ;
 
@@ -75,6 +74,7 @@ CREATE TABLE glocation
     dwhere     VARCHAR2(40)    NOT NULL, 
     CONSTRAINT GLOCATIONPK PRIMARY KEY (locationkey)
 );
+
 
 
 
@@ -488,11 +488,13 @@ CREATE TABLE gusers
     userlocation        NUMBER            NOT NULL, 
     gender               CHAR(1)           NOT NULL, 
     useremail           VARCHAR2(50)      NOT NULL, 
+  
     userjoindate       DATE              NOT NULL, 
     useroptionadmin    CHAR(1)           NOT NULL, 
     useroptiongroup    CHAR(1)           NOT NULL, 
     userstatus          NUMBER           NOT NULL, 
-    userstatuscode     NVARCHAR2(200)    NULL, 
+    userstatuscode     DATE, 
+    logintype 			number 			 NOT NULL,
     CONSTRAINT GUSERSPK PRIMARY KEY (userkey)
 );
 
@@ -517,17 +519,6 @@ INCREMENT BY 1;
 
 
 
-    
-insert into  gusers values(gusersSEQ.nextval,'duswl13','1234',null,null,2,19,'M','plain64@naver.com',sysdate,'N','Y',0,null);
-insert into  gusers values(gusersSEQ.nextval,'admin','1234',null,null,3,20,'F','admin@naver.com',sysdate,'Y','N',0,null);
-insert into  gusers values(gusersSEQ.nextval,'aaaa','1234',null,null,1,34,'M','aaaa@naver.com',sysdate,'N','N',0,null);
-insert into  gusers values(gusersSEQ.nextval,'bbbb','1234',null,null,2,18,'F','bbbb@naver.com',sysdate,'N','N',0,null);
-insert into  gusers values(gusersSEQ.nextval,'cccc','1234',null,null,5,3,'M','cccc@naver.com',sysdate,'N','N',0,null);
-
-insert into  gusers values(gusersSEQ.nextval,'dddd','1234',null,null,1,21,'F','dddd@naver.com',sysdate,'N','N',0,null);
-insert into  gusers values(gusersSEQ.nextval,'eeee','1234',null,null,1,19,'M','eeee@naver.com',sysdate,'N','N',0,null);
-insert into  gusers values(gusersSEQ.nextval,'ffff','1234',null,null,2,22,'F','ffff@naver.com',sysdate,'N','N',0,null);
-insert into  gusers values(gusersSEQ.nextval,'gggg','1234',null,null,3,19,'M','gggg@naver.com',sysdate,'N','N',0,null);
 
 
 CREATE TABLE ggroup
@@ -1083,3 +1074,5 @@ ALTER TABLE userlikegroup
 ALTER TABLE userlikegroup
     ADD CONSTRAINT FKuserlikegroupgroupkeyg FOREIGN KEY (groupkey)
         REFERENCES ggroup (groupkey);
+                                                 
+                   
