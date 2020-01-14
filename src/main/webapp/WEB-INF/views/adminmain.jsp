@@ -455,7 +455,7 @@
 											</li>
 											<li>
 												<i class="fas fa-user"></i>
-												<a href="adminusers?page=1&type=0" title="">회원</a>
+												<a href="adminusers" title="">회원</a>
 											</li>
 											<li>
 												<i class="fas fa-users"></i>
@@ -464,7 +464,7 @@
 											
 											<li>
 												<i class="fas fa-align-justify"></i>
-												<a href="adminpage4.html" title="">카테고리</a>
+												<a href="admincategory" title="">카테고리</a>
 											</li>
 											
 											<li>
