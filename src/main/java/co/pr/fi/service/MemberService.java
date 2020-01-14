@@ -11,7 +11,6 @@ import co.pr.fi.domain.GUsers;
 //회원 처리
 public interface MemberService {
 
-	void isMember();
 
 	int idCheck(String id);
 
@@ -30,6 +29,10 @@ public interface MemberService {
 	int updatePassword(String id, String encPassword);
 
 	int checkIdAndEmail(String id, String email);
+
+	int restoreUser(int key);
+
+
 
 
 }

@@ -10,6 +10,8 @@
 		<typeAlias alias="statisticsLocation" type="co.pr.fi.domain.StatisticsLocation" />
 		<typeAlias alias="statisticsJoinDate" type="co.pr.fi.domain.StatisticsJoinDate" />
 		<typeAlias alias="statisticsCategory" type="co.pr.fi.domain.StatisticsCategory" />
+		<typeAlias alias="gusercategory" type="co.pr.fi.domain.GUserCategory" />
+		<typeAlias alias="policeResult" type="co.pr.fi.domain.PoliceResult" />
 	
 		
 		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />

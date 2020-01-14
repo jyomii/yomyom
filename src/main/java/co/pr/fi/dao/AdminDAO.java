@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
@@ -46,6 +48,26 @@ public class AdminDAO {
 
 	public List<GUsers> getAllUserList(Map<String, Integer> list) {
 		return sqlSession.selectList("Admin.getAllUserList", list);
+	}
+
+	public List<String> getAdminusercategory(String id) {
+		
+		return sqlSession.selectList("Admin.getadminusercategory",id);
+	}
+
+	public int AdmindeleteUser(String id) {
+		
+		return sqlSession.update("Admin.admindeleteUser",id);
+	}
+
+	public List<GUsers> AdminSearchUser(String keyword) {
+		
+		return sqlSession.selectList("Admin.AdminSearchUser",keyword);
+	}
+
+	public List<PoliceResult> adminPolice() {
+		
+		return sqlSession.selectList("Admin.AdminPolice");
 	}
 
 }

@@ -2,7 +2,9 @@ package co.pr.fi.service;
 
 import java.util.List;
 
+import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
@@ -22,6 +24,14 @@ public interface AdminService {
 	List<GUsers> getAllUserList(int type, int page, int limit);
 
 	int getListCount(int type);
+
+	List<String> getAdminusercategory(String id);
+
+	int AdmindeleteUser(String id);
+
+	List<GUsers> AdminSearchUser(String keyword);
+
+	List<PoliceResult> adminPolice();
 
 
 

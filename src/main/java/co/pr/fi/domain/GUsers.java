@@ -28,6 +28,9 @@ public class GUsers {
 	// 유저지역
 	private int userLocation;
 
+	
+	private String locationName;
+	
 	// 성별
 	private String gender;
 
@@ -46,8 +49,18 @@ public class GUsers {
 	// 상태
 	private int userStatus;
 
-	// 상태이유
-	private String userStatusCode;
+
+	private Date userStatusCode;
+
+	
+	
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
 
 	public int getUserKey() {
 		return userKey;
@@ -153,11 +166,13 @@ public class GUsers {
 		this.userStatus = userStatus;
 	}
 
-	public String getUserStatusCode() {
+	
+
+	public Date getUserStatusCode() {
 		return userStatusCode;
 	}
 
-	public void setUserStatusCode(String userStatusCode) {
+	public void setUserStatusCode(Date userStatusCode) {
 		this.userStatusCode = userStatusCode;
 	}
 
@@ -186,5 +201,6 @@ public class GUsers {
 		this.userOptionGroup = param.getUserOptionGroup();
 		this.userStatus = param.getUserStatus();
 		this.userStatusCode = param.getUserStatusCode();
+		this.locationName = param.getLocationName();
 	}
 }

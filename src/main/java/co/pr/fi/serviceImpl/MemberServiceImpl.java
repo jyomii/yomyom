@@ -20,12 +20,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	MemberDAO dao;
 
-	@Override
-	public void isMember() {
-
-		System.out.println("확인중입니다.");
-
-	}
 
 	@Override
 	public int idCheck(String id) {
@@ -90,7 +84,16 @@ public class MemberServiceImpl implements MemberService {
 		return dao.checkIdAndEmail(map);
 	}
 
+	@Override
+	public int restoreUser(int key) {
+		return dao.restoreUser(key);
+	}
+
+	
+		
+	}
+
 
 	
 
-}
+

@@ -3,12 +3,35 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Admin">
 
+<select id="AdminPolice" resultType="policeResult">
+SELECT reciveuserkey userkey, (select userid from gusers where reciveuserkey = userkey) userid,count(*) count FROM USERPOLICE GROUP BY reciveuserkey order by count(*) desc
+</select>
+
+<select id="AdminSearchUser" parameterType="String" resultType="member">
+select * from gusers where userid like '%' ||  #{keyword} || '%'
+</select>
+
+
+<select id="admindeleteUser" parameterType="String" resultType="int"> 
+update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate where userid = #{id}
+</select>
+
+	<select id="getadminusercategory" parameterType="String" resultType="String">
+	SELECT SCATEGORYNAME FROM GUSERCATEGORY,GCATEGORY2 WHERE USERKEY = #{key} 
+	AND gcategory2.scategorykey = gusercategory.categorykey
+	</select>
 		
 	<select id="getAllUserList" parameterType="Map" resultType="member">
 	  <![CDATA[ 
-	SELECT * FROM (
+	  SELECT * FROM (
 				SELECT b.*, rownum rnum
-				FROM (SELECT * FROM GUSERS WHERE userstatus = #{type}
+				FROM (SELECT USERKEY, USERID, USERPASSWORD, USERIMAGEFILE, 
+				USERIMAGEORIGIN, USERAGE, 
+				(SELECT SWHERE ||' ' ||  DWHERE LocationName
+				 FROM GLOCATION WHERE LOCATIONKEY = USERLOCATION) LocationName,
+				  GENDER, USEREMAIL, USERJOINDATE,useroptionadmin,
+				   useroptiongroup, userstatus, 
+                userstatuscode, logintype FROM GUSERS WHERE userstatus = #{type}
 				ORDER BY userjoindate ) b )
 				WHERE RNUM >= #{startrow} and rnum <= #{endrow}
 				]]>

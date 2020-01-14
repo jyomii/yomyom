@@ -35,6 +35,10 @@
 	top: 50%;
 	margin: 0 auto;
 }
+
+a.add-butn.more-action {
+	right: 89px;
+}
 </style>
 </head>
 <body>
@@ -476,14 +480,13 @@
 											<ul class="nav nav-tabs">
 												<li class="nav-item"><c:choose>
 														<c:when test="${type == 0 }">
-															<a class="active" href="#frends" data-toggle="tab"><input
-																type="hidden" value="0">전체 회원</a>
+															<a class="active" href="#frends" data-toggle="tab">전체
+																회원</a>
 															<span>${glistcount }</span>
 
 														</c:when>
 														<c:otherwise>
-															<a href="#frends" data-toggle="tab"><input
-																type="hidden" value="0">전체 회원</a>
+															<a href="#frends" data-toggle="tab">일반 회원</a>
 															<span>${glistcount }</span>
 
 														</c:otherwise>
@@ -493,38 +496,84 @@
 
 												<li class="nav-item"><c:choose>
 														<c:when test="${type == 1 }">
-															<a class="active" href="#frends-req" data-toggle="tab"><input
-																type="hidden" value="1">탈퇴 예정 회원</a>
+															<a class="active" href="#frends-req" data-toggle="tab">탈퇴
+																예정 회원</a>
 															<span>${jlistcount }</span>
 														</c:when>
 														<c:otherwise>
-															<a href="#frends-req" data-toggle="tab"><input
-																type="hidden" value="1">탈퇴 예정 회원</a>
+															<a href="#frends-req" data-toggle="tab">탈퇴 예정 회원</a>
 															<span>${jlistcount }</span>
 														</c:otherwise>
 													</c:choose></li>
 
 
+
+												<li class="nav-item"><c:choose>
+														<c:when test="${type == 2 }">
+															<a class="active" href="#taluser" data-toggle="tab">강제 탈퇴 회원</a>
+															<span>${tlistcount }</span>
+														</c:when>
+														<c:otherwise>
+															<a href="#taluser" data-toggle="tab">강제 탈퇴 회원</a>
+															<span>${tlistcount }</span>
+														</c:otherwise>
+													</c:choose></li>
+													
+													<li class="nav-item"><c:choose>
+														<c:when test="${type == 3 }">
+															<a class="active" href="#stopuser" data-toggle="tab">정지 회원</a>
+															<span>${stoplistcount }</span>
+														</c:when>
+														<c:otherwise>
+															<a href="#stopuser" data-toggle="tab">정지 회원</a>
+															<span>${stoplistcount }</span>
+														</c:otherwise>
+													</c:choose></li>
 											</ul>
 											<span id="searchDir"></span>
 											<!-- Tab panes -->
 											<div class="tab-content">
 
-												<div class="tab-pane active fade show " id="frends">
+
+
+												<div class="tab-pane fade " id="searchResult">
+
+													<ul class="nearby-contct">
+													</ul>
+
+												</div>
+
+
+												<div class="tab-pane fade " id="frends">
 
 													<ul class="nearby-contct">
 														<c:forEach items="${gallList}" var="item">
 															<li>
 																<div class="nearly-pepls">
 																	<figure>
-																		<a data-toggle="modal" data-target="#exampleModal"><img
+																		<a id="check" data-toggle="modal"
+																			data-target="#exampleModal" class="modalclick"
+																			data-userkey='${item.userKey }'
+																			data-userid='${item.userId }'
+																			data-logintype='${item.logintype}'
+																			data-location='${item.locationName}'
+																			data-age='${item.userAge}'
+																			data-gender='${item.gender}'
+																			data-joindate='${item.userJoinDate}'><img
 																			src="resources/images/resources/friend-avatar9.jpg"
 																			alt=""></a>
 																	</figure>
 																	<div class="pepl-info">
 																		<h4>
-																			<a data-toggle="modal" data-target="#exampleModal"
-																				title="">${item.userId }</a>
+																			<a id="check" data-toggle="modal"
+																				data-target="#exampleModal" title=""
+																				class="modalclick" data-userkey='${item.userKey }'
+																				data-userid='${item.userId }'
+																				data-logintype='${item.logintype}'
+																				data-location='${item.locationName}'
+																				data-age='${item.userAge}'
+																				data-gender='${item.gender}'
+																				data-joindate='${item.userJoinDate}'>${item.userId }</a>
 																		</h4>
 																		<c:choose>
 																			<c:when test="${item.logintype == 1}">
@@ -535,9 +584,25 @@
 																			</c:otherwise>
 																		</c:choose>
 
-																		<a href="#" title="" class="add-butn more-action"
-																			data-ripple="">탈퇴</a> <a href="#" title=""
-																			class="add-butn" data-ripple="">쪽지 보내기</a>
+																		<c:choose>
+																			<c:when test="${item.userStatus == 0}">
+																				<span>정상</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 1}">
+																				<span>탈퇴 예정</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 2}">
+																				<span>강제 탈퇴</span>
+																			</c:when>
+																			<c:otherwise>
+																				<span>정지</span>
+																			</c:otherwise>
+																		</c:choose>
+
+																		<a href="javascript:deleteuser('${item.userId }');"
+																			title="" class="add-butn more-action" data-ripple="">탈퇴</a>
+																		<a href="#" title="" class="add-butn" data-ripple="">쪽지
+																			보내기</a>
 																	</div>
 																</div>
 															</li>
@@ -551,20 +616,37 @@
 														<button class="btn-view btn-load-more"></button>
 													</div>
 												</div>
+												
+												
 												<div class="tab-pane fade" id="frends-req">
 													<ul class="nearby-contct">
 														<c:forEach items="${jallList}" var="item">
 															<li>
 																<div class="nearly-pepls">
 																	<figure>
-																		<a data-toggle="modal" data-target="#exampleModal"><img
+																		<a id="check" data-toggle="modal"
+																			data-target="#exampleModal" class="modalclick"
+																			data-userkey='${item.userKey }'
+																			data-userid='${item.userId }'
+																			data-logintype='${item.logintype}'
+																			data-location='${item.locationName}'
+																			data-age='${item.userAge}'
+																			data-gender='${item.gender}'
+																			data-joindate='${item.userJoinDate}'><img
 																			src="resources/images/resources/friend-avatar9.jpg"
 																			alt=""></a>
 																	</figure>
 																	<div class="pepl-info">
 																		<h4>
-																			<a data-toggle="modal" data-target="#exampleModal"
-																				title="">${item.userId }</a>
+																			<a id="check" data-toggle="modal"
+																				data-target="#exampleModal" title=""
+																				class="modalclick" data-userkey='${item.userKey }'
+																				data-userid='${item.userId }'
+																				data-logintype='${item.logintype}'
+																				data-location='${item.locationName}'
+																				data-age='${item.userAge}'
+																				data-gender='${item.gender}'
+																				data-joindate='${item.userJoinDate}'>${item.userId }</a>
 																		</h4>
 																		<c:choose>
 																			<c:when test="${item.logintype == 1}">
@@ -575,9 +657,157 @@
 																			</c:otherwise>
 																		</c:choose>
 
-																		<a href="#" title="" class="add-butn more-action"
-																			data-ripple="">탈퇴</a> <a href="#" title=""
-																			class="add-butn" data-ripple="">쪽지 보내기</a>
+																		<c:choose>
+																			<c:when test="${item.userStatus == 0}">
+																				<span>정상</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 1}">
+																				<span>탈퇴 예정</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 2}">
+																				<span>강제 탈퇴</span>
+																			</c:when>
+																			<c:otherwise>
+																				<span>정지</span>
+																			</c:otherwise>
+																		</c:choose>
+
+																		<a href="#" title="" class="add-butn" data-ripple="">복구</a>
+																	</div>
+																</div>
+															</li>
+
+														</c:forEach>
+
+													</ul>
+													<button class="btn-view btn-load-more"></button>
+												</div>
+												
+												
+												
+												<div class="tab-pane fade" id="taluser">
+													<ul class="nearby-contct">
+														<c:forEach items="${tallList}" var="item">
+															<li>
+																<div class="nearly-pepls">
+																	<figure>
+																		<a id="check" data-toggle="modal"
+																			data-target="#exampleModal" class="modalclick"
+																			data-userkey='${item.userKey }'
+																			data-userid='${item.userId }'
+																			data-logintype='${item.logintype}'
+																			data-location='${item.locationName}'
+																			data-age='${item.userAge}'
+																			data-gender='${item.gender}'
+																			data-joindate='${item.userJoinDate}'><img
+																			src="resources/images/resources/friend-avatar9.jpg"
+																			alt=""></a>
+																	</figure>
+																	<div class="pepl-info">
+																		<h4>
+																			<a id="check" data-toggle="modal"
+																				data-target="#exampleModal" title=""
+																				class="modalclick" data-userkey='${item.userKey }'
+																				data-userid='${item.userId }'
+																				data-logintype='${item.logintype}'
+																				data-location='${item.locationName}'
+																				data-age='${item.userAge}'
+																				data-gender='${item.gender}'
+																				data-joindate='${item.userJoinDate}'>${item.userId }</a>
+																		</h4>
+																		<c:choose>
+																			<c:when test="${item.logintype == 1}">
+																				<span>카카오톡 가입 유저</span>
+																			</c:when>
+																			<c:otherwise>
+																				<span>일반 가입 유저</span>
+																			</c:otherwise>
+																		</c:choose>
+
+																		<c:choose>
+																			<c:when test="${item.userStatus == 0}">
+																				<span>정상</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 1}">
+																				<span>탈퇴 예정</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 2}">
+																				<span>강제 탈퇴</span>
+																			</c:when>
+																			<c:otherwise>
+																				<span>정지</span>
+																			</c:otherwise>
+																		</c:choose>
+
+																		
+																	</div>
+																</div>
+															</li>
+
+														</c:forEach>
+
+													</ul>
+													<button class="btn-view btn-load-more"></button>
+												</div>
+												
+												
+												
+												
+												<div class="tab-pane fade" id="stopuser">
+													<ul class="nearby-contct">
+														<c:forEach items="${stopallList}" var="item">
+															<li>
+																<div class="nearly-pepls">
+																	<figure>
+																		<a id="check" data-toggle="modal"
+																			data-target="#exampleModal" class="modalclick"
+																			data-userkey='${item.userKey }'
+																			data-userid='${item.userId }'
+																			data-logintype='${item.logintype}'
+																			data-location='${item.locationName}'
+																			data-age='${item.userAge}'
+																			data-gender='${item.gender}'
+																			data-joindate='${item.userJoinDate}'><img
+																			src="resources/images/resources/friend-avatar9.jpg"
+																			alt=""></a>
+																	</figure>
+																	<div class="pepl-info">
+																		<h4>
+																			<a id="check" data-toggle="modal"
+																				data-target="#exampleModal" title=""
+																				class="modalclick" data-userkey='${item.userKey }'
+																				data-userid='${item.userId }'
+																				data-logintype='${item.logintype}'
+																				data-location='${item.locationName}'
+																				data-age='${item.userAge}'
+																				data-gender='${item.gender}'
+																				data-joindate='${item.userJoinDate}'>${item.userId }</a>
+																		</h4>
+																		<c:choose>
+																			<c:when test="${item.logintype == 1}">
+																				<span>카카오톡 가입 유저</span>
+																			</c:when>
+																			<c:otherwise>
+																				<span>일반 가입 유저</span>
+																			</c:otherwise>
+																		</c:choose>
+
+																		<c:choose>
+																			<c:when test="${item.userStatus == 0}">
+																				<span>정상</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 1}">
+																				<span>탈퇴 예정</span>
+																			</c:when>
+																			<c:when test="${item.userStatus == 2}">
+																				<span>강제 탈퇴</span>
+																			</c:when>
+																			<c:otherwise>
+																				<span>정지</span>
+																			</c:otherwise>
+																		</c:choose>
+
+																		<a href="#" title="" class="add-butn" data-ripple="">복구</a>
 																	</div>
 																</div>
 															</li>
@@ -599,27 +829,11 @@
 										<div class="widget">
 											<h4 class="widget-title">신고 목록</h4>
 											<ul class="followers" style="max-height: 400px;">
-												<li><span>duswl13</span>
-
-													<p>
-														욕설/비방 3회<br> 1회<br>광고 1회
-													</p>
-
-
-
-													<div></div></li>
-												<li><span>asdjkl13</span>
-													<p>광고 4회</p>
-													<div></div></li>
-												<li><span>kin6853</span>
-													<p>욕설/비방 1회</p>
-													<div></div></li>
-												<li><span>kin6853</span>
-													<p>욕설/비방 1회</p>
-													<div></div></li>
-												<li><span>kin6853</span>
-													<p>욕설/비방 1회</p>
-													<div></div></li>
+												<c:forEach items="${policeResult }" var="item">
+													<li><span>${item.userid }</span>
+														<p>총 ${item.count }번 신고</p>
+														<div></div></li>
+												</c:forEach>
 											</ul>
 										</div>
 										<!-- who's following -->
@@ -794,7 +1008,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">회원 아이디</h5>
+					<h5 class="modal-title" id="exampleModalLabel">회원 정보</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -802,18 +1016,28 @@
 				</div>
 				<div class="modal-body">
 					<div class="widget">
-						<ul class="short-profile">
-							<li><span>닉네임</span>
-								<p>microsoftcompany13</p></li>
-							<li><span>관심 카테고리</span>
-								<p>게임 운동 영화</p></li>
-							<li><span>연령대</span>
-								<p>10대</p></li>
-							<li><span>지역</span>
-								<p>인천</p></li>
-							<li><span>상태</span>
-								<p>정상</p></li>
-						</ul>
+
+						아이디
+						<p></p>
+
+						로그인 타입
+						<p></p>
+
+						지역
+						<p></p>
+
+						연령대
+						<p></p>
+
+						성별
+						<p></p>
+
+						관심사
+						<p></p>
+
+						가입날짜
+						<p></p>
+
 					</div>
 					<!-- profile intro widget -->
 				</div>
@@ -827,28 +1051,60 @@
 	</div>
 
 	<script src="resources/js/main.min.js"></script>
-	
+
 	<script src="resources/js/script.js"></script>
 	<script>
-		var page = "${page}";
+		var type = "${type}";
+		type++;
+		var page0, page1, page2, page3;
 
-		var glistcount = "${glistcount}";
-		var jlistcount = "${jlistcount}";
+		//타입에 따라 열려있는 page가 다름
+		if (type == 1) {
 
+			showContent(1);
+			page0 = "${page}";
+			page1 = 1;
+			page2 = 1;
+			page3 = 1;
+		} else if(type == 2){
+			showContent(2);
+			page0 = 1;
+			page1 = "${page}";
+			page2 = 1;
+			page3 = 1;
+		}else if(type == 3){
+			showContent(3);
+			page0 = 1;
+			page1 = 1;
+			page2 = "${page}";
+			page3 = 1;
+		}else {
+			showContent(4);
+			page0 = 1;
+			page1 = 1;
+			page2 = 1;
+			page3 = "${page}";
+		}
+
+	
+
+		//더보기 버튼 클릭 시
 		$('.btn-load-more').click(function() {
-			var item = $(this).index();
+			type = $(this).index();
 
-			// item 0 : 일반 유저 목록 불러오기
-			// item 1 : 탈퇴 예정 목록 불러오기
-
-			// 현재 활성화되있는 type (일반유저/탈퇴예정) 체크하기
-			var type = $('.nav-item a.active input').val();
-
+			// type 1 : 일반 유저 목록 불러오기
+			// type 2 : 탈퇴 예정 목록 불러오기
+			// type 3 : 강제탈퇴 목록 불러오기
+			// type 4 : 정지 목록 불러오기
+			
 			var data = {
 				"type" : type,
-				"page" : ++page
+				"page" : type == 0 ? ++page0 : type == 1 ? 
+						++page1 : type == 2 ? 
+						++page2 : ++page3
 			};
 
+			//ajax로 목록 불러오기
 			$.ajax({
 				method : "post",
 				url : "adminusers",
@@ -856,46 +1112,23 @@
 				success : function(result) {
 					console.log(result);
 
-					var html = '';
-					
-					for(var i = 0 ; i < result.length; i++){
-						html +='<li>';
-						html += '	<div class="nearly-pepls">';
-						html += '<figure>';
-						html += '<a data-toggle="modal" data-target="#exampleModal"><img';
-						html += ' src="resources/images/resources/friend-avatar9.jpg"';
-						html += 'alt=""></a>';
-						html += '</figure>';
-						html += '<div class="pepl-info">';
-						html += '<h4>';
-						html += '<a data-toggle="modal" data-target="#exampleModal"';
-						html += 'title="">'+result[i].userId+'</a>';
-						html += '</h4>';
-						
-						if(result[i].logintype == 1)
-						html += '<span>카카오톡 가입 유저</span>';
-						else
-						html += '<span>일반 가입 유저</span>';
-						
-						html += '<a href="#" title="" class="add-butn more-action"';
-						html += 'data-ripple="">탈퇴</a> <a href="#" title=""';
-						html += 'class="add-butn" data-ripple="">쪽지 보내기</a>';
-						html += '</div>';
-						html += '</div>';
-						html += '</li>';
-				
-						
-					}
+					var html = list(result);
 
 					//일반회원 목록 더불러온거임
-					if (item == 0) {
+					if (type == 1) {
 
 						$('#frends ul').append(html);
 
 						//탈퇴예정회원 목록 더불러온거임
-					} else {
+					} else if(type == 2){
 
 						$('#frends-req ul').append(html);
+					} else if(type == 3){
+
+						$('#taluser ul').append(html);
+					}else {
+
+						$('#stopuser ul').append(html);
 					}
 
 				}
@@ -903,6 +1136,230 @@
 			});
 
 		});
+
+		//모달에 회원 상세정보 넣기
+		$(document).on("click", "#check", function(event) {
+
+			var userkey = $(this).data('userkey');
+			var userId = $(this).data('userid');
+			var logintype = $(this).data('logintype');
+			var location = $(this).data('location');
+			var age = $(this).data('age');
+			var gender = $(this).data('gender');
+			var joindate = $(this).data('joindate');
+
+			$('.modal-body p:eq(0)').text(userId);
+			$('.modal-body p:eq(1)').text(logintype == '1' ? '카카오톡' : '일반 유저');
+			$('.modal-body p:eq(2)').text(location);
+			$('.modal-body p:eq(3)').text(age * 10);
+
+			$('.modal-body p:eq(4)').text(gender == 'M' ? '남' : '여');
+			$('.modal-body p:eq(6)').text(getFormatDate(new Date(joindate)));
+
+			//관심사 정보
+			$.ajax({
+				url : "adminusercategory",
+				data : {
+					"id" : userkey
+				},
+				method : "post",
+				success : function(result) {
+
+					var text1 = "";
+
+					for (var j = 0; j < result.length; j++)
+						text1 += result[j] + " ";
+					$('.modal-body p:eq(5)').text(text1);
+				}
+
+			});
+
+		});
+
+		//유저 강제탈퇴시키기
+		function deleteuser(id) {
+
+			var delConfirm = confirm('해당 회원을 탈퇴시키겠습니까?');
+
+			if (delConfirm) {
+
+				//해당 유저 강제탈퇴시키기
+				$.ajax({
+					url : "AdmindeleteUser",
+					data : {
+						"id" : id
+					},
+					method : "post",
+					success : function(result) {
+
+						if (result == 1) {
+							alert('강제탈퇴 되었습니다.');
+							location.href = "adminusers";
+						}
+					}
+
+				});
+
+			}
+
+		}
+		//날짜 표시 형식
+		function getFormatDate(date) {
+			var year = date.getFullYear(); //yyyy
+			var month = (1 + date.getMonth()); //M
+			month = month >= 10 ? month : '0' + month; //month 두자리로 저장
+			var day = date.getDate(); //d
+			day = day >= 10 ? day : '0' + day; //day 두자리로 저장
+			return year + '-' + month + '-' + day;
+		}
+
+		//검색
+		var form = $("<form>").attr({
+			"class" : "filterform",
+			"action" : "#"
+		});
+		var input = $("<input>").attr({
+			"class" : "filterinput",
+			"type" : "text",
+			"placeholder" : "아이디를 입력하세요..."
+		});
+
+		$(form).append(input).appendTo($("#searchDir"));
+		$(form).submit(function() {
+			return false;
+		});
+
+		$(input).keyup(function() {
+			var text = $(this).val();
+
+			if (text) {
+				//검색어가 있을 경우 detail 버튼 숨기기
+				$('.btn-load-more').css('display', 'none');
+
+				//해당 검색어로 ajax 검색하기
+				$.ajax({
+
+					url : "AdminSearchUser",
+					data : {
+						"keyword" : text
+					},
+					method : "post",
+					success : function(list) {
+						console.log(list);
+
+						if (list.length > 0) {
+							var html1 = print(list);
+							$('#searchResult .nearby-contct').html(html1);
+
+						}
+					}
+
+				});
+
+				showContent(0);
+
+			} else {
+
+				showContent(type);
+
+				//검색어가 없을 경우 detail 버튼 보이기
+				$('.btn-load-more').css('display', 'block');
+			}
+
+		});
+
+		//어떤 탭 눌렀는지 확인
+		$('.nav-item a').click(function() {
+			if ($(this).text() == '일반 회원')
+				type = 1;
+			else if($(this).text() == '탈퇴 예정 회원')
+				type = 2;
+			else if($(this).text() == '강제 탈퇴 회원')
+				type = 3;
+			else 
+				type = 4;
+
+		});
+
+		function showContent(position) {
+
+			$('.tab-pane:eq(' + position + ')').addClass('active');
+			$('.tab-pane:eq(' + position + ')').addClass('show');
+			$('.tab-pane:eq(' + position + ')').siblings()
+					.removeClass('active');
+			$('.tab-pane:eq(' + position + ')').siblings().removeClass('show');
+
+		}
+		function print(result) {
+
+			var html = "";
+			for (var i = 0; i < result.length; i++) {
+
+				html += '<li>';
+				html += '<div class="nearly-pepls">';
+				html += '<figure>';
+				html += '	<a id="check" data-toggle="modal" data-target="#exampleModal"';
+				html += 'class="modalclick"';
+				
+				html += ' data-userkey="'+result[i].userKey+'"';
+				html += ' data-userid="'+result[i].userId+'"';
+				html += ' data-logintype="'+result[i].logintype+'"';
+				html += ' data-location="'+result[i].locationName+'"';
+				html += ' data-age="'+result[i].userAge+'"';
+				html += ' data-gender="'+result[i].gender+'"';
+				html += ' data-joindate="'+result[i].userJoinDate+'"';
+				html += '><img';
+				html += ' src="resources/images/resources/friend-avatar9.jpg"';
+				html += 'alt=""></a>';
+				html += '</figure>';
+				html += '<div class="pepl-info">';
+				html += '<h4>';
+				html += '<a id="check" data-toggle="modal" data-target="#exampleModal"';
+				html += 'title=""';
+				html += 'class="modalclick"';
+				html += ' data-userkey="'+result[i].userKey+'"';
+				html += ' data-userid="'+result[i].userId+'"';
+				html += ' data-logintype="'+result[i].logintype+'"';
+				html += ' data-location="'+result[i].locationName+'"';
+				html += ' data-age="'+result[i].userAge+'"';
+				html += ' data-gender="'+result[i].gender+'"';
+				html += ' data-joindate="'+result[i].userJoinDate+'"';
+				html += '>'
+						+ result[i].userId + '</a>';
+				html += '</h4>';
+				if (result[i].logintype == 1)
+					html += '<span>카카오톡 가입 유저</span>';
+				else
+					html += '<span>일반 가입 유저</span>';
+
+				if (result[i].userStatus == 0) {
+					html += '<span>정상</span>';
+					html += '<a href="javascript:deleteuser('
+							+ result[i].userId
+							+ ');" title="" class="add-butn more-action"';
+					html += 'data-ripple="">탈퇴</a> ';
+
+					html += '<a href="#" title=""';
+				html += 'class="add-butn" data-ripple="">쪽지 보내기</a>';
+				} else if (result[i].userStatus == 1) {
+					html += '<span>탈퇴 예정</span>';
+					html += '<a href="#" title="" class="add-butn" data-ripple="">복구</a>';
+				} else if (result[i].userStatus == 2) {
+					html += '<span>강제 탈퇴</span>';
+				} else {
+					html += '<span>정지</span>';
+					html += '<a href="#" title="" class="add-butn" data-ripple="">복구</a>';
+				}
+
+				html += '</div>';
+				html += '</div>';
+				html += '</li>';
+
+			}
+
+			return html;
+
+		}
 	</script>
 </body>
 

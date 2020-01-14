@@ -536,10 +536,12 @@ CREATE TABLE ggroup
     groupcorigin     VARCHAR2(100)    NOT NULL, 
     groupprivate      CHAR(1)          NOT NULL, 
     grouptype         CHAR(1)          NOT NULL, 
+    groupdate		  DATE			   NOT NULL,
     CONSTRAINT GGROUPPK PRIMARY KEY (groupkey)
 );
 
-
+-- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
+-- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
 
 
 CREATE SEQUENCE ggroupSEQ
@@ -1033,6 +1035,7 @@ CREATE TABLE userpolice
     policeboardsort    CHAR(1)    NOT NULL, 
     policenumber        NUMBER     NOT NULL, 
     policesort          NUMBER     NOT NULL, 
+    reciveuserKey number,
     CONSTRAINT USERPOLICEPK PRIMARY KEY (policekey)
 );
       
