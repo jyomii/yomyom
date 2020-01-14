@@ -519,7 +519,25 @@ INCREMENT BY 1;
 
 
 
+CREATE TABLE requestCategory
+(
+    requestKey    NUMBER          NOT NULL, 
+    dname         VARCHAR2(50)    NOT NULL, 
+    sname         VARCHAR2(50)    NULL, 
+    userkey       NUMBER          NOT NULL, 
+    CONSTRAINT REQUESTCATEGORY_PK PRIMARY KEY (requestKey)
+);
 
+
+
+ALTER TABLE requestCategory
+    ADD CONSTRAINT FK_requestCategory_userkey_g_u FOREIGN KEY (userkey)
+        REFERENCES g_users (user_key);
+                                                 
+                                                 
+                                                 
+                                                 
+                                                 
 
 CREATE TABLE ggroup
 (
