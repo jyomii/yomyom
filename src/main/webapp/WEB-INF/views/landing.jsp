@@ -122,7 +122,7 @@
 										onclick="location.href='kakao'">
 										<img src="resources/images/kakao-talk.png"
 											style="width: 30px; height: 30px; float: left;">카카오톡으로
-										1초만에 시작하기
+										  로그인
 									</button>
 								</div>
 								<p style="text-align: center;">또는</p>

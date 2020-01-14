@@ -3,25 +3,91 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Admin">
 
-<select id="AdminPolice" resultType="policeResult">
-SELECT reciveuserkey userkey, (select userid from gusers where reciveuserkey = userkey) userid,count(*) count FROM USERPOLICE GROUP BY reciveuserkey order by count(*) desc
-</select>
 
-<select id="AdminSearchUser" parameterType="String" resultType="member">
-select * from gusers where userid like '%' ||  #{keyword} || '%'
-</select>
+ 
 
-
-<select id="admindeleteUser" parameterType="String" resultType="int"> 
-update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate where userid = #{id}
-</select>
-
-	<select id="getadminusercategory" parameterType="String" resultType="String">
-	SELECT SCATEGORYNAME FROM GUSERCATEGORY,GCATEGORY2 WHERE USERKEY = #{key} 
-	AND gcategory2.scategorykey = gusercategory.categorykey
+	<select id="getRequestCategory" resultType="requestcategory">
+	  <![CDATA[ 
+	select * from (select  dname,sname,count(*) requestkey
+	from requestcategory 
+	 group by(sname,dname) order by count(*) desc )
+	 where rownum <= 10
+	 	]]>
 	</select>
+	
+	
+	
+	
+	<insert id="addDCategory" parameterType="String">
+		insert into gcategory values((select NVL(MAX(DCATEGORYKEY),0) FROM gcategory)+1, #{dname})
 		
-	<select id="getAllUserList" parameterType="Map" resultType="member">
+		<selectKey resultType="Integer" order="AFTER"> 
+		SELECT dcategorykey FROM gcategory where dcategoryname = #{dname}
+		</selectKey>
+
+	</insert>
+
+	<insert id="addSCategory" parameterType="map">
+	insert into gcategory2 values((select NVL(MAX(SCATEGORYKEY),0) FROM gcategory2)+1, #{dkey}, #{sname})
+	</insert>
+
+	<select id="isDCategory" parameterType="String" resultType="int">
+		SELECT dcategorykey
+		FROM  GCATEGORY WHERE  dcategoryname=#{dname}
+	</select>
+	
+	<select id="isCategory" parameterType="map"  resultType="int">
+		SELECT count(*)
+		FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
+		gcategory.dcategorykey and SCATEGORYNAME=#{sname} and dcategoryname=#{dname}
+	</select>
+
+
+	<delete id="getAdminCategoryDelete" parameterType="int">
+	DELETE FROM GCATEGORY2 WHERE SCATEGORYKEY = #{skey}
+	</delete>
+	
+	<select id="getAdminD_SCategoryCount" parameterType="int" resultType="int">
+	SELECT count(*)  FROM GCATEGORY2  WHERE dcategorykey = #{dkey}
+	</select>
+
+
+	<select id="getAdminCategory" resultType="gcategoryname">
+		SELECT scategorykey, gcategory2.dcategorykey dcategorykey,
+		dcategoryname dname,SCATEGORYNAME sname
+		FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
+		gcategory.dcategorykey
+
+	</select>
+
+
+
+	<select id="AdminPolice" resultType="policeResult">
+		SELECT reciveuserkey userkey, (select userid from gusers where reciveuserkey
+		= userkey) userid,count(*) count FROM USERPOLICE GROUP BY
+		reciveuserkey order by count(*) desc
+	</select>
+
+	<select id="AdminSearchUser" parameterType="String"
+		resultType="member">
+		select * from gusers where userid like '%' || #{keyword} || '%'
+	</select>
+
+
+	<select id="admindeleteUser" parameterType="String"
+		resultType="int">
+		update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate where userid =
+		#{id}
+	</select>
+
+	<select id="getadminusercategory" parameterType="String"
+		resultType="String">
+		SELECT SCATEGORYNAME FROM GUSERCATEGORY,GCATEGORY2 WHERE USERKEY = #{key}
+		AND gcategory2.scategorykey = gusercategory.categorykey
+	</select>
+
+	<select id="getAllUserList" parameterType="Map"
+		resultType="member">
 	  <![CDATA[ 
 	  SELECT * FROM (
 				SELECT b.*, rownum rnum
@@ -36,23 +102,27 @@ update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate where userid = #{id}
 				WHERE RNUM >= #{startrow} and rnum <= #{endrow}
 				]]>
 	</select>
-	
+
 	<select id="getListCount" parameterType="int" resultType="int">
-	select count(*) from gusers where userStatus = #{type}
+		select count(*) from gusers where userStatus = #{type}
 	</select>
-	
+
 
 	<select id="getStatisticsAge" resultType="statisticsAge">
-	select agevalue age, count(*) value from gusers, gage where agekey = userage group by agevalue
+		select agevalue age, count(*) value from gusers, gage where agekey = userage
+		group by agevalue
 	</select>
-	
-	<select id="getStatisticsLocation" resultType="statisticsLocation">
-	select swhere location, count(userlocation) value from glocation,gusers where 
-	locationkey = userlocation group by swhere
+
+	<select id="getStatisticsLocation"
+		resultType="statisticsLocation">
+		select swhere location, count(userlocation) value from glocation,gusers
+		where
+		locationkey = userlocation group by swhere
 	</select>
-	
-	
-	<select id="getStatisticsJoinDate" resultType="statisticsJoinDate">
+
+
+	<select id="getStatisticsJoinDate"
+		resultType="statisticsJoinDate">
 	  <![CDATA[ 
 	  select rownum, joindate, value from (SELECT to_char(userjoindate,'mm-dd') joindate,
 	count(*) value FROM GUSERS group by to_char(userjoindate,'mm-dd') 
@@ -60,8 +130,9 @@ update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate where userid = #{id}
 	where rownum <= 7   
 	]]>
 	</select>
-	
-	<select id="getStatisticsCategory" resultType="statisticsCategory">
+
+	<select id="getStatisticsCategory"
+		resultType="statisticsCategory">
 	 <![CDATA[ 
 	select category, value from (select scategoryname category, count(scategoryname) 
 	value from gcategory2,ggroup where CATEGORYKEY = SCATEGORYKEY 
@@ -70,9 +141,9 @@ update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate where userid = #{id}
 	]]>
 	</select>
 
-	
-	
-	
+
+
+
 
 
 </mapper>
