@@ -14,6 +14,7 @@
 		<typeAlias alias="policeResult" type="co.pr.fi.domain.PoliceResult" />
 		<typeAlias alias="gcategoryname" type="co.pr.fi.domain.GCategoryName" />
 		<typeAlias alias="requestcategory" type="co.pr.fi.domain.RequestCategory" />
+		<typeAlias alias="usermessage" type="co.pr.fi.domain.UserMessage" />
 		
 		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />

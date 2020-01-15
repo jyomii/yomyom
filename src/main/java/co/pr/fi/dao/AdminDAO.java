@@ -16,6 +16,7 @@ import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
 import co.pr.fi.domain.StatisticsLocation;
+import co.pr.fi.domain.UserMessage;
 
 //관리자 관련 DB
 @Repository
@@ -99,13 +100,23 @@ public class AdminDAO {
 		return sqlSession.selectList("Admin.getRequestCategory");
 	}
 
-	public int insertDCategory(String dname) {
-		return sqlSession.insert("Admin.insertDCategory",dname);
+	public int deleteRequestCategory(Map<String, String> list) {
+		return sqlSession.delete("Admin.deleteRequestCategory",list);
 	}
 
-	public int insertDSCategory(Map<String, String> map) {
-		return sqlSession.insert("Admin.insertDSCategory",map);
+	public int addNotice(String newNotice) {
+		return sqlSession.insert("Admin.newNotice",newNotice);
 	}
+
+	public List<UserMessage> getNotice(Map<String, Integer> list) {
+		return sqlSession.selectList("Admin.getNotice",list);
+	}
+
+	public int deleteNotice(Map<String, Object> list) {
+	
+		return sqlSession.delete("Admin.deleteNotice",list);
+	}
+
 
 
 }
