@@ -517,7 +517,11 @@ CREATE SEQUENCE gusersSEQ
 START WITH 1
 INCREMENT BY 1;
 
-
+//관리자 계정 
+insert into gusers values(0, 'admin','$2a$10$DGdkEZGSwAL1tOEmaEEqB.qfcKQrREhIo4wwgIfD5LWi/eICNg5Ha',
+NULL,NULL,2,1,'F','plain64@naver.com',sysdate,'Y','N',0,null,0);
+                                          
+                                                 
 
 CREATE TABLE requestCategory
 (
