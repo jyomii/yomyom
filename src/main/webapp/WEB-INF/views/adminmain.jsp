@@ -469,7 +469,7 @@
 											
 											<li>
 												<i class="fas fa-clipboard"></i>
-												<a href="adminpage5.html" title="">공지사항</a>
+												<a href="adminnotice" title="">공지사항</a>
 											</li>
 											
 										</ul>

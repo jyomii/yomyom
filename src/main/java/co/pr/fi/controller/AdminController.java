@@ -1,6 +1,10 @@
 package co.pr.fi.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,7 @@ import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
 import co.pr.fi.domain.StatisticsLocation;
+import co.pr.fi.domain.UserMessage;
 import co.pr.fi.service.AdminService;
 
 @Controller
@@ -26,22 +31,72 @@ public class AdminController {
 	AdminService adminService;
 
 	@ResponseBody
-	@PostMapping("/AdminInsertCategory")
-	public int AdminInsertCategory(@RequestParam(value="sname", required = false) String sname, String dname) {
-		
-		
-		if(sname.equals("") || sname == null) {
-			return adminService.insertDCategory(dname);
-		}else {
-			return adminService.insertDSCategory(dname,sname);
-		}
-		
-		
-	}
-	@ResponseBody
-	@PostMapping("/AdminAddCategory")
-	public int AdminAddCategory(String sname, String dname) {
+	@PostMapping("/deleteNotice")
+	//개힘들었다...ajax로 배열 데이터 받을떄 이렇게 받아야함..ㅠㅠ
+	public int deleteNotice(@RequestParam(value="key[]") List<Integer> key) {
 
+		
+		return adminService.deleteNotice(key);
+
+	}
+
+	@ResponseBody
+	@GetMapping("/moreNotice")
+	public List<UserMessage> moreNotice(int page) {
+		int limit = 10;
+		return adminService.getNotice(page, limit);
+	}
+
+	@PostMapping("/newNotice")
+	public void newNotice(String newNotice, HttpServletResponse resp) throws IOException {
+		resp.setContentType("text/html; charset=utf-8");
+		int result = adminService.addNotice(newNotice);
+		PrintWriter out = resp.getWriter();
+		if (result == 1) {
+			out.println("<script>alert('추가되었습니다.'); location.href='adminnotice';</script>");
+		} else {
+			out.println("<script>alert('추가되지 않았습니다.') history.back();</script>");
+		}
+		out.close();
+	}
+
+	@GetMapping("/adminnotice")
+	public ModelAndView notice(ModelAndView mv) {
+
+		// 한 페이지에 보여줄 갯수
+		int limit = 10;
+		int page = 1;
+
+		List<UserMessage> notice = adminService.getNotice(page, limit);
+		mv.addObject("notice", notice);
+		mv.setViewName("adminnotice");
+
+		return mv;
+	}
+
+	@ResponseBody
+	@PostMapping("/AdminInsertCategory")
+	public int AdminInsertCategory(@RequestParam(value = "sname", required = false) String sname, String dname) {
+
+		int result;
+		if (sname.equals("") || sname == null) {
+			result = adminService.addDCategory(dname);
+		} else {
+			result = addCategory(sname, dname);
+		}
+
+		if (result > 0) {
+
+			// 해당 요청 삭제
+			return adminService.deleteRequestCategory(sname, dname);
+
+		} else {
+			return 0;
+		}
+
+	}
+
+	public int addCategory(String sname, String dname) {
 		// 대분류/소분류 있는지 여부 확인
 		int isCategory = adminService.isCategory(sname, dname);
 
@@ -58,11 +113,10 @@ public class AdminController {
 			// 대분류 코드가 있으면 바로 gcategory2 테이블에 추가
 			if (isDCategory > 0) {
 
-				System.out.println("test1");
 				return adminService.addSCategory(isDCategory, sname);
 
 			} else {
-				System.out.println("test2");
+
 				// 없으면 대분류 코드 만들고 gcategory2 테이블에 추가
 				int dkey = adminService.addDCategory(dname);
 				return adminService.addSCategory(dkey, sname);
@@ -71,15 +125,22 @@ public class AdminController {
 
 		}
 
-	
+	}
+
+	@ResponseBody
+	@PostMapping("/AdminAddCategory")
+	public int AdminAddCategory(String sname, String dname) {
+
+		return addCategory(sname, dname);
+
 	}
 
 	@GetMapping("/admincategory")
 	public ModelAndView AdminCategory(ModelAndView mv) {
 
-		//모든 카테고리 항목 불러오기
+		// 모든 카테고리 항목 불러오기
 		List<GCategoryName> list = adminService.getAdminCategory();
-		//카테고리 요청목록 불러오기
+		// 카테고리 요청목록 불러오기
 		List<RequestCategory> listCategory = adminService.getRequestCategory();
 		mv.addObject("categorylist", list);
 		mv.addObject("listCategory", listCategory);

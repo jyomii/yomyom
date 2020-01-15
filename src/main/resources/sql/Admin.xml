@@ -2,9 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Admin">
+	
+	<delete id="deleteNotice" parameterType="map">
+	delete from usermessage where mgkey in 
+	<foreach collection="key" open="(" close=")" separator="," item="item">
+	#{item}
+	</foreach>
+	
+	</delete>
+	
+	<select id="getNotice" parameterType="map" resultType="usermessage">
+		  <![CDATA[ 
+			  SELECT * FROM (
+				SELECT b.*, rownum rnum
+				FROM (SELECT * from usermessage order by mgDate desc) b)
+				WHERE RNUM >= #{startrow} and rnum <= #{endrow}
+					]]>
+	</select>
 
 
- 
+
+	<insert id="newNotice" parameterType="String">
+	insert into usermessage values(nvl((select max(mgkey) from usermessage)+1,0),0, #{message}, sysdate, 0,0)
+	</insert>
+
+
+ 	<delete id="deleteRequestCategory" parameterType="map">
+ 		delete from requestcategory where dname = #{dname} 
+ 		<if test="sname != null">
+ 		and sname = #{sname}
+ 		</if>
+ 	</delete>
 
 	<select id="getRequestCategory" resultType="requestcategory">
 	  <![CDATA[ 
@@ -70,7 +98,7 @@
 
 	<select id="AdminSearchUser" parameterType="String"
 		resultType="member">
-		select * from gusers where userid like '%' || #{keyword} || '%'
+		select * from gusers where userid like '%' || #{keyword} || '%' and userkey > 0
 	</select>
 
 
@@ -97,14 +125,14 @@
 				 FROM GLOCATION WHERE LOCATIONKEY = USERLOCATION) LocationName,
 				  GENDER, USEREMAIL, USERJOINDATE,useroptionadmin,
 				   useroptiongroup, userstatus, 
-                userstatuscode, logintype FROM GUSERS WHERE userstatus = #{type}
+                userstatuscode, logintype FROM GUSERS WHERE userstatus = #{type} and userkey > 0
 				ORDER BY userjoindate ) b )
 				WHERE RNUM >= #{startrow} and rnum <= #{endrow}
 				]]>
 	</select>
 
 	<select id="getListCount" parameterType="int" resultType="int">
-		select count(*) from gusers where userStatus = #{type}
+		select count(*) from gusers where userStatus = #{type} and userkey > 0
 	</select>
 
 

@@ -11,6 +11,7 @@ import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
 import co.pr.fi.domain.StatisticsLocation;
+import co.pr.fi.domain.UserMessage;
 
 //관리자 처리 
 public interface AdminService {
@@ -47,10 +48,16 @@ public interface AdminService {
 
 	List<RequestCategory> getRequestCategory();
 
-	int insertDCategory(String dname);
+	int deleteRequestCategory(String sname, String dname);
 
-	int insertDSCategory(String dname, String sname);
+	int addNotice(String newNotice);
 
+	List<UserMessage> getNotice(int page, int limit);
+
+	int deleteNotice(List<Integer> key);
+
+
+	
 
 
 

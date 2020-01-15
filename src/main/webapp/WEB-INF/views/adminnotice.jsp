@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,22 +8,47 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <title>Winku Social Network Toolkit</title>
-<link rel="icon" href="resources/images/fav.png" type="image/png"
-	sizes="16x16">
+<link rel="icon" href="resources/images/fav.png" type="image/png" sizes="16x16">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <link rel="stylesheet" href="resources/css/main.min.css">
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/color.css">
 <link rel="stylesheet" href="resources/css/responsive.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 <style>
-.editing-interest form ol>li {
-	width: 50%;
-	float: left;
+
+.newpst-input {
+ 
+    width: 100%;
+}
+
+.mesages-lists {
+   
+    padding-top: 0px;
+
+}
+
+.modal-backdrop {
+	z-index: -1;
+}
+
+.modal.fade.show {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#exampleModal .modal-dialog {
+	-webkit-transform: translate(0, -50%);
+	-o-transform: translate(0, -50%);
+	transform: translate(0, -50%);
+	top: 50%;
+	margin: 0 auto;
+}
+
+.editing-interest form ol > li{
+ width:50%;
+ float: left;      
+
 }
 </style>
 </head>
@@ -187,8 +212,8 @@
 									data-off-label="OFF"></label>
 							</div>
 							<div class="setting-row">
-								<span>My profile</span> <input type="checkbox" id="switch4" />
-								<label for="switch4" data-on-label="ON" data-off-label="OFF"></label>
+								<span>My profile</span> <input type="checkbox" id="switch4" /> <label
+									for="switch4" data-on-label="ON" data-off-label="OFF"></label>
 							</div>
 							<div class="setting-row">
 								<span>Show profile</span> <input type="checkbox" id="switch5" />
@@ -233,8 +258,8 @@
 
 		<div class="topbar stick">
 			<div class="logo">
-				<a title="" href="newsfeed.html"><img
-					src="resources/images/logo.png" alt=""></a>
+				<a title="" href="newsfeed.html"><img src="resources/images/logo.png"
+					alt=""></a>
 			</div>
 
 			<div class="top-area">
@@ -424,7 +449,7 @@
 		<!-- topbar -->
 
 
-
+		
 
 		<section>
 			<div class="gap gray-bg">
@@ -437,20 +462,30 @@
 										<div class="widget">
 											<h4 class="widget-title">관리자 메뉴</h4>
 											<ul class="naves">
-												<li><i class="ti-clipboard"></i> <a
-													href="adminpage.html" title="">통계</a></li>
-												<li><i class="fas fa-user"></i> <a
-													href="adminpage2.html" title="">회원</a></li>
-												<li><i class="fas fa-users"></i> <a
-													href="adminpage3.html" title="">모임</a></li>
-
-												<li><i class="fas fa-align-justify"></i> <a
-													href="adminpage4.html" title="">카테고리</a></li>
-
-												<li><i class="fas fa-clipboard"></i> <a
-													href="adminpage5.html" title="">공지사항</a></li>
-
-											</ul>
+											<li>
+												<i class="ti-clipboard"></i>
+												<a href="adminpage.html" title="">통계</a>
+											</li>
+											<li>
+												<i class="fas fa-user"></i>
+												<a href="adminpage2.html" title="">회원</a>
+											</li>
+											<li>
+												<i class="fas fa-users"></i>
+												<a href="adminpage3.html" title="">모임</a>
+											</li>
+											
+											<li>
+												<i class="fas fa-align-justify"></i>
+												<a href="adminpage4.html" title="">카테고리</a>
+											</li>
+											
+											<li>
+												<i class="fas fa-clipboard"></i>
+												<a href="adminpage5.html" title="">공지사항</a>
+											</li>
+											
+										</ul>
 										</div>
 										<!-- recent activites -->
 
@@ -460,86 +495,82 @@
 								<!-- sidebar -->
 								<div class="col-lg-6">
 									<div class="central-meta">
-										<div class="editing-interest">
-											<h5 class="f-title">
-												<i class="ti-heart"></i>카테고리
-											</h5>
-											<p>모임의 카테고리 종류를 추가합니다.</p>
-											<form class="CategorySetting">
-												<label>카테고리: </label> <input type="text"
-													placeholder="대분류:소분류 형식으로 입력하세요." 
-													onkeypress="press()">
-												<button class="addCategory" type="button">추가</button>
-
-												<ol class="interest-added">
-													<c:forEach items="${categorylist }" var="item">
-														<li>
-														<input type="hidden"
-															value="${item.scategorykey }">
-														<input
-															type="hidden" value="${item.dcategorykey }"> <a
-															title="">${item.dname } : ${item.sname }</a></li>
-
-													</c:forEach>
-
-
-												</ol>
+									<div class="inbox-lists">
+									<h5 class="f-title"><i class="ti-heart"></i>공지사항</h5>
+								
+												<div class="inbox-action">
+													<ul>
+														<li><label><input type="checkbox" name="select-all" id="select_all" /> 전체 선택</label></li>
+														<li><a class="delete-email" title=""><i class="fa fa-trash-o"></i> 삭제</a></li>
+														<li><a href="adminnotice" title=""><i class="fa fa-refresh"></i> 새로고침</a></li>
+													</ul>
+												</div>
+												<div class="mesages-lists">
+													
+													<div class="central-meta item"
+														style="display: inline-block;">
+														<div class="new-postbox">
+			
+															<div class="newpst-input">
+																<form method="post" action="newNotice">
+																<input type="hidden" name="newNotice">
+																	<textarea rows="2" placeholder="새로운 공지사항을 입력하세요."></textarea>
+																	<div class="attachments">
+																		<ul>
+																			
+																			<li>
+																				<button type="submit">추가</button>
+																			</li>
+																		</ul>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>
 												
-											</form>
-										</div>
+													<ul id="message-list" class="message-list">
+													
+													<c:forEach items="${notice }" var="item">
+														<li class="unread">
+														
+															<input value="${item.mgKey }" class="select-message" type="checkbox" />
+															<span class="star-this starred"><i class="fa fa-star-o"></i></span>
+
+															<h3 class="sender-name">관리자</h3>
+															
+															<span class="make-important"><i class="fa fa-thumb-tack"></i></span>
+
+															<p>
+											`				${item.mgContent}
+															</p>
+														</li>
+													</c:forEach>
+														
+														
+														
+														
+													
+													<div class="lodmore">
+														<button class="btn-view btn-load-more"></button>
+													</div>
+														
+													</ul>
+													
+													
+												</div>
+											</div><!-- Inbox lists -->
 									</div>
 
 								</div>
-
-
-
-								<!-- 요청 목록 -->
-								<div class="col-lg-3">
-									<aside class="sidebar static">
-										<div class="widget">
-											<h4 class="widget-title">요청 목록</h4>
-											<ul class="followers">
-											
-											<c:forEach items="${listCategory }" var="item">
-												<li>
-												<input type="hidden" value="${item.dname }">
-												<input type="hidden" value="${item.sname }">
-												<span>
-												
-										
-												<c:choose>
-													<c:when test="${empty item.sname}">
-													대분류 : ${item.dname }
-													</c:when>
-													<c:otherwise>
-													${item.dname } : ${item.sname }
-													</c:otherwise>
-												</c:choose>
-												
-												
-												</span>
-
-													<p>${item.requestkey }번의 요청이 들어왔습니다.</p>
-													<div></div>
-													</li>
-													
-													
-												
-												</c:forEach>
-												
-												
-											</ul>
-										</div>
-										
-
-									</aside>
-								</div>
-									<!-- 요청 끝 -->
+								
+								
+								
+							
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+				</div>
 		</section>
 
 		<footer>
@@ -549,8 +580,8 @@
 						<div class="widget">
 							<div class="foot-logo">
 								<div class="logo">
-									<a href="index-2.html" title=""><img
-										src="resources/images/logo.png" alt=""></a>
+									<a href="index-2.html" title=""><img src="resources/images/logo.png"
+										alt=""></a>
 								</div>
 								<p>The trio took this simple idea and built it into the
 									world’s leading carpooling platform.</p>
@@ -697,98 +728,122 @@
 	<!-- side panel -->
 
 
-
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">모임 이름</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="widget">
+						<ul class="short-profile">
+							<li><span>모임 소개글</span>
+								<p>Hi, i am jhon kates, i am 32 years old and worked as a
+									web developer in microsoft company.</p></li>
+							<li><span>카테고리</span>
+								<p>게임</p></li>
+							<li><span>연령대</span>
+								<p>10대</p></li>
+								<li><span>공개 여부</span>
+								<p>N</p></li>
+						</ul>
+					</div>
+					<!-- profile intro widget -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script src="resources/js/main.min.js"></script>
 	<script src="resources/js/script.js"></script>
 	<script>
-		$('.CategorySetting').submit(function() {
-			return false;
+	
+	var page = 1;
+	
+	
+	//삭제버튼 눌렀을 경우
+	$('.delete-email').click(function(){
+		
+		var array = new Array();
+		
+		$('.select-message:checked').each(function(index, item){
+			var check = $(this).val();
+			array.push(check);
 		});
 		
-		
-		$('.followers li').click(function() {
-			
-			var index = $(this).index();
-			
-			var dname = $(this).children('input:eq(0)').val();
-			var sname = $(this).children('input:eq(1)').val();
-			
-			
-			$.ajax({
-				url : "AdminInsertCategory",
-				data : {"dname" : dname,
-						"sname" : sname},
-				method: "post",
-				success : function(result){
-					if(result > 0){
-					$('.followers li:eq('+index+')').remove();	
-					alert('추가되었습니다.');
-					}
-					}
-				
-			});
-			
-		//	alert(index);
-			//alert($(this).children('input:eq(0)').val());
-		//	alert($(this).children('input:eq(1)').val());
-			
-
-		});
-		
-		
-		function press(){ 
-			
-			 if(window.event.keyCode == 13){
-				 addCategory();
-			 }
-				 
-		} 
-		
-		$('.addCategory').click(function() {
-
-			addCategory();
-
-		});
-		
-		
-		//카테고리 추가
-		function  addCategory(){
-			var text = $('.addCategory').prev().val();
-
-			if (text.indexOf(':') != -1) {
-				var result = text.split(':');
-
-				if (result.length == 2 &&  result[0] &&  result[1]) {
-					//alert('대분류 :' + result[0]);
-					//alert('소분류 :' + result[1]);
-					
-					$.ajax({
-						url : "AdminAddCategory",
-						data : {"dname" : result[0],
-								"sname" : result[1]},
-						method: "post",
-						success : function(result){
-							if(result == 1){
-								alert("추가되었습니다.");
-								location.href="admincategory";
-							}else
-								alert('이미 존재하는 카테고리입니다.');
-						}
-					});
-				
-					
-
-				} else {
-					alert("대분류:소분류 형식으로 작성해주세요.");
-				}
-
-			} else {
-				alert("대분류:소분류 형식으로 작성해주세요.");
+		$.ajax({
+			url : "deleteNotice",
+			method : "post",
+			data : {"key" : array},
+			success : function(result){
+				console.log('삭제되었습니다.');
 			}
 			
-		}
-
+		});
 		
+	});
+	
+	$('.newpst-input form').submit(function(){
+		
+		var str = $(".newpst-input form textarea").val();
+
+		alert(str);
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+		console.log(str);
+		
+		$(".newpst-input form input").val(str);
+		return true;
+		
+	});
+	
+	
+	$('.lodmore').click(function(){
+		
+		page++;
+		
+		$.ajax({
+			url : "moreNotice",
+			method : "get",
+			data : {"page" : page},
+			success : function(result){
+				var text = "";
+				
+				for(var i =0; i < result.length; i ++){
+					
+					text += '<li class="unread">';
+					text += '<input value="${mgKey }" class="select-message" type="checkbox" />';
+					text += '<span class="star-this starred"><i class="fa fa-star-o"></i></span>';
+					text += '<h3 class="sender-name">관리자</h3>';
+					text += '<span class="make-important"><i class="fa fa-thumb-tack"></i></span>';
+					text += '<p>';
+					text += result[i].mgContent;
+					text += '</p>';
+					text += '</li>';
+			
+				
+				}
+				
+				
+				$('.lodmore').before(text);
+				
+			}
+			
+		});
+		
+	});
+	
 	</script>
 </body>
 

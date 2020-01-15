@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.AdminDAO;
 import co.pr.fi.domain.GCategoryName;
-import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.RequestCategory;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsLocation;
+import co.pr.fi.domain.UserMessage;
 import co.pr.fi.service.AdminService;
 
 @Service
@@ -77,32 +77,32 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int AdmindeleteUser(String id) {
-		
+
 		return dao.AdmindeleteUser(id);
-		
+
 	}
 
 	@Override
 	public List<GUsers> AdminSearchUser(String keyword) {
-	
+
 		return dao.AdminSearchUser(keyword);
 	}
 
 	@Override
 	public List<PoliceResult> adminPolice() {
-		
+
 		return dao.adminPolice();
 	}
 
 	@Override
 	public List<GCategoryName> getAdminCategory() {
-		
+
 		return dao.getAdminCategory();
 	}
 
 	@Override
 	public int isCategory(String sname, String dname) {
-		
+
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("sname", sname);
 		map.put("dname", dname);
@@ -111,9 +111,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int isDCategory(String dname) {
-		
-		
-		return ((Object)dao.isDCategory(dname) == null ? 0 : dao.isDCategory(dname));
+
+		return ((Object) dao.isDCategory(dname) == null ? 0 : dao.isDCategory(dname));
 	}
 
 	@Override
@@ -126,31 +125,54 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int addDCategory(String dname) {
-		
+
 		return dao.addDCategory(dname);
 	}
 
 	@Override
 	public List<RequestCategory> getRequestCategory() {
-		
+
 		return dao.getRequestCategory();
 	}
 
 	@Override
-	public int insertDCategory(String dname) {
-		
-		return dao.insertDCategory(dname);
+	public int deleteRequestCategory(String sname, String dname) {
+
+		Map<String, String> list = new HashMap<String, String>();
+		if (sname != null && !sname.equals(""))
+			list.put("sname", sname);
+
+		list.put("dname", dname);
+		return dao.deleteRequestCategory(list);
 	}
 
 	@Override
-	public int insertDSCategory(String dname, String sname) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("dname", dname);
-		map.put("sname", sname);
-		return dao.insertDSCategory(map);
+	public int addNotice(String newNotice) {
+		return dao.addNotice(newNotice);
 	}
 
+	@Override
+	public List<UserMessage> getNotice(int page, int limit) {
 
-	
+		Map<String, Integer> list = new HashMap<String, Integer>();
+
+		int startrow = (page - 1) * limit + 1;
+		// 읽기 시작할 row 번호(1 11 21 31
+		int endrow = startrow + limit - 1;
+		// 읽을 마지막 row 번호 (10 20 30
+
+		list.put("startrow", startrow);
+		list.put("endrow", endrow);
+
+		return dao.getNotice(list);
+	}
+
+	@Override
+	public int deleteNotice(List<Integer> key) {
+		
+		Map<String, Object> list = new HashMap<String, Object>();
+		list.put("key", key);
+		return dao.deleteNotice(list);
+	}
 
 }
