@@ -560,12 +560,13 @@ CREATE TABLE ggroup
     groupprivate      CHAR(1)          NOT NULL, 
     grouptype         CHAR(1)          NOT NULL, 
     groupdate		  DATE			   NOT NULL,
+    groupstatus        NUMBER           NOT NULL,
     CONSTRAINT GGROUPPK PRIMARY KEY (groupkey)
 );
 
 -- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
 -- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
-
+-- ALTER TABLE ggroup ADD (groupstatus NUMBER NOT NULL);
 
 CREATE SEQUENCE ggroupSEQ
 START WITH 1
