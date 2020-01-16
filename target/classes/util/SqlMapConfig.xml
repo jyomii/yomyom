@@ -18,10 +18,13 @@
 		
 		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
+		
+		<typeAlias alias = "group" type = "co.pr.fi.domain.GGroup"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="sql/member.xml"></mapper>
 		<mapper resource="sql/Admin.xml"></mapper>
+		<mapper resource="sql/group.xml"></mapper>
 	</mappers>
 </configuration>

@@ -10,6 +10,10 @@
 		</layout>
 	</appender>
 	
+	<!-- group -->
+	<logger name = "Group">
+		<level value = "trace"/>
+	</logger>
 	
 	<!-- member -->
 	<logger name="Member">
