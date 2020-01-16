@@ -139,6 +139,9 @@ public class MemberController {
 
 	}
 
+	
+	
+	
 	@GetMapping("/login")
 	public ModelAndView login(ModelAndView m, HttpServletRequest request, HttpSession session) {
 
@@ -155,7 +158,7 @@ public class MemberController {
 		m.addObject("dcategory", dcategory);
 		m.addObject("scategory", scategory);
 		m.setViewName("landing");
-		// m.setViewName("exampleMap");
+		
 		return m;
 	}
 
