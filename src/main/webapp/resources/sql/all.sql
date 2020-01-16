@@ -1,5 +1,7 @@
 
 
+DROP TABLE requestCategory;
+
 -- glocation Table Create SQL
 DROP TABLE userlikegroup;
 DROP SEQUENCE userlikegroupSEQ;
@@ -34,8 +36,7 @@ DROP SEQUENCE usermessageSEQ;
 
     DROP TABLE gusercategory;     
 
-
- DROP TABLE vote;
+DROP TABLE vote;
 DROP SEQUENCE voteSEQ;
 
 
@@ -517,7 +518,7 @@ CREATE SEQUENCE gusersSEQ
 START WITH 1
 INCREMENT BY 1;
 
-//관리자 계정 
+/*관리자 계정*/ 
 insert into gusers values(0, 'admin','$2a$10$DGdkEZGSwAL1tOEmaEEqB.qfcKQrREhIo4wwgIfD5LWi/eICNg5Ha',
 NULL,NULL,2,1,'F','plain64@naver.com',sysdate,'Y','N',0,null,0);
                                           
@@ -536,7 +537,7 @@ CREATE TABLE requestCategory
 
 ALTER TABLE requestCategory
     ADD CONSTRAINT FK_requestCategory_userkey_g_u FOREIGN KEY (userkey)
-        REFERENCES g_users (user_key);
+        REFERENCES gusers (userkey);
                                                  
                                                  
                                                  
@@ -596,11 +597,6 @@ ALTER TABLE ggroup
         
 
     
-insert into ggroup values(1, '다이아롤팟',2,0,0,1,'다이아 이하는 승인 거부요','default.png','default.png','defaultc.png','defaultc.png','N','N');
-
-insert into ggroup values(2, '저녁롤모임',2,1,0,1,'티어상관없이하실분','default.png','default.png','defaultc.png','defaultc.png','N','N');
-
-
 
 
 CREATE TABLE ggroupmember
@@ -631,15 +627,6 @@ ALTER TABLE ggroupmember
     ADD CONSTRAINT FKggroupmemberuserkeygu FOREIGN KEY (userkey)
         REFERENCES gusers (userkey);
 
-
-insert into ggroupmember values(1,2,'연지야',1);
-insert into ggroupmember values(1,4,'에이',0);
-insert into ggroupmember values(1,5,'삐삐',0);
-
-
-insert into ggroupmember values(2,2,'연지야',1);
-insert into ggroupmember values(2,6,'디디',0);
-insert into ggroupmember values(2,7,'이이',0);
 
 
 
@@ -678,13 +665,10 @@ ALTER TABLE ggroupboard
 
 
     
-/*그룹 생성 시 같이 추가되어야함*/
+/*그룹 생성 시 같이 추가되어야함
 insert into ggroupboard values(1,1,'공지사항','Y','Y','Y','Y','Y','Y');
 insert into ggroupboard values(2,2,'공지사항','Y','Y','Y','Y','Y','Y');
-
-
-
-insert into ggroupboard values(3,1,'팟일정','Y','Y','Y','Y','Y','Y');
+*/
 
 
 
@@ -716,18 +700,6 @@ INCREMENT BY 1;
 
 
 
-insert into post values(postSEQ.nextval, '가가가가가가가','가가가가가가',sysdate, 2,1,'Y','Y',3,0);
-
-insert into post values(postSEQ.nextval, '야 이거 이상해','이상함',sysdate, 5,1,'Y','Y',3,0);
-
-insert into post values(postSEQ.nextval, '오늘 저녁 뭐먹지?','뭐먹냐',sysdate, 4,1,'Y','Y',3,0);
-
-
-insert into post values(postSEQ.nextval, '오늘 모임요','8시 5인팟 모집요',sysdate, 2,1,'Y','Y',1,0);
-
-
-
-
 
 
 CREATE TABLE calendar
@@ -752,10 +724,6 @@ ALTER TABLE calendar
     ADD CONSTRAINT FKcalendargrouplocationgl FOREIGN KEY (grouplocation)
         REFERENCES glocation (locationkey);
         
-        
-insert into calendar values(sysdate, sysdate, 0, 4, 0, null);  
-
-
 
 
 
@@ -805,12 +773,6 @@ ALTER TABLE gusercategory
     ADD CONSTRAINT FKgusercategorycategoryke FOREIGN KEY (categorykey)
         REFERENCES gcategory2 (scategorykey);
 
-
-insert into gusercategory values(2, 1);
-
-insert into gusercategory values(2, 3);
-
-insert into gusercategory values(2, 5);
 
 
 
@@ -871,8 +833,6 @@ ALTER TABLE prboard
         
 
 
-insert into prboard values(prboardSEQ.nextval, 2, 1, '롤 할 사람',sysdate );
-
 
 
 -- glocation Table Create SQL
@@ -894,8 +854,6 @@ ALTER TABLE calendarmember
     ADD CONSTRAINT FKcalendarmemberuserkeyg FOREIGN KEY (userkey, groupkey)
         REFERENCES ggroupmember (userkey, groupkey);
 
-
-insert into calendarmember values(2, 4,1);
 
 
 -- glocation Table Create SQL
