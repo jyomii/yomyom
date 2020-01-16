@@ -22,12 +22,19 @@
 	cursor: pointer;
 }
 
-.tab-content li {
-	cursor: pointer;
+
+
+.tab-content li:hover{
+cursor: pointer;
 }
+.tab-content ul{
+list-style: none;}
+
+
 
 .click_category {
-	background: #eee;
+	background: #088dcd;
+	color:white;
 }
 
 .modal-backdrop {
@@ -203,12 +210,12 @@
 								<div class="form-group">
 									<div class="select">
 										<label> 연령대 <select name="age">
-												<option value="10">10</option>
-												<option value="20">20</option>
-												<option value="30" selected="selected">30</option>
-												<option value="40">40</option>
-												<option value="50">50</option>
-												<option value="60">60</option>
+												<option value="10">10대</option>
+												<option value="20">20대</option>
+												<option value="30" selected="selected">30대</option>
+												<option value="40">40대</option>
+												<option value="50">50대</option>
+												<option value="60">60대</option>
 
 										</select>
 										</label> <label> 지역 <select name="location">

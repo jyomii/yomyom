@@ -9,4 +9,9 @@ import org.springframework.stereotype.Repository;
 public class GroupMasterDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+
+	public int checkGroupName(String name) {
+	
+		return sqlSession.selectOne("GroupMaster.checkGroupName",name);
+	}
 }

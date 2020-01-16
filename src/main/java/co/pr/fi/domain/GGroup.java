@@ -47,6 +47,18 @@ public class GGroup {
  // 모임 설립일,,
  private Date groupDate;
  
+ //모임 상태
+ private int groupstatus;
+ 
+ 
+
+public int getGroupstatus() {
+	return groupstatus;
+}
+
+public void setGroupstatus(int groupstatus) {
+	this.groupstatus = groupstatus;
+}
 
 public int getGroupKey() {
      return groupKey;
@@ -177,5 +189,6 @@ public int getGroupKey() {
      this.groupPrivate = param.getGroupPrivate();
      this.groupType = param.getGroupType();
      this.groupDate = param.getGroupDate();
+     this.groupstatus = param.getGroupstatus();
  }
 }

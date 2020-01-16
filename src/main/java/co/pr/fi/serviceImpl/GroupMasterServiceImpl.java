@@ -12,4 +12,10 @@ public class GroupMasterServiceImpl implements GroupMasterService {
 	@Autowired
 	GroupMasterDAO dao;
 
+	@Override
+	public int checkGroupName(String name) {
+		
+		return dao.checkGroupName(name);
+	}
+
 }
