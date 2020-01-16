@@ -451,7 +451,7 @@ list-style: none;}
 												<div class="form-group">
 
 
-													<input type="text" name="groupname" id="input" required="required" /> <label
+													<input type="text" name="groupName" id="input" required="required" /> <label
 														class="control-label" for="input">모임 이름</label><i
 														class="mtrl-select"></i>
 												</div>
@@ -459,7 +459,7 @@ list-style: none;}
 
 
 												<div class="form-group">
-													<textarea rows="4" id="textarea" name="groupinfo" required="required"></textarea>
+													<textarea rows="4" id="textarea" name="groupInfo" required="required"></textarea>
 													<label class="control-label" for="textarea">모임 소개글</label><i
 														class="mtrl-select"></i>
 												</div>
@@ -469,7 +469,7 @@ list-style: none;}
 												<div class="form-group">
 												
 												
-													<label style="width:100%;">연령대<select name="agekey">
+													<label style="width:100%;">연령대<select name="ageKey">
 							
 														<option value="0" selected="selected">전체</option>
 														<option value="10">10대</option>
@@ -481,7 +481,7 @@ list-style: none;}
 													</select>
 													</label>
 													
-													<label style="width:100%;"> 지역 <select name="wherekey">
+													<label style="width:100%;"> 지역 <select name="whereKey">
 												<option value="0" selected="selected">전체</option>
 												<option value="1">서울특별시</option>
 												<option value="2">서울특별시 종로구</option>
@@ -760,7 +760,7 @@ list-style: none;}
 												
 												<div class="form-group">
 												<label>모임 카테고리</label>
-												<input type="hidden" id="category" name="category">
+												<input type="hidden" id="category" name="categoryKey">
 													<div class="d-flex flex-row mt-2">
 									<ul class="nav nav-tabs nav-tabs--vertical nav-tabs--left">
 										<c:forEach items="${dcategory}" var="list" varStatus="status">
@@ -833,7 +833,7 @@ list-style: none;}
 														<div class="edit-phto">
 															<i class="fa fa-camera-retro"></i> <label
 																class="fileContainer"> 대표 사진 추가 <input
-																name="groupidorigin" type="file" accept=".gif, .jpg, .png" />
+																name="groupIdOrigin" type="file"  />
 															</label>
 														</div>
 
@@ -850,7 +850,7 @@ list-style: none;}
 
 														<div class="edit-phto">
 															<i class="fa fa-camera-retro"></i> <label
-																class="fileContainer"> 커버 사진 추가 <input name="groupcorigin"
+																class="fileContainer"> 커버 사진 추가 <input name="groupCOrigin"
 																type="file" />
 															</label>
 														</div>
@@ -873,13 +873,13 @@ list-style: none;}
 													<div class="setting-row">
 														<span>공개 여부</span>
 														<p>검색 결과에 모임 정보를 표출합니다.</p>
-														<input type="checkbox" id="switch01" name="groupprivate"/> <label
+														<input type="checkbox" id="switch01" name="groupPrivate"/> <label
 															for="switch01" data-on-label="ON" data-off-label="OFF"></label>
 													</div>
 													<div class="setting-row">
 														<span>원데이 클래스 여부</span>
 														<p>주기적으로 회비를 납입하는 모임입니다.</p>
-														<input name ="grouptype" type="checkbox" id="switch02" /> <label
+														<input name ="groupType" type="checkbox" id="switch02" /> <label
 															for="switch02" data-on-label="ON" data-off-label="OFF"></label>
 													</div>
 
@@ -1080,7 +1080,7 @@ list-style: none;}
 	
 	
 	//모임 이름 확인
-	$('input[name="groupname"]').keyup(function(){
+	$('input[name="groupName"]').keyup(function(){
 		
 		var reg_hanengnum = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{3,20}$/;
 
@@ -1117,7 +1117,7 @@ list-style: none;}
 	
 	
 	//소개글 확인
-	$('textarea[name="groupinfo"]').keyup(function(){
+	$('textarea[name="groupInfo"]').keyup(function(){
 		
 		var info = $(this).val();
 		var label = $(this).next();
@@ -1135,7 +1135,7 @@ list-style: none;}
 	
 	
 	//이미지 셋팅
-	$('input[name="groupidorigin"]').on('change',function(){
+	$('input[name="groupIdOrigin"]').on('change',function(){
 		
 		  readURL(this,0);
 		
@@ -1143,7 +1143,7 @@ list-style: none;}
 	
 	
 	//이미지 셋팅
-	$('input[name="groupcorigin"]').on('change',function(){
+	$('input[name="groupCOrigin"]').on('change',function(){
 		
 		  readURL(this,1);
 		
@@ -1166,9 +1166,9 @@ list-style: none;}
 	//reset
 	$('.submit-btns button:eq(0)').click(function(){
 		
-		$('input[name="groupname"]').next().text("모임 이름");
-		$('textarea[name="groupinfo"]').next().text("모임 소개글");
-		$('textarea[name="groupinfo"]').next().css('color','#088dcd');
+		$('input[name="groupName"]').next().text("모임 이름");
+		$('textarea[name="groupInfo"]').next().text("모임 소개글");
+		$('textarea[name="groupInfo"]').next().css('color','#088dcd');
 		
 		 $('figure:eq(0) img').attr('src', "resources/images/resources/user-avatar.jpg");
 		 $('figure:eq(1) img').attr('src', "resources/images/resources/timeline-1.jpg");
@@ -1179,10 +1179,9 @@ list-style: none;}
 	
 	
 	//submit
-	$("#insertGroup").submit(function(){
-		console.log($(this).serialize());
-		return false;
-	});
+	//$("#insertGroup").submit(function(){
+	
+	//});
 	</script>
 </body>
 

@@ -806,8 +806,6 @@ ALTER TABLE usermessage
         REFERENCES gusers (userkey);
         
 
-insert into usermessage values(usermessageSEQ.nextval, '0','2020년 01월 15일 점검 예약있습니다.',sysdate,3, 2 );
-
 
 
 -- glocation Table Create SQL
