@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
+import co.pr.fi.domain.GGroup;
 import co.pr.fi.service.GroupMasterService;
 import co.pr.fi.service.MemberService;
 
@@ -24,6 +25,13 @@ public class GroupMasterController {
 	@Autowired
 	MemberService memberService;
 
+	
+	
+	@PostMapping("/insertGroup")
+	public void insertGroup(GGroup group) {
+		
+		
+	}
 	@ResponseBody
 	@PostMapping("/checkGroupName")
 	public int checkGroupName(String name) {
