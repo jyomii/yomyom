@@ -547,12 +547,12 @@ ALTER TABLE requestCategory
 CREATE TABLE ggroup
 (
     groupkey          NUMBER           NOT NULL, 
-    groupname         VARCHAR2(40)     NOT NULL, 
+    groupname         VARCHAR2(60)     NOT NULL, 
     userkey           NUMBER           NOT NULL, 
     agekey            NUMBER           NOT NULL, 
     wherekey          NUMBER           NOT NULL, 
     categorykey       NUMBER           NOT NULL, 
-    groupinfo         VARCHAR2(100)    NOT NULL, 
+    groupinfo         VARCHAR2(300)    NOT NULL, 
     groupdfile       VARCHAR2(100)    NOT NULL, 
     groupidorigin    VARCHAR2(100)    NOT NULL, 
     groupcfile       VARCHAR2(100)    NOT NULL, 
