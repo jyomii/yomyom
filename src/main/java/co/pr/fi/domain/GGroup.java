@@ -50,8 +50,8 @@ public class GGroup {
  //모임 상태
  private int groupstatus;
  
- 
 
+ 
 public int getGroupstatus() {
 	return groupstatus;
 }

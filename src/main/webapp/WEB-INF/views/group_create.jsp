@@ -445,7 +445,7 @@ list-style: none;}
 											<h5 class="f-title">
 												<i class="ti-info-alt"></i> 모임 생성
 											</h5>
-											<form id="insertGroup" method="post" action="insertGroup">
+											<form id="insertGroup" method="post" action="insertGroup" enctype="multipart/form-data"> 
 
 												
 												<div class="form-group">
@@ -472,12 +472,12 @@ list-style: none;}
 													<label style="width:100%;">연령대<select name="ageKey">
 							
 														<option value="0" selected="selected">전체</option>
-														<option value="10">10대</option>
-														<option value="20">20대</option>
-														<option value="30">30대</option>
-														<option value="30">40대</option>
-														<option value="30">50대</option>
-														<option value="30">60대</option>
+														<option value="1">10대</option>
+														<option value="2">20대</option>
+														<option value="3">30대</option>
+														<option value="4">40대</option>
+														<option value="5">50대</option>
+														<option value="6">60대</option>
 													</select>
 													</label>
 													
@@ -833,7 +833,7 @@ list-style: none;}
 														<div class="edit-phto">
 															<i class="fa fa-camera-retro"></i> <label
 																class="fileContainer"> 대표 사진 추가 <input
-																name="groupIdOrigin" type="file"  />
+																name="files" type="file" 	accept="image/gif, image/jpeg, image/png" />
 															</label>
 														</div>
 
@@ -850,8 +850,8 @@ list-style: none;}
 
 														<div class="edit-phto">
 															<i class="fa fa-camera-retro"></i> <label
-																class="fileContainer"> 커버 사진 추가 <input name="groupCOrigin"
-																type="file" />
+																class="fileContainer"> 커버 사진 추가 <input name="files"
+																type="file" 	accept="image/gif, image/jpeg, image/png"/>
 															</label>
 														</div>
 
@@ -1135,7 +1135,7 @@ list-style: none;}
 	
 	
 	//이미지 셋팅
-	$('input[name="groupIdOrigin"]').on('change',function(){
+	$('input[name="files"]:eq(0)').on('change',function(){
 		
 		  readURL(this,0);
 		
@@ -1143,7 +1143,7 @@ list-style: none;}
 	
 	
 	//이미지 셋팅
-	$('input[name="groupCOrigin"]').on('change',function(){
+	$('input[name="files"]:eq(1)').on('change',function(){
 		
 		  readURL(this,1);
 		
@@ -1179,9 +1179,9 @@ list-style: none;}
 	
 	
 	//submit
-	//$("#insertGroup").submit(function(){
+	$("#insertGroup").submit(function(){
 	
-	//});
+	});
 	</script>
 </body>
 
