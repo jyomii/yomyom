@@ -26,7 +26,7 @@
 	list-style: none;
 	padding-top: 20px;
 }
-<!---->
+
 .forgroupnamewidth {
 	width: 30%;
 	display: inline-block;
