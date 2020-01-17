@@ -567,6 +567,10 @@ CREATE TABLE ggroup
 -- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
 -- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
 -- ALTER TABLE ggroup ADD (groupstatus NUMBER NOT NULL);
+--ALTER TABLE ggroup MODIFY(groupdfile VARCHAR2(100) null);
+--ALTER TABLE ggroup MODIFY(groupidorigin VARCHAR2(100) null);
+--ALTER TABLE ggroup MODIFY(groupcfile VARCHAR2(100) null);
+--ALTER TABLE ggroup MODIFY(groupcorigin VARCHAR2(100) null);
                                             
 CREATE SEQUENCE ggroupSEQ
 START WITH 1
