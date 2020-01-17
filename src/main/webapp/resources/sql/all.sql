@@ -553,10 +553,10 @@ CREATE TABLE ggroup
     wherekey          NUMBER           NOT NULL, 
     categorykey       NUMBER           NOT NULL, 
     groupinfo         VARCHAR2(300)    NOT NULL, 
-    groupdfile       VARCHAR2(100)    NOT NULL, 
-    groupidorigin    VARCHAR2(100)    NOT NULL, 
-    groupcfile       VARCHAR2(100)    NOT NULL, 
-    groupcorigin     VARCHAR2(100)    NOT NULL, 
+    groupdfile       VARCHAR2(100)    , 
+    groupidorigin    VARCHAR2(100)    , 
+    groupcfile       VARCHAR2(100)    , 
+    groupcorigin     VARCHAR2(100)    , 
     groupprivate      CHAR(1)          NOT NULL, 
     grouptype         CHAR(1)          NOT NULL, 
     groupdate		  DATE			   NOT NULL,
@@ -567,7 +567,7 @@ CREATE TABLE ggroup
 -- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
 -- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
 -- ALTER TABLE ggroup ADD (groupstatus NUMBER NOT NULL);
-
+                                            
 CREATE SEQUENCE ggroupSEQ
 START WITH 1
 INCREMENT BY 1;
