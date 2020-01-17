@@ -46,7 +46,6 @@ Last change:  4/september/18
 
 @import url('https://fonts.googleapis.com/css?family=Muli:300,400,400i,500,700,800');
 @import url('https://fonts.googleapis.com/css?family=Satisfy');
-
 @font-face {
     font-family: HoboStd;
     src: url('../fonts/HoboStd.ttf'), url('../fonts/HoboStd.eot');
@@ -557,9 +556,7 @@ header.sticky {
 }
 
 .login-reg-bg {
-
-  background-color:rgba(255, 255, 255, 0.3);
-     
+    background: #f4f7f6 none repeat scroll 0 0;
     float: left;
     height: 100vh;
     position: relative;
@@ -626,7 +623,7 @@ header.sticky {
     width: 100%;
 }
 
-.log-reg-area.reg,.log-reg-area.reg2 {
+.log-reg-area.reg {
     display: none;
 }
 
@@ -637,16 +634,6 @@ header.sticky {
 .login-reg-bg.show .log-reg-area.sign {
     display: none;
 }
-
-
-.login-reg-bg.show.detail .log-reg-area.reg {
-    display: none;
-}
-
-.login-reg-bg.show.detail .log-reg-area.reg2 {
-    display: block;
-}
-
 
 
 /*--- topbar ---*/
@@ -3277,7 +3264,7 @@ nav.breadcrumb {
 }
 
 .accordion .card h5 button::before {
-    content: "�꼪";
+    content: "";
     float: right;
     font-family: fontawesome;
 }
@@ -3790,6 +3777,9 @@ a.add-butn.more-action {
     font-weight: 400;
 }
 
+.groups.recommands{
+	margin-bottom: 35px;
+}
 
 /*--- edit basic info page ---*/
 
@@ -4736,7 +4726,7 @@ canvas {
 }
 
 .top-area > ul.main-menu > li::after {
-    content: "�꼪";
+    content: "";
     font-family: fontawesome;
     font-size: 13px;
     position: absolute;
@@ -5523,7 +5513,16 @@ canvas {
 
 
 /*--- blog grid post ---*/
-
+.g-post-classic-recommands {
+	background: #fdfdfd none repeat scroll 0 0;
+    border: 1px solid #ede9e9;
+    border-radius: 3px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 25px;
+	width:100%;
+}
 .g-post-classic {
     background: #fff none repeat scroll 0 0;
     border: 1px solid #ede9e9;
@@ -5533,13 +5532,13 @@ canvas {
     -ms-transition: all 0.2s linear 0s;
     -o-transition: all 0.2s linear 0s;
     transition: all 0.2s linear 0s;
-    width: 100%;
+    width: 32.85%;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
     border-radius: 3px;
-    margin-bottom: 40px;
+    margin:auto;
 }
 
 .blog-sec {
