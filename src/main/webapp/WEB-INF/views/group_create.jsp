@@ -1067,9 +1067,13 @@ list-style: none;}
 	<script src="resources/js/script.js"></script>
 	<script>
 	
+	var checkGname = false;
+	var checkCategory = false;
+	
 	//카테고리 등록
 	$('.tab-content li').click(function(){
 		
+		checkCategory = true;
 		//카테고리 값 저장해놓기
 		$('#category').val($(this).children('input').val());
 		
@@ -1086,7 +1090,7 @@ list-style: none;}
 
 		var name = $(this).val();
 		var label = $(this).next();
-		var checkGname = false;
+	
 		
 		if(reg_hanengnum.test(name)){
 	
@@ -1099,9 +1103,11 @@ list-style: none;}
 					
 					if(result == 1){
 						checkGname = false;
+						label.css('color','red');
 						label.text('이미 사용중인 모임명입니다.');
 					}else{
 						checkGname = true;
+						label.css('color','#088dcd');
 						label.text('사용가능한 모임명입니다.');
 					}
 					
@@ -1167,6 +1173,7 @@ list-style: none;}
 	$('.submit-btns button:eq(0)').click(function(){
 		
 		$('input[name="groupName"]').next().text("모임 이름");
+		$('input[name="groupName"]').next().css('color','#088dcd');
 		$('textarea[name="groupInfo"]').next().text("모임 소개글");
 		$('textarea[name="groupInfo"]').next().css('color','#088dcd');
 		
@@ -1181,6 +1188,22 @@ list-style: none;}
 	//submit
 	$("#insertGroup").submit(function(){
 	
+		//이름체크
+		if(!checkGname){
+			alert('그룹 이름을 확인해주세요.');
+			$('input[name="groupName"]').focus();
+			
+			return false;
+		}
+		
+		//카테고리 체크
+		if(!checkCategory){
+			alert('카테고리를 확인해주세요.');
+			
+			return false;
+		}
+		
+		
 	});
 	</script>
 </body>
