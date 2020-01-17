@@ -54,7 +54,7 @@
 				</li>
 				<li><span>Time Line</span>
 					<ul>
-						<li><a href="time-line.html" title="">timeline</a></li>
+						<li><a href="groupmain" title="">groupmain</a></li>
 						<li><a href="timeline-friends.html" title="">timeline friends</a></li>
 						<li><a href="timeline-groups.html" title="">timeline groups</a></li>
 						<li><a href="timeline-pages.html" title="">timeline pages</a></li>
@@ -229,9 +229,9 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#" title="">timeline</a>
+					<a href="#" title="">모임</a>
 					<ul>
-						<li><a href="time-line.html" title="">timeline</a></li>
+						<li><a href="groupmain" title="">groupmain</a></li>
 						<li><a href="timeline-friends.html" title="">timeline friends</a></li>
 						<li><a href="timeline-groups.html" title="">timeline groups</a></li>
 						<li><a href="timeline-pages.html" title="">timeline pages</a></li>
