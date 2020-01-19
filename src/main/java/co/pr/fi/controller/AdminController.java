@@ -115,7 +115,7 @@ public class AdminController {
 
 		List<UserMessage> notice = adminService.getNotice(page, limit);
 		mv.addObject("notice", notice);
-		mv.setViewName("adminnotice");
+		mv.setViewName("admin/adminnotice");
 
 		return mv;
 	}
@@ -199,7 +199,7 @@ public class AdminController {
 		List<RequestCategory> listCategory = categoryService.getRequestCategory();
 		mv.addObject("categorylist", list);
 		mv.addObject("listCategory", listCategory);
-		mv.setViewName("admincategory");
+		mv.setViewName("admin/admincategory");
 		return mv;
 
 	}
@@ -246,7 +246,7 @@ public class AdminController {
 		mv.addObject("location", location);
 		mv.addObject("joindate", joindate);
 		mv.addObject("category", category);
-		mv.setViewName("adminmain");
+		mv.setViewName("admin/adminmain");
 
 		return mv;
 	}
@@ -267,7 +267,7 @@ public class AdminController {
 		List<GGroup> defaultGroup = adminService.getAllGroupList(0, page, limit);
 		List<GGroup> requestGroup = adminService.getAllGroupList(1, page, limit);
 
-		mv.setViewName("admingroup");
+		mv.setViewName("admin/admingroup");
 		mv.addObject("d_listCount", d_listCount);
 		mv.addObject("r_listCount", r_listCount);
 		mv.addObject("defaultGroup", defaultGroup);
@@ -347,7 +347,7 @@ public class AdminController {
 		mv.addObject("policeResult", policeResult);
 		mv.addObject("page", page);
 		mv.addObject("type", ++type);
-		mv.setViewName("adminusers");
+		mv.setViewName("admin/adminusers");
 		return mv;
 	}
 
