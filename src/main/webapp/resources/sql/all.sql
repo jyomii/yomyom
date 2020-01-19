@@ -1,5 +1,4 @@
 
-
 DROP TABLE requestCategory;
 
 -- glocation Table Create SQL
@@ -541,8 +540,10 @@ ALTER TABLE requestCategory
                                                  
                                                  
                                                  
-                                                 
-                                                 
+ SELECT * FROM (
+				SELECT b.*, rownum rnum
+				FROM (SELECT * from getAllGroupList order by mgDate desc) b)
+				WHERE RNUM >= #{startrow} and rnum <= #{endrow}                                                 
 
 CREATE TABLE ggroup
 (

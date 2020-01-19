@@ -3,6 +3,7 @@ package co.pr.fi.service;
 import java.util.List;
 
 import co.pr.fi.domain.GCategoryName;
+import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.PoliceResult;
@@ -28,7 +29,6 @@ public interface AdminService {
 
 	int getListCount(int type);
 
-	List<String> getAdminusercategory(String id);
 
 	int AdmindeleteUser(String id);
 
@@ -36,25 +36,22 @@ public interface AdminService {
 
 	List<PoliceResult> adminPolice();
 
-	List<GCategoryName> getAdminCategory();
-
-	int isCategory(String sname, String dname);
-
-	int isDCategory(String dname);
-
-	int addSCategory(int DCategorykey, String sname);
-
-	int addDCategory(String dname);
-
-	List<RequestCategory> getRequestCategory();
-
-	int deleteRequestCategory(String sname, String dname);
-
-	int addNotice(String newNotice);
-
 	List<UserMessage> getNotice(int page, int limit);
 
 	int deleteNotice(List<Integer> key);
+
+	List<GGroup> getAllGroupList(int i, int page, int limit);
+
+	int getGroupListCount(int i);
+
+	int acceptGroup(int key);
+
+	int negativeGroup(int key);
+
+	int deleteGroupMember(int key);
+
+	
+	int sendMessage(UserMessage message);
 
 
 	

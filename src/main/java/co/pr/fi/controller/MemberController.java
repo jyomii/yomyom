@@ -33,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.service.CategoryService;
 import co.pr.fi.service.MemberService;
 import co.pr.fi.serviceImpl.KakaoAPI;
 
@@ -41,6 +42,9 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 
+	@Autowired
+	CategoryService categoryService;
+	
 	@Autowired
 	private KakaoAPI kakao;
 
@@ -147,8 +151,8 @@ public class MemberController {
 
 		// 임시로 해논거임ㅇㅇ
 		session.invalidate();
-		List<GCategory> dcategory = memberService.getDCategory();
-		List<GCategory2> scategory = memberService.getSCategory();
+		List<GCategory> dcategory = categoryService.getDCategory();
+		List<GCategory2> scategory = categoryService.getSCategory();
 
 		Cookie[] getCookiesCookie = request.getCookies();
 		if (getCookiesCookie != null)
@@ -201,7 +205,7 @@ public class MemberController {
 			Map<String, Object> usercategory = new HashMap<String, Object>();
 			usercategory.put("id", id);
 			usercategory.put("list", categorykey);
-			int category = memberService.insertUserCategory(usercategory);
+			int category = categoryService.insertUserCategory(usercategory);
 
 			if (category > 0) {
 				return 1;

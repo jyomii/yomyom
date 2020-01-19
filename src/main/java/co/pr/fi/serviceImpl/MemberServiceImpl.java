@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.MemberDAO;
-import co.pr.fi.domain.GCategory;
-import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.service.MemberService;
@@ -34,18 +32,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<GCategory> getDCategory() {
-		
-		return dao.getDCategory();
-	}
-
-	@Override
-	public List<GCategory2> getSCategory() {
-
-		return dao.getSCategory();
-	}
-
-	@Override
 	public int joinUser(GUsers guser) {
 		
 		return dao.joinUser(guser);
@@ -53,11 +39,7 @@ public class MemberServiceImpl implements MemberService {
 
 	
 
-	@Override
-	public int insertUserCategory(Map<String, Object> usercategory) {
-		
-		return dao.insertUserCategory(usercategory);
-	}
+
 
 	@Override
 	public GUsers getUsers(String id) {

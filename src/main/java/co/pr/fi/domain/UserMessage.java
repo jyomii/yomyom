@@ -23,7 +23,18 @@ public class UserMessage {
  // 보낸유저키값 
  private int mgSend;
 
- public int getMgKey() {
+ 
+ 
+ @Override
+public String toString() {
+	return "UserMessage [mgKey=" + mgKey + ", mgSort=" + mgSort + ", mgContent=" + mgContent + ", mgDate=" + mgDate
+			+ ", mgReceive=" + mgReceive + ", mgSend=" + mgSend + ", getMgKey()=" + getMgKey() + ", getMgSort()="
+			+ getMgSort() + ", getMgContent()=" + getMgContent() + ", getMgDate()=" + getMgDate() + ", getMgReceive()="
+			+ getMgReceive() + ", getMgSend()=" + getMgSend() + ", getClass()=" + getClass() + ", hashCode()="
+			+ hashCode() + ", toString()=" + super.toString() + "]";
+}
+
+public int getMgKey() {
      return mgKey;
  }
 

@@ -2,16 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Admin">
-	
+
+<insert id="sendMessage" parameterType="usermessage">
+
+insert into usermessage values(nvl((select max(mgkey) from
+		usermessage)+1,0), #{mgSort}, #{mgContent}, sysdate, #{mgReceive},#{mgSend})
+</insert>
+
+<delete id="deleteGroupMember">
+delete from ggroupmember where groupKey = #{groupKey}
+</delete>
+
+<delete id="negativeGroup">
+delete from ggroup where groupKey = #{groupKey}
+</delete>
+<update id="acceptGroup" parameterType="int">
+	update ggroup set groupstatus = 0 where groupKey = #{groupKey}
+</update>
+
+	<select id="getAllGroupList" parameterType="group"
+		resultType="group">
+	   <![CDATA[ 
+	 SELECT * FROM (
+				SELECT b.*,
+				( 
+
+					SELECT dcategoryname || ':'  || SCATEGORYNAME categoryName
+							
+							FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
+							gcategory.dcategorykey and scategorykey = b.categoryKey
+					
+					) categoryName,
+					
+					
+					( 
+					SELECT SWHERE ||' ' ||  DWHERE LocationName
+									 FROM GLOCATION WHERE LOCATIONKEY = b.whereKey
+					) LocationName,
+									
+									
+					( 
+					SELECT count(*)
+									 FROM ggroupmember WHERE groupKey = b.groupKey
+					) memberCount,
+				
+				
+				 rownum rnum
+				FROM (SELECT * from ggroup where groupstatus = #{type} order by groupdate desc) b)
+				WHERE RNUM >= #{startrow} and rnum <= #{endrow}     
+	]]>
+	</select>
+
+	<select id="getGroupListCount" parameterType="int"
+		resultType="int">
+		select count(*) from ggroup where groupstatus = #{type}
+	</select>
+
+
+
 	<delete id="deleteNotice" parameterType="map">
-	delete from usermessage where mgkey in 
-	<foreach collection="key" open="(" close=")" separator="," item="item">
-	#{item}
-	</foreach>
-	
+		delete from usermessage where mgkey in
+		<foreach collection="key" open="(" close=")" separator=","
+			item="item">
+			#{item}
+		</foreach>
+
 	</delete>
-	
-	<select id="getNotice" parameterType="map" resultType="usermessage">
+
+	<select id="getNotice" parameterType="map"
+		resultType="usermessage">
 		  <![CDATA[ 
 			  SELECT * FROM (
 				SELECT b.*, rownum rnum
@@ -22,97 +81,34 @@
 
 
 
-	<insert id="newNotice" parameterType="String">
-	insert into usermessage values(nvl((select max(mgkey) from usermessage)+1,0),0, #{message}, sysdate, 0,0)
-	</insert>
 
-
- 	<delete id="deleteRequestCategory" parameterType="map">
- 		delete from requestcategory where dname = #{dname} 
- 		<if test="sname != null">
- 		and sname = #{sname}
- 		</if>
- 	</delete>
-
-	<select id="getRequestCategory" resultType="requestcategory">
-	  <![CDATA[ 
-	select * from (select  dname,sname,count(*) requestkey
-	from requestcategory 
-	 group by(sname,dname) order by count(*) desc )
-	 where rownum <= 10
-	 	]]>
-	</select>
-	
-	
-	
-	
-	<insert id="addDCategory" parameterType="String">
-		insert into gcategory values((select NVL(MAX(DCATEGORYKEY),0) FROM gcategory)+1, #{dname})
-		
-		<selectKey resultType="Integer" order="AFTER"> 
-		SELECT dcategorykey FROM gcategory where dcategoryname = #{dname}
-		</selectKey>
-
-	</insert>
-
-	<insert id="addSCategory" parameterType="map">
-	insert into gcategory2 values((select NVL(MAX(SCATEGORYKEY),0) FROM gcategory2)+1, #{dkey}, #{sname})
-	</insert>
-
-	<select id="isDCategory" parameterType="String" resultType="int">
-		SELECT dcategorykey
-		FROM  GCATEGORY WHERE  dcategoryname=#{dname}
-	</select>
-	
-	<select id="isCategory" parameterType="map"  resultType="int">
-		SELECT count(*)
-		FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
-		gcategory.dcategorykey and SCATEGORYNAME=#{sname} and dcategoryname=#{dname}
-	</select>
-
-
-	<delete id="getAdminCategoryDelete" parameterType="int">
-	DELETE FROM GCATEGORY2 WHERE SCATEGORYKEY = #{skey}
-	</delete>
-	
-	<select id="getAdminD_SCategoryCount" parameterType="int" resultType="int">
-	SELECT count(*)  FROM GCATEGORY2  WHERE dcategorykey = #{dkey}
-	</select>
-
-
-	<select id="getAdminCategory" resultType="gcategoryname">
-		SELECT scategorykey, gcategory2.dcategorykey dcategorykey,
-		dcategoryname dname,SCATEGORYNAME sname
-		FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
-		gcategory.dcategorykey
-
-	</select>
 
 
 
 	<select id="AdminPolice" resultType="policeResult">
-		SELECT reciveuserkey userkey, (select userid from gusers where reciveuserkey
-		= userkey) userid,count(*) count FROM USERPOLICE GROUP BY
-		reciveuserkey order by count(*) desc
+		SELECT reciveuserkey
+		userkey, (select userid from gusers where reciveuserkey
+		= userkey)
+		userid,count(*) count FROM USERPOLICE GROUP BY
+		reciveuserkey order by
+		count(*) desc
 	</select>
 
 	<select id="AdminSearchUser" parameterType="String"
 		resultType="member">
-		select * from gusers where userid like '%' || #{keyword} || '%' and userkey > 0
+		select * from gusers where userid like '%' || #{keyword} ||
+		'%' and userkey > 0
 	</select>
 
 
 	<select id="admindeleteUser" parameterType="String"
 		resultType="int">
-		update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate where userid =
+		update gusers set USERSTATUS = 2, USERSTATUSCODE = sysdate
+		where userid =
 		#{id}
 	</select>
 
-	<select id="getadminusercategory" parameterType="String"
-		resultType="String">
-		SELECT SCATEGORYNAME FROM GUSERCATEGORY,GCATEGORY2 WHERE USERKEY = #{key}
-		AND gcategory2.scategorykey = gusercategory.categorykey
-	</select>
+
 
 	<select id="getAllUserList" parameterType="Map"
 		resultType="member">
@@ -132,18 +128,22 @@
 	</select>
 
 	<select id="getListCount" parameterType="int" resultType="int">
-		select count(*) from gusers where userStatus = #{type} and userkey > 0
+		select
+		count(*) from gusers where userStatus = #{type} and userkey > 0
 	</select>
 
 
 	<select id="getStatisticsAge" resultType="statisticsAge">
-		select agevalue age, count(*) value from gusers, gage where agekey = userage
-		group by agevalue
+		select agevalue age,
+		count(*) value from gusers, gage where agekey = userage
+		group by
+		agevalue
 	</select>
 
 	<select id="getStatisticsLocation"
 		resultType="statisticsLocation">
-		select swhere location, count(userlocation) value from glocation,gusers
+		select swhere location, count(userlocation) value from
+		glocation,gusers
 		where
 		locationkey = userlocation group by swhere
 	</select>

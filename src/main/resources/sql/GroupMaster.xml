@@ -4,9 +4,18 @@
 <mapper namespace="GroupMaster">
 	
 	
-	<insert id="insertGroup" parameterType="ggroup">
+	
+	 
+	<insert id="insertGroup" parameterType="group">
+	
+	
+	 <selectKey keyProperty="groupKey" resultType="Integer" order="BEFORE">
+			select nvl((select max(groupkey) from ggroup)+1,0) from dual
+		</selectKey>
+	 
+	
 	insert into ggroup values(
-	nvl((select max(groupkey) from ggroup)+1,0),
+	#{groupKey},
 	 #{groupName},
 	 #{userKey},
 	 #{ageKey},
@@ -23,7 +32,19 @@
 	#{groupstatus}
 	
 	 )
+	 
+	 
+	 
+	
+	
 	</insert>
+
+	
+	<insert id="insertGroupMember" parameterType="groupmember">
+	insert into ggroupmember values(#{groupKey}, #{userKey}, #{groupNickname}, 
+	#{userGrade})
+	</insert>
+	
 	<select id="checkGroupName" parameterType="String" resultType="int">
 		select count(*) from ggroup where groupName = #{name}
 	</select>
