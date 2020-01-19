@@ -460,34 +460,34 @@
 								<div class="col-lg-3">
 									<aside class="sidebar static">
 										<div class="widget">
-											<h4 class="widget-title">관리자 메뉴</h4>
-											<ul class="naves">
+										<h4 class="widget-title">관리자 메뉴</h4>
+										<ul class="naves">
 											<li>
 												<i class="ti-clipboard"></i>
-												<a href="adminpage.html" title="">통계</a>
+												<a href="admin" title="">통계</a>
 											</li>
 											<li>
 												<i class="fas fa-user"></i>
-												<a href="adminpage2.html" title="">회원</a>
+												<a href="adminusers" title="">회원</a>
 											</li>
 											<li>
 												<i class="fas fa-users"></i>
-												<a href="adminpage3.html" title="">모임</a>
+												<a href="admingroup" title="">모임</a>
 											</li>
 											
 											<li>
 												<i class="fas fa-align-justify"></i>
-												<a href="adminpage4.html" title="">카테고리</a>
+												<a href="admincategory" title="">카테고리</a>
 											</li>
 											
 											<li>
 												<i class="fas fa-clipboard"></i>
-												<a href="adminpage5.html" title="">공지사항</a>
+												<a href="adminnotice" title="">공지사항</a>
 											</li>
 											
 										</ul>
-										</div>
-										<!-- recent activites -->
+									</div>
+									<!-- 관리자 메뉴 -->
 
 
 									</aside>

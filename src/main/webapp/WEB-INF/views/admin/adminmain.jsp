@@ -459,7 +459,7 @@
 											</li>
 											<li>
 												<i class="fas fa-users"></i>
-												<a href="adminpage3.html" title="">모임</a>
+												<a href="admingroup" title="">모임</a>
 											</li>
 											
 											<li>
@@ -474,7 +474,7 @@
 											
 										</ul>
 									</div>
-									<!-- recent activites -->
+									<!-- 관리자 메뉴 -->
 									
 									<!-- who's following -->
 								</aside>
