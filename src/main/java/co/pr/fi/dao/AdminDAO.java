@@ -7,11 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import co.pr.fi.domain.GCategoryName;
-import co.pr.fi.domain.GUserCategory;
+import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.PoliceResult;
-import co.pr.fi.domain.RequestCategory;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
 import co.pr.fi.domain.StatisticsJoinDate;
@@ -53,10 +51,7 @@ public class AdminDAO {
 		return sqlSession.selectList("Admin.getAllUserList", list);
 	}
 
-	public List<String> getAdminusercategory(String id) {
-		
-		return sqlSession.selectList("Admin.getadminusercategory",id);
-	}
+	
 
 	public int AdmindeleteUser(String id) {
 		
@@ -73,40 +68,7 @@ public class AdminDAO {
 		return sqlSession.selectList("Admin.AdminPolice");
 	}
 
-	public List<GCategoryName> getAdminCategory() {
-		return sqlSession.selectList("Admin.getAdminCategory");
-	}
 
-	public int isCategory(Map<String, String> map) {
-		
-		return sqlSession.selectOne("Admin.isCategory",map);
-	}
-
-	public int isDCategory(String dname) {
-		
-		return sqlSession.selectOne("Admin.isDCategory",dname);
-	}
-
-	public int addSCategory(Map<String, Object> map) {
-		return sqlSession.insert("Admin.addSCategory",map);
-	}
-
-	public int addDCategory(String dname) {
-		return sqlSession.insert("Admin.addDCategory",dname);
-	}
-
-	public List<RequestCategory> getRequestCategory() {
-	
-		return sqlSession.selectList("Admin.getRequestCategory");
-	}
-
-	public int deleteRequestCategory(Map<String, String> list) {
-		return sqlSession.delete("Admin.deleteRequestCategory",list);
-	}
-
-	public int addNotice(String newNotice) {
-		return sqlSession.insert("Admin.newNotice",newNotice);
-	}
 
 	public List<UserMessage> getNotice(Map<String, Integer> list) {
 		return sqlSession.selectList("Admin.getNotice",list);
@@ -115,6 +77,33 @@ public class AdminDAO {
 	public int deleteNotice(Map<String, Object> list) {
 	
 		return sqlSession.delete("Admin.deleteNotice",list);
+	}
+
+	public List<GGroup> getAllGroupList(Map<String, Integer> list) {
+		
+		return sqlSession.selectList("Admin.getAllGroupList", list);
+	}
+
+	public int getGroupListCount(int type) {
+		
+		return sqlSession.selectOne("Admin.getGroupListCount", type);
+	}
+
+	public int acceptGroup(int key) {
+		
+		return sqlSession.update("Admin.acceptGroup", key);
+	}
+
+	public int negativeGroup(int key) {
+		return sqlSession.delete("Admin.negativeGroup", key);
+	}
+
+	public int deleteGroupMember(int key) {
+		return sqlSession.delete("Admin.deleteGroupMember", key);
+	}
+
+	public int sendMessage(UserMessage message) {
+		return sqlSession.insert("Admin.sendMessage", message);
 	}
 
 

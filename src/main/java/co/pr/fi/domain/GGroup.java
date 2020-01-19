@@ -50,8 +50,39 @@ public class GGroup {
  //모임 상태
  private int groupstatus;
  
-
+ //모임 회원수(조인)
+ private int memberCount;
  
+ //모임 카테고리 이름(조인)
+ private String categoryName; 
+ 
+ //모임 지역 이름(조인)
+ private String locationName; 
+ 
+public String getLocationName() {
+	return locationName;
+}
+
+public void setLocationName(String locationName) {
+	this.locationName = locationName;
+}
+
+public int getMemberCount() {
+	return memberCount;
+}
+
+public void setMemberCount(int memberCount) {
+	this.memberCount = memberCount;
+}
+
+public String getCategoryName() {
+	return categoryName;
+}
+
+public void setCategoryName(String categoryName) {
+	this.categoryName = categoryName;
+}
+
 public int getGroupstatus() {
 	return groupstatus;
 }

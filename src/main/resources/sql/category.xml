@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="category">
+	<select id="getadminusercategory" parameterType="String"
+		resultType="String">
+		SELECT SCATEGORYNAME FROM GUSERCATEGORY,GCATEGORY2 WHERE
+		USERKEY = #{key}
+		AND gcategory2.scategorykey =
+		gusercategory.categorykey
+	</select>
+
+
+
+
+	<select id="getAdminCategory" resultType="gcategoryname">
+		SELECT scategorykey,
+		gcategory2.dcategorykey dcategorykey,
+		dcategoryname dname,SCATEGORYNAME
+		sname
+		FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
+		gcategory.dcategorykey
+
+	</select>
+
+
+
+	<delete id="getAdminCategoryDelete" parameterType="int">
+		DELETE FROM
+		GCATEGORY2 WHERE SCATEGORYKEY = #{skey}
+	</delete>
+
+
+	<delete id="deleteRequestCategory" parameterType="map">
+		delete from requestcategory where dname = #{dname}
+		<if test="sname != null">
+			and sname = #{sname}
+		</if>
+	</delete>
+
+
+	<select id="getRequestCategory" resultType="requestcategory">
+	  <![CDATA[ 
+	select * from (select  dname,sname,count(*) requestkey
+	from requestcategory 
+	 group by(sname,dname) order by count(*) desc )
+	 where rownum <= 10
+	 	]]>
+	</select>
+
+
+
+	
+	<insert id="addDCategory" parameterType="dcategory">
+	<selectKey keyProperty="dCategoryKey" resultType="int" order="BEFORE">
+			select nvl((select max(dCategoryKey) from gcategory)+1,0) from dual
+		</selectKey>
+	 
+	
+		insert into gcategory values(#{dCategoryKey}, #{dCategoryName})
+
+
+	</insert>
+
+	<insert id="addSCategory" parameterType="map">
+		insert into gcategory2
+		values((select NVL(MAX(SCATEGORYKEY),0) FROM
+		gcategory2)+1, #{dkey},
+		#{sname})
+	</insert>
+
+	<select id="isDCategory" parameterType="String" resultType="int">
+		SELECT dcategorykey
+		FROM GCATEGORY WHERE dcategoryname=#{dname}
+	</select>
+
+	<select id="isCategory" parameterType="map" resultType="int">
+		SELECT
+		count(*)
+		FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
+		gcategory.dcategorykey and SCATEGORYNAME=#{sname} and
+		dcategoryname=#{dname}
+	</select>
+
+
+	<insert id="UserRequestCategory" parameterType="requestcategory">
+		INSERT INTO
+		REQUESTCATEGORY VALUES(nvl(
+		(SELECT MAX(REQUESTKEY) FROM
+		REQUESTCATEGORY)+1,0),
+		#{dname},
+		#{sname},
+		#{userkey}
+		)
+	</insert>
+
+	<select id="alreadyRequestCategory"
+		parameterType="requestcategory" resultType="int">
+		select count(*) from REQUESTCATEGORY where dname= #{dname} and
+		<choose>
+		<when test="sname==null">
+		sname is null
+		</when>
+		<otherwise>
+		sname = #{sname} 
+		</otherwise>
+		</choose>
+		
+		and userkey = #{userkey}
+	</select>
+
+
+	<insert id="insertcategory" parameterType="Map">
+		<selectKey order="BEFORE" keyProperty="userkey"
+			resultType="int">
+			select userkey from gusers where userid= #{id}
+		</selectKey>
+		insert all
+		<foreach item="item" index="index" collection="list">
+			into
+			gusercategory values(#{userkey},#{item})
+		</foreach>
+		select * from dual
+	</insert>
+
+	<select id="getdcategory" resultType="dcategory">
+		SELECT * FROM gcategory
+	</select>
+
+	<select id="getscategory" resultType="scategory">
+		SELECT * FROM gcategory2
+	</select>
+
+
+
+
+</mapper>

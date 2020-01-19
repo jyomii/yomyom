@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategoryName;
+import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.RequestCategory;
@@ -24,20 +26,57 @@ import co.pr.fi.domain.StatisticsJoinDate;
 import co.pr.fi.domain.StatisticsLocation;
 import co.pr.fi.domain.UserMessage;
 import co.pr.fi.service.AdminService;
+import co.pr.fi.service.CategoryService;
 
 @Controller
 public class AdminController {
+
 	@Autowired
 	AdminService adminService;
 
+	@Autowired
+	CategoryService categoryService;
+
 	@ResponseBody
 	@PostMapping("/deleteNotice")
-	//개힘들었다...ajax로 배열 데이터 받을떄 이렇게 받아야함..ㅠㅠ
-	public int deleteNotice(@RequestParam(value="key[]") List<Integer> key) {
+	// 개힘들었다...ajax로 배열 데이터 받을떄 이렇게 받아야함..ㅠㅠ
+	public int deleteNotice(@RequestParam(value = "key[]") List<Integer> key) {
 
-		
 		return adminService.deleteNotice(key);
 
+	}
+	
+	
+	
+	//모임장에게 관리자가 메세지 보내기
+	@ResponseBody
+	@PostMapping("/SendUserMessage")
+	public int SendUserMessage(UserMessage message) {
+		
+		message.setMgSend(0);
+		message.setMgSort("D"); //쪽지 D: 일반 메세지
+	
+		return adminService.sendMessage(message);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/negativeGroup")
+	public int negativeGroup(int key) {
+		
+		if(adminService.deleteGroupMember(key) == 1) 
+		return adminService.negativeGroup(key);
+		else
+		return 0;
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/acceptGroup")
+	public int acceptGroup(int key) {
+		
+		return adminService.acceptGroup(key);
+		
 	}
 
 	@ResponseBody
@@ -50,7 +89,14 @@ public class AdminController {
 	@PostMapping("/newNotice")
 	public void newNotice(String newNotice, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/html; charset=utf-8");
-		int result = adminService.addNotice(newNotice);
+		
+		UserMessage message = new UserMessage();
+		message.setMgContent(newNotice);
+		message.setMgSend(0);
+		message.setMgSort("N");
+		message.setMgReceive(0); //공지사항 받는사람 0으로 처리함 일단
+		
+		int result = adminService.sendMessage(message);
 		PrintWriter out = resp.getWriter();
 		if (result == 1) {
 			out.println("<script>alert('추가되었습니다.'); location.href='adminnotice';</script>");
@@ -80,7 +126,12 @@ public class AdminController {
 
 		int result;
 		if (sname.equals("") || sname == null) {
-			result = adminService.addDCategory(dname);
+			GCategory c = new GCategory();
+			c.setDCategoryName(dname);
+
+			categoryService.addDCategory(c);
+
+			result = c.getDCategoryKey();
 		} else {
 			result = addCategory(sname, dname);
 		}
@@ -88,7 +139,7 @@ public class AdminController {
 		if (result > 0) {
 
 			// 해당 요청 삭제
-			return adminService.deleteRequestCategory(sname, dname);
+			return categoryService.deleteRequestCategory(sname, dname);
 
 		} else {
 			return 0;
@@ -98,7 +149,7 @@ public class AdminController {
 
 	public int addCategory(String sname, String dname) {
 		// 대분류/소분류 있는지 여부 확인
-		int isCategory = adminService.isCategory(sname, dname);
+		int isCategory = categoryService.isCategory(sname, dname);
 
 		if (isCategory == 1) {
 			// 이미 있는 카테고리
@@ -108,18 +159,22 @@ public class AdminController {
 			// 없는 카테고리
 
 			// 대분류 코드 가져오기
-			int isDCategory = adminService.isDCategory(dname);
+			int isDCategory = categoryService.isDCategory(dname);
 
 			// 대분류 코드가 있으면 바로 gcategory2 테이블에 추가
 			if (isDCategory > 0) {
 
-				return adminService.addSCategory(isDCategory, sname);
+				return categoryService.addSCategory(isDCategory, sname);
 
 			} else {
 
 				// 없으면 대분류 코드 만들고 gcategory2 테이블에 추가
-				int dkey = adminService.addDCategory(dname);
-				return adminService.addSCategory(dkey, sname);
+				GCategory c = new GCategory();
+				c.setDCategoryName(dname);
+				categoryService.addDCategory(c);
+				
+				int dkey = c.getDCategoryKey();
+				return categoryService.addSCategory(dkey, sname);
 
 			}
 
@@ -139,9 +194,9 @@ public class AdminController {
 	public ModelAndView AdminCategory(ModelAndView mv) {
 
 		// 모든 카테고리 항목 불러오기
-		List<GCategoryName> list = adminService.getAdminCategory();
+		List<GCategoryName> list = categoryService.getAdminCategory();
 		// 카테고리 요청목록 불러오기
-		List<RequestCategory> listCategory = adminService.getRequestCategory();
+		List<RequestCategory> listCategory = categoryService.getRequestCategory();
 		mv.addObject("categorylist", list);
 		mv.addObject("listCategory", listCategory);
 		mv.setViewName("admincategory");
@@ -172,7 +227,7 @@ public class AdminController {
 	@PostMapping("/adminusercategory")
 	public List<String> getAdminusercategory(String id) {
 
-		List<String> list = adminService.getAdminusercategory(id);
+		List<String> list = categoryService.getAdminusercategory(id);
 
 		return list;
 
@@ -197,6 +252,29 @@ public class AdminController {
 	}
 
 	// ModelAndView
+
+	@GetMapping("/admingroup")
+	public ModelAndView adminGroup(ModelAndView mv) {
+
+		// 한 페이지에 보여줄 갯수
+		int limit = 10;
+		// 현재 페이지
+		int page = 1;
+
+		int d_listCount = adminService.getGroupListCount(0);
+		int r_listCount = adminService.getGroupListCount(1);
+
+		List<GGroup> defaultGroup = adminService.getAllGroupList(0, page, limit);
+		List<GGroup> requestGroup = adminService.getAllGroupList(1, page, limit);
+
+		mv.setViewName("admingroup");
+		mv.addObject("d_listCount", d_listCount);
+		mv.addObject("r_listCount", r_listCount);
+		mv.addObject("defaultGroup", defaultGroup);
+		mv.addObject("requestGroup", requestGroup);
+
+		return mv;
+	}
 
 	@GetMapping("/adminusers")
 	public ModelAndView adminusers(ModelAndView mv, @RequestParam(value = "type", defaultValue = "1") int type,

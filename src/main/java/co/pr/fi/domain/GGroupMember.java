@@ -13,7 +13,7 @@ public class GGroupMember {
  private String groupNickname;
 
  // 유저등급 
- private int userGrade;
+ private int userGrade; //일반: 0 // 모임장: 1 // 모임가입예정 : -1
 
  public int getGroupKey() {
      return groupKey;

@@ -1,10 +1,7 @@
 package co.pr.fi.service;
 
 import java.util.List;
-import java.util.Map;
 
-import co.pr.fi.domain.GCategory;
-import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
 
@@ -16,13 +13,10 @@ public interface MemberService {
 
 	List<GLocation> getLocationList();
 
-	List<GCategory> getDCategory();
-
-	List<GCategory2> getSCategory();
+	
 
 	int joinUser(GUsers guser);
 
-	int insertUserCategory(Map<String, Object> usercategory);
 
 	GUsers getUsers(String id);
 

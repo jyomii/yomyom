@@ -22,7 +22,8 @@
 		<typeAlias alias="gcategoryname" type="co.pr.fi.domain.GCategoryName" />
 		<typeAlias alias="requestcategory" type="co.pr.fi.domain.RequestCategory" />
 		<typeAlias alias="usermessage" type="co.pr.fi.domain.UserMessage" />
-		<typeAlias alias="ggroup" type="co.pr.fi.domain.GGroup" />
+		<typeAlias alias="groupmember" type="co.pr.fi.domain.GGroupMember" />
+		
 		
 		
 		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />
@@ -36,5 +37,6 @@
 		<mapper resource="sql/Admin.xml"></mapper>
 		<mapper resource="sql/GroupMaster.xml"></mapper>
 		<mapper resource="sql/group.xml"></mapper>
+		<mapper resource="sql/category.xml"></mapper>
 	</mappers>
 </configuration>

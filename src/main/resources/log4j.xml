@@ -25,6 +25,17 @@
 		<level value="trace" />
 	</logger>
 	
+	<!-- requestcategory -->
+	<logger name = "category">
+		<level value = "trace"/>
+	</logger>
+	
+	<!-- groupmaster -->
+	<logger name = "GroupMaster">
+		<level value = "trace"/>
+	</logger>
+	
+	
 	<!-- Application Loggers -->
 	<logger name="co.pr.fi">
 		<level value="info" />
