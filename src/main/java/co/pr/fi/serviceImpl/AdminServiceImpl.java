@@ -27,12 +27,24 @@ public class AdminServiceImpl implements AdminService {
 	public List<StatisticsAge> statisticsAge() {
 		return dao.statisticsAge();
 	}
+	
+	@Override
+	public List<StatisticsAge> statisticsGAge() {
+		return dao.statisticsGAge();
+	}
+	
 
 	@Override
 	public List<StatisticsLocation> statisticsLocation() {
 		return dao.statisticsLocation();
 	}
 
+	@Override
+	public List<StatisticsLocation> statisticsgLocation() {
+		return dao.statisticsgLocation();
+	}
+	
+	
 	@Override
 	public List<co.pr.fi.domain.StatisticsJoinDate> StatisticsJoinDate() {
 
@@ -151,8 +163,22 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int sendMessage(UserMessage message) {
-		return dao.sendMessage(message);
+	public List<StatisticsCategory> statisticsUCategory() {
+		return dao.statisticsUCategory();
 	}
+
+	@Override
+	public int setUserStatus(String id, int status) {
+		 Map<String, Object> list = new HashMap<String, Object>();
+		 list.put("id", id);
+		 list.put("status", status);
+		return dao.setUserStatus(list);
+	}
+
+
+
+
+
+	
 
 }

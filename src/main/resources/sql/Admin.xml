@@ -3,11 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Admin">
 
-<insert id="sendMessage" parameterType="usermessage">
-
-insert into usermessage values(nvl((select max(mgkey) from
-		usermessage)+1,0), #{mgSort}, #{mgContent}, sysdate, #{mgReceive},#{mgSend})
-</insert>
+<update id="setUserStatus" parameterType="map">
+update gusers set userstatus = #{status} where userid = #{id}
+</update>
 
 <delete id="deleteGroupMember">
 delete from ggroupmember where groupKey = #{groupKey}
@@ -139,6 +137,14 @@ delete from ggroup where groupKey = #{groupKey}
 		group by
 		agevalue
 	</select>
+	
+	<select id="getStatisticsGAge" resultType="statisticsAge">
+		select agevalue age,
+		count(*) value from ggroup, gage where ggroup.ageKey = gage.ageKey
+		group by
+		agevalue
+		
+	</select>
 
 	<select id="getStatisticsLocation"
 		resultType="statisticsLocation">
@@ -146,6 +152,13 @@ delete from ggroup where groupKey = #{groupKey}
 		glocation,gusers
 		where
 		locationkey = userlocation group by swhere
+	</select>
+	
+	<select id="statisticsgLocation" resultType="statisticsLocation">
+		select swhere location, count(whereKey) value from
+		glocation,ggroup
+		where
+		locationkey = whereKey group by swhere
 	</select>
 
 
@@ -164,6 +177,15 @@ delete from ggroup where groupKey = #{groupKey}
 	 <![CDATA[ 
 	select category, value from (select scategoryname category, count(scategoryname) 
 	value from gcategory2,ggroup where CATEGORYKEY = SCATEGORYKEY 
+	group by scategoryname order by count(scategoryname) desc) 
+	where rownum <10
+	]]>
+	</select>
+	
+	<select id="statisticsUCategory" resultType="statisticsCategory">
+	 <![CDATA[ 
+	select category, value from (select scategoryname category, count(scategoryname) 
+	value from gcategory2,gusercategory where CATEGORYKEY = SCATEGORYKEY 
 	group by scategoryname order by count(scategoryname) desc) 
 	where rownum <10
 	]]>

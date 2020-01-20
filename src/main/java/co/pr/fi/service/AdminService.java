@@ -40,7 +40,7 @@ public interface AdminService {
 
 	int deleteNotice(List<Integer> key);
 
-	List<GGroup> getAllGroupList(int i, int page, int limit);
+	List<GGroup> getAllGroupList(int type, int page, int limit);
 
 	int getGroupListCount(int i);
 
@@ -50,8 +50,15 @@ public interface AdminService {
 
 	int deleteGroupMember(int key);
 
+	List<StatisticsAge> statisticsGAge();
+
+	List<StatisticsLocation> statisticsgLocation();
+
+	List<StatisticsCategory> statisticsUCategory();
+
+	int setUserStatus(String id, int i);
+
 	
-	int sendMessage(UserMessage message);
 
 
 	

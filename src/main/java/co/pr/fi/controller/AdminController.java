@@ -27,6 +27,7 @@ import co.pr.fi.domain.StatisticsLocation;
 import co.pr.fi.domain.UserMessage;
 import co.pr.fi.service.AdminService;
 import co.pr.fi.service.CategoryService;
+import co.pr.fi.service.MessageService;
 
 @Controller
 public class AdminController {
@@ -36,6 +37,9 @@ public class AdminController {
 
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	MessageService messageService;
 
 	@ResponseBody
 	@PostMapping("/deleteNotice")
@@ -48,6 +52,23 @@ public class AdminController {
 	
 	
 	
+	@ResponseBody
+	@PostMapping("/recoveryUser")
+	public int recoveryUser(String id) {
+		
+		//일반 회원으로 복구
+		return adminService.setUserStatus(id,0);
+		
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/moreGroupList")
+	public List<GGroup> moreGroupList(int page, int type){
+		int limit = 10;
+		return adminService.getAllGroupList(type, page, limit);
+	}
+	
 	//모임장에게 관리자가 메세지 보내기
 	@ResponseBody
 	@PostMapping("/SendUserMessage")
@@ -56,7 +77,7 @@ public class AdminController {
 		message.setMgSend(0);
 		message.setMgSort("D"); //쪽지 D: 일반 메세지
 	
-		return adminService.sendMessage(message);
+		return messageService.sendMessage(message);
 	}
 	
 	
@@ -96,7 +117,7 @@ public class AdminController {
 		message.setMgSort("N");
 		message.setMgReceive(0); //공지사항 받는사람 0으로 처리함 일단
 		
-		int result = adminService.sendMessage(message);
+		int result = messageService.sendMessage(message);
 		PrintWriter out = resp.getWriter();
 		if (result == 1) {
 			out.println("<script>alert('추가되었습니다.'); location.href='adminnotice';</script>");
@@ -236,16 +257,26 @@ public class AdminController {
 	@GetMapping("/admin")
 	public ModelAndView admin1(ModelAndView mv) {
 
-		List<StatisticsAge> age = adminService.statisticsAge();
-		List<StatisticsLocation> location = adminService.statisticsLocation();
-		List<StatisticsJoinDate> joindate = adminService.StatisticsJoinDate();
-		List<StatisticsCategory> category = adminService.statisticsCategory();
-
+		List<StatisticsAge> age = adminService.statisticsAge(); //회원 연령대 통계
+		List<StatisticsLocation> location = adminService.statisticsLocation(); //회원 지역 통계
+		List<StatisticsJoinDate> joindate = adminService.StatisticsJoinDate(); //회원 가입 수 통계
+		
+		List<StatisticsCategory> ucategory = adminService.statisticsUCategory(); //회원 카테고리 통계
+		
+		
+		List<StatisticsCategory> gcategory = adminService.statisticsCategory(); //모임 카테고리 통계
+		List<StatisticsAge> gage = adminService.statisticsGAge(); //모임 연령대 통계 
+		List<StatisticsLocation> glocation = adminService.statisticsgLocation(); //모임 지역 통계 
+		
+		
 		mv.addObject("age", age);
 
 		mv.addObject("location", location);
 		mv.addObject("joindate", joindate);
-		mv.addObject("category", category);
+		mv.addObject("category", gcategory);
+		mv.addObject("ucategory", ucategory);
+		mv.addObject("gage", gage);
+		mv.addObject("glocation", glocation);
 		mv.setViewName("admin/adminmain");
 
 		return mv;
@@ -358,7 +389,7 @@ public class AdminController {
 
 		// 한 페이지에 보여줄 갯수
 		int limit = 10;
-		type = type - 1;
+		type = type -1;
 
 		List<GUsers> allList = null;
 		allList = adminService.getAllUserList(type, page, limit);
