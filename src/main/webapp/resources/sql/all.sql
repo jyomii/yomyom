@@ -538,12 +538,7 @@ ALTER TABLE requestCategory
     ADD CONSTRAINT FK_requestCategory_userkey_g_u FOREIGN KEY (userkey)
         REFERENCES gusers (userkey);
                                                  
-                                                 
-                                                 
- SELECT * FROM (
-				SELECT b.*, rownum rnum
-				FROM (SELECT * from getAllGroupList order by mgDate desc) b)
-				WHERE RNUM >= #{startrow} and rnum <= #{endrow}                                                 
+                                                           
 
 CREATE TABLE ggroup
 (
@@ -1008,18 +1003,18 @@ ALTER TABLE bfile
     ADD CONSTRAINT FKbfilepostkeypostpostk FOREIGN KEY (postkey)
         REFERENCES post (postkey);
         
-  
 
 
 -- glocation Table Create SQL
 CREATE TABLE userpolice
 (
-    policekey           NUMBER     NOT NULL, 
-    userkey             NUMBER     NOT NULL, 
-    policeboardsort    CHAR(1)    NOT NULL, 
-    policenumber        NUMBER     NOT NULL, 
-    policesort          NUMBER     NOT NULL, 
-    reciveuserKey number,
+    policekey           NUMBER     NOT NULL, --자동증가
+    userkey             NUMBER     NOT NULL, --신고한 유저
+    policeboardsort    CHAR(1)    NOT NULL, --글/댓글 여부
+    policenumber        NUMBER     NOT NULL, --글/댓글 번호
+    policesort          NUMBER     NOT NULL, --욕/비방/정치/혐오/공부
+    reciveuserKey number, --신고당한 유저
+    
     CONSTRAINT USERPOLICEPK PRIMARY KEY (policekey)
 );
       
@@ -1063,3 +1058,5 @@ ALTER TABLE userlikegroup
         REFERENCES ggroup (groupkey);
                                                  
                    
+        
+ 
