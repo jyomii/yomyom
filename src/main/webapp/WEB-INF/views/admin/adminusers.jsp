@@ -866,6 +866,20 @@ a.add-butn.more-action {
 												<c:forEach items="${policeResult }" var="item">
 													<li><span>${item.userid }</span>
 														<p>총 ${item.count }번 신고</p>
+														<p>
+														<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    내용 확인
+  </a></p>
+  <div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+  	<br>
+  	<hr>
+  	<br>
+  	   Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+  
+  </div>
+</div>
 														<div></div></li>
 												</c:forEach>
 											</ul>
