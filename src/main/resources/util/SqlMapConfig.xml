@@ -29,7 +29,7 @@
 		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
 		
-		<typeAlias alias = "group" type = "co.pr.fi.domain.GGroup"/>
+		<typeAlias alias="group" type="co.pr.fi.domain.GGroup"/>
 	</typeAliases>
 
 	<mappers>

@@ -796,7 +796,7 @@
 														<span class="status f-online"></span>
 													</figure>
 													<div class="friendz-meta">
-														<a href="G_mem_detail.net?userkey=${userkey}">이지연</a> <i><a
+														<a href="G_mem_detail.net?userKey=${userKey}">이지연</a> <i><a
 															href="https://wpkixx.com/cdn-cgi/l/email-protection"
 															class="__cf_email__"
 															data-cfemail="4136282f352433322e2d25243301262c20282d6f222e2c">모임장</a></i>

@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- group -->
-	<logger name = "Group">
+	<logger name = "group">
 		<level value = "trace"/>
 	</logger>
 	

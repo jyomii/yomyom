@@ -1,8 +1,15 @@
 $(function(){
-	/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴에 대한 색 변경 */
+	var status = 0;	// 어떤 메뉴를 눌렀는지 확인
+	var add = '';	// append시킬 변수 
+	
+	// 처음 회원 상세페이지 접속 시 0(가입한 모임) 전송
+	viewList("${userKey}");
+	
+	/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴에 대한 색 변경 */ 
 	$('.user-active li').click(function(){
 		$('.user-active li').removeClass('selected-menu');
 		$(this).addClass('selected-menu');
+		viewList("${userKey}", $(this).index());	// 선택될 때마다 넘긴다.
 	});
 	
 	/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴 클릭 시 이동 X */
@@ -10,18 +17,29 @@ $(function(){
 		event.preventDefault();
 	});
 	
-	var doc = '';	// 테이블에 append시킬 변수 
-	
-	function go(send) {
+	function viewList(userkey, status) {
 		$.ajax({
-			type : "GET",
-			url : "",
-			data : {userkey : "${userkey}", },
+			type : "POST",
+			url : "G_mem_detail",
+			data : {userKey : userkey, menu : status},
 			dataType : 'json',
+			cache : false,
 			success : function(data) {
-				
-				var add = signedGroup(data);
-				$('.table.table-responsive').append(add);
+				console.log(data.menu);
+				console.log(data.list);
+				switch (data.menu) {
+					case 0:
+						add = signedGroup(data);
+						break;
+					case 1:
+						add = wroteTitle(data);
+						break;
+					case 2:
+						add = wroteComment(data);
+						break;
+				}
+				$('table').append(add);
+				//$('table').append("<h1>돌겠네</h1>");
 			},
 			error : function(request, status, error) {
 				console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
@@ -29,9 +47,9 @@ $(function(){
 		}); // ajax end
 	}; // function go end
 	
-	
 	/* ##### 가입한 모임 ##### */
-	function signedGroup(data) {
+	function signedGroup (data) {
+		var doc = '';
 		doc += '<thead>';
 		doc += '	<tr>';
 		doc += '		<th scope = "col">name</th>';
@@ -40,28 +58,27 @@ $(function(){
 		doc += '	</tr>';
 		doc += '</thead>';
 		doc += '<tbody>';
-		/* ForEach 반복문 시작 */
-		doc += '	<tr>';
-		doc += '		<td>';
-		// #### img 경로는 추후 변경 ####
-		doc += '			<img src = "uploadfile/${groupdfile}" class = "group-img" alt = "">';
-		doc += '			<a href = "groupin_group_main?groupkey=${groupkey}" title = "">${groupname}</a>';
-		doc += '		</td>';
-		doc += '		<td>';
-		doc += '			${groupcount}명';
-		doc += '		</td>';
-		doc += '		<td>';
-		doc += '			${groupdate}';
-		doc += '		</td>';
-		doc += '	</tr>';
-		/* ForEach 반복문 종료 */
+		$(data.list).each(function(index, item) {
+			doc += '	<tr>';
+			doc += '		<td>';
+			doc += '			<img src = "uploadfile/' + item.groupDFile + '" class = "group-img" alt = "">';
+			doc += '			<a href = "groupin_group_main?groupkey=${groupKey}" title = "">' + item.groupName + '</a>';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.memberCount + '명';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.groupDate;
+			doc += '		</td>';
+			doc += '	</tr>';
+		}); 
 		doc += '</tbody>';
 		return doc;
-	}
-	
+	} // signedGroup end
+
 	function wroteTitle(data) {
+		var doc = '';
 		/* ##### 작성한 글 ##### */
-		doc = '';
 		doc += '<thead>';
 		doc += '	<tr>';
 		doc += '		<th scope = "col">subject</th>';
@@ -82,10 +99,10 @@ $(function(){
 		doc += '</tbody>';
 		return doc;
 	}
-	
+
 	function wroteComment(data) {
+		var doc = '';
 		/* ##### 작성한 댓글 ##### */
-		doc = '';
 		doc += '<thead>';
 		doc += '	<tr>';
 		doc += '		<th scope = "col">Comment</th>';

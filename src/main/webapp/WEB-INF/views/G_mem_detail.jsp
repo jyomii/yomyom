@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>        
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="resources/css/responsive.css">
 	<!-- 제이쿼리 -->
 	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src = "resources/js/g_mem_detail.js"></script>
     <!-- 아이콘 -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<!-- 스타일 추가 -->
@@ -74,6 +76,31 @@
 		.user-active li {
 			color : #545454;
 		}
+		
+		/* style.css에서 테이블에 대한 스타일 원본임 */
+		/*
+		.forum-list table tbody tr td {
+			padding : 20px;
+			text-align : center;
+			width : 100%;
+		}
+		*/
+		.forum-list table tbody tr td {
+			padding : 20px;
+		}
+		
+		.forum-list table tbody tr td:first-child {
+			width : 67%;
+		}
+		
+		.forum-list table tbody tr td:nth-child(2) {
+			text-align : center;
+		}
+		
+		.forum-list table tbody tr td:last-child {
+			text-align : center;
+			width : 23%;
+		}
 	</style>
 	<script>
 		$(function(){
@@ -81,6 +108,7 @@
 			$('.user-active li').click(function(){
 				$('.user-active li').removeClass('selected-menu');
 				$(this).addClass('selected-menu');
+				console.log($(this).index());
 			});
 			
 			$('.user-active a').click(function() {
@@ -118,6 +146,53 @@
 										<th scope="col">date</th>
 									</tr>
 								</thead>
+								<tbody>
+									<c:forEach var = "b" items = "${list}">
+										<tr>
+											<td>
+												<!-- 이미지 어떻ㄱㅔ 가져오는지 몰랑 ㅠ 내일 물어보자 -->
+												<img src = "resources/images/${b.groupDFile}" class = "group-img" alt = "">
+												<!-- 주소 나중에 바꿔야함 -->
+												<a href = "forums-category.html?groupKey=${groupKey}" title = "${b.groupName}">${b.groupName}</a>
+											</td>	
+											<td>${b.memberCount}명</td>
+											<td>${b.groupDate}</td>
+										</tr>
+									</c:forEach>
+										<tr>
+											<td>
+												<img src = "resources/images/test/test.png" class = "group-img" alt = "">
+												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
+											</td>	
+											<td>33명</td>
+											<td>2020-02-10</td>
+										</tr>
+										<tr>
+											<td>
+												<img src = "resources/images/test/test3.png" class = "group-img" alt = "">
+												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
+											</td>	
+											<td>33명</td>
+											<td>2020-02-10</td>
+										</tr>
+										<tr>
+											<td>
+												<img src = "resources/images/test/test2.png" class = "group-img" alt = "">
+												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
+											</td>	
+											<td>33명</td>
+											<td>2020-02-10</td>
+										</tr>
+										<tr>
+											<td>
+												<img src = "resources/images/test/test1.png" class = "group-img" alt = "">
+												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
+											</td>	
+											<td>33명</td>
+											<td>2020-02-10</td>
+										</tr>
+								</tbody>
+							<%--
 								<tbody>
 									<tr>
 										<td>
@@ -248,10 +323,11 @@
 										<td>2019.08.12</td>
 									</tr>
 								</tbody>
+								 --%>
 							</table>
 						</div> 
 						<!-- 작성한 글 리스트 끝 -->
-						--%>
+						
 
 						<%-- 
 						<!-- 작성한 댓글 리스트 -->
