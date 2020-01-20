@@ -140,12 +140,12 @@ public class GroupMasterController {
 
 		// 원데이 클래스 여부
 		if (group.getGroupType() == null) {
-			group.setGroupType("N");
-			group.setGroupstatus(1);
+			group.setGroupType("Y");
+			group.setGroupstatus(0);
 		} else {
 			// 원데이 클래스일 경우 관리자에게 승인을 받아야함
-			group.setGroupstatus(0);
-			group.setGroupType("Y");
+			group.setGroupstatus(1);
+			group.setGroupType("N");
 
 		}
 
@@ -157,7 +157,7 @@ public class GroupMasterController {
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		out.print("<script>");
-		if (group.getGroupKey() > 0) {
+		if (result > 0) {
 			
 			 
 			
@@ -174,14 +174,14 @@ public class GroupMasterController {
 			 
 			groupMasterService.insertGroupMember(member);
 			
-			if (group.getGroupstatus() == 1)
-				out.print("alert('그룹이 생성되었습니다.');");
+			if (group.getGroupstatus() == 0)
+				out.print("alert('모임이 생성되었습니다.');");
 			else
 				out.print("alert('원데이 클래스 모임은 관리자의 승인 후 모임이 생성됩니다.');");
 
 			out.print("location.href='groupCreate';");
 		} else {
-			out.print("alert('그룹 생성에 실패했습니다.');history.back();");
+			out.print("alert('모임 생성에 실패했습니다.');history.back();");
 		}
 		out.print("</script>");
 		out.close();

@@ -26,11 +26,23 @@ public class AdminDAO {
 
 		return sqlSession.selectList("Admin.getStatisticsAge");
 	}
+	
+
+	public List<StatisticsAge> statisticsGAge() {
+		return sqlSession.selectList("Admin.getStatisticsGAge");
+	}
+
 
 	public List<StatisticsLocation> statisticsLocation() {
 
 		return sqlSession.selectList("Admin.getStatisticsLocation");
 	}
+	
+	public List<StatisticsLocation> statisticsgLocation() {
+		return sqlSession.selectList("Admin.statisticsgLocation");
+	}
+	
+	
 
 	public List<StatisticsJoinDate> statisticsJoinDate() {
 
@@ -102,9 +114,19 @@ public class AdminDAO {
 		return sqlSession.delete("Admin.deleteGroupMember", key);
 	}
 
-	public int sendMessage(UserMessage message) {
-		return sqlSession.insert("Admin.sendMessage", message);
+
+	public List<StatisticsCategory> statisticsUCategory() {
+		return sqlSession.selectList("Admin.statisticsUCategory");
 	}
+
+
+	public int setUserStatus(Map<String, Object> list) {
+		return sqlSession.update("Admin.setUserStatus",list);
+	}
+
+
+
+
 
 
 

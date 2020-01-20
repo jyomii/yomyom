@@ -22,7 +22,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 
-
 <style>
 .modal-backdrop {
 	z-index: -1;
@@ -858,30 +857,6 @@ a.add-butn.more-action {
 	});
 	
 	
-	//승인 거부
-	$('.negative').click(function(result){
-		
-		var key = $(this).next().next().val();
-		
-		$.ajax({
-			
-			url : "negativeGroup",
-			data : {"key" : key},
-			method: "post",
-			success : function(result){
-				if(result == 1){
-					alert('모임이 해산되었습니다.');
-					location.href="admingroup";
-				}
-			}
-			
-			
-		});
-		
-	});
-	
-	
-	
 	//모달에 쪽지를 받을 회원키 넣기
 	$(document).on("click", ".usermessage", function(event) {
 
@@ -913,6 +888,138 @@ a.add-butn.more-action {
 		return false;
 		
 	});
+	
+	
+	var page = 1;
+	//더보기 클릭 시 모임목록 가져오기
+	$('.btn-load-more').click(function(){
+		page++;
+		var type = ($(this).index());
+		
+		$.ajax({
+			url : "moreGroupList",
+			method: "post",
+			data : {"page" : page,
+					"type" : type},
+			success : function(result){
+				
+			
+				if (result.length > 0) {
+					var html1 = print(result,type);
+					
+					if(type == 0)
+					$('#frends ul').append(html1);
+					else
+					$('#frends-req ul').append(html1);
+					
+				}
+				
+		
+			}
+			
+		});
+		
+	});
+	
+	
+	function print(list, type){
+
+		var html = "";
+		for (var i = 0; i < list.length; i++) {
+			
+			
+
+			html += '<li>';
+			html += '<div class="nearly-pepls">';
+			html += '<figure>';
+			html += '<a>';
+		
+			if(list[i].groupDFile == null)
+			html += '<img src= "resources/images/resources/photo1.jpg" alt="">';
+			else
+			html += "<img src= \'<spring:url value='/image"+list[i].groupDFile +"'/>\'/>";
+			                                            
+			html += '</a></figure>';
+			
+			
+			html += '<div class="pepl-info">';
+			html += '<h4>';
+			html += '<a title="">'+list[i].groupName+'</a>';
+			html += '</h4><span>'+list[i].categoryName+'/';
+			
+			
+			if(list[i].ageKey == 0)
+				html +='연령대 제한 없음/';
+			else
+				html += (list[i].ageKey*10)+'대/';
+				
+			if(list[i].whereKey == 0)	
+				html +='지역 없음/';
+			else
+				html += list[i].locationName+'/';
+			
+			html += list[i].memberCount +'명';
+			
+			
+			html += '</span>';
+			
+			if(type == 1){
+				//승인예정 모임
+				html += '<a href="#" title=""';
+				html +=	' class="add-butn more-action negative" data-ripple="">거부</a>';
+				
+				html += '<a style="color:white;" class="add-butn accept" data-ripple="">';
+				html += '승인';
+				html += '</a>';
+				html += '	<input type="hidden" value="'+list[i].groupKey+'">';
+			}else{
+				
+				html+=' <a href="#" title="" class="add-butn more-action negative" data-ripple="">모임 해산</a>';
+				html+='  <a href="#"  title="" class="add-butn usermessage" data-toggle="modal" data-target="#exampleModal"';
+	            html+=' data-userKey="'+list[i].userKey+'"';
+												
+	            html+='   >쪽지 보내기</a>';
+	            html+= '<input type="hidden" value="'+list[i].groupKey+'">';
+	           
+			}
+	
+			
+			html += '</div></div></li>';
+			
+		}
+
+		return html;
+
+	}
+	
+	
+	//승인 거부 및 모임 해산
+	$(document).on("click", ".negative", function(event) {
+
+		console.log('check');
+		var key = $(this).next().next().val();
+		console.log(key);
+		$.ajax({
+			
+			url : "negativeGroup",
+			data : {"key" : key},
+			method: "post",
+			success : function(result){
+				if(result == 1){
+					alert('모임이 해산되었습니다.');
+					location.href="admingroup";
+				}
+			}
+			
+			
+		});
+
+	});
+	
+	
+	
+	
+	
 
 	</script>
 </body>

@@ -610,9 +610,8 @@ a.add-butn.more-action {
 																		</c:choose>
 
 																		<a href="javascript:deleteuser('${item.userId }');"
-																			title="" class="add-butn more-action" data-ripple="">탈퇴</a>
-																		<a href="#" title="" class="add-butn" data-ripple="">쪽지
-																			보내기</a>
+																			title="" class="add-butn" data-ripple="">탈퇴</a>
+																	
 																	</div>
 																</div>
 															</li>
@@ -622,9 +621,13 @@ a.add-butn.more-action {
 
 
 													</ul>
-													<div class="lodmore">
-														<button class="btn-view btn-load-more"></button>
-													</div>
+														
+														<button class="btn-view btn-load-more"
+														<c:if test="${glistcount < 10}">
+														 style="visibility:hidden;"
+														</c:if>
+														></button>
+														
 												</div>
 												
 												
@@ -682,7 +685,7 @@ a.add-butn.more-action {
 																			</c:otherwise>
 																		</c:choose>
 
-																		<a href="#" title="" class="add-butn" data-ripple="">복구</a>
+																		<a href="javascript:recoveryUser('${item.userId}')" title="" class="add-butn" data-ripple="">복구</a>
 																	</div>
 																</div>
 															</li>
@@ -690,7 +693,14 @@ a.add-butn.more-action {
 														</c:forEach>
 
 													</ul>
-													<button class="btn-view btn-load-more"></button>
+												
+													<button class="btn-view btn-load-more"
+														<c:if test="${jlistcount < 10}">
+														 style="visibility:hidden;"
+														</c:if>
+													
+													></button>
+													
 												</div>
 												
 												
@@ -757,7 +767,14 @@ a.add-butn.more-action {
 														</c:forEach>
 
 													</ul>
-													<button class="btn-view btn-load-more"></button>
+												
+													<button class="btn-view btn-load-more"
+														<c:if test="${tlistcount < 10}">
+														 style="visibility:hidden;"
+														</c:if>
+													
+													></button>
+												
 												</div>
 												
 												
@@ -817,7 +834,7 @@ a.add-butn.more-action {
 																			</c:otherwise>
 																		</c:choose>
 
-																		<a href="#" title="" class="add-butn" data-ripple="">복구</a>
+																		<a href="javascript:recoveryUser('${item.userId}')" title="" class="add-butn" data-ripple="">복구</a>
 																	</div>
 																</div>
 															</li>
@@ -825,7 +842,14 @@ a.add-butn.more-action {
 														</c:forEach>
 
 													</ul>
-													<button class="btn-view btn-load-more"></button>
+													
+													<button class="btn-view btn-load-more"
+													<c:if test="${stoplistcount < 10}">
+														  style="visibility:hidden;"
+														</c:if>
+													
+													></button>
+												
 												</div>
 											</div>
 										</div>
@@ -1100,8 +1124,11 @@ a.add-butn.more-action {
 
 		//더보기 버튼 클릭 시
 		$('.btn-load-more').click(function() {
-			type = ($(this).index())+1;
+			 
+			
+			type = ($(".btn-load-more").index(this))+1;
 
+			//search 결과에 더보기 버튼 없음
 			// type 1 : 일반 유저 목록 불러오기
 			// type 2 : 탈퇴 예정 목록 불러오기
 			// type 3 : 강제탈퇴 목록 불러오기
@@ -1113,6 +1140,8 @@ a.add-butn.more-action {
 						++page1 : type == 3 ? 
 						++page2 : ++page3
 			};
+			
+			console.log(data);
 
 			//ajax로 목록 불러오기
 			$.ajax({
@@ -1123,22 +1152,34 @@ a.add-butn.more-action {
 					console.log(result);
 
 					var html = print(result);
-
+					var more = (result.length < 10);
+					
+					
 					//일반회원 목록 더불러온거임
 					if (type == 1) {
 
 						$('#frends ul').append(html);
+						if(more)
+						$('#frends .btn-load-more').css('visibility','hidden');
 
 						//탈퇴예정회원 목록 더불러온거임
 					} else if(type == 2){
 
 						$('#frends-req ul').append(html);
+						
+						if(more)
+							$('#frends-req .btn-load-more').css('visibility','hidden');
 					} else if(type == 3){
 
 						$('#taluser ul').append(html);
+						
+						if(more)
+							$('#taluser .btn-load-more').css('visibility','hidden');
 					}else {
 
 						$('#stopuser ul').append(html);
+						if(more)
+							$('#stopuser .btn-load-more').css('visibility','hidden');
 					}
 
 				}
@@ -1185,6 +1226,26 @@ a.add-butn.more-action {
 			});
 
 		});
+		
+
+		//회원 복구
+		function recoveryUser(id){
+			
+			$.ajax({
+				url: "recoveryUser",
+				method: "post",
+				data : {"id" : id},
+				success : function(result){
+					if(result == 1){
+						alert('일반회원으로 복구되었습니다.');
+						location.href="adminusers";
+					
+					}
+				}
+				
+			});
+		}
+		
 
 		//유저 강제탈퇴시키기
 		function deleteuser(id) {
@@ -1244,7 +1305,7 @@ a.add-butn.more-action {
 
 			if (text) {
 				//검색어가 있을 경우 detail 버튼 숨기기
-				$('.btn-load-more').css('display', 'none');
+				$('.btn-load-more').css('visibility','hidden');
 
 				//해당 검색어로 ajax 검색하기
 				$.ajax({
@@ -1270,10 +1331,11 @@ a.add-butn.more-action {
 
 			} else {
 
+			
 				showContent(type);
 
 				//검색어가 없을 경우 detail 버튼 보이기
-				$('.btn-load-more').css('display', 'block');
+				$('.btn-load-more').css('visibility','hidden');
 			}
 
 		});
@@ -1290,6 +1352,8 @@ a.add-butn.more-action {
 				type = 4;
 
 		});
+		
+		
 
 		function showContent(position) {
 
@@ -1346,19 +1410,18 @@ a.add-butn.more-action {
 					html += '<span>정상</span>';
 					html += '<a href="javascript:deleteuser('
 							+ result[i].userId
-							+ ');" title="" class="add-butn more-action"';
+							+ ');" title="" class="add-butn"';
 					html += 'data-ripple="">탈퇴</a> ';
 
-					html += '<a href="#" title=""';
-				html += 'class="add-butn" data-ripple="">쪽지 보내기</a>';
+				
 				} else if (result[i].userStatus == 1) {
 					html += '<span>탈퇴 예정</span>';
-					html += '<a href="#" title="" class="add-butn" data-ripple="">복구</a>';
+					html += '<a href="javascript:recoveryUser('+ result[i].userId+')" title="" class="add-butn" data-ripple="">복구</a>';
 				} else if (result[i].userStatus == 2) {
 					html += '<span>강제 탈퇴</span>';
 				} else {
 					html += '<span>정지</span>';
-					html += '<a href="#" title="" class="add-butn" data-ripple="">복구</a>';
+					html += '<a href="javascript:recoveryUser('+ result[i].userId+')" title="" class="add-butn" data-ripple="">복구</a>';
 				}
 
 				html += '</div>';

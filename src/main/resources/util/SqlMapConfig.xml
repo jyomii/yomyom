@@ -33,6 +33,7 @@
 	</typeAliases>
 
 	<mappers>
+		<mapper resource="sql/message.xml"></mapper>
 		<mapper resource="sql/member.xml"></mapper>
 		<mapper resource="sql/Admin.xml"></mapper>
 		<mapper resource="sql/GroupMaster.xml"></mapper>

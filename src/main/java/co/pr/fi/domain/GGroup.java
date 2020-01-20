@@ -42,13 +42,13 @@ public class GGroup {
  private String groupPrivate;
 
  // 모임타입 
- private String groupType;
+ private String groupType; // y : 원데이  n : 일반
 
  // 모임 설립일,,
  private Date groupDate;
  
  //모임 상태
- private int groupstatus;
+ private int groupstatus; // 0 : 일반 1 : 승인예정
  
  //모임 회원수(조인)
  private int memberCount;
