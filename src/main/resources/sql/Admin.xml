@@ -3,13 +3,56 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Admin">
 
+
+
+<insert id="insert_deleteFile" parameterType="String">
+	insert into delete_File values(#{before_file})
+	</insert>
+	
+	<select id="selectDeletelist" resultType="String">
+	select * from delete_File
+	</select>
+	
+	<delete id="deleteList">
+	delete from delete_File
+	</delete>
+	
+	
+	
+<update id="stopCancelUsers">
+update gusers set userstatuscode = null, userstatus = 0 
+where userstatus = 3 and ROUND((sysdate-userstatuscode)*24*60) > 30
+</update>
+
+<delete id="deletePolice" parameterType="int">
+delete from userpolice where reciveuserKey  = #{userkey}
+</delete>
+
+
+<select id="policeMDetail" parameterType="int" resultType="policeDetail">
+  select distinct policeboardsort,policenumber,commentcontent postcontent
+   from userpolice, gcomment 
+   where reciveuserKey = 0 and policeboardsort = 'M' 
+   and reciveuserKey = gcomment.userkey 
+   and commnetnum in (policenumber)
+    
+</select>
+<select id="policeBDetail" parameterType="int" resultType="policeDetail">
+  select distinct policeboardsort, policenumber,postcontent 
+  from userpolice,post 
+  where reciveuserKey = #{userkey} and policeboardsort = 'B' 
+  and reciveuserKey = post.userkey and postkey in (policenumber)
+</select>
+
 <update id="setUserStatus" parameterType="map">
 update gusers set userstatus = #{status} where userid = #{id}
 </update>
 
-<delete id="deleteGroupMember">
-delete from ggroupmember where groupKey = #{groupKey}
-</delete>
+<update id="setUserStatusDate">
+update gusers set userstatuscode = sysdate where userid = #{id}
+</update>
+
+
 
 <delete id="negativeGroup">
 delete from ggroup where groupKey = #{groupKey}

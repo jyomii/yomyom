@@ -2,7 +2,9 @@ package co.pr.fi.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +21,7 @@ import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategoryName;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceDetail;
 import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.RequestCategory;
 import co.pr.fi.domain.StatisticsAge;
@@ -27,6 +31,7 @@ import co.pr.fi.domain.StatisticsLocation;
 import co.pr.fi.domain.UserMessage;
 import co.pr.fi.service.AdminService;
 import co.pr.fi.service.CategoryService;
+import co.pr.fi.service.MemberService;
 import co.pr.fi.service.MessageService;
 
 @Controller
@@ -37,6 +42,9 @@ public class AdminController {
 
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@Autowired
 	MessageService messageService;
@@ -50,6 +58,41 @@ public class AdminController {
 
 	}
 	
+	
+	//회원 정지시키기
+	@ResponseBody
+	@RequestMapping("/stopUsers")
+	public int stopUsers(String userId) {
+		
+		//정지처리, Status Date 추가
+		if(adminService.setUserStatus(userId,3) == 1) {
+			adminService.setUserStatusDate(userId);
+			
+			//해당 신고내용 삭제
+			GUsers users = memberService.getUsers(userId);
+			return adminService.deletePolice(users.getUserKey());
+			
+			
+			
+		}else {
+			
+			return 0;
+		}
+		
+	}
+	
+	
+	
+	//신고된 내용 상세 확인
+	@ResponseBody
+	@RequestMapping("/policeDetail")
+	public Map<String, List<PoliceDetail>> policeDetail(int userkey) {
+		Map<String, List<PoliceDetail>> result = new HashMap<String, List<PoliceDetail>>();
+		result.put("B", adminService.policeBDetail(userkey));
+		result.put("M", adminService.policeMDetail(userkey));
+		
+		return result;
+	}
 	
 	
 	@ResponseBody
@@ -85,10 +128,9 @@ public class AdminController {
 	@PostMapping("/negativeGroup")
 	public int negativeGroup(int key) {
 		
-		if(adminService.deleteGroupMember(key) == 1) 
+		//모임 이미지,다 지워야함, 회원 탈퇴할때 회원이미지도 지워야함..
 		return adminService.negativeGroup(key);
-		else
-		return 0;
+		
 	}
 	
 	
@@ -239,6 +281,9 @@ public class AdminController {
 		 * status : 0 : 정상 status : 1 : 탈퇴예정 (스스로) status : 2 : 강제탈퇴 (운영자) status : 3 :
 		 * 정지
 		 */
+		
+		//해당 회원 이미지를 휴지통으로 넣기
+		
 
 		return adminService.AdmindeleteUser(id);
 

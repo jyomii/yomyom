@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.RequestCategory;
@@ -179,6 +180,23 @@ public class GroupMasterController {
 			else
 				out.print("alert('원데이 클래스 모임은 관리자의 승인 후 모임이 생성됩니다.');");
 
+			
+			//기본적으로 공지사항 게시판 생성
+			GGroupBoard noticeBoard = new GGroupBoard();
+			noticeBoard.setGroupKey(group.getGroupKey());
+			noticeBoard.setBoardName("공지사항 게시판");
+			noticeBoard.setBoardType("N");
+			
+			groupMasterService.insertGroupBoard(noticeBoard);
+			
+			//기본적으로 모임일정 게시판 생성
+			GGroupBoard groupBoard = new GGroupBoard();
+			groupBoard.setGroupKey(group.getGroupKey());
+			groupBoard.setBoardName("모임 일정 게시판");
+			groupBoard.setBoardType("Y");
+			
+			groupMasterService.insertGroupBoard(groupBoard);
+			
 			out.print("location.href='groupCreate';");
 		} else {
 			out.print("alert('모임 생성에 실패했습니다.');history.back();");
