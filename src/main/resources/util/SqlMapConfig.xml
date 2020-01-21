@@ -30,6 +30,7 @@
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
 		
 		<typeAlias alias="group" type="co.pr.fi.domain.GGroup"/>
+		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
 	</typeAliases>
 
 	<mappers>
