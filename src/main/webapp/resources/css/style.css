@@ -9596,13 +9596,13 @@ button.submit-checkout {
 .forum-list table {
     border: 1px solid #dee2e6;
 }
-
+/*
 .forum-list table tbody tr td {
     padding: 20px;
     text-align: center;
     width: 100%;
 }
-
+*/
 .forum-list table tbody tr td:first-child {
     text-align: left;
 }
