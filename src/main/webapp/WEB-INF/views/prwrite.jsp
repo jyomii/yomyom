@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,23 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-	<title>GROUP IN</title>
-    <link rel="icon" href="resources/images/fav.png" type="image/png" sizes="16x16"> 
+	<title>Winku Social Network Toolkit</title>
+    <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> 
     
     <link rel="stylesheet" href="resources/css/main.min.css">
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="resources/css/color.css">
     <link rel="stylesheet" href="resources/css/responsive.css">
-
-
-<style>
-.basics > li, .education > li {
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 20px;
-    text-transform: none;
- }
-</style>
 
 </head>
 <body>
@@ -74,6 +63,8 @@
 						<li><a href="groups.html" title="">groups page</a></li>
 						<li><a href="page-likers.html" title="">Likes page</a></li>
 						<li><a href="people-nearby.html" title="">people nearby</a></li>
+						
+						
 					</ul>
 				</li>
 				<li><span>Account Setting</span>
@@ -384,7 +375,7 @@
 							</li>
 							<li>
 								<a href="notifications.html" title="">
-									<img src="resources/images/resources/thumb-3.jpg" alt="">
+									<img src="images/resources/thumb-3.jpg" alt="">
 									<div class="mesg-meta">
 										<h6>Andrew</h6>
 										<span>Hi, how r u dear ...?</span>
@@ -447,311 +438,180 @@
 	</div><!-- topbar -->
 	
 	<section>
-		<div class="feature-photo">
-			<figure><img src="resources/images/resources/timeline-1.jpg" alt=""></figure>
-		
-			<form class="edit-phto">
-				<i class="fa fa-camera-retro"></i>
-				<label class="fileContainer">
-					배경 사진 변경
-				<input type="file"/>
-				</label>
-			</form>
-			<div class="container-fluid">
-				<div class="row merged">
-					<div class="col-lg-2 col-sm-3">
-						<div class="user-avatar">
-							<figure>
-								<img src="resources/images/resources/user-avatar.jpg" alt="">
-								<form class="edit-phto">
-									<i class="fa fa-camera-retro"></i>
-									<label class="fileContainer">
-										프로필 사진 변경
-										<input type="file"/>
-									</label>
-								</form>
-							</figure>
+			<div class="feature-photo">
+				<figure><img src="resources/images/resources/timeline-1.jpg" alt=""></figure>
+				<div class="add-btn">
+					<span>1205 followers</span>
+					<a href="#" title="" data-ripple="">Add Friend</a>
+				</div>
+				<form class="edit-phto">
+					<i class="fa fa-camera-retro"></i>
+					<label class="fileContainer">
+						Edit Cover Photo
+					<input type="file"/>
+					</label>
+				</form>
+				<div class="container-fluid">
+					<div class="row merged">
+						<div class="col-lg-2 col-sm-3">
+							<div class="user-avatar">
+								<figure>
+									<img src="resources/images/resources/user-avatar.jpg" alt="">
+									<form class="edit-phto">
+										<i class="fa fa-camera-retro"></i>
+										<label class="fileContainer">
+											Edit Display Photo
+											<input type="file"/>
+										</label>
+									</form>
+								</figure>
+							</div>
 						</div>
-					</div>
-					<div class="col-lg-10 col-sm-9">
-						<div class="timeline-info">
-							<ul>
-								<li class="admin-name">
-								  <h5>이지연</h5>
-								  <span>일반 회원</span>
-								</li>
-								
-							</ul>
+						<div class="col-lg-10 col-sm-9">
+							<div class="timeline-info">
+								<ul>
+									<li class="admin-name">
+									  <h5>Janice Griffith</h5>
+									  <span>Group Admin</span>
+									</li>
+									<li>
+										<a class="" href="time-line.html" title="" data-ripple="">time line</a>
+										<a class="" href="timeline-photos.html" title="" data-ripple="">Photos</a>
+										<a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
+										<a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
+										<a class="" href="groups.html" title="" data-ripple="">Groups</a>
+										<a class="" href="about.html" title="" data-ripple="">about</a>
+										<a class="active" href="#" title="" data-ripple="">more</a>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section><!-- top area -->
-		
-	<section>
-		<div class="gap gray-bg">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="row" id="page-contents">
-							<div class="col-lg-3">
-								<aside class="sidebar static">
-									<div class="widget">
-									<h4 class="widget-title">정보 수정</h4>
-									<ul class="naves">
-										<li>
-											<i class="ti-info-alt"></i>
-											<a title="" class="jungbo">기본 정보</a>
-										</li>
-										<li>
-											<i class="ti-heart"></i>
-											<a title="" class="gss">관심사</a>
-										</li>
-										
-									</ul>
-								</div>
-							<div class="widget">
-											<h4 class="widget-title">최근 참가한 모임</h4>
-											<ul class="activitiez">
-												<li>
-													<div class="activity-meta">
-														<i>2019-12-27</i>
-														<span><a href="#" title="">2019 슬픔의 케이팝 파티</a></span>
-														<h6>by <a href="time-line.html">케즐모</a></h6>
-													</div>
-												</li>
-												<li>
-													<div class="activity-meta">
-														<i>2019-11-19</i>
-														<span><a href="#" title="">남양주 북한강 라이딩 정모</a></span>
-														<h6>by <a href="time-line.html">자연이 좋다!!!</a></h6>
-													</div>
-												</li>
-												<li>
-													<div class="activity-meta">
-														<i>2019-10-30</i>
-														<span><a href="#" title="">알고리즘 스터디</a></span>
-														<h6>by<a href="#">나는 나는 개발자</a></h6>
-													</div>
-												</li>
+		</section><!-- top area -->
+
+			<section>
+			<div class="gap gray-bg">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row" id="page-contents">
+								<div class="col-lg-3">
+									<aside class="sidebar static">
+										<div class="widget">
+											<h4 class="widget-title">카테고리</h4>
+											<ul class="naves">
+												<li><i class="ti-clipboard"></i> <a
+													href="newsfeed.html" title="">운동</a></li>
+												<li><i class="ti-mouse-alt"></i> <a href="inbox.html"
+													title="">공연</a></li>
+												<li><i class="ti-files"></i> <a href="fav-page.html"
+													title="">음악</a></li>
+												<li><i class="ti-user"></i> <a
+													href="timeline-friends.html" title="">취미</a></li>
+												<li><i class="ti-image"></i> <a
+													href="timeline-photos.html" title="">친목</a></li>
+												<li><i class="ti-video-camera"></i> <a
+													href="timeline-videos.html" title="">게임</a></li>
+												<li><i class="ti-video-camera"></i> <a
+													href="timeline-videos.html" title="">공부</a></li>
 											</ul>
-										</div><!-- recent activites -->								
-								</aside>
-							</div><!-- sidebar -->
+										</div>
+										<!-- Shortcuts -->
+
+									</aside>
+								</div><!-- sidebar -->
 							<div class="col-lg-6">
-							<div class="central-meta">
-									<div class="about">
-										<div class="personal">
-											<h5 class="f-title"><i class="ti-info-alt"></i>회원 정보</h5>
-										</div>
-										<div class="d-flex flex-row mt-2">
-											<ul class="nav nav-tabs nav-tabs--vertical nav-tabs--left" >
-												<li class="nav-item">
-													<a href="#basic" class="nav-link active" data-toggle="tab" >기본 정보</a>
-												</li>
-												<li class="nav-item">
-													<a href="#interest" class="nav-link" data-toggle="tab"  >관심사</a>
-												</li>
-											</ul>
-											<div class="tab-content">
-												<div class="tab-pane fade show active" id="basic" >
-													<ul class="basics">
-											<!-- 		<input type="hidden" name="USER_ID" value="${userKey }" id="USER_ID">
-														<li><i class="ti-user"></i>${userId}</li>
-														<li><i class="ti-map-alt"></i>${userLocationName }</li>
-														<li><i class="ti-mobile"></i>${userphone }</li>
-														<li><i class="ti-email"></i>${usermail }</li>
-														<li><i class="ti-calendar"></i>${userjoindate}</li>
-														-->
-														<c:forEach items="${id }" var="item">
-														<input type="hidden" name="userid" value="${id }" id="user">
-														<li><i class="ti-user"></i>${id}</li>
-														<li><i class="ti-map-alt"></i>${item.userLocation}</li>
-														<li><i class="ti-mobile"></i>${item.userphone}</li>
-														<li><i class="ti-email"></i>${item.useremail}</li>
-														<li><i class="ti-calendar"></i>${item.userjoindate}</li>
-														</c:forEach>
-													</ul>
-												</div>
-												<div class="tab-pane fade" id="interest" role="tabpanel">
-													<ul class="basics" >
-											<!-- 	<input type="hidden" name="USER_ID" value="${id }" id="USER_ID">   -->
-														<li>인터넷</li>
-														<li>등산</li>
-														<li>음악</li>
-														<li>춤</li>
-														<li>게임</li>
-													</ul>
-												</div>
+								<div class="central-meta">
+									<div class="editing-info">
+										<h5 class="f-title"><i class="ti-info-alt"></i> 홍보 글 작성 </h5>
+										<form method="post">
+											<div class="form-group">	
+											  <input type="text" required="required"/>
+											  <label class="control-label" for="input">제목</label><i class="mtrl-select"></i>
+											</div>											
+											<br><br>
+											<div class="form-group">	
+											  <textarea rows="4" id="textarea" required="required"></textarea>
+											  <label class="control-label" for="textarea">내용</label><i class="mtrl-select"></i>
 											</div>
-										</div>
-									</div>
-								</div>
-							<div class="central-meta">
-									<div class="frnds">
-										<ul class="nav nav-tabs">
-											 <li class="nav-item"><a class="active" href="#frends" data-toggle="tab">가입한 모임</a> <span>5</span></li>
-											 <li class="nav-item"><a class="" href="#frends-req" data-toggle="tab">만든 모임</a><span>3</span></li>
-										</ul>
-
-										<!-- Tab panes -->
-										<div class="tab-content">
-										  <div class="tab-pane active fade show " id="frends" >
-											<ul class="nearby-contct">
-											
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="resources/images/resources/nearly1.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">케즐모</a></h4>
-														<span>케이팝을 즐기는 모임</span>
-														<!-- <a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a> -->
-														<a href="#" title="" class="add-butn" data-ripple="">모임 탈퇴</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">도시탐험가들</a></h4>
-														<span>이곳저곳을 탐방하는 모임입니다</span>
-														<a href="#" title="" class="add-butn" data-ripple="">모임 탈퇴</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="resources/images/resources/nearly6.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">365일 춤만 출래 예예예 미러미러미러</a></h4>
-														<span>취미로 춤추는 사람들의 모임</span>
-														<a href="#" title="" class="add-butn" data-ripple="">모임 탈퇴</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="resources/images/resources/nearly2.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">뷰파인더</a></h4>
-														<span>사진 속에 많은 것을 담아내고 싶은 사람들의 모임입니다^^</span>
-														<a href="#" title="" class="add-butn" data-ripple="">모임 탈퇴</a>
-													</div>
-												</div>
-											</li>
-										</ul>
-											<div class="lodmore"><button class="btn-view btn-load-more"></button></div>
-										  </div>
-										  <!-- 내가 만든 모임 -->
-										  <div class="tab-pane fade" id="frends-req" >
-											<ul class="nearby-contct">
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="resources/images/resources/nearly5.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">자연이 좋다!!!</a></h4>
-														<span>산과 강과 들로 나가는 사람들</span>
-														<a href="#" title="" class="add-butn" data-ripple="">모임 관리</a>
-													</div>
-												</div>
-											</li>	
-
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">은평구 소모임</a></h4>
-														<span>은평구 동네친구</span>
-														<a href="#" title="" class="add-butn" data-ripple="">모임 관리</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img src="resources/images/resources/nearly2.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="time-line.html" title="">등산조아</a></h4>
-														<span>주말에 산 오르는 사람들의 모임</span>
-														<a href="#" title="" class="add-butn" data-ripple="">모임 관리</a>
-													</div>
-												</div>
-											</li>
-								
-										</ul>	
-											  <button class="btn-view btn-load-more"></button>
-										  </div>
-										</div>
+											<div class="submit-btns">
+												<button type="button" class="mtr-btn"><span>등록</span></button>
+												<button type="button" class="mtr-btn" onclick="location.href='prboard'"><span>취소</span></button>
+											</div>
+										</form>
 									</div>
 								</div>	
-								
-								</div>
-								
+							</div><!-- centerl meta -->
 							<div class="col-lg-3">
-								<aside class="sidebar static">
-								<div class="widget">
-									<div class="editing-interest">
-										<h4 class="widget-title"><i class="ti-bell"></i>최근 쪽지 </h4>
-										<div class="notification-box">
-											<ul>
-											<li>
-											<div>
-											<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;받은 쪽지가 없습니다.</p>
-											</div>
-											</li>
+									<aside class="sidebar static">
+										<div class="widget">
+											<h4 class="widget-title">최근 뜨는 모임</h4>
+											<ul class="followers">
+												<li>
+													<figure>
+														<img
+															src="resources/images/resources/friend-avatar2.jpg"
+															alt="">
+													</figure>
+													<div class="friend-meta">
+														<h4>
+															<a href="time-line.html" title="">광진구 자전거 매니아</a>
+														</h4>
+													</div>
+												</li>
+												<li>
+													<figure>
+														<img src="resources/images/resources/friend-avatar4.jpg"
+															alt="">
+													</figure>
+													<div class="friend-meta">
+														<h4>
+															<a href="time-line.html" title="">무초 구스또!</a>
+														</h4>
+													</div>
+												</li>
+												<li>
+													<figure>
+														<img src="resources/images/resources/friend-avatar6.jpg"
+															alt="">
+													</figure>
+													<div class="friend-meta">
+														<h4>
+															<a href="time-line.html" title="">옵치고고</a>
+														</h4>
+													</div>
+												</li>
+												<li>
+													<figure>
+														<img src="resources/images/resources/friend-avatar8.jpg"
+															alt="">
+													</figure>
+													<div class="friend-meta">
+														<h4>
+															<a href="time-line.html" title="">치킨먹자 배그냠냠</a>
+														</h4>
+													</div>
+												</li>
 											</ul>
 										</div>
-									</div>
-									</div>
-								<div class="widget">
-											<h4 class="widget-title">최근 알림</h4>
-											<ul class="activitiez">
-												<li>
-													<div class="activity-meta">
-														<i>1시간 전</i>
-														<span><a href="#" title="">새로운 공지사항이 올라왔습니다. </a></span>
-														<h6>by <a href="time-line.html">케즐모</a></h6>
-													</div>
-												</li>
-												<li>
-													<div class="activity-meta">
-														<i>3시간 전</i>
-														<span><a href="#" title="">새로운 일정이 등록되었습니다.</a></span>
-														<h6>by <a href="time-line.html">자연이 좋다!!!</a></h6>
-													</div>
-												</li>
-												<li>
-													<div class="activity-meta">
-														<i>2일 전</i>
-														<span><a href="#" title="">가입이 승인되었습니다.</a></span>
-														<h6>by<a href="#">365일 춤만 출래 예예예 미러미러미러</a></h6>
-													</div>
-												</li>
-											</ul>
-										</div><!-- recent activites -->
+										<!-- who's following -->
+										
+								</div>
+								<!-- creat page-->
 								</aside>
-							</div><!-- sidebar -->
-						</div>	
+							</div>
+							<!-- sidebar -->
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>	
+	</div>
 	</section>
+	</div>
+	</section>
+	
 
 	<footer>
 		<div class="container">
@@ -900,52 +760,13 @@
 					<label for="switch111" data-on-label="ON" data-off-label="OFF"></label>
 				</div>
 			</form>
-		</div><!-- side panel -->		
+		</div><!-- side panel -->	
 	
-	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="resources/js/main.min.js"></script>
-	<script src="resources/js/script.js"></script>
-	<script src="resources/js/map-init.js"></script>
+	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 	<script src="resources/js/main.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
-	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="resources/js/main.min.js"></script>
 	<script src="resources/js/script.js"></script>
 	<script src="resources/js/map-init.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
-	<script>
-		//회원 정보 수정 이동
-		$(".jungbo").click(function(){
-			location.href="mypage2";
-		});
-		
-		//회원 관심사 수정 이동
-		$(".gss").click(function(){
-			location.href="mypage3";
-		});
-		
-		
-		function getInterest(){
-			$.ajax({
-				type:"post",
-				url:"mypage2",
-				data:{"userId" : $("#userId").val()},
-				dataType:"json",
-				success:function(rdata){
-					if(rdata.length>0){
-						$("#interest").text('');
-						output='';
-						$(rdata).each(function(){
-							output+="<span>"+this.interest + "</span>";
-							
-						})
-						$("#Interests").append(output);
-					}
-				}
-			})	//ajax end
-		}//function end
-		console.log("test");
-		getInterests();
-		
-	</script>
 
 </body>	
 

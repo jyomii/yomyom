@@ -2,6 +2,8 @@ package co.pr.fi.domain;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 //홍보게시판 
 public class PrBoard {
 
@@ -69,4 +71,6 @@ public class PrBoard {
      this.content = param.getContent();
      this.dateWrite = param.getDateWrite();
  }
+
+
 }
