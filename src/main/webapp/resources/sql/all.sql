@@ -677,6 +677,9 @@ ALTER TABLE userpolice
     ADD CONSTRAINT FKuserpoliceuserkeyguser FOREIGN KEY (userkey)
         REFERENCES gusers (userkey) on delete cascade;
 
+ALTER TABLE userpolice
+    ADD CONSTRAINT FKuserpoliceuserkeyguser1 FOREIGN KEY (reciveuserKey)
+        REFERENCES gusers (userkey) on delete cascade;
 
 
 
