@@ -863,21 +863,17 @@ a.add-butn.more-action {
 										<div class="widget">
 											<h4 class="widget-title">신고 목록</h4>
 											<ul class="followers" style="max-height: 400px;">
-												<c:forEach items="${policeResult }" var="item">
+												<c:forEach items="${policeResult }" var="item" varStatus="status">
 													<li><span>${item.userid }</span>
 														<p>총 ${item.count }번 신고</p>
 														<p>
-														<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    내용 확인
-  </a></p>
+														<a onClick="policeDetail('${item.userkey}','${status.index}');"
+class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    내용 확인</a>
+    <a class="btn btn-secondary" onClick="stopUser1('${item.userid}');" style="color:white;">정지</a></p>
   <div class="collapse" id="collapseExample">
   <div class="card card-body">
-    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-  	<br>
-  	<hr>
-  	<br>
-  	   Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-  
+   
   </div>
 </div>
 														<div></div></li>
@@ -1135,6 +1131,47 @@ a.add-butn.more-action {
 		}
 
 	
+		//신고 내용 자세히 보기
+		function policeDetail(userkey ,index){
+			
+		
+			
+			$.ajax({
+				url : "policeDetail",
+				data : {"userkey" : userkey},
+				success : function(result){
+					
+					console.log(result);
+					printPoliceDetail(result,index);
+				}
+				
+			});
+		};
+		
+		
+		function stopUser1(userId){
+			
+			
+			var result = confirm('해당 회원을 정지시키겠습니까?');
+			
+			if(result){
+				$.ajax({
+					url : "stopUsers",
+					data : {"userId" : userId},
+					success : function(result){
+						if(result > 0){
+							
+							location.href= "adminusers";
+						}
+					}
+					
+				});
+			}
+			
+		}
+		
+		
+		
 
 		//더보기 버튼 클릭 시
 		$('.btn-load-more').click(function() {
@@ -1446,6 +1483,38 @@ a.add-butn.more-action {
 
 			return html;
 
+		}
+		
+		
+		function printPoliceDetail(result, index ){
+			
+			var text = "";
+			
+			
+			text += '<div class="card card-body">';
+			
+			for(var i = 0; i < result.B.length; i++){
+				
+				
+				text +=  result.B[i].postcontent;
+				text += '<br><hr><br>';
+			
+			}
+			
+			
+			
+			for(var j = 0; j < result.M.length; j++){
+				text +=  result.M[j].postcontent;
+				text += '<br><hr><br>';
+				
+			}
+			
+			text += '  </div>';
+			
+			
+			$('.card-body:eq('+index+')').html(text);
+			
+			
 		}
 	</script>
 </body>

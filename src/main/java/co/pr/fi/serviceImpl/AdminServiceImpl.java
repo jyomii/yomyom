@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import co.pr.fi.dao.AdminDAO;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceDetail;
 import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
@@ -157,10 +158,7 @@ public class AdminServiceImpl implements AdminService {
 		return dao.negativeGroup(key);
 	}
 
-	@Override
-	public int deleteGroupMember(int key) {
-		return dao.deleteGroupMember(key);
-	}
+	
 
 	@Override
 	public List<StatisticsCategory> statisticsUCategory() {
@@ -173,6 +171,33 @@ public class AdminServiceImpl implements AdminService {
 		 list.put("id", id);
 		 list.put("status", status);
 		return dao.setUserStatus(list);
+	}
+
+	@Override
+	public List<PoliceDetail> policeBDetail(int userkey) {
+		
+		return dao.policeBDetail(userkey);
+	}
+
+	@Override
+	public List<PoliceDetail> policeMDetail(int userkey) {
+		return dao.policeMDetail(userkey);
+	}
+
+	@Override
+	public void setUserStatusDate(String userId) {
+		dao.setUserStatusDate(userId);
+	}
+
+	@Override
+	public int deletePolice(int userKey) {
+		
+		return 	dao.deletePolice(userKey);
+	}
+
+	@Override
+	public int stopCancelUsers() {
+		return dao.stopCancelUsers();
 	}
 
 

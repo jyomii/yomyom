@@ -12,7 +12,7 @@ public class UserPolice {
  private int reciveuserKey;
  
  // 글 종류 
- private String policeBoardSort;
+ private String policeBoardSort; /*B : 게시글 M : 댓글 */
 
  // 글 번호 
  private int policeNumber;

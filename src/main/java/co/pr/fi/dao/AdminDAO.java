@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceDetail;
 import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
@@ -110,10 +111,7 @@ public class AdminDAO {
 		return sqlSession.delete("Admin.negativeGroup", key);
 	}
 
-	public int deleteGroupMember(int key) {
-		return sqlSession.delete("Admin.deleteGroupMember", key);
-	}
-
+	
 
 	public List<StatisticsCategory> statisticsUCategory() {
 		return sqlSession.selectList("Admin.statisticsUCategory");
@@ -122,6 +120,34 @@ public class AdminDAO {
 
 	public int setUserStatus(Map<String, Object> list) {
 		return sqlSession.update("Admin.setUserStatus",list);
+	}
+
+
+	public List<PoliceDetail> policeBDetail(int userkey) {
+	
+		return sqlSession.selectList("Admin.policeBDetail",userkey);
+	}
+
+
+	public List<PoliceDetail> policeMDetail(int userkey) {
+		return sqlSession.selectList("Admin.policeMDetail",userkey);
+	}
+
+
+	public void setUserStatusDate(String userId) {
+		sqlSession.update("Admin.setUserStatusDate",userId);
+	}
+
+
+	public int deletePolice(int userKey) {
+	
+		return sqlSession.delete("Admin.deletePolice",userKey);
+	}
+
+
+	public int stopCancelUsers() {
+		
+		return sqlSession.update("Admin.stopCancelUsers");
 	}
 
 
