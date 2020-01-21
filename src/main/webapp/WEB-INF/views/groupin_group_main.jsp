@@ -493,10 +493,11 @@
 					<li>
 						<!-- 헤더메뉴 --> <a href="#" title="">모임</a>
 						<ul>
-							<li><a href="index-2.html" title="">Home Social</a></li>
-							<li><a href="index2.html" title="">Home Social 2</a></li>
-							<li><a href="index-company.html" title="">Home Company</a></li>
-							<li><a href="landing.html" title="">Login page</a></li>
+							<!-- 임시 -->
+							<li><a href="signGroup" title="">모임 가입</a></li>
+							<li><a href="detailBoard" title="">모임 게시글</a></li>
+							<li><a href="recommendG" title="">모임 추천</a></li>
+							<li><a href="groupmain" title="">모임 메인</a></li>
 							<li><a href="logout.html" title="">Logout Page</a></li>
 							<li><a href="newsfeed.html" title="">news feed</a></li>
 						</ul>

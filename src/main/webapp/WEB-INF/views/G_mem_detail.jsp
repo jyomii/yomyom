@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>        
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>      
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,20 +104,6 @@
 			width : 23%;
 		}
 	</style>
-	<script>
-		$(function(){
-			/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴에 대한 색 변경 */
-			$('.user-active li').click(function(){
-				$('.user-active li').removeClass('selected-menu');
-				$(this).addClass('selected-menu');
-				console.log($(this).index());
-			});
-			
-			$('.user-active a').click(function() {
-				event.preventDefault();
-			});
-		});
-	</script>
 </head>
 <body>
 <div class="theme-layout">
@@ -135,7 +122,10 @@
 								</ul>
 							</div>
 						</div>
-
+						<form>
+							<input type = "hidden" id = "userKey" name = "userKey" value = "${userKey}">
+							<input type = "hidden" id = "groupKey" name = "groupKey" value = "${groupKey}">
+						</form>
 						<%-- 메뉴 선택에 따라 현재 조회하는 회원의 발자취가,, 나와야 되는데,, 현재는 야매; --%>
 						<!-- 가입한 모임 리스트 -->
 						<div class="forum-list">
@@ -151,47 +141,14 @@
 									<c:forEach var = "b" items = "${list}">
 										<tr>
 											<td>
-												<!-- 이미지 어떻ㄱㅔ 가져오는지 몰랑 ㅠ 내일 물어보자 -->
-												<img src = "resources/images/${b.groupDFile}" class = "group-img" alt = "">
+												<img src="<spring:url value='/image${b.groupDFile}'/>" class = "group-img" alt = ""/>
 												<!-- 주소 나중에 바꿔야함 -->
-												<a href = "forums-category.html?groupKey=${groupKey}" title = "${b.groupName}">${b.groupName}</a>
+												<a href = "forums-category.html?groupKey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a>
 											</td>	
 											<td>${b.memberCount}명</td>
 											<td>${b.groupDate}</td>
 										</tr>
 									</c:forEach>
-										<tr>
-											<td>
-												<img src = "resources/images/test/test.png" class = "group-img" alt = "">
-												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
-											</td>	
-											<td>33명</td>
-											<td>2020-02-10</td>
-										</tr>
-										<tr>
-											<td>
-												<img src = "resources/images/test/test3.png" class = "group-img" alt = "">
-												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
-											</td>	
-											<td>33명</td>
-											<td>2020-02-10</td>
-										</tr>
-										<tr>
-											<td>
-												<img src = "resources/images/test/test2.png" class = "group-img" alt = "">
-												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
-											</td>	
-											<td>33명</td>
-											<td>2020-02-10</td>
-										</tr>
-										<tr>
-											<td>
-												<img src = "resources/images/test/test1.png" class = "group-img" alt = "">
-												<a href = "forums-category.html" title = "테스트">코딩이 너무 싫어요</a>
-											</td>	
-											<td>33명</td>
-											<td>2020-02-10</td>
-										</tr>
 								</tbody>
 							<%--
 								<tbody>

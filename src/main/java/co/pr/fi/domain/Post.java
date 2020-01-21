@@ -15,7 +15,7 @@ public class Post {
  private String postContent;
 
  // 작성날짜 
- private Date postDate;
+ private String postDate;
 
  // 모임키값 
  private int groupKey;
@@ -59,11 +59,11 @@ public class Post {
      this.postContent = postContent;
  }
 
- public Date getPostDate() {
+ public String getPostDate() {
      return postDate;
  }
 
- public void setPostDate(Date postDate) {
+ public void setPostDate(String postDate) {
      this.postDate = postDate;
  }
 
