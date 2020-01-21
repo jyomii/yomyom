@@ -1,4 +1,5 @@
 $(function(){
+	
 	var status = 0;	// 어떤 메뉴를 눌렀는지 확인
 	var add = '';	// append시킬 변수 
 	

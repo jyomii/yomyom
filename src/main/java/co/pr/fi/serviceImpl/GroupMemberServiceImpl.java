@@ -19,4 +19,5 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 	public List<GGroup> userInGroup(int userKey) {
 		return dao.userInGroup(userKey);
 	}
+	
 }

@@ -85,6 +85,7 @@
 			width : 100%;
 		}
 		*/
+		
 		.forum-list table tbody tr td {
 			padding : 20px;
 		}

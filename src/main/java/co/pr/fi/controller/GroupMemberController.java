@@ -24,7 +24,6 @@ public class GroupMemberController {
 	GroupMemberService groupMemberService;
 	
 	/* ############임시############## */
-	
 	// 모임 메인 페이지 이동
 	@GetMapping("/groupmain")
 	public String groupmain (Model m) {
