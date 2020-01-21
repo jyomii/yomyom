@@ -45,7 +45,7 @@ public class GGroup {
  private String groupType; // y : 원데이  n : 일반
 
  // 모임 설립일,,
- private Date groupDate;
+ private String groupDate;
  
  //모임 상태
  private int groupstatus; // 0 : 일반 1 : 승인예정
@@ -195,11 +195,11 @@ public int getGroupKey() {
      this.groupType = groupType;
  }
  
- public Date getGroupDate() {
+ public String getGroupDate() {
 	return groupDate;
  }
 
- public void setGroupDate(Date groupDate) {
+ public void setGroupDate(String groupDate) {
 	this.groupDate = groupDate;
  }
  

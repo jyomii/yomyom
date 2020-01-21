@@ -30,6 +30,7 @@
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
 		
 		<typeAlias alias="group" type="co.pr.fi.domain.GGroup"/>
+		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
 	</typeAliases>
 
 	<mappers>
@@ -39,5 +40,6 @@
 		<mapper resource="sql/GroupMaster.xml"></mapper>
 		<mapper resource="sql/group.xml"></mapper>
 		<mapper resource="sql/category.xml"></mapper>
+		<mapper resource="sql/mypage.xml"></mapper>
 	</mappers>
 </configuration>
