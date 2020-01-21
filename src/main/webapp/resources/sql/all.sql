@@ -173,7 +173,7 @@ ALTER TABLE gusers
         REFERENCES glocation (locationkey) on delete cascade;
         
 
-ALTER TABLE GUSERS MODIFY (USERPASSWORD VARCHAR2(100));
+ALTER TABLE GUSERS MODIFY (USERPASSWORD VARCHAR2(300));
                                                  
 CREATE SEQUENCE gusersSEQ
 START WITH 1
