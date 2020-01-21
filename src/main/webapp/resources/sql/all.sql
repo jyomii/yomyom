@@ -300,12 +300,7 @@ CREATE TABLE ggroupboard
     boardkey         NUMBER          NOT NULL, 
     groupkey         NUMBER          NOT NULL, 
     boardname        VARCHAR2(50)    NOT NULL, 
-    boardvote        CHAR(1)         NOT NULL, 
-    boardcalendar    CHAR(1)         NOT NULL, 
-    boardladder      CHAR(1)         NOT NULL, 
-    boardnotice      CHAR(1)         NOT NULL, 
-    boardmap         CHAR(1)         NOT NULL, 
-    boardview        CHAR(1)         NOT NULL, 
+    boardtype       CHAR(1)   
     CONSTRAINT GGROUPBOARDPK PRIMARY KEY (boardkey)
 );
 
