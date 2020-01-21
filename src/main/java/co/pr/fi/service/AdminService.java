@@ -69,6 +69,14 @@ public interface AdminService {
 
 	int stopCancelUsers();
 
+	GGroup getGroup(int key);
+
+	void insertDeleteFiles(String groupDFile);
+
+	List<String> getDeleteFiles();
+
+	void deleteFilesList();
+
 	
 
 

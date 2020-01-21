@@ -200,6 +200,28 @@ public class AdminServiceImpl implements AdminService {
 		return dao.stopCancelUsers();
 	}
 
+	@Override
+	public GGroup getGroup(int key) {
+	
+		return dao.getGroup(key);
+	}
+
+	@Override
+	public void insertDeleteFiles(String groupDFile) {
+		dao.insertDeleteFiles(groupDFile);
+		
+	}
+
+	@Override
+	public List<String> getDeleteFiles() {
+		return dao.getDeleteFiles();
+	}
+
+	@Override
+	public void deleteFilesList() {
+		dao.deleteFilesList();
+	}
+
 
 
 

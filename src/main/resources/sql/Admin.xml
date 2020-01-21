@@ -5,7 +5,12 @@
 
 
 
-<insert id="insert_deleteFile" parameterType="String">
+	<select id="getGroup" parameterType="int" resultType="group">
+	select * from ggroup where groupkey = #{key}
+	</select>
+	
+	
+	<insert id="insert_deleteFile" parameterType="String">
 	insert into delete_File values(#{before_file})
 	</insert>
 	
