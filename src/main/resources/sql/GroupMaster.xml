@@ -22,7 +22,6 @@
 	 <selectKey keyProperty="groupKey" resultType="Integer" order="BEFORE">
 			select nvl((select max(groupkey) from ggroup)+1,0) from dual
 		</selectKey>
-	 
 	
 	insert into ggroup values(
 	#{groupKey},

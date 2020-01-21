@@ -124,11 +124,19 @@ public class AdminController {
 	}
 	
 	
+	//모임 삭제
 	@ResponseBody
 	@PostMapping("/negativeGroup")
 	public int negativeGroup(int key) {
 		
-		//모임 이미지,다 지워야함, 회원 탈퇴할때 회원이미지도 지워야함..
+		
+		GGroup group = adminService.getGroup(key);
+		
+		//모임 이미지 휴지통에 넣기
+		adminService.insertDeleteFiles(group.getGroupDFile());
+		adminService.insertDeleteFiles(group.getGroupCFile());
+		
+		//모임 삭제
 		return adminService.negativeGroup(key);
 		
 	}
@@ -283,7 +291,8 @@ public class AdminController {
 		 */
 		
 		//해당 회원 이미지를 휴지통으로 넣기
-		
+		GUsers users = memberService.getUsers(id);
+		adminService.insertDeleteFiles(users.getUserImageFile());
 
 		return adminService.AdmindeleteUser(id);
 

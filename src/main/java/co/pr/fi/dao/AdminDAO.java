@@ -151,6 +151,29 @@ public class AdminDAO {
 	}
 
 
+	public GGroup getGroup(int key) {
+	
+		return sqlSession.selectOne("Admin.getGroup",key);
+	}
+
+
+	public void insertDeleteFiles(String groupDFile) {
+
+		sqlSession.insert("Admin.insert_deleteFile",groupDFile);
+	}
+
+
+	public List<String> getDeleteFiles() {
+	
+		return sqlSession.selectList("Admin.selectDeletelist");
+	}
+
+
+	public void deleteFilesList() {
+		sqlSession.delete("Admin.deleteList");
+	}
+
+
 
 
 
