@@ -1,5 +1,6 @@
 package co.pr.fi.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,16 @@ public class PrServiceImpl implements PrService{
 
 	@Override
 	public List<PrBoard> getBoardList(int page, int limit) {
-		return dao.getBoardList(page, limit);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		int startrow = (page-1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getBoardList(map);
+	}
+
+	@Override
+	public void insertBoard(PrBoard prboard) {
+	    dao.insertBoard(prboard);
 	}
 }

@@ -57,10 +57,10 @@ public class MyPageController {
 	
 	  @RequestMapping(value = "/mypage")
 	   public ModelAndView mypageinfo(HttpSession session, 
-			            @RequestParam("id") String id,
-	    		HttpServletRequest request, ModelAndView mv) {
+	          HttpServletRequest request, ModelAndView mv) throws Exception {
+		  String id = (String) session.getAttribute("id");
 	      GUsers user = myPageService.userinfo(id);
-	      mv.setViewName("mypage/mypageinfo");
+	      mv.setViewName("mypage");
 	      mv.addObject("mypage", user);
 	      return mv;
 	   }

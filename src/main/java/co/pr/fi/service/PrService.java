@@ -7,8 +7,10 @@ import co.pr.fi.domain.PrBoard;
 //홍보게시판 처리
 public interface PrService {
 
-	int getListCount();
+	public int getListCount();
 
-	List<PrBoard> getBoardList(int page, int limit);
+	public List<PrBoard> getBoardList(int page, int limit);
+
+	public void insertBoard(PrBoard prboard);
 
 }
