@@ -946,7 +946,7 @@
 			location.href = "mypage3";
 		});
 		
-		//아 근데 비밀번호 암호화라서... 될랑가 모르겠네 일단 보류..
+		//아 근데 비밀번호 암호화라서... 일단 보류..
 		function exitGroup() {       
 			var pass = prompt('탈퇴하려면 비밀번호를 입력하세요.');
 			

@@ -65,6 +65,7 @@ public class MyPageController {
 	      return mv;
 	   }
 	  
+	  
 	  //수정폼
 	    @RequestMapping(value="/mypage2")
 	    public ModelAndView update(HttpSession session, ModelAndView mv) throws Exception {

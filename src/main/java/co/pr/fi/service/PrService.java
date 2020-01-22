@@ -13,4 +13,5 @@ public interface PrService {
 
 	public void insertBoard(PrBoard prboard);
 
+	
 }

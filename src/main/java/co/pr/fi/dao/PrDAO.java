@@ -27,4 +27,5 @@ public class PrDAO {
 		return sqlSession.insert("Prs.insert", prboard);
 	}
 
+	
 }

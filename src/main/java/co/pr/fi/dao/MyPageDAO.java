@@ -20,4 +20,5 @@ public class MyPageDAO {
 		return sqlSession.update("Mypages.update", user);
 	}
 	
+	
 }

@@ -9,4 +9,5 @@ public interface MyPageService {
 
     public int myupdate(GUsers user);
 
+    
 }

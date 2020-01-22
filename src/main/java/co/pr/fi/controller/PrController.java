@@ -41,6 +41,7 @@ public class PrController {
 	}
 	
 	
+	
 	//글 목록 보기
 	@RequestMapping(value = "/prboard")
 	   public ModelAndView boardlist(@RequestParam(value = "page", required = false, defaultValue = "1") int page,

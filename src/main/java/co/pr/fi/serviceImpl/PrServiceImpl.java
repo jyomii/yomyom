@@ -21,6 +21,7 @@ public class PrServiceImpl implements PrService{
 		return dao.getListCount();
 	}
 
+	
 	@Override
 	public List<PrBoard> getBoardList(int page, int limit) {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();

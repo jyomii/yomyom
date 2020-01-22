@@ -544,6 +544,7 @@
 									</div>
 								</div>	
 							</div><!-- centerl meta -->
+							
 							<div class="col-lg-3">
 									<aside class="sidebar static">
 										<div class="widget">

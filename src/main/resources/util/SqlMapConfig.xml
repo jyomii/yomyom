@@ -30,7 +30,10 @@
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
 		
 		<typeAlias alias="group" type="co.pr.fi.domain.GGroup"/>
+		
+		
 		<typeAlias alias="prboard" type="co.pr.fi.domain.PrBoard"/>
+		
 	</typeAliases>
 
 	<mappers>
