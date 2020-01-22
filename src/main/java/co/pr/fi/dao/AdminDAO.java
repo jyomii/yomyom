@@ -174,6 +174,12 @@ public class AdminDAO {
 	}
 
 
+	public int getNoticeCount() {
+	
+		return 	sqlSession.selectOne("Admin.getNoticeCount");
+	}
+
+
 
 
 

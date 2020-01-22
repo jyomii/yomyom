@@ -77,6 +77,8 @@ public interface AdminService {
 
 	void deleteFilesList();
 
+	int getNoticeCount();
+
 	
 
 

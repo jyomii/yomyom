@@ -120,13 +120,15 @@ delete from ggroup where groupKey = #{groupKey}
 		  <![CDATA[ 
 			  SELECT * FROM (
 				SELECT b.*, rownum rnum
-				FROM (SELECT * from usermessage order by mgDate desc) b)
+				FROM (SELECT * from usermessage where MGSORT = 'N' order by mgDate desc) b)
 				WHERE RNUM >= #{startrow} and rnum <= #{endrow}
 					]]>
 	</select>
 
 
-
+	<select id="getNoticeCount" resultType="int">
+	select count(*) from usermessage where MGSORT = 'N'
+	</select>
 
 
 
