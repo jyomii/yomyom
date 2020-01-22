@@ -11,6 +11,14 @@
    </settings>
    
 	<typeAliases>
+		<typeAlias alias="calendarmemberlist"
+			type="com.naver.myhome.domain.CalendarMemberList" />
+		<typeAlias alias="meetinglist"
+			type="com.naver.myhome.domain.MeetingList" />
+			<typeAlias alias="boardlist"
+			type="com.naver.myhome.domain.BoardList" />
+			<typeAlias alias="memberlist"
+			type="com.naver.myhome.domain.MemberList" />
 		<typeAlias alias="member" type="co.pr.fi.domain.GUsers" />
 		<typeAlias alias="location" type="co.pr.fi.domain.GLocation" />
 		<typeAlias alias="statisticsAge" type="co.pr.fi.domain.StatisticsAge" />

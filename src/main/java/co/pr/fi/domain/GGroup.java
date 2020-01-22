@@ -2,224 +2,244 @@ package co.pr.fi.domain;
 
 import java.sql.Date;
 
-//모임 
+import org.springframework.web.multipart.MultipartFile;
+
+//紐⑥엫 
 public class GGroup {
 
- // 모임키값 
- private int groupKey;
+	// 紐⑥엫�궎媛�
+	private int groupKey;
 
- // 모임이름 
- private String groupName;
+	// 紐⑥엫�씠由�
+	private String groupName;
 
- // 모임장키값 
- private int userKey;
+	// 紐⑥엫�옣�궎媛�
+	private int userKey;
 
- // 연령대키값 
- private int ageKey;
+	// �뿰�졊���궎媛�
+	private int ageKey;
 
- // 모임지역키값 
- private int whereKey;
+	// 紐⑥엫吏��뿭�궎媛�
+	private int whereKey;
 
- // 모임카테고리 
- private int categoryKey;
+	// 紐⑥엫移댄뀒怨좊━
+	private int categoryKey;
 
- // 모임소개 
- private String groupInfo;
+	// 紐⑥엫�냼媛�
+	private String groupInfo;
 
- // 대표사진_file 
- private String groupDFile;
+	// ���몴�궗吏�_file
+	private String groupDFile;
 
- // 대표사진_origin 
- private String groupIdOrigin;
+	// ���몴�궗吏�_origin
+	private String groupIdOrigin;
 
- // 커버사진_file 
- private String groupCFile;
+	// 而ㅻ쾭�궗吏�_file
+	private String groupCFile;
 
- // 커버사진_origin 
- private String groupCOrigin;
+	// 而ㅻ쾭�궗吏�_origin
+	private String groupCOrigin;
 
- // 모임공개여부 
- private String groupPrivate;
+	// 紐⑥엫怨듦컻�뿬遺�
+	private String groupPrivate;
 
- // 모임타입 
- private String groupType; // y : 원데이  n : 일반
+	// 紐⑥엫���엯
+	private String groupType; // y : �썝�뜲�씠 n : �씪諛�
 
- // 모임 설립일,,
- private Date groupDate;
- 
- //모임 상태
- private int groupstatus; // 0 : 일반 1 : 승인예정
- 
- //모임 회원수(조인)
- private int memberCount;
- 
- //모임 카테고리 이름(조인)
- private String categoryName; 
- 
- //모임 지역 이름(조인)
- private String locationName; 
- 
-public String getLocationName() {
-	return locationName;
-}
+	// 紐⑥엫 �꽕由쎌씪,,
+	private Date groupDate;
 
-public void setLocationName(String locationName) {
-	this.locationName = locationName;
-}
+	// 紐⑥엫 �긽�깭
+	private int groupstatus; // 0 : �씪諛� 1 : �듅�씤�삁�젙
 
-public int getMemberCount() {
-	return memberCount;
-}
+	// 紐⑥엫 �쉶�썝�닔(議곗씤)
+	private int memberCount;
 
-public void setMemberCount(int memberCount) {
-	this.memberCount = memberCount;
-}
+	// 紐⑥엫 移댄뀒怨좊━ �씠由�(議곗씤)
+	private String categoryName;
 
-public String getCategoryName() {
-	return categoryName;
-}
+	// 紐⑥엫 吏��뿭 �씠由�(議곗씤)
+	private String locationName;
 
-public void setCategoryName(String categoryName) {
-	this.categoryName = categoryName;
-}
+	private MultipartFile groupMainImgUpload;
+	private MultipartFile groupImgUpload;
 
-public int getGroupstatus() {
-	return groupstatus;
-}
+	public MultipartFile getGroupMainImgUpload() {
+		return groupMainImgUpload;
+	}
 
-public void setGroupstatus(int groupstatus) {
-	this.groupstatus = groupstatus;
-}
+	public void setGroupMainImgUpload(MultipartFile groupMainImgUpload) {
+		this.groupMainImgUpload = groupMainImgUpload;
+	}
 
-public int getGroupKey() {
-     return groupKey;
- }
+	public MultipartFile getGroupImgUpload() {
+		return groupImgUpload;
+	}
 
- public void setGroupKey(int groupKey) {
-     this.groupKey = groupKey;
- }
+	public void setGroupImgUpload(MultipartFile groupImgUpload) {
+		this.groupImgUpload = groupImgUpload;
+	}
 
- public String getGroupName() {
-     return groupName;
- }
+	public String getLocationName() {
+		return locationName;
+	}
 
- public void setGroupName(String groupName) {
-     this.groupName = groupName;
- }
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
 
- public int getUserKey() {
-     return userKey;
- }
+	public int getMemberCount() {
+		return memberCount;
+	}
 
- public void setUserKey(int userKey) {
-     this.userKey = userKey;
- }
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
 
- public int getAgeKey() {
-     return ageKey;
- }
+	public String getCategoryName() {
+		return categoryName;
+	}
 
- public void setAgeKey(int ageKey) {
-     this.ageKey = ageKey;
- }
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
- public int getWhereKey() {
-     return whereKey;
- }
+	public int getGroupstatus() {
+		return groupstatus;
+	}
 
- public void setWhereKey(int whereKey) {
-     this.whereKey = whereKey;
- }
+	public void setGroupstatus(int groupstatus) {
+		this.groupstatus = groupstatus;
+	}
 
- public int getCategoryKey() {
-     return categoryKey;
- }
+	public int getGroupKey() {
+		return groupKey;
+	}
 
- public void setCategoryKey(int categoryKey) {
-     this.categoryKey = categoryKey;
- }
+	public void setGroupKey(int groupKey) {
+		this.groupKey = groupKey;
+	}
 
- public String getGroupInfo() {
-     return groupInfo;
- }
+	public String getGroupName() {
+		return groupName;
+	}
 
- public void setGroupInfo(String groupInfo) {
-     this.groupInfo = groupInfo;
- }
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
 
- public String getGroupDFile() {
-     return groupDFile;
- }
+	public int getUserKey() {
+		return userKey;
+	}
 
- public void setGroupDFile(String groupDFile) {
-     this.groupDFile = groupDFile;
- }
+	public void setUserKey(int userKey) {
+		this.userKey = userKey;
+	}
 
- public String getGroupIdOrigin() {
-     return groupIdOrigin;
- }
+	public int getAgeKey() {
+		return ageKey;
+	}
 
- public void setGroupIdOrigin(String groupIdOrigin) {
-     this.groupIdOrigin = groupIdOrigin;
- }
+	public void setAgeKey(int ageKey) {
+		this.ageKey = ageKey;
+	}
 
- public String getGroupCFile() {
-     return groupCFile;
- }
+	public int getWhereKey() {
+		return whereKey;
+	}
 
- public void setGroupCFile(String groupCFile) {
-     this.groupCFile = groupCFile;
- }
+	public void setWhereKey(int whereKey) {
+		this.whereKey = whereKey;
+	}
 
- public String getGroupCOrigin() {
-     return groupCOrigin;
- }
+	public int getCategoryKey() {
+		return categoryKey;
+	}
 
- public void setGroupCOrigin(String groupCOrigin) {
-     this.groupCOrigin = groupCOrigin;
- }
+	public void setCategoryKey(int categoryKey) {
+		this.categoryKey = categoryKey;
+	}
 
- public String getGroupPrivate() {
-     return groupPrivate;
- }
+	public String getGroupInfo() {
+		return groupInfo;
+	}
 
- public void setGroupPrivate(String groupPrivate) {
-     this.groupPrivate = groupPrivate;
- }
+	public void setGroupInfo(String groupInfo) {
+		this.groupInfo = groupInfo;
+	}
 
- public String getGroupType() {
-     return groupType;
- }
+	public String getGroupDFile() {
+		return groupDFile;
+	}
 
- public void setGroupType(String groupType) {
-     this.groupType = groupType;
- }
- 
- public Date getGroupDate() {
-	return groupDate;
- }
+	public void setGroupDFile(String groupDFile) {
+		this.groupDFile = groupDFile;
+	}
 
- public void setGroupDate(Date groupDate) {
-	this.groupDate = groupDate;
- }
- 
- // GGroup 모델 복사
- public void CopyData(GGroup param)
- {
-     this.groupKey = param.getGroupKey();
-     this.groupName = param.getGroupName();
-     this.userKey = param.getUserKey();
-     this.ageKey = param.getAgeKey();
-     this.whereKey = param.getWhereKey();
-     this.categoryKey = param.getCategoryKey();
-     this.groupInfo = param.getGroupInfo();
-     this.groupDFile = param.getGroupDFile();
-     this.groupIdOrigin = param.getGroupIdOrigin();
-     this.groupCFile = param.getGroupCFile();
-     this.groupCOrigin = param.getGroupCOrigin();
-     this.groupPrivate = param.getGroupPrivate();
-     this.groupType = param.getGroupType();
-     this.groupDate = param.getGroupDate();
-     this.groupstatus = param.getGroupstatus();
- }
+	public String getGroupIdOrigin() {
+		return groupIdOrigin;
+	}
+
+	public void setGroupIdOrigin(String groupIdOrigin) {
+		this.groupIdOrigin = groupIdOrigin;
+	}
+
+	public String getGroupCFile() {
+		return groupCFile;
+	}
+
+	public void setGroupCFile(String groupCFile) {
+		this.groupCFile = groupCFile;
+	}
+
+	public String getGroupCOrigin() {
+		return groupCOrigin;
+	}
+
+	public void setGroupCOrigin(String groupCOrigin) {
+		this.groupCOrigin = groupCOrigin;
+	}
+
+	public String getGroupPrivate() {
+		return groupPrivate;
+	}
+
+	public void setGroupPrivate(String groupPrivate) {
+		this.groupPrivate = groupPrivate;
+	}
+
+	public String getGroupType() {
+		return groupType;
+	}
+
+	public void setGroupType(String groupType) {
+		this.groupType = groupType;
+	}
+
+	public Date getGroupDate() {
+		return groupDate;
+	}
+
+	public void setGroupDate(Date groupDate) {
+		this.groupDate = groupDate;
+	}
+
+	// GGroup 紐⑤뜽 蹂듭궗
+	public void CopyData(GGroup param) {
+		this.groupKey = param.getGroupKey();
+		this.groupName = param.getGroupName();
+		this.userKey = param.getUserKey();
+		this.ageKey = param.getAgeKey();
+		this.whereKey = param.getWhereKey();
+		this.categoryKey = param.getCategoryKey();
+		this.groupInfo = param.getGroupInfo();
+		this.groupDFile = param.getGroupDFile();
+		this.groupIdOrigin = param.getGroupIdOrigin();
+		this.groupCFile = param.getGroupCFile();
+		this.groupCOrigin = param.getGroupCOrigin();
+		this.groupPrivate = param.getGroupPrivate();
+		this.groupType = param.getGroupType();
+		this.groupDate = param.getGroupDate();
+		this.groupstatus = param.getGroupstatus();
+	}
 }

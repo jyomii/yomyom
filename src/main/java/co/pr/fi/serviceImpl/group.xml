@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"  
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Group">
+	<select id="groupinfo" resultType="Group" parameterType="int">
+		select *
+		from ggroup where groupkey =#{groupkey}
+	</select>
+
+	<update id="groupMainImgUpdate" parameterType="Group">
+		update ggroup set
+		groupidorigin=#{groupidorigin}, groupdfile=#{groupdfile} where
+		groupkey=#{groupkey}
+	</update>
+
+	<update id="groupImgUpdate" parameterType="Group">
+		update ggroup set
+		groupcorigin=#{groupcorigin}, groupcfile=#{groupcfile} where
+		groupkey=#{groupkey}
+	</update>
+
+	<select id="groupwhere" resultType="location"
+		parameterType="int">
+		select * from glocation where locationkey =#{wherekey}
+	</select>
+
+	<select id="groupage" resultType="int" parameterType="int">
+		select
+		agevalue from gage where agekey =#{agekey}
+	</select>
+
+	<select id="groupdcategory" resultType="String"
+		parameterType="int">
+		select dcategoryname from gcategory where dcategorykey
+		=#{categorykey}
+	</select>
+
+	<select id="groupscategory" resultType="String"
+		parameterType="int">
+		select scategoryname from gcategory2 where dcategorykey
+		=#{categorykey}
+	</select>
+
+	<select id="groupmembers" resultType="int" parameterType="int">
+		select
+		count(*) from ggroupmember where usergrade in(0,1) and groupkey
+		=#{groupkey}
+	</select>
+
+	<select id="groupmaster" resultType="String" parameterType="int">
+		select groupnickname from ggroupmember where userkey = (select userkey
+		from ggroup where groupkey =#{groupkey})
+	</select>
+
+	<select id="groupboardlist" resultType="boardlist"
+		parameterType="int">
+		select * from ggroupboard where groupkey =
+		#{groupkey} order by boardseq
+	</select>
+
+	<select id="groupmemberlist" resultType="memberlist"
+		parameterType="int">
+		select userimagefile, groupnickname from gusers left join GGROUPMEMBER
+		using(userkey) where groupkey=#{groupkey} and usergrade in(0,1)
+	</select>
+	
+	<select id="groupmeetinglist" resultType="meetinglist"
+		parameterType="int">
+		select postkey,posttitle,postdate,userkey,groupkey,boardkey,cstartdate,cenddate,cmoney,maxperson,location from post left join calendar
+		using(postkey) where groupkey=#{groupkey} and usergrade in(0,1)
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
