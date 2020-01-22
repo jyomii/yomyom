@@ -558,7 +558,11 @@ a.add-butn.more-action {
 
 													</ul>
 													<div class="lodmore">
-														<button class="btn-view btn-load-more"></button>
+														<button class="btn-view btn-load-more"
+															<c:if test="${d_listCount < 10}">
+														 style="visibility:hidden;"
+														</c:if>
+														></button>
 													</div>
 												</div>
 												<div class="tab-pane fade" id="frends-req">
@@ -625,7 +629,11 @@ a.add-butn.more-action {
 														
 
 													</ul>
-													<button class="btn-view btn-load-more"></button>
+													<button class="btn-view btn-load-more"
+													<c:if test="${r_listCount < 10}">
+														 style="visibility:hidden;"
+														</c:if>
+													></button>
 												</div>
 											</div>
 										</div>
@@ -903,14 +911,23 @@ a.add-butn.more-action {
 					"type" : type},
 			success : function(result){
 				
-			
+				var more = (result.length < 10);
+				
 				if (result.length > 0) {
 					var html1 = print(result,type);
 					
-					if(type == 0)
+					
+					
+					if(type == 0){
 					$('#frends ul').append(html1);
-					else
+					if(more)
+						$('#frends .btn-load-more').css('visibility','hidden');
+					}
+					else{
 					$('#frends-req ul').append(html1);
+					if(more)
+						$('#frends-req .btn-load-more').css('visibility','hidden');
+					}
 					
 				}
 				
