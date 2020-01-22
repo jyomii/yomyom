@@ -598,6 +598,7 @@
 									</div><!-- settings widget -->										
 								</aside>
 							</div><!-- sidebar -->
+							
 							<!-- 모임 가입 폼 -->
 							<div class="col-lg-6">
 								<div class="central-meta">
@@ -646,6 +647,7 @@
 									</div>
 								</div>	
 							</div><!-- centerl meta -->
+							<!-- 모임 가입 끝 -->
 							<div class="col-lg-3">
 								<aside class="sidebar static">
 									<div class="widget">

@@ -1140,3 +1140,118 @@ FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
 ORDER BY GROUPDATE DESC;
 
 
+SELECT * FROM POST
+SELECT * FROM GCOMMENT
+
+-- 댓글 달기
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 15, 2, '아뇨 할 수 있어요!!', 1, 0, 0, sysdate, 3); 			-- 3번 모임의 15번 글에 2번 유저가 댓글을 달 것임 
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 14, 2, '노력하면 속도 붙을 거예요 홧팅', 1, 0, 0, sysdate, 3); 	-- 3번 모임의 14번 글에 2번 유저가 댓글을 달 것임 
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 16, 2, '미 친 듯 이 달 려 라 아 자', 1, 0, 0, sysdate, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 17, 2, '왕오아오아앙ㅇ', 1, 0, 0, sysdate, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 13, 2, '노.. 유 아 낫 바 보', 1, 0, 0, sysdate, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 11, 2, '노.. 유 아 낫 바 보', 1, 0, 0, sysdate, 6); 			-- 6번 모임의 11번 글에 2번 유저가 댓글을 달 것임
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 15, 3, 'ㅇㅇㅇㅇ', 1, 0, 0, SYSDATE, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 15, 4, 'SSSSS', 1, 0, 0, SYSDATE, 3);
+
+
+
+
+
+
+-- 현재 모임(3번)에서 해당 유저가(2번) 어떤 글에 무슨 댓글을 달았는지
+SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY FROM GCOMMENT WHERE USERKEY = 2 AND GROUPKEY = 3 ORDER BY COMMENTDATE DESC;
+
+SELECT POSTKEY, POSTTITLE, POSTDATE FROM POST WHERE POSTKEY IN (13, 17);
+SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY 
+FROM GCOMMENT WHERE USERKEY = 2 AND GROUPKEY = 3
+
+-- 글에 달린 댓글 개수 
+SELECT POSTKEY, POSTTITLE, USERKEY, COMMENTCONTENT, GROUPKEY
+FROM POST NATURAL JOIN (	SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY 
+							FROM GCOMMENT 
+							WHERE USERKEY = 2 AND GROUPKEY = 3
+							ORDER BY COMMENTDATE DESC) 
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+SELECT POSTKEY, POSTTITLE, POSTCONTENT, USERKEY, GROUPKEY
+FROM POST NATURAL JOIN (SELECT POSTKEY, COUNT(USERKEY), COMMENTCONTENT, GROUPKEY FROM GCOMMENT WHERE GROUPKEY = 3)
+
+SELECT C.POSTKEY, C.COMMENTCONTENT, C.GROUPKEY
+FROM GCOMMENT C JOIN (	SELECT POSTKEY, COUNT(POSTKEY) AS "#COUNT#"
+						FROM GCOMMENT C
+						GROUP BY POSTKEY);	
+						
+SELECT * FROM GCOMMENT;
+SELECT * FROM POST;
+
+SELECT *
+FROM POST
+WHERE POSTKEY IN (	SELECT POSTKEY 
+					FROM GCOMMENT 
+					WHERE USERKEY = 2 AND GROUPKEY = 3 )	
+
+-- 댓글이 어느 글에 달렸는지 알 수 있는 원문글 번호
+-- 어떤 유저가 댓글을 달았는지 알 수 있는 유저번호
+-- 유저가 단 댓글
+-- 유저가 댓글 쓴 날짜
+-- 어느 모임에서 썼는지에 대한 모임번호
+-- 글제목
+SELECT C.POSTKEY AS POSTKEY, C.USERKEY AS USERKEY, C.COMMENTCONTENT AS COMMENTCONTENT, C.COMMENTDATE AS COMMENTDATE, C.GROUPKEY AS GROUPKEY, P.POSTTITLE AS POSTTITLE
+FROM GCOMMENT C LEFT JOIN POST P
+ON C.POSTKEY = P.POSTKEY
+
+-- 글번호와 그 글들에 대한 댓글수 
+SELECT POSTKEY, COUNT(POSTKEY) AS COMMENTCOUNT
+FROM (	SELECT C.POSTKEY AS POSTKEY, C.USERKEY AS USERKEY, C.COMMENTCONTENT AS COMMENTCONTENT, C.COMMENTDATE AS COMMENTDATE, C.GROUPKEY AS GROUPKEY, P.POSTTITLE AS POSTTITLE
+		FROM GCOMMENT C LEFT JOIN POST P
+		ON C.POSTKEY = P.POSTKEY)
+GROUP BY POSTKEY
+-- 노답인데;
+
+SELECT POSTKEY, COUNT(POSTKEY) AS "COMMENTCOUNT"
+FROM GCOMMENT
+GROUP BY POSTKEY
+
+select * from GCOMMENT a left join post using(postkey) where a.userkey=2
+
+select * from post
+select * from gcomment
+
+select count(*),postkey from gcomment group by postkey
+select commentcount, posttitle from post left join (select count(postkey) commentcount, postkey from gcomment group by userkey) using(postkey) where groupkey=3
+
+select count(postkey) from post group by postkey having userkey = 2;
+
+select * 
+from post a left outer join (select count(b.postkey) commentcount, b.postkey 
+							from gcomment b 
+							group by b.postkey) p 
+							on a.postkey = p.postkey
+							where groupkey = 3 and userkey = 2;
+							
+SELECT POSTKEY, POSTTITLE, COMMENTDATE, USERKEY, COMMENTCONTENT, GROUPKEY
+FROM POST NATURAL JOIN ( 	SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY, COMMENTDATE 
+							FROM GCOMMENT 
+							WHERE USERKEY = 2 AND GROUPKEY = 3
+							ORDER BY COMMENTDATE DESC) 							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
