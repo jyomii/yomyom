@@ -143,7 +143,7 @@
 											<td>
 												<img src="<spring:url value='/image${b.groupDFile}'/>" class = "group-img" alt = ""/>
 												<!-- 주소 나중에 바꿔야함 -->
-												<a href = "forums-category.html?groupKey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a>
+												<a href = "groupmain?groupkey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a>
 											</td>	
 											<td>${b.memberCount}명</td>
 											<td>${b.groupDate}</td>

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.Post;
 
@@ -25,5 +26,15 @@ public class GroupMemberDAO {
 	// 해당 모임 내 유저의 작성글 조회
 	public List<Post> wroteInGroup (Map<String, Object> temp) {
 		return sqlSession.selectList("group.wroteInGroup", temp);
+	}
+	
+	// 해당 모임 내 유저가 댓글 단 글 조회 -- 댓글 빼고
+	public List<Post> postByCommented(Map<String, Object> temp) {
+		return sqlSession.selectList("group.postByCommented", temp);
+	}
+	
+	// 해당 모임 내 유저가 댓글 단 글 조회 -- 댓글만
+	public List<GComment> commentToPost(Map<String, Object> temp) {
+		return sqlSession.selectList("group.commentToPost", temp);
 	}
 }
