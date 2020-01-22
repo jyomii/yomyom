@@ -4,10 +4,30 @@
 <mapper namespace = "group">
 	<!-- 가입한 모임 보기 -->
 	<select id = "userInGroup" resultType = "group">
-		SELECT *
-		FROM ggroup
-		WHERE groupkey IN (SELECT groupkey
-							FROM ggroupmember
-							WHERE userkey = #{userkey})	
+		SELECT GROUPKEY, GROUPNAME, GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE, MEMBERCOUNT
+		FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
+									FROM GGROUPMEMBER
+									GROUP BY GROUPKEY
+									HAVING GROUPKEY IN (SELECT GROUPKEY 
+														FROM GGROUPMEMBER
+														WHERE USERKEY = #{USERKEY})) 
+		ORDER BY GROUPDATE DESC
+	</select>
+	
+	<!-- 해당 모임에서 작성한 글 -->
+	<select id = "wroteInGroup" resultType = "post" parameterType = "map">
+		SELECT POSTKEY, POSTTITLE, POSTREADCOUNT, TO_CHAR(POSTDATE, 'YYYY-MM-DD') AS POSTDATE
+		FROM POST
+		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
+		ORDER BY POSTDATE DESC
+	</select>
+	
+	<!-- 유저가 댓글 단 글 -->
+	<select id = "postByCommented" resultType = "post" parameterType = "map">
+		SELECT POSTKEY, POSTTITLE, TO_CHAR(COMMENTDATE, 'YYYY-MM-DD') AS COMMENTDATE, USERKEY, COMMENTCONTENT, GROUPKEY
+		FROM POST NATURAL JOIN ( 	SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY, COMMENTDATE 
+									FROM GCOMMENT 
+									WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
+									ORDER BY COMMENTDATE DESC) 
 	</select>
 </mapper>

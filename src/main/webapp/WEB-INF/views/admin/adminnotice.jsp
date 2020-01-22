@@ -551,7 +551,12 @@
 														
 													
 													<div class="lodmore">
-														<button class="btn-view btn-load-more"></button>
+														<button class="btn-view btn-load-more"
+														
+														<c:if test="${noticeCount < 10}">
+														 style="visibility:hidden;"
+														</c:if>
+														></button>
 													</div>
 														
 													</ul>
@@ -798,7 +803,7 @@
 		
 		var str = $(".newpst-input form textarea").val();
 
-		alert(str);
+		
 		str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
 		console.log(str);
@@ -809,7 +814,7 @@
 	});
 	
 	
-	$('.lodmore').click(function(){
+	$('.btn-load-more').click(function(){
 		
 		page++;
 		

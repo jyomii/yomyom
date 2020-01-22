@@ -6,6 +6,7 @@ import co.pr.fi.domain.GCategoryName;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.PoliceDetail;
 import co.pr.fi.domain.PoliceResult;
 import co.pr.fi.domain.RequestCategory;
 import co.pr.fi.domain.StatisticsAge;
@@ -48,7 +49,7 @@ public interface AdminService {
 
 	int negativeGroup(int key);
 
-	int deleteGroupMember(int key);
+
 
 	List<StatisticsAge> statisticsGAge();
 
@@ -57,6 +58,26 @@ public interface AdminService {
 	List<StatisticsCategory> statisticsUCategory();
 
 	int setUserStatus(String id, int i);
+
+	List<PoliceDetail> policeBDetail(int userkey);
+
+	List<PoliceDetail> policeMDetail(int userkey);
+
+	void setUserStatusDate(String userId);
+
+	int deletePolice(int userKey);
+
+	int stopCancelUsers();
+
+	GGroup getGroup(int key);
+
+	void insertDeleteFiles(String groupDFile);
+
+	List<String> getDeleteFiles();
+
+	void deleteFilesList();
+
+	int getNoticeCount();
 
 	
 

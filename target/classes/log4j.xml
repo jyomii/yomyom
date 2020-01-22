@@ -10,6 +10,10 @@
 		</layout>
 	</appender>
 	
+	<!-- group -->
+	<logger name = "group">
+		<level value = "trace"/>
+	</logger>
 	
 	<!-- member -->
 	<logger name="Member">
@@ -20,6 +24,17 @@
 	<logger name="Admin">
 		<level value="trace" />
 	</logger>
+	
+	<!-- requestcategory -->
+	<logger name = "category">
+		<level value = "trace"/>
+	</logger>
+	
+	<!-- groupmaster -->
+	<logger name = "GroupMaster">
+		<level value = "trace"/>
+	</logger>
+	
 	
 	<!-- Application Loggers -->
 	<logger name="co.pr.fi">

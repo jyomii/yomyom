@@ -1,5 +1,6 @@
 
 DROP TABLE requestCategory;
+DROP TABLE delete_File;
 
 -- glocation Table Create SQL
 DROP TABLE userlikegroup;
@@ -336,8 +337,8 @@ CREATE TABLE post
     boardkey             NUMBER            NOT NULL, 
     postreadcount        NUMBER            NOT NULL, 
     PRIMARY KEY(postkey),
-   FOREIGN KEY(userkey,groupkey) REFERENCES ggroupmember(userkey,groupkey), /*아 이걸 이렇게 하면 되는구나...*/
-  FOREIGN KEY(boardkey) REFERENCES ggroupboard(boardkey)
+   FOREIGN KEY(userkey,groupkey) REFERENCES ggroupmember(userkey,groupkey) on delete cascade, /*아 이걸 이렇게 하면 되는구나...*/
+  FOREIGN KEY(boardkey) REFERENCES ggroupboard(boardkey) on delete cascade
 );
 
 
@@ -1060,6 +1061,7 @@ insert into gusers values(0, 'admin','$2a$10$DGdkEZGSwAL1tOEmaEEqB.qfcKQrREhIo4w
 NULL,NULL,2,1,'F','plain64@naver.com',sysdate,'Y','N',0,null,0);
 
 
+create table delete_File (filename varchar2(100));
                                                  
     
 /*그룹 생성 시 같이 추가되어야함

@@ -4,6 +4,16 @@
 <mapper namespace="GroupMaster">
 	
 	
+    
+	<insert id="insertGroupBoard" parameterType="groupBoard">
+		insert into ggroupboard values(nvl((select max(boardKey) from ggroupboard)+1,0),
+		#{groupKey},
+		#{boardName},
+		#{boardType},
+		nvl((select max(boardseq) from ggroupboard where groupkey = #{groupKey})+1,0)
+		)
+	</insert>
+	
 	
 	 
 	<insert id="insertGroup" parameterType="group">
@@ -12,7 +22,6 @@
 	 <selectKey keyProperty="groupKey" resultType="Integer" order="BEFORE">
 			select nvl((select max(groupkey) from ggroup)+1,0) from dual
 		</selectKey>
-	 
 	
 	insert into ggroup values(
 	#{groupKey},

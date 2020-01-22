@@ -26,108 +26,155 @@
 	list-style: none;
 	padding-top: 20px;
 }
+
 .forgroupnamewidth {
 	width: 30%;
 	display: inline-block;
 }
+
 .forgroupnamewidth1 {
 	width: 60%;
 	display: inline-block;
 }
+
 .forgroupnameleft {
 	float: left;
 	list-style: none;
 	margin-right: 20px;
 }
+
 .forlogintitle {
 	margin-bottom: 10px !important;
 }
+
 .forSubmitBtnDiv {
 	margin-top: 0px !important;
 	margin-bottom: 10px;
 }
+
 .forLoginBtn {
 	padding-left: 25px !important;
 	padding-right: 25px !important;
 	margin-left: 13%;
 }
+
 .forMemberCountBtnOne {
 	margin-top: 0px !important;
 	padding: 3px !important;
 }
+
 .forMemberCountBtnTwo {
 	margin-top: 0px !important;
 	padding: 3px !important;
 }
+
 .forMemberCountBtnThree {
 	margin-top: 0px !important;
 	padding: 3px !important;
 }
+
+.forMemberCountBtnFour {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnFive {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSix {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSeven {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
 .forJoinBtn {
 	margin-top: 0px !important;
 	padding: 5px !important;
 	float: right;
 	font-size: 14px !important;
 }
+
 .forRegisterBtn {
 	padding-left: 20px !important;
 	padding-right: 20px !important;
 	margin-left: 10%;
 }
+
 .forRememberIdDiv {
 	margin-bottom: 0px !important;
 	margin-top: 5px !important;
 }
+
 .forcheckbox {
 	margin-top: 3px;
 }
+
 .calendarDiv {
 	text-align: center;
 	width: 95%;
 	margin: 0 auto;
 }
+
 .calendarTable {
 	width: 80%;
 	margin: 0 auto;
 }
+
 .calendarBtn {
 	cursor: pointer;
 }
+
 .calendarCell {
 	cursor: pointer;
 }
+
 .calendarDiv td {
 	border-radius: 13px;
 }
+
 .calendarCellSelected {
 	background-color: #4F93CE;
 	color: white !important;
 }
+
 .scheduleDiv {
 	width: 80%;
 	margin: 0 auto;
 }
+
 .scheduleUl {
 	padding-left: 0px !important;
 }
+
 .card-header-bgcolor {
 	background: white none repeat scroll 0 0 !important;
 }
+
 .schedule-span {
 	margin-bottom: 7px;
 	width: 70% !important;
 }
+
 .schedule-span1 {
 	width: 35% !important;
 }
+
 .nearby-contct>li {
 	padding: 15 px !important;
 }
+
 .paddingZero[aria-expanded="true"] {
 	background: #088dcd;
 	color: #fff;
 	text-decoration: none;
 }
+
 .groupMember {
 	display: inline-block;
 	list-style: outside none none;
@@ -136,22 +183,30 @@
 	width: 100%;
 	max-height: 300px !important;
 }
+
 .groupMember li {
 	display: inline-block;
 	margin-bottom: 20px;
 	position: relative;
 	width: 100%;
 }
-.your-page-groupList li{
+
+.your-page-groupList li {
 	margin-bottom: 3px !important;
 }
+
 .your-page-groupListDiv {
-    min-height: 273px;
+	min-height: 273px;
+}
+
+.min-width-h4 {
+	margin-bottom: 0px !important;
 }
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="resources/dist/js/datepicker.min.js"></script>
 <script src="resources/dist/js/i18n/datepicker.en.js"></script>
+<script src="resources/js/list.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <script>
@@ -189,6 +244,13 @@
 				$('.i-changeThree').addClass('fa-arrow-up');
 			}
 		})
+		//=======================================================
+		$('input[type=file]:eq(0)').on('change', function() {
+			$('#groupMainImgForm').submit();
+		});
+		$('input[type=file]:eq(1)').on('change', function() {
+			$('#groupImgForm').submit();
+		});
 	})
 </script>
 <script type="text/javascript">
@@ -203,6 +265,7 @@
 				.getDate());
 		buildCalendar(); //달력 cell 만들어 출력 
 	}
+
 	function nextCalendar() {//다음 달
 		// 다음 달을 today에 값을 저장하고 달력에 today 넣어줌
 		//today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
@@ -230,6 +293,7 @@
 		//new를 찍지 않아서 month는 +1을 더해줘야 한다. 
 		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
 				+ (today.getMonth() + 1) + "월";
+
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
 			//열을 지워줌
@@ -346,7 +410,7 @@
 									page</a></li>
 						</ul></li>
 					<li><span>forum</span>
-						<ul> 
+						<ul>
 							<li><a href="forum.html" title="">Forum Page</a></li>
 							<li><a href="forums-category.html" title="">Fourm
 									Category</a></li>
@@ -678,33 +742,47 @@
 
 		<!-- 그룹 페이지 상단 -->
 		<section>
+			<input type="hidden" id="thisGroupKey" value="${groupkey }">
 			<div class="feature-photo">
-				<!-- 모임 대문 사진 -->
 				<figure>
-					<img src="resources/images/resources/timeline-1.jpg" alt="">
+					<img id="groupPageImg" src="resources/upload${groupdfile}" alt="">
+					<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
 				</figure>
-				<!-- 모임 대문 사진 -->
-				<form class="edit-phto">
+
+				<!-- **********모임 대문 사진 수정*********** -->
+				<form class="edit-phto" id="groupMainImgForm"
+					enctype="multipart/form-data" action="group_mainImgUpdate.net"
+					method="post">
+					<input type="hidden" name="groupkey" value="${groupkey }">
 					<i class="fa fa-camera-retro"></i>
 					<!-- 대문 사진 수정 버튼 -->
-					<label class="fileContainer"> 대문 사진 수정 <input type="file" />
+					<label class="fileContainer"> 대문 사진 수정 <input type="file"
+						name="groupMainImgUpload" />
 					</label>
 				</form>
+				<!-- **********모임 대문 사진 수정*********** -->
+
 				<div class="container-fluid">
 					<div class="row merged">
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<!-- 그룹 사진 -->
 								<figure>
-									<img src="resources/images/resources/user-avatar.jpg" alt="">
-									<form class="edit-phto">
+									<img id="groupImg" src="resources/upload${groupcfile}" alt="">
+									<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
+									<!-- **********모임 사진 수정*********** -->
+									<form class="edit-phto" id="groupImgForm"
+										enctype="multipart/form-data" action="group_ImgUpdate.net"
+										method="post">
+										<input type="hidden" name="groupkey" id="hiddenGroupKey" value="${groupkey }">
 										<i class="fa fa-camera-retro"></i>
 										<!-- 그룹 사진 수정 버튼 -->
 										<label class="fileContainer"> 그룹 사진 수정하기 <input
-											type="file" />
+											type="file" name="groupImgUpload" />
 										</label>
 										<!-- 그룹 사진 수정 버튼 -->
 									</form>
+									<!-- **********모임 사진 수정*********** -->
 								</figure>
 								<!-- 그룹 사진 -->
 							</div>
@@ -715,7 +793,7 @@
 									<!-- 그룹 이름 -->
 									<ul>
 										<li class="admin-name forgroupname">
-											<h5>동선동 탁구모임 동.탁</h5>
+											<h5>${groupname}</h5>
 										</li>
 									</ul>
 									<!-- 그룹 이름 -->
@@ -723,10 +801,10 @@
 								<div class="forgroupnamewidth1">
 									<!-- 그룹 간단 정보 -->
 									<ul>
-										<li class="forgroupnameleft">지역: 성북구</li>
-										<li class="forgroupnameleft">연령대: 무관</li>
-										<li class="forgroupnameleft">카테고리: 운동>탁구</li>
-										<li class="forgroupnameleft">회원수: 300명</li>
+										<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
+										<li class="forgroupnameleft">연령대: ${groupage } 대</li>
+										<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
+										<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
 									</ul>
 									<!-- 그룹 간단 정보 -->
 								</div>
@@ -753,15 +831,31 @@
 										<div class="widget">
 											<h4 class="widget-title">게시판</h4>
 											<ul class="naves">
-												<li><i class="ti-clipboard"></i> <a
-													href="newsfeed.html" title="">공지게시판</a></li>
-												<li><i class="ti-mouse-alt"></i> <a href="inbox.html"
-													title="">모임게시판</a></li>
-												<li><i class="ti-files"></i> <a href="fav-page.html"
-													title="">회비게시판</a></li>
+												<c:forEach var="gbl" items="${groupboardlist }">
+													<li><i class="ti-clipboard"></i> <a
+														href="newsfeed.html" title="">${gbl.boardname}</a> <input
+														type="hidden" value="${gbl.boardtype }"></li>
+												</c:forEach>
 											</ul>
 										</div>
 										<!-- 그룹 게시판 위젯 -->
+
+										<!-- 모임 관리 게시판 위젯 -->
+										<div class="widget">
+											<h4 class="widget-title">모임 관리</h4>
+
+											<ul class="naves">
+												<li><i class="ti-info-alt"></i> <a
+													href="group_admin.net" title="">모임 기본 설정</a></li>
+												<li><i class="ti-mouse-alt"></i> <a
+													href="group_admin.net" title="">모임 일정 관리</a></li>
+												<li><i class="ti-heart"></i> <a
+													href="edit-interest.html" title="">모임 회원 관리</a></li>
+												<li><i class="ti-settings"></i> <a
+													href="edit-account-setting.html" title="">모임 게시판 관리</a></li>
+											</ul>
+										</div>
+										<!-- 모임 관리 게시판 위젯 -->
 
 										<!-- 그룹 카톡방 위젯 -->
 										<div class="widget">
@@ -789,127 +883,18 @@
 											<h4 class="widget-title">모임의 회원들</h4>
 											<div id="searchDir"></div>
 											<ul id="people-list" class="friendz-list">
-												<li>
-													<figure>
-														<img src="resources/images/resources/friend-avatar.jpg"
-															alt="">
-														<span class="status f-online"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net?userKey=${userKey}">이지연</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="4136282f352433322e2d25243301262c20282d6f222e2c">모임장</a></i>
-													</div>
-												</li>
-												<li>
-													<figure>
-														<img src="resources/images/resources/friend-avatar2.jpg"
-															alt="">
-														<span class="status f-away"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">고연희</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="3a585b48545f497a5d575b535614595557"></a></i>
-													</div>
-												</li>
-												<li>
-													<figure>
-														<img src="resources/images/resources/friend-avatar3.jpg"
-															alt="">
-														<span class="status f-off"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">조태석</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="127873617d7c7052757f737b7e3c717d7f"></a></i>
-													</div>
-												</li>
-												<li>
-													<figure>
-														<img src="resources/images/resources/friend-avatar4.jpg"
-															alt="">
-														<span class="status f-off"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">장연지</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="620803110d0c0022050f030b0e4c010d0f"></a></i>
-													</div>
-												</li>
-												<li>
-
-													<figure>
-														<img src="resources/images/resources/friend-avatar5.jpg"
-															alt="">
-														<span class="status f-online"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">나상엽</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="0963687a66676b496e64686065276a6664"></a></i>
-													</div>
-												</li>
-												<li>
-
-													<figure>
-														<img src="resources/images/resources/friend-avatar6.jpg"
-															alt="">
-														<span class="status f-away"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">andrew</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="5b313a283435391b3c363a323775383436">[email&#160;protected]</a></i>
-													</div>
-												</li>
-												<li>
-
-													<figure>
-														<img src="resources/images/resources/friend-avatar7.jpg"
-															alt="">
-														<span class="status f-off"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">amy watson</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="472d263428292507202a262e2b6924282a">[email&#160;protected]</a></i>
-													</div>
-												</li>
-												<li>
-
-													<figure>
-														<img src="resources/images/resources/friend-avatar5.jpg"
-															alt="">
-														<span class="status f-online"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">daniel warber</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="7a101b091514183a1d171b131654191517">[email&#160;protected]</a></i>
-													</div>
-												</li>
-												<li>
-													<figure>
-														<img src="resources/images/resources/friend-avatar2.jpg"
-															alt="">
-														<span class="status f-away"></span>
-													</figure>
-													<div class="friendz-meta">
-														<a href="G_mem_detail.net">Sarah Loren</a> <i><a
-															href="https://wpkixx.com/cdn-cgi/l/email-protection"
-															class="__cf_email__"
-															data-cfemail="7c1e1d0e12190f3c1b111d1510521f1311">[email&#160;protected]</a></i>
-													</div>
-												</li>
+												<c:forEach var="gml" items="${groupmemberlist }">
+													<li>
+														<figure>
+															<img src="resources/images/resources/friend-avatar.jpg"
+																alt="">
+														</figure>
+														<div class="friendz-meta">
+															<a href="time-line.html"></a>${gml.groupnickname } <i
+																class="__cf_email__">모임장</i>
+														</div>
+													</li>
+												</c:forEach>
 											</ul>
 										</div>
 										<!-- 그룹 가입 회원 목록 -->
@@ -935,18 +920,15 @@
 												<!-- 그룹 이름-->
 												<div class="friend-name">
 													<ins>
-														<a href="time-line.html" title="">동선동 탁구모임 동.탁</a>
+														<a href="time-line.html" title="">${groupname }</a>
 													</ins>
-													<span>모임장 : 이지연</span>
+													<span>모임장 : ${groupmaster}</span>
 												</div>
 												<!-- 그룹 이름-->
 
 												<!-- 그룹 소개 본문-->
 												<div class="description">
-													<p>
-														안녕하세요. 성북구에서 주로 모임을 갖는 탁구 모임 동탁입니다.<br> 연령대는 무관하고 회비도
-														있습니다.<br> 열심히 재밌게 탁구쳐요.<br>
-													</p>
+													<p>${groupinfo}</p>
 												</div>
 												<!-- 그룹 소개 본문-->
 											</div>
@@ -961,532 +943,87 @@
 											<span><i class="fa fa-users"></i>예정 모임</span>
 										</div>
 										<ul class="nearby-contct">
-											<li>
-												<div class="card">
-													<div class="card-header card-header-bgcolor"
-														id="headingOne">
-														<div class="nearly-pepls">
-															<figure>
-																<a href="time-line.html" title=""><img
-																	src="resources/images/resources/group1.jpg" alt=""></a>
-															</figure>
-															<div class="pepl-info">
-																<h4>
-																	<a href="time-line.html" title="">12월 23일 수요일 모임</a>
-																</h4>
-																<em>참여인원 15명</em> <span class="schedule-span">장소:
-																	동선동 탁구장</span>
-																<button type="button" class="mtr-btn forJoinBtn">
-																	<span>참여하기</span>
-																</button>
-																<br> <span class="schedule-span1">일시: 12월
-																	23일 오후 6시</span><br><br>
-																	<span class="schedule-span1">회비:1만원(음료수+밥값)</span>
-																<button type="button"
-																	class="mtr-btn forMemberCountBtnOne"
-																	data-toggle="collapse" data-target="#collapseOne"
-																	aria-expanded="true" aria-controls="collapseOne">
-																	<span>참여한 사람들 1/15&nbsp;&nbsp;&nbsp;<i
-																		class="fas fa-arrow-down i-changeOne"></i></span>
-																</button>
+											<c:forEach var="gmtl" items="${groupmeetinglist }" begin="0"
+												end="2">
+												<c:choose>
+													<c:when test="${gmtl.rownum+0 ==1}">
+														<c:set var="l" value="One" />
+														<c:set var="n" value="1" />
+													</c:when>
+													<c:when test="${gmtl.rownum+0 ==2}">
+														<c:set var="l" value="Two" />
+														<c:set var="n" value="2" />
+													</c:when>
+													<c:otherwise>
+														<c:set var="l" value="Three" />
+														<c:set var="n" value="3" />
+													</c:otherwise>
+												</c:choose>
+												<li>
+													<div class="card">
+														<div class="card-header card-header-bgcolor"
+															id="heading${l}">
+															<div class="nearly-pepls">
+																<figure>
+																	<a href="time-line.html" title=""><img
+																		src="resources/images/resources/group1.jpg" alt=""></a>
+																</figure>
+																<div class="pepl-info">
+																	<h4 class="min-width-h4">
+																		<a href="time-line.html" title="">${gmtl.posttitle}</a>
+																	</h4>
+																	<br>
+																	<br> <span class="schedule-span">장소:
+																		${gmtl.location}</span>
+																	<button type="button" class="mtr-btn forJoinBtn">
+																		<span>참여하기</span>
+																	</button>
+																	<br> <span class="schedule-span1">일시:
+																		${gmtl.cstartdate}</span><br>
+																	<span class="schedule-span1">회비: ${gmtl.cmoney}</span>
+																	<button type="button"
+																		class="mtr-btn forMemberCountBtn${l}"
+																		data-toggle="collapse" data-target="#collapse${l}"
+																		aria-expanded="true" aria-controls="collapse${l}">
+																		<span>참여한 사람들 <span class="currentperson${n}">${gmtl.currentperson }</span> /
+																			${gmtl.maxperson}&nbsp;&nbsp;&nbsp;<i
+																			class="fas fa-arrow-down i-change${l}"></i>
+																		</span>
+																	</button>
+																	<input type="hidden" value="${gmtl.postkey }">
+																	<input type="hidden" value="${n}">
+																</div>
+															</div>
+														</div>
+														<div id="collapse${l}" class="collapse"
+															aria-labelledby="heading${l}" data-parent="#accordion">
+															<div class="card-body">
+																<div class="widget friend-list">
+																	<div id="searchDir${n}"></div>
+																	<ul id="people-list${n}"
+																		class="friendz-list people-list groupMember">
 
+																		<c:forEach var="gml" items="${groupmemberlist }">
+																			<li>
+																				<figure>
+																					<img
+																						src="resources/images/resources/friend-avatar.jpg"
+																						alt="">
+																				</figure>
+																				<div class="friendz-meta">
+																					<a href="time-line.html"></a>${gml.groupnickname }
+																					<i class="__cf_email__">모임장</i>
+																				</div>
+																			</li>
+																		</c:forEach>
+
+																	</ul>
+																</div>
 															</div>
 														</div>
 													</div>
-													<div id="collapseOne" class="collapse"
-														aria-labelledby="headingOne" data-parent="#accordion">
-														<div class="card-body">
-															<div class="widget friend-list">
-																<div id="searchDir1"></div>
-																<ul id="people-list1"
-																	class="friendz-list people-list groupMember">
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">이지연</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="4136282f352433322e2d25243301262c20282d6f222e2c">모임장</a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar2.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">고연희</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="3a585b48545f497a5d575b535614595557"></a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar3.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">조태석</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="127873617d7c7052757f737b7e3c717d7f"></a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar4.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">장연지</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="620803110d0c0022050f030b0e4c010d0f"></a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar5.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">나상엽</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="0963687a66676b496e64686065276a6664"></a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar6.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">andrew</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="5b313a283435391b3c363a323775383436">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar7.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">amy watson</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="472d263428292507202a262e2b6924282a">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar5.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">daniel warber</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="7a101b091514183a1d171b131654191517">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar2.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">Sarah Loren</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="7c1e1d0e12190f3c1b111d1510521f1311">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="card">
-													<div class="card-header card-header-bgcolor"
-														id="headingTwo">
-														<div class="nearly-pepls">
-															<figure>
-																<a href="time-line.html" title=""><img
-																	src="resources/images/resources/group1.jpg" alt=""></a>
-															</figure>
-															<div class="pepl-info">
-																<h4>
-																	<a href="time-line.html" title="">12월 23일 수요일 모임</a>
-																</h4>
-																<em>참여인원 15명</em> <span class="schedule-span">장소:
-																	동선동 탁구장</span>
-																<button type="button" class="mtr-btn forJoinBtn">
-																	<span>참여하기</span>
-																</button>
-																<br> <span class="schedule-span1">일시: 12월
-																	23일 오후 6시</span><br><br>
-																	<span class="schedule-span1">회비:1만원(음료수+밥값)</span>
-																<button type="button"
-																	class="mtr-btn forMemberCountBtnTwo"
-																	data-toggle="collapse" data-target="#collapseTwo"
-																	aria-expanded="true" aria-controls="collapseTwo">
-																	<span>참여한 사람들 1/15&nbsp;&nbsp;&nbsp;<i
-																		class="fas fa-arrow-down i-changeTwo"></i></span>
-																</button>
-
-															</div>
-														</div>
-													</div>
-													<div id="collapseTwo" class="collapse"
-														aria-labelledby="headingTwo" data-parent="#accordion">
-														<div class="card-body">
-															<div class="widget friend-list">
-																<div id="searchDir2"></div>
-																<ul id="people-list2"
-																	class="friendz-list people-list groupMember">
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">이지연</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="4136282f352433322e2d25243301262c20282d6f222e2c">모임장</a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar2.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">고연희</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="3a585b48545f497a5d575b535614595557"></a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar3.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">조태석</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="127873617d7c7052757f737b7e3c717d7f"></a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar4.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">장연지</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="620803110d0c0022050f030b0e4c010d0f"></a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar5.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">나상엽</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="0963687a66676b496e64686065276a6664"></a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar6.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">andrew</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="5b313a283435391b3c363a323775383436">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar7.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">amy watson</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="472d263428292507202a262e2b6924282a">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar5.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">daniel warber</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="7a101b091514183a1d171b131654191517">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar2.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">Sarah Loren</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="7c1e1d0e12190f3c1b111d1510521f1311">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="card">
-													<div class="card-header card-header-bgcolor"
-														id="headingThree">
-														<div class="nearly-pepls">
-															<figure>
-																<a href="time-line.html" title=""><img
-																	src="resources/images/resources/group1.jpg" alt=""></a>
-															</figure>
-															<div class="pepl-info">
-																<h4>
-																	<a href="time-line.html" title="">12월 23일 수요일 모임</a>
-																</h4>
-																<em>참여인원 15명</em> <span class="schedule-span">장소:
-																	동선동 탁구장</span>
-																<button type="button" class="mtr-btn forJoinBtn">
-																	<span>참여하기</span>
-																</button>
-																<br> <span class="schedule-span1">일시: 12월
-																	23일 오후 6시</span><br><br>
-																	<span class="schedule-span1">회비:1만원(음료수+밥값)</span>
-																<button type="button"
-																	class="mtr-btn forMemberCountBtnThree"
-																	data-toggle="collapse" data-target="#collapseThree"
-																	aria-expanded="true" aria-controls="collapseThree">
-																	<span>참여한 사람들 1/15&nbsp;&nbsp;&nbsp;<i
-																		class="fas fa-arrow-down i-changeThree"></i></span>
-																</button>
-
-															</div>
-														</div>
-													</div>
-													<div id="collapseThree" class="collapse"
-														aria-labelledby="headingThree" data-parent="#accordion">
-														<div class="card-body">
-															<div class="widget friend-list">
-																<div id="searchDir3"></div>
-																<ul id="people-list3"
-																	class="friendz-list people-list groupMember">
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">이지연</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="4136282f352433322e2d25243301262c20282d6f222e2c">모임장</a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar2.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">고연희</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="3a585b48545f497a5d575b535614595557"></a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar3.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">조태석</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="127873617d7c7052757f737b7e3c717d7f"></a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar4.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">장연지</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="620803110d0c0022050f030b0e4c010d0f"></a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar5.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">나상엽</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="0963687a66676b496e64686065276a6664"></a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar6.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">andrew</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="5b313a283435391b3c363a323775383436">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar7.jpg"
-																				alt="">
-																			<span class="status f-off"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">amy watson</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="472d263428292507202a262e2b6924282a">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar5.jpg"
-																				alt="">
-																			<span class="status f-online"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">daniel warber</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="7a101b091514183a1d171b131654191517">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar2.jpg"
-																				alt="">
-																			<span class="status f-away"></span>
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html">Sarah Loren</a> <i><a
-																				href="https://wpkixx.com/cdn-cgi/l/email-protection"
-																				class="__cf_email__"
-																				data-cfemail="7c1e1d0e12190f3c1b111d1510521f1311">[email&#160;protected]</a></i>
-																		</div>
-																	</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-												</div>
-											</li>
-
+												</li>
+											</c:forEach>
 										</ul>
 										<!-- photos -->
 									</div>
@@ -1780,7 +1317,7 @@
 																	<li>동.탁</li>
 																	<li>동.탁</li>
 																	<li>동.탁</li>
-																</ul>	
+																</ul>
 															</div>
 														</div>
 													</div>
@@ -2005,7 +1542,7 @@
 	<script data-cfasync="false"
 		src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 	<script src="resources/js/main.min.js"></script>
-	<script src="resources/js/script1.js"></script>
+	<script src="resources/js/script.js"></script>
 </body>
 
 </html>

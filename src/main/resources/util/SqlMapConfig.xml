@@ -23,17 +23,19 @@
 		<typeAlias alias="requestcategory" type="co.pr.fi.domain.RequestCategory" />
 		<typeAlias alias="usermessage" type="co.pr.fi.domain.UserMessage" />
 		<typeAlias alias="groupmember" type="co.pr.fi.domain.GGroupMember" />
-		
-		
+		<typeAlias alias="groupBoard" type="co.pr.fi.domain.GGroupBoard" />
+		<typeAlias alias="policeDetail" type="co.pr.fi.domain.PoliceDetail" />
 		
 		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
 		
 		<typeAlias alias="group" type="co.pr.fi.domain.GGroup"/>
-		
-		
+
 		<typeAlias alias="prboard" type="co.pr.fi.domain.PrBoard"/>
-		
+
+		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
+		<typeAlias alias = "comment" type = "co.pr.fi.domain.GComment"/>
+
 	</typeAliases>
 
 	<mappers>
