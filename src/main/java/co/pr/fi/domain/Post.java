@@ -1,48 +1,112 @@
 
 package co.pr.fi.domain;
 
-//모임게시글 
+//紐⑥엫寃뚯떆湲� 
 public class Post {
-
-	// 모임게시글키값
+	private int rownum;
+	// 紐⑥엫寃뚯떆湲��궎媛�
 	private int postKey;
 
-	// 제목
+	// �젣紐�
 	private String postTitle;
 
-	// 내용
+	// �궡�슜
 	private String postContent;
 
-	// 작성날짜
+	// �옉�꽦�궇吏�
 	private String postDate;
 
-	// 모임키값
+	// 紐⑥엫�궎媛�
 	private int groupKey;
 
-	// 유저키값
+	// �쑀���궎媛�
 	private int userKey;
 
-	// 댓글허용여부
+	// �뙎湲��뿀�슜�뿬遺�
 	private String postOptionReply;
 
-	// 검색허용여부
+	// 寃��깋�뿀�슜�뿬遺�
 	private String postOptionSearch;
 
-	// 모임게시판키값
+	// 紐⑥엫寃뚯떆�뙋�궎媛�
 	private int boardKey;
 
-	// 조회수
+	// 議고쉶�닔
 	private int postReadcount;
 
-	// 댓글수
+	// �뙎湲��닔
 	private int replyCount;
 	
-	// 댓글 내용
+	// �뙎湲� �궡�슜
 	private String commentContent;
 	
-	// 댓글 작성일
+	// �뙎湲� �옉�꽦�씪
 	private String commentDate;
 	
+	private String cstartdate;
+	private String cenddate;
+	private String cmoney;
+	private int maxperson;
+	private String location;
+	private int currentperson;
+	
+	
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+
+	public String getCstartdate() {
+		return cstartdate;
+	}
+
+	public void setCstartdate(String cstartdate) {
+		this.cstartdate = cstartdate;
+	}
+
+	public String getCenddate() {
+		return cenddate;
+	}
+
+	public void setCenddate(String cenddate) {
+		this.cenddate = cenddate;
+	}
+
+	public String getCmoney() {
+		return cmoney;
+	}
+
+	public void setCmoney(String cmoney) {
+		this.cmoney = cmoney;
+	}
+
+	public int getMaxperson() {
+		return maxperson;
+	}
+
+	public void setMaxperson(int maxperson) {
+		this.maxperson = maxperson;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public int getCurrentperson() {
+		return currentperson;
+	}
+
+	public void setCurrentperson(int currentperson) {
+		this.currentperson = currentperson;
+	}
+
 	public int getPostKey() {
 		return postKey;
 	}
@@ -146,7 +210,7 @@ public class Post {
 		this.commentDate = commentDate;
 	}
 
-	// Post 모델 복사
+	// Post 紐⑤뜽 蹂듭궗
 	public void CopyData(Post param) {
 		this.postKey = param.getPostKey();
 		this.postTitle = param.getPostTitle();
