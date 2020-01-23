@@ -29,6 +29,30 @@ public class Post {
 	// 검색허용여부
 	private String postOptionSearch;
 
+	// 모임게시글키값
+	private int postKey;
+
+	// 제목
+	private String postTitle;
+
+	// 내용
+	private String postContent;
+
+	// 작성날짜
+	private String postDate;
+
+	// 모임키값
+	private int groupKey;
+
+	// 유저키값
+	private int userKey;
+
+	// 댓글허용여부
+	private String postOptionReply;
+
+	// 검색허용여부
+	private String postOptionSearch;
+
 	// 모임게시판키값
 	private int boardKey;
 
@@ -97,6 +121,15 @@ public class Post {
 	public void setCurrentperson(int currentperson) {
 		this.currentperson = currentperson;
 	}
+
+	// 댓글수
+	private int postCommentcount;
+	
+	// 댓글 내용
+	private String commentContent;
+	
+	// 댓글 작성일
+	private String commentDate;
 
 	public int getPostKey() {
 		return postKey;
@@ -178,6 +211,30 @@ public class Post {
 		this.postReadcount = postReadcount;
 	}
 
+
+	public int getPostCommentcount() {
+		return postCommentcount;
+	}
+
+	public void setPostCommentcount(int postCommentcount) {
+		this.postCommentcount = postCommentcount;
+	}
+	public String getCommentContent() {
+		return commentContent;
+	}
+
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
+	}
+	
+	public String getCommentDate() {
+		return commentDate;
+	}
+
+	public void setCommentDate(String commentDate) {
+		this.commentDate = commentDate;
+	}
+
 	// Post 모델 복사
 	public void CopyData(Post param) {
 		this.postKey = param.getPostKey();
@@ -190,5 +247,9 @@ public class Post {
 		this.postOptionSearch = param.getPostOptionSearch();
 		this.boardKey = param.getBoardKey();
 		this.postReadcount = param.getPostReadcount();
+		this.postCommentcount = param.getPostCommentcount();
+		this.commentContent = param.getCommentContent();
+		this.commentDate = param.getCommentDate();
+
 	}
 }

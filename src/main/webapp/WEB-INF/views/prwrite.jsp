@@ -187,7 +187,7 @@
 							<span>Business account</span>
 							<input type="checkbox" id="switch8" /> 
 							<label for="switch8" data-on-label="ON" data-off-label="OFF"></label>
-						</div>
+						</div> 
 						<div class="setting-row">
 							<span>Show me online</span>
 							<input type="checkbox" id="switch9" /> 
@@ -375,7 +375,7 @@
 							</li>
 							<li>
 								<a href="notifications.html" title="">
-									<img src="images/resources/thumb-3.jpg" alt="">
+									<img src="resources/images/resources/thumb-3.jpg" alt="">
 									<div class="mesg-meta">
 										<h6>Andrew</h6>
 										<span>Hi, how r u dear ...?</span>
@@ -526,10 +526,10 @@
 								<div class="central-meta">
 									<div class="editing-info">
 										<h5 class="f-title"><i class="ti-info-alt"></i> 홍보 글 작성 </h5>
-										<form method="post">
+										<form method="post" action="boardwrite">
 											<div class="form-group">	
-											  <input type="text" required="required"/>
-											  <label class="control-label" for="input">제목</label><i class="mtrl-select"></i>
+											  <input type="text" required="required" />
+											  <label class="control-label" for="input">모임명</label><i class="mtrl-select"></i>
 											</div>											
 											<br><br>
 											<div class="form-group">	
@@ -544,6 +544,7 @@
 									</div>
 								</div>	
 							</div><!-- centerl meta -->
+							
 							<div class="col-lg-3">
 									<aside class="sidebar static">
 										<div class="widget">

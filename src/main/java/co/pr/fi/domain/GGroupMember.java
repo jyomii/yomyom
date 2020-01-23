@@ -14,7 +14,14 @@ public class GGroupMember {
 
  // 유저등급 
  private int userGrade; //일반: 0 // 모임장: 1 // 모임가입예정 : -1
-
+ 
+ // 만들어보자,,,,,,
+ // 유저 프사
+ private String profileImg;
+ 
+ // 유저 프사 원본
+ private String profileOImg;
+ 
  public int getGroupKey() {
      return groupKey;
  }
