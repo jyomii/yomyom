@@ -14,7 +14,7 @@
 <link rel="icon" href="resources/images/fav.png" type="image/png"
 	sizes="16x16">
 <link rel="stylesheet" href="resources/css/main.min.css">
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="resources/css/style_group.css">
 <link rel="stylesheet" href="resources/css/color.css">
 <link rel="stylesheet" href="resources/css/responsive.css">
 <link rel="stylesheet"
@@ -204,8 +204,6 @@
 }
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="resources/dist/js/datepicker.min.js"></script>
-<script src="resources/dist/js/i18n/datepicker.en.js"></script>
 <script src="resources/js/list.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -745,10 +743,9 @@
 			<input type="hidden" id="thisGroupKey" value="${groupkey }">
 			<div class="feature-photo">
 				<figure>
-					<img id="groupPageImg" src="resources/upload${groupdfile}" alt="">
+					<img id="groupPageImg" src="<spring:url value='/image${groupdfile }'/>" alt=""/>
 					<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
 				</figure>
-
 				<!-- **********모임 대문 사진 수정*********** -->
 				<form class="edit-phto" id="groupMainImgForm"
 					enctype="multipart/form-data" action="group_mainImgUpdate.net"
@@ -768,7 +765,7 @@
 							<div class="user-avatar">
 								<!-- 그룹 사진 -->
 								<figure>
-									<img id="groupImg" src="resources/upload${groupcfile}" alt="">
+									<img id="groupImg" src="<spring:url value='/image${groupcfile }'/>"/>
 									<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 									<!-- **********모임 사진 수정*********** -->
 									<form class="edit-phto" id="groupImgForm"
@@ -833,8 +830,8 @@
 											<ul class="naves">
 												<c:forEach var="gbl" items="${groupboardlist }">
 													<li><i class="ti-clipboard"></i> <a
-														href="newsfeed.html" title="">${gbl.boardname}</a> <input
-														type="hidden" value="${gbl.boardtype }"></li>
+														href="newsfeed.html" title="">${gbl.boardName}</a> <input
+														type="hidden" value="${gbl.boardType }"></li>
 												</c:forEach>
 											</ul>
 										</div>
@@ -928,7 +925,7 @@
 
 												<!-- 그룹 소개 본문-->
 												<div class="description">
-													<p>${groupinfo}</p>
+													<p>${groupInfo}</p>
 												</div>
 												<!-- 그룹 소개 본문-->
 											</div>
@@ -970,7 +967,7 @@
 																</figure>
 																<div class="pepl-info">
 																	<h4 class="min-width-h4">
-																		<a href="time-line.html" title="">${gmtl.posttitle}</a>
+																		<a href="time-line.html" title="">${gmtl.postTitle}</a>
 																	</h4>
 																	<br>
 																	<br> <span class="schedule-span">장소:
@@ -990,7 +987,7 @@
 																			class="fas fa-arrow-down i-change${l}"></i>
 																		</span>
 																	</button>
-																	<input type="hidden" value="${gmtl.postkey }">
+																	<input type="hidden" value="${gmtl.postKey }">
 																	<input type="hidden" value="${n}">
 																</div>
 															</div>
@@ -1539,10 +1536,8 @@
 	<script>
 		buildCalendar();
 	</script>
-	<script data-cfasync="false"
-		src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 	<script src="resources/js/main.min.js"></script>
-	<script src="resources/js/script.js"></script>
+	<script src="resources/js/script_group.js"></script>
 </body>
 
 </html>
