@@ -26,6 +26,7 @@ public class GroupServiceImpl implements GroupService {
 		return dao.groupinfo(groupkey);
 	}
 
+	
 	@Override
 	public int groupMainImgUpdate(GGroup group) {
 		return dao.groupMainImgUpdate(group);
