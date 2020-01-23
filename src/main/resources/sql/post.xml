@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "post">
+	<!-- 게시글 조회 -->
+	<select id = "detailBoard" resultType = "post">
+		SELECT POSTKEY, POSTTITLE, POSTCONTENT, POSTDATE, USERKEY, POSTREADCOUNT
+		FROM POST
+		WHERE POSTKEY = #{POSTKEY}
+	</select>
+	
+	
+	<!-- 게시글 조회수 증가 -->
+	<update id = "updateReadCount">
+		UPDATE POST
+		SET POSTREADCOUNT = POSTREADCOUNT + 1
+		WHERE POSTKEY = #{POSTKEY}
+	</update>
+</mapper>

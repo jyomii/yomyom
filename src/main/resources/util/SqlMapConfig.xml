@@ -42,5 +42,6 @@
 		<mapper resource="sql/group.xml"></mapper>
 		<mapper resource="sql/category.xml"></mapper>
 		<mapper resource="sql/mypage.xml"></mapper>
+		<mapper resource="sql/post.xml"></mapper>
 	</mappers>
 </configuration>

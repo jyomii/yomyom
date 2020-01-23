@@ -1,7 +1,5 @@
 package co.pr.fi.domain;
 
-import java.sql.Date;
-
 //모임게시글 
 public class Post {
 
@@ -36,7 +34,7 @@ public class Post {
 	private int postReadcount;
 
 	// 댓글수
-	private int postCommentcount;
+	private int replyCount;
 	
 	// 댓글 내용
 	private String commentContent;
@@ -124,12 +122,12 @@ public class Post {
 		this.postReadcount = postReadcount;
 	}
 
-	public int getPostCommentcount() {
-		return postCommentcount;
+	public int getReplyCount() {
+		return replyCount;
 	}
 
-	public void setPostCommentcount(int postCommentcount) {
-		this.postCommentcount = postCommentcount;
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 	public String getCommentContent() {
 		return commentContent;
@@ -159,7 +157,7 @@ public class Post {
 		this.postOptionSearch = param.getPostOptionSearch();
 		this.boardKey = param.getBoardKey();
 		this.postReadcount = param.getPostReadcount();
-		this.postCommentcount = param.getPostCommentcount();
+		this.replyCount = param.getReplyCount();
 		this.commentContent = param.getCommentContent();
 		this.commentDate = param.getCommentDate();
 	}

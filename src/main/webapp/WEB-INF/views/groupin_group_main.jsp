@@ -810,7 +810,7 @@
 														<span class="status f-away"></span>
 													</figure>
 													<div class="friendz-meta">
-														<a href="G_mem_detail.net">고연희</a> <i><a
+														<a href="G_mem_detail.net?userKey=8">고연희</a> <i><a
 															href="https://wpkixx.com/cdn-cgi/l/email-protection"
 															class="__cf_email__"
 															data-cfemail="3a585b48545f497a5d575b535614595557"></a></i>

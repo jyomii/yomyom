@@ -17,6 +17,11 @@ public class GroupBoardServiceImpl implements GroupBoardService {
 
 	@Override
 	public List<Post> detailBoard(String postkey) {
-		return dao.detailBoard(postkey);
+		int result = dao.updateReadCount(postkey);
+		if (result == 1) {
+			return dao.detailBoard(postkey);
+		}
+		System.out.println("조회수 증가 실패");
+		return null;
 	}
 }
