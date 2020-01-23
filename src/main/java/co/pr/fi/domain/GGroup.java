@@ -2,6 +2,8 @@ package co.pr.fi.domain;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 //모임 
 public class GGroup {
 
@@ -59,6 +61,25 @@ public class GGroup {
  //모임 지역 이름(조인)
  private String locationName; 
  
+ private MultipartFile groupMainImgUpload;
+ private MultipartFile groupImgUpload;
+ 
+public MultipartFile getGroupMainImgUpload() {
+	return groupMainImgUpload;
+}
+
+public void setGroupMainImgUpload(MultipartFile groupMainImgUpload) {
+	this.groupMainImgUpload = groupMainImgUpload;
+}
+
+public MultipartFile getGroupImgUpload() {
+	return groupImgUpload;
+}
+
+public void setGroupImgUpload(MultipartFile groupImgUpload) {
+	this.groupImgUpload = groupImgUpload;
+}
+
 public String getLocationName() {
 	return locationName;
 }
