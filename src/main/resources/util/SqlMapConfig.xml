@@ -48,5 +48,6 @@
 		<mapper resource="sql/category.xml"></mapper>
 		<mapper resource="sql/mypage.xml"></mapper>
 		<mapper resource="sql/prboard.xml"></mapper>
+    <mapper resource="sql/post.xml"></mapper>
 	</mappers>
 </configuration>

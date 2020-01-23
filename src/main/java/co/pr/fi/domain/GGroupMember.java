@@ -17,10 +17,10 @@ public class GGroupMember {
  
  // 만들어보자,,,,,,
  // 유저 프사
- private String profileImg;
+ private String profileFile;
  
  // 유저 프사 원본
- private String profileOImg;
+ private String profileOrigin;
  
  public int getGroupKey() {
      return groupKey;
@@ -54,12 +54,30 @@ public class GGroupMember {
      this.userGrade = userGrade;
  }
 
- // GGroupMember 모델 복사
+ public String getProfileFile() {
+	return profileFile;
+}
+
+public void setProfileFile(String profileFile) {
+	this.profileFile = profileFile;
+}
+
+public String getProfileOrigin() {
+	return profileOrigin;
+}
+
+public void setProfileOrigin(String profileOrigin) {
+	this.profileOrigin = profileOrigin;
+}
+
+// GGroupMember 모델 복사
  public void CopyData(GGroupMember param)
  {
      this.groupKey = param.getGroupKey();
      this.userKey = param.getUserKey();
      this.groupNickname = param.getGroupNickname();
      this.userGrade = param.getUserGrade();
+     this.profileFile = param.getProfileFile();
+     this.profileOrigin = param.getProfileOrigin();
  }
 }

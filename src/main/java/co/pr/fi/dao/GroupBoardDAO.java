@@ -13,9 +13,14 @@ import co.pr.fi.domain.Post;
 public class GroupBoardDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	
+	// 게시글 조회
 	public List<Post> detailBoard(String postkey) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("post.detailBoard", postkey);
+	}
+	
+	// 게시글 조회수 증가
+	public int updateReadCount(String postkey) {
+		return sqlSession.update("post.updateReadCount", postkey);
 	}
 }

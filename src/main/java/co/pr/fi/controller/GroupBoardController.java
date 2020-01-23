@@ -23,7 +23,15 @@ public class GroupBoardController {
 		List<Post> list = new ArrayList<Post>();
 		
 		list = groupBoardService.detailBoard(postkey);	
-		mv.setViewName("G_detailBoard");
+		
+		if (list != null) {
+			mv.addObject("list", list);
+			mv.setViewName("G_detailBoard");
+			return mv;
+		}
+		
+		mv.addObject("죄송합니다. 게시글을 조회할 수 없습니다.", "error");
+		mv.setViewName("error");
 		return mv;
 	}
 }
