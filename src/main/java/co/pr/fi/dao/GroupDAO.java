@@ -72,5 +72,6 @@ public class GroupDAO {
 		return sqlSession.selectList("group.groupcalendarlist", map);
 	}
 
+	
 }
 
