@@ -38,7 +38,7 @@ public class GroupController {
 	public ModelAndView group_main(ModelAndView mv) {
 		int groupkey = 1;
 		GGroup group = groupservice.groupInfo(groupkey);
-		mv.setViewName("member/groupin_group_main");
+		mv.setViewName("groupin_group_main");
 		mv.addObject("groupkey", groupkey);
 		String groupmaster = groupservice.groupmaster(groupkey);
 		mv.addObject("groupmaster", groupmaster);
@@ -77,13 +77,13 @@ public class GroupController {
 	}
 
 	@PostMapping("/group_mainImgUpdate.net")
-	public String groupMainImg(GGroup group, HttpServletRequest request) throws Exception {
+	public String groupMainImg(@RequestParam(value = "groupkey") int groupKey, GGroup group, HttpServletRequest request) throws Exception {
 		MultipartFile uploadfile = group.getGroupMainImgUpload();
 
 		if (!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();// ���� ���ϸ�
 			group.setGroupIdOrigin(fileName);// ���� ���ϸ� ����
-
+			group.setGroupKey(groupKey);
 			// ���ο� ���� �̸� : ���� ��+��+��
 			Calendar c = Calendar.getInstance();
 			int year = c.get(Calendar.YEAR);// ���� �⵵ ���մϴ�.
@@ -92,7 +92,7 @@ public class GroupController {
 			// String saveFolder =
 			// request.getSession().getServletContext().getRealPath("resources") +
 			// "/upload/";
-			String saveFolder = "C:\\Users\\na\\Documents\\workspace-sts-3.9.10.RELEASE\\Final\\src\\main\\webapp\\resources\\upload/";
+			String saveFolder = "C:\\groupin/";
 			String homedir = saveFolder + year + "-" + month + "-" + date;
 			System.out.println("homedir = " + homedir);
 			File path1 = new File(homedir);
@@ -148,7 +148,7 @@ public class GroupController {
 			// String saveFolder =
 			// request.getSession().getServletContext().getRealPath("resources") +
 			// "/upload/";
-			String saveFolder = "C:\\Users\\na\\Documents\\workspace-sts-3.9.10.RELEASE\\Final\\src\\main\\webapp\\resources\\upload/";
+			String saveFolder = "C:\\groupin/";
 			String homedir = saveFolder + year + "-" + month + "-" + date;
 			System.out.println("homedir = " + homedir);
 			File path1 = new File(homedir);
