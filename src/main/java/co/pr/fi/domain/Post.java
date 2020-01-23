@@ -1,3 +1,4 @@
+
 package co.pr.fi.domain;
 
 //모임게시글 

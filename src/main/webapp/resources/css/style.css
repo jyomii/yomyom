@@ -5523,7 +5523,16 @@ canvas {
 
 
 /*--- blog grid post ---*/
-
+.g-post-classic-recommands {
+	background: #fdfdfd none repeat scroll 0 0;
+    border: 1px solid #ede9e9;
+    border-radius: 3px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 25px;
+	width:100%;
+}
 .g-post-classic {
     background: #fff none repeat scroll 0 0;
     border: 1px solid #ede9e9;
@@ -5533,13 +5542,13 @@ canvas {
     -ms-transition: all 0.2s linear 0s;
     -o-transition: all 0.2s linear 0s;
     transition: all 0.2s linear 0s;
-    width: 100%;
+    width: 32.85%;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
     border-radius: 3px;
-    margin-bottom: 40px;
+    margin:auto;
 }
 
 .blog-sec {
@@ -5562,6 +5571,7 @@ canvas {
     -o-box-shadow: 3px 3px 15px #d0d0d0;
     box-shadow: 3px 3px 15px #d0d0d0;
 }
+
 
 .g-post-classic > figure {
     position: relative;

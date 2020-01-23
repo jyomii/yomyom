@@ -21,6 +21,7 @@ public class PrBoard {
 
  // 작성날짜 
  private Date dateWrite;
+ 
 
  public int getPrKey() {
      return prKey;

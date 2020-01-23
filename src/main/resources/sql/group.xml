@@ -33,4 +33,92 @@
 		USING(POSTKEY)					 						  
 		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}							
 	</select>
+	
+	<select id="groupinfo" resultType="group" parameterType="int">
+		select *
+		from ggroup where groupkey =#{groupkey}
+	</select>
+
+	<update id="groupMainImgUpdate" parameterType="group">
+		update ggroup set
+		groupidorigin=#{groupIdOrigin}, groupdfile=#{groupDFile} where
+		groupkey=#{groupKey}
+	</update>
+
+	<update id="groupImgUpdate" parameterType="group">
+		update ggroup set
+		groupcorigin=#{groupCOrigin}, groupcfile=#{groupCFile} where
+		groupkey=#{groupKey}
+	</update>
+
+	<select id="groupwhere" resultType="location"
+		parameterType="int">
+		select * from glocation where locationkey =#{wherekey}
+	</select>
+
+	<select id="groupage" resultType="int" parameterType="int">
+		select
+		agevalue from gage where agekey =#{agekey}
+	</select>
+
+	<select id="groupdcategory" resultType="String"
+		parameterType="int">
+		select dcategoryname from gcategory where dcategorykey
+		=#{categorykey}
+	</select>
+
+	<select id="groupscategory" resultType="String"
+		parameterType="int">
+		select scategoryname from gcategory2 where dcategorykey
+		=#{categorykey}
+	</select>
+
+	<select id="groupmembers" resultType="int" parameterType="int">
+		select
+		count(*) from ggroupmember where usergrade in(0,1) and groupkey
+		=#{groupkey}
+	</select>
+
+	<select id="groupmaster" resultType="String" parameterType="int">
+		select groupnickname from ggroupmember where userkey = (select userkey
+		from ggroup where groupkey =#{groupkey})
+	</select>
+
+	<select id="groupboardlist" resultType="groupBoard"
+		parameterType="int">
+		select * from ggroupboard where groupkey =
+		#{groupkey}
+		order by boardseq
+	</select>
+
+	<select id="groupmemberlist" resultType="memberlist"
+		parameterType="int">
+		select userimagefile, groupnickname from gusers left
+		join GGROUPMEMBER
+		using(userkey) where groupkey=#{groupkey} and
+		usergrade in(0,1)
+	</select>
+
+	<select id="groupmeetinglist" resultType="post"
+		parameterType="int">
+		select rownum, A.* from(select
+		postkey,posttitle,postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
+		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson
+		from post left join calendar
+		using(postkey) left join (select count(*)
+		currentperson,postkey from calendarmember left join
+		(select * from post left join ggroupboard using(boardkey) where
+		boardtype='N')
+		using (postkey) left join calendar using (postkey) group by postkey) using
+		(postkey)
+		where groupkey=1 order by
+		cstartdate) A
+	</select>
+
+	<select id="groupcalendarlist" resultType="memberlist"
+		parameterType="java.util.Map">
+		select userimagefile, groupnickname from gusers left
+		join GGROUPMEMBER using(userkey) left join calendarmember a
+		using(userkey) where a.groupkey=#{groupkey} and a.postkey=#{postkey}
+	</select>
 </mapper>

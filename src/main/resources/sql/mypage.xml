@@ -3,9 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Mypages">
 
-	<select id="userinfo" resultType="member">
-		select * from gusers where
-		userid = #{id}
+	<select id="info" resultType="member" parameterType="String">
+		select * from gusers 
+		where userid = #{id}
 	</select>
 
 	<update id="update" parameterType="member">
@@ -15,6 +15,7 @@
 	        userjoindate = #{userjoindate}
 	    where userid = #{id}
 	</update>
+
 
 	
 </mapper>

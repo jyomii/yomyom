@@ -30,8 +30,13 @@
 		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
 		
 		<typeAlias alias="group" type="co.pr.fi.domain.GGroup"/>
+
+		<typeAlias alias="prboard" type="co.pr.fi.domain.PrBoard"/>
+
 		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
 		<typeAlias alias = "comment" type = "co.pr.fi.domain.GComment"/>
+<typeAlias alias="memberlist"
+			type="co.pr.fi.domain.MemberList" />
 	</typeAliases>
 
 	<mappers>
@@ -42,6 +47,7 @@
 		<mapper resource="sql/group.xml"></mapper>
 		<mapper resource="sql/category.xml"></mapper>
 		<mapper resource="sql/mypage.xml"></mapper>
-		<mapper resource="sql/post.xml"></mapper>
+		<mapper resource="sql/prboard.xml"></mapper>
+    <mapper resource="sql/post.xml"></mapper>
 	</mappers>
 </configuration>

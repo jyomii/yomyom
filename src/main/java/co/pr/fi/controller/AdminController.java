@@ -183,9 +183,11 @@ public class AdminController {
 		// 한 페이지에 보여줄 갯수
 		int limit = 10;
 		int page = 1;
-
+		
+		int noticeCount = adminService.getNoticeCount();
 		List<UserMessage> notice = adminService.getNotice(page, limit);
 		mv.addObject("notice", notice);
+		mv.addObject("noticeCount", noticeCount);
 		mv.setViewName("admin/adminnotice");
 
 		return mv;
