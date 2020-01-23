@@ -35,7 +35,8 @@
 
 		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
 		<typeAlias alias = "comment" type = "co.pr.fi.domain.GComment"/>
-
+<typeAlias alias="memberlist"
+			type="co.pr.fi.domain.MemberList" />
 	</typeAliases>
 
 	<mappers>
