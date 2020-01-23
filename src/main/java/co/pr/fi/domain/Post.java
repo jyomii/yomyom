@@ -4,6 +4,30 @@ import java.sql.Date;
 
 //모임게시글 
 public class Post {
+	private int rownum;
+	// 모임게시글키값
+	private int postKey;
+
+	// 제목
+	private String postTitle;
+
+	// 내용
+	private String postContent;
+
+	// 작성날짜
+	private String postDate;
+
+	// 모임키값
+	private int groupKey;
+
+	// 유저키값
+	private int userKey;
+
+	// 댓글허용여부
+	private String postOptionReply;
+
+	// 검색허용여부
+	private String postOptionSearch;
 
 	// 모임게시글키값
 	private int postKey;
@@ -35,6 +59,69 @@ public class Post {
 	// 조회수
 	private int postReadcount;
 
+	private String cstartdate;
+	private String cenddate;
+	private String cmoney;
+	private int maxperson;
+	private String location;
+	private int currentperson;
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+
+	public String getCstartdate() {
+		return cstartdate;
+	}
+
+	public void setCstartdate(String cstartdate) {
+		this.cstartdate = cstartdate;
+	}
+
+	public String getCenddate() {
+		return cenddate;
+	}
+
+	public void setCenddate(String cenddate) {
+		this.cenddate = cenddate;
+	}
+
+	public String getCmoney() {
+		return cmoney;
+	}
+
+	public void setCmoney(String cmoney) {
+		this.cmoney = cmoney;
+	}
+
+	public int getMaxperson() {
+		return maxperson;
+	}
+
+	public void setMaxperson(int maxperson) {
+		this.maxperson = maxperson;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public int getCurrentperson() {
+		return currentperson;
+	}
+
+	public void setCurrentperson(int currentperson) {
+		this.currentperson = currentperson;
+	}
+
 	// 댓글수
 	private int postCommentcount;
 	
@@ -43,7 +130,7 @@ public class Post {
 	
 	// 댓글 작성일
 	private String commentDate;
-	
+
 	public int getPostKey() {
 		return postKey;
 	}
@@ -124,6 +211,7 @@ public class Post {
 		this.postReadcount = postReadcount;
 	}
 
+
 	public int getPostCommentcount() {
 		return postCommentcount;
 	}
@@ -162,5 +250,6 @@ public class Post {
 		this.postCommentcount = param.getPostCommentcount();
 		this.commentContent = param.getCommentContent();
 		this.commentDate = param.getCommentDate();
+
 	}
 }
