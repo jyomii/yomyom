@@ -38,12 +38,10 @@ jQuery(document)
 						return false;
 					});
 
-					// ------ scrollbar plugin
-					if ($.isFunction($.fn.perfectScrollbar)) {
-						$(
-								'.dropdowns, .twiter-feed, .invition, .followers, .chatting-area, .peoples, #people-list, .chat-list > ul, .message-list, .chat-users, .left-menu')
-								.perfectScrollbar();
-					}
+					 //------ scrollbar plugin
+				    if ($.isFunction($.fn.perfectScrollbar)) {
+				        $('.dropdowns, .twiter-feed, .invition, .followers, .chatting-area, .peoples, #people-list, #people-list1, #people-list2, #people-list3, #people-list4, #people-list5, #people-list6, #people-list7, .chat-list > ul, .message-list, .chat-users, .left-menu').perfectScrollbar();
+				    }
 
 					/*--- socials menu scritp ---*/
 					$('.trigger').on("click", function() {
