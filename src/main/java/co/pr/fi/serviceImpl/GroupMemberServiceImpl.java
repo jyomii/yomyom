@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import co.pr.fi.dao.GroupMemberDAO;
 import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.JoinQuest;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupMemberService;
 
@@ -34,7 +35,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 	}
 
 	@Override
-	public List<GComment> commentToPost(Map<String, Object> temp) {
-		return dao.commentToPost(temp);
+	public List<JoinQuest> getJoinSample(int groupKey) {
+		return dao.getJoinSample(groupKey);
 	}
 }

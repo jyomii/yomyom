@@ -49,7 +49,7 @@ public class GUsers {
 	// 상태
 	private int userStatus;
 
-
+	
 	private Date userStatusCode;
 
 	

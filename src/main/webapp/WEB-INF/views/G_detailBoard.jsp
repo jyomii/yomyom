@@ -702,6 +702,8 @@
 									</div>
 									--%>
 									
+									<%--
+									<!-- ########################################################### -->
 									<!-- 게시글 샘플 -->
 									<div class="central-meta item">
 										<div class="user-post">
@@ -710,7 +712,7 @@
 													<!-- 작성자 프사 누르면 작성자 정보페이지로 (이름, 생일, 지역, 관심있는 카테고리, 가입한 모임, 작성한 글, 작성한 댓글 -->
 													<a href = "">
 													<!-- 이걸로 바꿔야 된다. '유저 프사' -->
-													<%-- <img src="<spring:url value='/image${b.groupDFile}'/>" class = "group-img" alt = ""/> --%>
+													<img src="<spring:url value='/image${b.groupDFile}'/>" class = "group-img" alt = ""/> <!-- 이걸로 바꿔야 한다. -->
 													<img src="resources/images/resources/friend-avatar10.jpg" alt="">
 													</a>
 												</figure>
@@ -786,12 +788,7 @@
 															</li>
 														</ul>
 													</div>
-													<!--  -->
 													<div class="description">
-														<%-- 글내용 
-														<p>
-															${b.content}
-														</p> --%>
 														<p>
 															오버워치에 난장판이 잘 안 나오니까 오늘도 없겠거니... 기대도 안 하고 과제를 했는데 아니 글쎄 난장판이 나왔다지 뭐예요? 심지어 하루 건너 뛰고 이틀이나 난장판이 나왔는데 제가 그 하루 건너 뛴 날에 오버워치를 했지 뭐예요?
 														</p>
@@ -896,43 +893,38 @@
 										</div>
 									</div>
 									<!-- 게시글 샘플 끝 -->
+									<!-- ########################################################### -->
+									--%>
 									
 									<div class="central-meta item">
 										<div class="user-post">
 											<div class="friend-info">
 												<figure>
-													<img src="resources/images/resources/friend-avatar10.jpg" alt="">
+													<img src="<spring:url value='/image${profileFile}'/>" class = "group-img" alt = ""/>
 												</figure>
 												<div class="friend-name">
-													<ins><a href="time-line.html" title="">Janice Griffith</a></ins>
-													<span>2019년 01월 06일 12:04</span>
+													<ins><a href="time-line.html" title="">${groupNickname}</a></ins>
+													<span>${postDate}</span>
 												</div>
 												<div class="post-meta">
-													<iframe src="https://player.vimeo.com/video/15232052" height="315" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 													<div class="we-video-info">
 														<ul>
 															<li>
 																<span class="views" data-toggle="tooltip" title="views">
 																	<i class="fa fa-eye"></i>
-																	<ins>1.2k</ins>
+																	<ins>${postReadcount}</ins>
 																</span>
 															</li>
 															<li>
 																<span class="comment" data-toggle="tooltip" title="Comments">
 																	<i class="fa fa-comments-o"></i>
-																	<ins>52</ins>
+																	<ins>${list.replyCount}</ins>
 																</span>
 															</li>
 															<li>
 																<span class="like" data-toggle="tooltip" title="like">
 																	<i class="ti-heart"></i>
-																	<ins>2.2k</ins>
-																</span>
-															</li>
-															<li>
-																<span class="dislike" data-toggle="tooltip" title="dislike">
-																	<i class="ti-heart-broken"></i>
-																	<ins>200</ins>
+																	<ins>좋아요</ins>
 																</span>
 															</li>
 															<li class="social-media">
@@ -971,9 +963,8 @@
 														</ul>
 													</div>
 													<div class="description">
-														
 														<p>
-															Lonely Cat Enjoying in Summer Curabitur <a href="#" title="">#mypage</a> ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc,
+															${list.postContent}
 														</p>
 													</div>
 												</div>
