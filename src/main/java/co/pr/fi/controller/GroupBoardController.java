@@ -20,6 +20,12 @@ public class GroupBoardController {
 	// 게시글 보기
 	@GetMapping("/detailBoard")
 	public ModelAndView detailBoard (String postkey, ModelAndView mv) {
+		// ## 가져와야 할 List ##
+		// 유저 프사(profileFile), 유저 닉네임(groupNickname)															-- GGROUPMEMBER
+		// 글제목(POSTTITLE), 글 작성일(POSTDATE), 글내용(POSTCONTENT), 조회수(VIEWCOUNT), 댓글수(REPLYCOUNT), 좋아요수(LIKE)	-- POST
+		// 해당 글에 달린 댓글								-- gcomment
+		// userkey, postkey, commentkey
+		
 		List<Post> list = new ArrayList<Post>();
 		
 		list = groupBoardService.detailBoard(postkey);	

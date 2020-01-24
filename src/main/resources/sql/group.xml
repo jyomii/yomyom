@@ -14,24 +14,9 @@
 		ORDER BY GROUPDATE DESC
 	</select>
 	
-	<!-- 해당 모임에서 작성한 글 -->
-	<select id = "wroteInGroup" resultType = "post" parameterType = "map">
-		SELECT POSTKEY, POSTTITLE, POSTREADCOUNT, TO_CHAR(POSTDATE, 'YYYY-MM-DD') AS POSTDATE
-		FROM POST
-		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
-		ORDER BY POSTDATE DESC
-	</select>
-	
-	<!-- 유저가 댓글 단 글 -->
-	<select id = "postByCommented" resultType = "post" parameterType = "map">
-		SELECT USERKEY, POSTKEY, COMMENTCONTENT, GROUPKEY, REPLYCOUNT, POSTTITLE, TO_CHAR(COMMENTDATE, 'YYYY-MM-DD') COMMENTDATE, POSTREADCOUNT 
-		FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT, POSTREADCOUNT
-								 FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
-							 						  FROM GCOMMENT
-							 						  GROUP BY POSTKEY)
-							 	 USING (POSTKEY)) 
-		USING(POSTKEY)					 						  
-		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}							
+	<!-- 모임의 가입 양식 가져오기 -->
+	<select id = "getJoinSample" resultType = "joinQuest">
+		SELECT * FROM JOINQUEST WHERE GROUPKEY = #{GROUPKEY}
 	</select>
 	
 	<select id="groupinfo" resultType="group" parameterType="int">

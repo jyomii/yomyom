@@ -4,11 +4,10 @@
 <mapper namespace = "post">
 	<!-- 게시글 조회 -->
 	<select id = "detailBoard" resultType = "post">
-		SELECT POSTKEY, POSTTITLE, POSTCONTENT, POSTDATE, USERKEY, POSTREADCOUNT
+		SELECT POSTKEY, POSTTITLE, POSTCONTENT, TO_CHAR(POSTDATE, 'YYYY-MM-DD') POSTDATE, USERKEY, POSTREADCOUNT
 		FROM POST
 		WHERE POSTKEY = #{POSTKEY}
 	</select>
-	
 	
 	<!-- 게시글 조회수 증가 -->
 	<update id = "updateReadCount">
@@ -16,4 +15,25 @@
 		SET POSTREADCOUNT = POSTREADCOUNT + 1
 		WHERE POSTKEY = #{POSTKEY}
 	</update>
+	
+	<!-- 해당 모임에서 작성한 글 -->
+	<select id = "wroteInGroup" resultType = "post" parameterType = "map">
+		SELECT POSTKEY, POSTTITLE, POSTREADCOUNT, TO_CHAR(POSTDATE, 'YYYY-MM-DD') AS POSTDATE
+		FROM POST
+		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
+		ORDER BY POSTDATE DESC
+	</select>
+	
+	<!-- 유저가 댓글 단 글 -->
+	<select id = "postByCommented" resultType = "post" parameterType = "map">
+		SELECT USERKEY, POSTKEY, COMMENTCONTENT, GROUPKEY, REPLYCOUNT, POSTTITLE, TO_CHAR(COMMENTDATE, 'YYYY-MM-DD') COMMENTDATE, POSTREADCOUNT 
+		FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT, POSTREADCOUNT
+								 FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
+							 						  FROM GCOMMENT
+							 						  GROUP BY POSTKEY)
+							 	 USING (POSTKEY)) 
+		USING(POSTKEY)					 						  
+		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}							
+	</select>
+	
 </mapper>
