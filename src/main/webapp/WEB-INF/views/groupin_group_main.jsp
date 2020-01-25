@@ -128,6 +128,11 @@
 	color: white !important;
 }
 
+.calendarCellMy {
+	background-color: black;
+	color: white !important;
+}
+
 .scheduleDiv {
 	width: 80%;
 	margin: 0 auto;
@@ -187,11 +192,16 @@
 .min-width-h4 {
 	margin-bottom: 0px !important;
 }
+
+.height-for-white {
+	height: 70px !important;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
 <section>
-	<input type="hidden" id="thisGroupKey" value="${groupkey }">
+	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
+		type="hidden" id="UserKey" value="10">
 	<div class="feature-photo">
 		<figure>
 			<img id="groupPageImg"
@@ -211,7 +221,7 @@
 		</form>
 		<!-- **********모임 대문 사진 수정*********** -->
 
-		<div class="container-fluid">
+		<div class="container-fluid height-for-white">
 			<div class="row merged">
 				<div class="col-lg-2 col-sm-3">
 					<div class="user-avatar">
@@ -423,12 +433,21 @@
 															</h4>
 															<br> <br> <span class="schedule-span">장소:
 																${gmtl.location}</span>
-															<button type="button" class="mtr-btn forJoinBtn">
-																<span>참여하기</span>
-															</button>
-															<br> <span class="schedule-span1">일시:
-																${gmtl.cstartdate}</span><br> <span class="schedule-span1">회비:
-																${gmtl.cmoney}</span>
+															<c:if test="${gmtl.joinbtn eq 'yes'}">
+																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
+																	<span>참여하기</span>
+																</button>
+															</c:if>
+															<c:if test="${gmtl.joinbtn eq 'no'}">
+																<button type="button" class="mtr-btn forJoinBtn gmtlcancelbtn">
+																	<span>취소하기</span>
+																</button>
+															</c:if>
+															<input type="hidden" id="postkey${n}"
+																value="${gmtl.postKey }"> <input type="hidden"
+																value="${n}"> <br> <span
+																class="schedule-span1">일시: ${gmtl.cstartdate}</span><br>
+															<span class="schedule-span1">회비: ${gmtl.cmoney}</span>
 															<button type="button"
 																class="mtr-btn forMemberCountBtn${l}"
 																data-toggle="collapse" data-target="#collapse${l}"
@@ -772,6 +791,10 @@
 
 								<!-- 그룹별 정모 나의 일정 위젯 -->
 								<div class="widget calendarCenter">
+									<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
+									<c:forEach var="gcl" items="${groupcalendarlist }">
+											<input type="hidden" id="cal${gcl.rownum}" value="${gcl.startdate }">
+									</c:forEach>
 									<h4 class="widget-title">나의 일정</h4>
 
 									<div class="calendarDiv">
@@ -829,53 +852,9 @@
 <jsp:include page="mainpage/footer.jsp" />
 <!-- footer end -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="resources/js/list.js"></script>
-<script>
-	$(function() {
-		$(".calendarDiv").on('click', 'td', function(event) {
-			if ($(this).text() != "" || $(this).text().length() > 2) {
-				$('td').removeClass('calendarCellSelected');
-				$(this).addClass('calendarCellSelected');
-			}
-		})
-		$(".forMemberCountBtnOne").click(function() {
-			if ($("#collapseOne").hasClass("show")) {
-				$('.i-changeOne').removeClass('fa-arrow-up');
-				$('.i-changeOne').addClass('fa-arrow-down');
-			} else {
-				$('.i-changeOne').removeClass('fa-arrow-down');
-				$('.i-changeOne').addClass('fa-arrow-up');
-			}
-		})
-		$(".forMemberCountBtnTwo").click(function() {
-			if ($("#collapseTwo").hasClass("show")) {
-				$('.i-changeTwo').removeClass('fa-arrow-up');
-				$('.i-changeTwo').addClass('fa-arrow-down');
-			} else {
-				$('.i-changeTwo').removeClass('fa-arrow-down');
-				$('.i-changeTwo').addClass('fa-arrow-up');
-			}
-		})
-		$(".forMemberCountBtnThree").click(function() {
-			if ($("#collapseThree").hasClass("show")) {
-				$('.i-changeThree').removeClass('fa-arrow-up');
-				$('.i-changeThree').addClass('fa-arrow-down');
-			} else {
-				$('.i-changeThree').removeClass('fa-arrow-down');
-				$('.i-changeThree').addClass('fa-arrow-up');
-			}
-		})
-		//=======================================================
-		$('input[type=file]:eq(0)').on('change', function() {
-			$('#groupMainImgForm').submit();
-		});
-		$('input[type=file]:eq(1)').on('change', function() {
-			$('#groupImgForm').submit();
-		});
-	})
-</script>
 <script type="text/javascript">
 	//달력시작==================================================================
+	
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
 	function prevCalendar() {//이전 달
@@ -937,19 +916,19 @@
 		for (i = 1; i <= lastDate.getDate(); i++) {
 			//1일부터 마지막 일까지 돌림
 			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-			cell.innerHTML = "<a href='#' class='caldendarCell'>" + i + "</a>";//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+			cell.innerHTML = "<span class='caldendarCell' id='day"+i+"'>" + i + "</span>";//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
 			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
 			if (cnt % 7 == 1) {/*일요일 계산*/
 				//1주일이 7일 이므로 일요일 구하기
 				//월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-				cell.innerHTML = "<a href='#' class='caldendarCell'><font color=#F79DC2>"
-						+ i + "</a>";
+				cell.innerHTML = "<span class='caldendarCell' id='day"+i+"'><font color=#F79DC2>"
+						+ i + "</span>";
 				//1번째의 cell에만 색칠
 			}
 			if (cnt % 7 == 0) {/* 1주일이 7일 이므로 토요일 구하기*/
 				//월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-				cell.innerHTML = "<a href='#' class='caldendarCell'><font color=skyblue>"
-						+ i + "</a>";
+				cell.innerHTML = "<span class='caldendarCell' id='day"+i+"'><font color=skyblue>"
+						+ i + "</span>";
 				//7번째의 cell에만 색칠
 				row = calendar.insertRow();
 				//토요일 다음에 올 셀을 추가
@@ -966,9 +945,578 @@
 	//달력끝==================================================================
 </script>
 <script>
+$(function() {
 	buildCalendar();
+	var mycalendarlistcount = $('#gclc').val();
+	for(var i = 1; i<=mycalendarlistcount;i++){
+		var temp = $('#cal'+i).val();
+		console.log(temp)
+		$('#day'+temp).parent().addClass('calendarCellMy');
+	}
+	$(".nearby-contct").on('click', '.gmtljoinbtn', function(event) {
+		var userkey = $('#UserKey').val();
+        var postkey = $(this).next().val();
+        var n = $(this).next().next().val();
+        var groupkey = $('#hiddenGroupKey').val();
+        ajaxJoinBtn(postkey, groupkey, userkey, n);
+        $(this).removeClass('gmtljoinbtn');
+        $(this).addClass('gmtlcancelbtn');
+        $(this).children().html('취소하기');
+    })
+
+    $(".nearby-contct").on('click', '.gmtlcancelbtn', function(event) {
+        var userkey = $('#UserKey').val();
+        var postkey = $(this).next().val();
+        var n = $(this).next().next().val();
+        var groupkey = $('#hiddenGroupKey').val();
+        ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
+        $(this).removeClass('gmtlcancelbtn');
+        $(this).addClass('gmtljoinbtn');
+        $(this).children().html('참여하기');
+    })
+	$(".calendarDiv").on('click', 'td', function(event) {
+        if ($(this).text() != "" || $(this).text().length() > 2) {
+            $('td').removeClass('calendarCellSelected');
+            $(this).addClass('calendarCellSelected');
+        }
+    })
+    
+    
+    
+    $(".forMemberCountBtnOne").click(function() {
+    	var postkey = $(this).next().val();
+        var n = $(this).next().next().val();
+        var groupkey = $('#hiddenGroupKey').val();
+        ajax(postkey, groupkey, n);
+        if ($("#collapseOne").hasClass("show")) {
+            $('.i-changeOne').removeClass('fa-arrow-up');
+            $('.i-changeOne').addClass('fa-arrow-down');
+        } else {
+            $('.i-changeOne').removeClass('fa-arrow-down');
+            $('.i-changeOne').addClass('fa-arrow-up');
+        }
+    })
+    $(".forMemberCountBtnTwo").click(function() {
+    	var postkey = $(this).next().val();
+        var n = $(this).next().next().val();
+        var groupkey = $('#hiddenGroupKey').val();
+        ajax(postkey, groupkey, n);
+        if ($("#collapseTwo").hasClass("show")) {
+            $('.i-changeTwo').removeClass('fa-arrow-up');
+            $('.i-changeTwo').addClass('fa-arrow-down');
+        } else {
+            $('.i-changeTwo').removeClass('fa-arrow-down');
+            $('.i-changeTwo').addClass('fa-arrow-up');
+        }
+    })
+    $(".forMemberCountBtnThree").click(function() {
+        var postkey = $(this).next().val();
+        var n = $(this).next().next().val();
+        var groupkey = $('#hiddenGroupKey').val();
+        ajax(postkey, groupkey, n);
+        if ($("#collapseThree").hasClass("show")) {
+            $('.i-changeThree').removeClass('fa-arrow-up');
+            $('.i-changeThree').addClass('fa-arrow-down');
+        } else {
+            $('.i-changeThree').removeClass('fa-arrow-down');
+            $('.i-changeThree').addClass('fa-arrow-up');
+        }
+    })
+
+    //=======================================================
+    $('input[type=file]:eq(0)').on('change', function() {
+        $('#groupMainImgForm').submit();
+    });
+    $('input[type=file]:eq(1)').on('change', function() {
+        $('#groupImgForm').submit();
+    });
+
+
+    //===== Search Filter =====//
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter(searchDir, list) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter($("#searchDir"), $("#people-list"));
+        });
+    }(jQuery));
+
+    //===== Search Filter =====//나상엽추가===============================================
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter1(searchDir1, list1) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir1);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list1).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list1).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list1).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter1($("#searchDir1"), $("#people-list1"));
+        });
+    }(jQuery));
+
+    //===========================================================================
+
+    //===== Search Filter =====//나상엽추가===============================================
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter2(searchDir2, list2) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir2);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list2).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list2).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list2).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter2($("#searchDir2"), $("#people-list2"));
+        });
+    }(jQuery));
+
+    //===========================================================================
+
+    //===== Search Filter =====//나상엽추가===============================================
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter3(searchDir3, list3) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir3);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list3).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list3).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list3).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter3($("#searchDir3"), $("#people-list3"));
+        });
+    }(jQuery));
+
+    //===========================================================================
+    //===== Search Filter =====//나상엽추가===============================================
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter4(searchDir4, list4) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir4);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list4).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list4).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list4).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter4($("#searchDir4"), $("#people-list4"));
+        });
+    }(jQuery));
+
+    //===========================================================================
+    //===== Search Filter =====//나상엽추가===============================================
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter5(searchDir5, list5) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir5);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list5).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list5).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list5).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter5($("#searchDir5"), $("#people-list5"));
+        });
+    }(jQuery));
+
+    //===========================================================================
+    //===== Search Filter =====//나상엽추가===============================================
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter6(searchDir6, list6) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir6);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list6).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list6).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list6).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter6($("#searchDir6"), $("#people-list6"));
+        });
+    }(jQuery));
+
+    //===========================================================================
+    //===== Search Filter =====//나상엽추가===============================================
+    (function($) {
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function(a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function listFilter7(searchDir7, list7) {
+            var form = $("<form>").attr({
+                    "class": "filterform",
+                    "action": "#"
+                }),
+                input = $("<input>").attr({
+                    "class": "filterinput",
+                    "type": "text",
+                    "placeholder": "회원 찾기"
+                });
+            $(form).append(input).appendTo(searchDir7);
+
+            $(input).change(
+                function() {
+                    var filter = $(this).val();
+                    if (filter) {
+                        $(list7).find(
+                                "li:not(:Contains(" + filter + "))")
+                            .slideUp();
+                        $(list7).find("li:Contains(" + filter + ")")
+                            .slideDown();
+                    } else {
+                        $(list7).find("li").slideDown();
+                    }
+                    return false;
+                }).keyup(function() {
+                $(this).change();
+            });
+        }
+
+        //search friends widget
+        $(function() {
+            listFilter7($("#searchDir7"), $("#people-list7"));
+        });
+    }(jQuery));
+
+    //===========================================================================
+
+    function ajax(postkey, groupkey, n) {
+        output = "";
+        var data = "postkey=" + postkey + "&groupkey=" + groupkey;
+        var empty = "people-list" + n;
+        $.ajax({
+            type: "post",
+            url: "group_main_ajax.net",
+            data: data,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+                $("#" + empty).empty();
+                output = "";
+                $(data.groupcalendarmemberlist).each(
+                    function(index, item) {
+                        output += "<li><figure>";
+                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+                        output += "</figure><div class='friendz-meta'>";
+                        output += "<a href='time-line.html'></a>" + item.groupnickname;
+                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                    })
+                $("#" + empty).append(output);
+            },
+            error: function() {
+                console.log('에러')
+            }
+        }) // ajax
+    } // function ajax end
+    function ajaxJoinBtn(postkey, groupkey, userkey, n) {
+        output = "";
+        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
+        var empty = "people-list" + n;
+        $.ajax({
+            type: "post",
+            url: "group_main_ajaxJoin.net",
+            data: data,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+                $("#" + empty).empty();
+                $(".currentperson"+n).empty();
+                $(".currentperson"+n).html(data.currentperson);
+                output = "";
+                $(data.groupcalendarmemberlist).each(
+                    function(index, item) {
+                        output += "<li><figure>";
+                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+                        output += "</figure><div class='friendz-meta'>";
+                        output += "<a href='time-line.html'></a>" + item.groupnickname;
+                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                    })
+                $("#" + empty).append(output);
+            },
+            error: function() {
+                console.log('에러')
+            }
+        }) // ajax
+    } // function ajax end
+
+    function ajaxJoinCancelBtn(postkey, groupkey, userkey, n) {
+        output = "";
+        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
+        var empty = "people-list" + n;
+        $.ajax({
+            type: "post",
+            url: "group_main_ajaxJoinCancel.net",
+            data: data,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+                $("#" + empty).empty();
+                output = "";
+                $(".currentperson"+n).empty();
+                $(".currentperson"+n).html(data.currentperson);
+                $(data.groupcalendarmemberlist).each(
+                    function(index, item) {
+                        output += "<li><figure>";
+                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+                        output += "</figure><div class='friendz-meta'>";
+                        output += "<a href='time-line.html'></a>" + item.groupnickname;
+                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                    })
+                $("#" + empty).append(output);
+            },
+            error: function() {
+                console.log('에러')
+            }
+        }) // ajax
+    } // function ajax end
+    function ajaxCalendarList(userkey) {
+        output = "";
+        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
+        var empty = "people-list" + n;
+        $.ajax({
+            type: "post",
+            url: "group_main_ajaxJoinCancel.net",
+            data: data,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+                $("#" + empty).empty();
+                output = "";
+                $(".currentperson"+n).empty();
+                $(".currentperson"+n).html(data.currentperson);
+                $(data.groupcalendarmemberlist).each(
+                    function(index, item) {
+                        output += "<li><figure>";
+                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+                        output += "</figure><div class='friendz-meta'>";
+                        output += "<a href='time-line.html'></a>" + item.groupnickname;
+                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                    })
+                $("#" + empty).append(output);
+            },
+            error: function() {
+                console.log('에러')
+            }
+        }) // ajax
+    } // function ajax end
+    
+})
 </script>
-<script src="resources/js/script_group.js"></script>
-<link rel="stylesheet" href="resources/css/style_group.css">
+
+<script src="resources/js/script.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />

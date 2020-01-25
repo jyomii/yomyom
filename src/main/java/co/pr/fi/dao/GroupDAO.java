@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 
 
 import co.pr.fi.domain.GGroupBoard;
-
+import co.pr.fi.domain.CalendarList;
+import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.Post;
@@ -69,6 +70,24 @@ public class GroupDAO {
 	}
 
 	public List<MemberList> groupcalendarmemberlist(Map<String, Integer> map) {
+		return sqlSession.selectList("group.groupcalendarmemberlist", map);
+	}
+
+	public void groupcalendarmemberinsert(Map<String, Integer> map) {
+		sqlSession.insert("group.groupcalendarmemberinsert",map);
+		
+	}
+
+	public List<CalendarMember> calendarmemberjoinbtn(Map<String, Integer> map) {
+		return sqlSession.selectList("group.calendarmemberjoinbtn", map);
+	}
+
+	public void groupcalendarmemberdelete(Map<String, Integer> map) {
+		sqlSession.delete("group.groupcalendarmemberdelete",map);
+		
+	}
+	
+	public List<CalendarList> groupcalendarlist(Map<String, Object> map) {
 		return sqlSession.selectList("group.groupcalendarlist", map);
 	}
 

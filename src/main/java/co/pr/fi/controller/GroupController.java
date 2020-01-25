@@ -1,6 +1,7 @@
 package co.pr.fi.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.pr.fi.domain.GGroupBoard;
+import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.Post;
@@ -37,6 +39,10 @@ public class GroupController {
 	@GetMapping("/group_main.net")
 	public ModelAndView group_main(ModelAndView mv) {
 		int groupkey = 1;
+		int userkey = 10;
+		Calendar c = Calendar.getInstance();
+		int month = c.get(Calendar.MONTH) + 1;
+		int year = c.get(Calendar.YEAR);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.setViewName("groupin_group_main");
 		mv.addObject("groupkey", groupkey);
@@ -61,18 +67,46 @@ public class GroupController {
 		mv.addObject("groupboardlist", groupboardlist);
 		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
 		mv.addObject("groupmemberlist", groupmemberlist);
-		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey);
+		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey,userkey);
 		mv.addObject("groupmeetinglist", groupmeetinglist);
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey,month,year);
+		mv.addObject("groupcalendarlist",groupcalendarlist);
+		mv.addObject("groupcalendarlistCount",groupcalendarlist.size());
 		return mv;
 	}
-
+	
 	@ResponseBody
 	@RequestMapping(value = "/group_main_ajax.net")
-	public Object boardListAjax(@RequestParam(value = "postkey") int postkey,
+	public Object boardListAjaxJ(@RequestParam(value = "postkey") int postkey,
 			@RequestParam(value = "groupkey") int groupkey) throws Exception {
+		groupservice.calendarmemberlist(postkey, groupkey);
 		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("groupcalendarmemberlist", groupcalendarmemberlist);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/group_main_ajaxJoin.net")
+	public Object boardListAjaxJoin(@RequestParam(value = "postkey") int postkey,
+			@RequestParam(value = "groupkey") int groupkey, @RequestParam(value = "userkey") int userkey) throws Exception {
+		groupservice.calendarmemberinsert(postkey, groupkey, userkey);
+		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("groupcalendarmemberlist", groupcalendarmemberlist);
+		map.put("currentperson", groupcalendarmemberlist.size());
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/group_main_ajaxJoinCancel.net")
+	public Object boardListAjaxJoinCancel(@RequestParam(value = "postkey") int postkey,
+			@RequestParam(value = "groupkey") int groupkey, @RequestParam(value = "userkey") int userkey) throws Exception {
+		groupservice.calendarmemberdelete(postkey, groupkey, userkey);
+		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("groupcalendarmemberlist", groupcalendarmemberlist);
+		map.put("currentperson", groupcalendarmemberlist.size());
 		return map;
 	}
 
