@@ -1,47 +1,50 @@
 
 package co.pr.fi.domain;
 
-//紐⑥엫寃뚯떆湲� 
+//모임게시글 
 public class Post {
 	private int rownum;
-	// 紐⑥엫寃뚯떆湲��궎媛�
+	// 모임게시글키값
 	private int postKey;
 
-	// �젣紐�
+	// 제목
 	private String postTitle;
 
-	// �궡�슜
+	// 내용
 	private String postContent;
 
-	// �옉�꽦�궇吏�
+	// 작성날짜
 	private String postDate;
 
-	// 紐⑥엫�궎媛�
+	// 모임키값
 	private int groupKey;
 
-	// �쑀���궎媛�
+	// 유저키값
 	private int userKey;
 
-	// �뙎湲��뿀�슜�뿬遺�
+	// 댓글허용여부
 	private String postOptionReply;
 
-	// 寃��깋�뿀�슜�뿬遺�
+	// 검색허용여부
 	private String postOptionSearch;
 
-	// 紐⑥엫寃뚯떆�뙋�궎媛�
+	// 모임게시판키값
 	private int boardKey;
 
-	// 議고쉶�닔
+	// 조회수
 	private int postReadcount;
 
-	// �뙎湲��닔
+	// 댓글수
 	private int replyCount;
 	
-	// �뙎湲� �궡�슜
+	// 댓글 내용
 	private String commentContent;
 	
-	// �뙎湲� �옉�꽦�씪
+	// 댓글 작성일
 	private String commentDate;
+	
+	// 좋아요 수
+	private int postlike;
 	
 	private String cstartdate;
 	private String cenddate;
@@ -210,7 +213,15 @@ public class Post {
 		this.commentDate = commentDate;
 	}
 
-	// Post 紐⑤뜽 蹂듭궗
+	public int getPostlike() {
+		return postlike;
+	}
+
+	public void setPostlike(int postlike) {
+		this.postlike = postlike;
+	}
+
+	// Post 모델 복사
 	public void CopyData(Post param) {
 		this.postKey = param.getPostKey();
 		this.postTitle = param.getPostTitle();
@@ -225,5 +236,6 @@ public class Post {
 		this.replyCount = param.getReplyCount();
 		this.commentContent = param.getCommentContent();
 		this.commentDate = param.getCommentDate();
+		this.postlike = param.getPostlike();
 	}
 }

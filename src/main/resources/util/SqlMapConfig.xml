@@ -35,12 +35,19 @@
 
 		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
 		<typeAlias alias = "comment" type = "co.pr.fi.domain.GComment"/>
+
 		<typeAlias alias = "calendarmember" type = "co.pr.fi.domain.CalendarMember"/>
 		<typeAlias alias = "calendarlist" type = "co.pr.fi.domain.CalendarList"/>
 <typeAlias alias="memberlist"
 			type="co.pr.fi.domain.MemberList" />
 	</typeAliases>
 
+		
+		<typeAlias alias="memberlist" type="co.pr.fi.domain.MemberList" /> 
+
+		<typeAlias alias = "joinQuest" type = "co.pr.fi.domain.JoinQuest"/>
+		<typeAlias alias = "joinAnswer" type = "co.pr.fi.domain.JoinAnswer"/>
+	</typeAliases>
 	<mappers>
 		<mapper resource="sql/message.xml"></mapper>
 		<mapper resource="sql/member.xml"></mapper>
@@ -50,6 +57,6 @@
 		<mapper resource="sql/category.xml"></mapper>
 		<mapper resource="sql/mypage.xml"></mapper>
 		<mapper resource="sql/prboard.xml"></mapper>
-    <mapper resource="sql/post.xml"></mapper>
+    	<mapper resource="sql/post.xml"></mapper>
 	</mappers>
 </configuration>

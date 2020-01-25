@@ -1,5 +1,6 @@
 package co.pr.fi.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GGroupMember;
+import co.pr.fi.domain.JoinAnswer;
+import co.pr.fi.domain.JoinQuest;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupMemberService;
 
@@ -38,10 +41,41 @@ public class GroupMemberController {
 		return "groupin_group_main";
 	}
 	
-	// 모임 가입 페이지 이동
+	// 모임 가입 페이지 이동  
 	@GetMapping("/signGroup")
-	public String signGroup () {
-		return "G_signup";
+	public ModelAndView signGroup (ModelAndView mv) {
+		System.out.println("모임 가입 페이지 이동");
+		// 모임의 가입 양식을 가져온다.
+		int groupKey = 1;
+		int userKey = 1;
+		
+		List<JoinQuest> list = groupMemberService.getJoinSample(groupKey);
+		System.out.println("###################" + list.get(0).getQuest3());
+		mv.addObject("quest1", list.get(0).getQuest1());
+		mv.addObject("quest2", list.get(0).getQuest2());
+		mv.addObject("quest3", list.get(0).getQuest3());
+		mv.addObject("quest4", list.get(0).getQuest4());
+		mv.addObject("quest5", list.get(0).getQuest5());
+		mv.addObject("introduce", list.get(0).getIntroduce());
+		mv.addObject("groupKey", groupKey);
+		mv.addObject("userKey", userKey);
+		mv.setViewName("G_signup");
+		return mv;
+	}
+	
+	// 모임 가입하기
+	@PostMapping("/joinGroupAction")
+	public String joinGroupAction(GGroupMember mem, JoinAnswer answer, int groupKey, int userKey) {
+		
+		String filePath = "C:/groupin"; // 파일 저장 경로, 설정파일로 따로 관리한다.
+		File dir = new File(filePath); 	// 파일 저장 경로 확인, 없으면 만든다.
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		// 이미지 갖고오는 거 하기 ################ 
+		// int result = groupMemberService.joinGroup(groupKey, userKey, mem);
+		return "";
 	}
 	
 	// 모임 추천 페이지 이동

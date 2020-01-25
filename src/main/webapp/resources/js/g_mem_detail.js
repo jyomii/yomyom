@@ -32,7 +32,6 @@ $(function(){
 						add = wroteTitle(data);
 						break;
 					case 2:
-						console.log("comment success");
 						add = wroteComment(data);
 						break;
 				}
@@ -60,9 +59,7 @@ $(function(){
 		$(data.list).each(function(index, item) {
 			doc += '	<tr>';
 			doc += '		<td>';
-			console.log('\" = ' + '\"');
-			// \' 는 ' 이다.
-			// \" 는 " 이구.
+			// \' 는 ' 이다. \" 는 " 이구.
 			doc += "			<img src= \"<spring:url value='/image" + item.groupDFile + "'/>\" class = 'group-img' alt = ''/>";
 			doc += '			<a href = "groupmain?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
 			doc += '		</td>';
@@ -80,7 +77,7 @@ $(function(){
 
 	/* ##### 작성한 글 ##### */
 	function wroteTitle(data) {
-		// 뭐지,, 가입한 모임이랑 똑같이 칼럼이 3갠데도 얘는 테이블이 좀 안 맞음
+		console.log(data.list);
 		var doc = '';
 		doc += '<thead>';
 		doc += '	<tr>';
@@ -90,19 +87,23 @@ $(function(){
 		doc += '	</tr>';
 		doc += '</thead>';
 		doc += '<tbody>';
-		$(data.list).each(function(index, item){
-			doc += '	<tr>';
-			doc += '		<td>';
-			doc += '			<a href = "detailBoard?postkey=' + item.postKey + '" title = "">' + item.postTitle + '</a>';
-			doc += '		</td>';
-			doc += '		<td>';
-			doc += 				item.postReadcount;
-			doc += '		</td>';
-			doc += '		<td>';
-			doc += 				item.postDate;
-			doc += '		</td>';
-			doc += '	</tr>';
-		});
+		if ((data.list).length != 0) {
+			$(data.list).each(function(index, item){
+				doc += '	<tr>';
+				doc += '		<td>';
+				doc += '			<a href = "detailBoard?postkey=' + item.postKey + '" title = "">' + item.postTitle + '</a>';
+				doc += '		</td>';
+				doc += '		<td>';
+				doc += 				item.postReadcount;
+				doc += '		</td>';
+				doc += '		<td>';
+				doc += 				item.postDate;
+				doc += '		</td>';
+				doc += '	</tr>';
+			});
+		} else {
+			doc += '<tr><td colspan = 3>작성글이 존재하지 않습니다.</td></tr>'
+		}
 		doc += '</tbody>';
 		return doc;
 	} // wroteTitle end
@@ -119,32 +120,36 @@ $(function(){
 		doc += '	</tr>';
 		doc += '</thead>';
 		doc += '<tbody>';
-		$(data.list).each(function(index, item){
-			doc += '	<tr>';
-			doc += '		<td>';
-			doc += '			<div class = "comment-info">';
-			doc += '				<div class = "comment-content">';
-			doc += '					<span>';
-			doc += '						<a href = "detailBoard?postkey=' + item.postKey + '">' + item.commentContent + '</a>';
-			doc += '					</span>';
-			doc += '				</div>';
-			doc += '				<div class = "comment-subject">';
-			doc += '					<span>';
-			doc += '						<a href = "detailBoard?postkey=' + item.postKey + '">' + item.postTitle + '</a>';
-			doc += '					</span>';
-			doc += '					<span class = "comment-num">';
-			doc += '						[댓글개스]';
-			doc += '					</span>';
-			doc += '				</div>';
-			doc += '		</td>';
-			doc += '		<td>';
-			doc += 				'0';
-			doc += '		</td>';
-			doc += '		<td>';
-			doc += 				item.commentDate;
-			doc += '		</td>';
-			doc += '	</tr>';
-		});
+		if ((data.list).length != 0) {
+			$(data.list).each(function(index, item){
+				doc += '	<tr>';
+				doc += '		<td>';
+				doc += '			<div class = "comment-info">';
+				doc += '				<div class = "comment-content">';
+				doc += '					<span>';
+				doc += '						<a href = "detailBoard?postkey=' + item.postKey + '">' + item.commentContent + '</a>';
+				doc += '					</span>';
+				doc += '				</div>';
+				doc += '				<div class = "comment-subject">';
+				doc += '					<span>';
+				doc += '						<a href = "detailBoard?postkey=' + item.postKey + '">' + item.postTitle + '</a>';
+				doc += '					</span>';
+				doc += '					<span class = "comment-num">';
+				doc += 						'[' + item.replyCount + ']';
+				doc += '					</span>';
+				doc += '				</div>';
+				doc += '		</td>';
+				doc += '		<td>';
+				doc +=				item.postReadcount;
+				doc += '		</td>';
+				doc += '		<td>';
+				doc += 				item.commentDate;
+				doc += '		</td>';
+				doc += '	</tr>';
+			});
+		} else {
+			doc += '<tr><td colspan = 3>댓글이 존재하지 않습니다.</td></tr>'
+		}
 		doc += '</tbody>';
 		return doc;
 	} // wroteComment end

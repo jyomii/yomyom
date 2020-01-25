@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,21 +47,25 @@
 	</style>
 	<script>
 		$(function () {
-			// ajax로 나중에 바꾸기 
-			var add = false;
-			$('#input').keyup(function(){
-				if (!add) {
-				//	var tag = '<span class = "nick-status" style = "color : red">이미 존재하는 닉네임입니다.</span>';
-					var tag = '<span class = "nick-status" style = "color : blue">사용가능한 닉네임입니다.</span>';
-					$('.form-group.half').append(tag);
+			$('#nickname').keyup(function(){
+				var reg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2, 10}$/;
+				
+				if (reg.test($(this).val())) {
+					$.ajax({
+						type : "POST",
+						url : "groupNickCheck",
+						data : {},
+						cache : false,
+						success : function (data) {
+							if (data == 1) {
+								var tag = '<span class = "nick-status" style = "color : red">이미 존재하는 닉네임입니다.</span>';
+							}
+							var tag = '<span class = "nick-status" style = "color : blue">사용가능한 닉네임입니다.</span>';
+							$('.form-group.half').append(tag);
+						}
+					})
 				}
-				add = true;
-				$('.form-group.half').remove('<span>');
 			});
-			
-			if (!('#input').val()) {
-				$('.form-group.half').remove('<span>');
-			}
 		});
 	</script>
 </head>
@@ -605,49 +610,69 @@
 									<div class="editing-info">
 										<h5 class="f-title"><i class="ti-info-alt"></i>모임 가입</h5>
 										<!-- 사진 때문에 enctype 추가 -->
-										<form method = "post" enctype = "multipart/form-data">
+										<form method = "post" enctype = "multipart/form-data" action = "joinGroupAction">
+											<input type = "hidden" name = "groupKey" value = "${groupKey}">
+											<input type = "hidden" name = "userKey" value = "${userKey}">
 											<!-- 프사 -->
 											<div class = "profile-img">
 												<label>
-													<input type = "file" name = "uploadfile" accept = "image/gif, image/jpeg, image/png" style = "display : none">
-													<img src = "resources/images/test/default.png" alt = "Avatar" class = "avatar">
+													<input type = "file" name = "profileFile" accept = "image/gif, image/jpeg, image/png" style = "display : none">
+													<img src = "resources/images/default.png" alt = "default" class = "avatar">
 												</label>
 											</div>
 											<!-- 반쪽짜리 -->
 											<!-- 닉네임 -->
 											<div class="form-group half">	
-											  <input type="text" id="input" required="required"/>
-											  <label class="control-label" for="input">닉네임</label><i class="mtrl-select"></i>
+											  <input type = "text" id = "nickname" name = "groupNickname" required = "required"/>
+											  <label class="control-label" for="nickname">닉네임</label><i class="mtrl-select"></i>
 											</div>
-											<div class="form-group">	
-											  <input type="text" required="required"/>
-											  <label class="control-label" for="input">사용하는 개발 언어는?</label><i class="mtrl-select"></i>
-											</div>
-											<div class="form-group">	
-											  <input type="text" required="required"/>
-											  <label class="control-label" for="input">프로젝트 경험이 있습니까?</label><i class="mtrl-select"></i>
-											</div>
-											<div class="form-group">	
-											  <input type="text" required="required"/>
-											  <label class="control-label" for="input">당신이 생각하는 코딩 실력은 어느 정도입니까?</label><i class="mtrl-select"></i>
-											</div>
-											<div class="form-group">	
-											  <input type="text" required="required"/>
-											  <label class="control-label" for="input">관련 직종에 종사하고 있습니까?</label><i class="mtrl-select"></i>
-											</div>
-											<div class="form-group">	
-											  <textarea rows="4" id="textarea" required="required"></textarea>
-											  <label class="control-label" for="textarea">간단한 자기소개</label><i class="mtrl-select"></i>
-											</div>
+											<!-- 효율적으로 코드 좀 짜보쟈 -->
+											<c:if test = "${quest1 ne null}">
+												<div class="form-group">	
+												  <input type = "text" id = "answer1" name = "answer1" required = "required"/>
+												  <label class="control-label" for="answer1">${quest1}</label><i class="mtrl-select"></i>
+												</div>
+											</c:if>
+											<c:if test = "${quest2 ne null}">
+												<div class="form-group">	
+												  <input type = "text" id = "answer2" name = "answer2" required = "required"/>
+												  <label class="control-label" for="answer2">${quest2}</label><i class="mtrl-select"></i>
+												</div>
+											</c:if>
+											<c:if test = "${quest3 ne null}">
+												<div class="form-group">	
+												  <input type = "text" id = "answer3" name = "answer3" required = "required"/>
+												  <label class="control-label" for="answer3">${quest3}</label><i class="mtrl-select"></i>
+												</div>
+											</c:if>
+											<c:if test = "${quest4 ne null}">
+												<div class="form-group">	
+												  <input type = "text" id = "answer4" name = "answer4" required = "required"/>
+												  <label class="control-label" for="answer4">${quest4}</label><i class="mtrl-select"></i>
+												</div>
+											</c:if>
+											<c:if test = "${quest5 ne null}">
+												<div class="form-group">	
+												  <input type = "text" id = "answer5" name = "answer5" required = "required"/>
+												  <label class="control-label" for="answer5">${quest5}</label><i class="mtrl-select"></i>
+												</div>
+											</c:if>
+											<c:if test = "${introuduce ne null}">
+												<div class="form-group">	
+												  <textarea rows = "4" id = "introduce" name = "introduce" required = "required"></textarea>
+												  <label class="control-label" for="introduce">${introduce}</label><i class="mtrl-select"></i>
+												</div>
+											</c:if>
 											<div class="submit-btns">
-												<button type="button" class="mtr-btn"><span>취소</span></button>
-												<button type="button" class="mtr-btn"><span>가입</span></button>
+												<button type="reset" class="mtr-btn"><span>취소</span></button>
+												<button type="submit" class="mtr-btn"><span>가입</span></button>
 											</div>
 										</form>
 									</div>
 								</div>	
 							</div><!-- centerl meta -->
 							<!-- 모임 가입 끝 -->
+							
 							<div class="col-lg-3">
 								<aside class="sidebar static">
 									<div class="widget">
