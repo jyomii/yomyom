@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.JoinQuest;
 import co.pr.fi.domain.Post;
 
 //모임 회원 관련 DB (모임 참여, 탈퇴 // 모임 회원 목록, 회원이 쓴 글 확인, 참여 모임 확인, 댓글 목록 확인 등  )
@@ -24,6 +26,16 @@ public class GroupMemberDAO {
 	
 	// 해당 모임 내 유저의 작성글 조회
 	public List<Post> wroteInGroup (Map<String, Object> temp) {
-		return sqlSession.selectList("group.wroteInGroup", temp);
+		return sqlSession.selectList("post.wroteInGroup", temp);
+	}
+	
+	// 해당 모임 내 유저가 댓글 단 글 조회 
+	public List<Post> postByCommented(Map<String, Object> temp) {
+		return sqlSession.selectList("post.postByCommented", temp);
+	}
+	
+	// 모임의 가입 양식 가져오기
+	public List<JoinQuest> getJoinSample(int groupKey) {
+		return sqlSession.selectList("group.getJoinSample", groupKey);
 	}
 }

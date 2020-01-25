@@ -20,4 +20,5 @@ public class MyPageServiceImpl implements MyPageService{
 	public int myupdate(GUsers user) {
 		return dao.myupdate(user);
 	}
+	
 }

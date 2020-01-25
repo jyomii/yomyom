@@ -222,6 +222,11 @@ public class AdminServiceImpl implements AdminService {
 		dao.deleteFilesList();
 	}
 
+	@Override
+	public int getNoticeCount() {
+		return dao.getNoticeCount();
+	}
+
 
 
 

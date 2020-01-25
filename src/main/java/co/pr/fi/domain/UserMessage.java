@@ -9,7 +9,7 @@ public class UserMessage {
  private int mgKey;
 
  // 종류 
- private String mgSort;
+ private String mgSort; //N : 공지사항 , D : 일반 쪽지
 
  // 내용 
  private String mgContent;

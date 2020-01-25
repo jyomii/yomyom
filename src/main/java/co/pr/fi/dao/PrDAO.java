@@ -1,5 +1,6 @@
 package co.pr.fi.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,12 +16,16 @@ public class PrDAO {
 	private SqlSessionTemplate sqlSession;
 
 	public int getListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("Prs.count");
 	}
 
-	public List<PrBoard> getBoardList(int page, int limit) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PrBoard> getBoardList(HashMap<String, Integer> map) {
+		return sqlSession.selectList("Prs.boardList", map);
 	}
+
+	public int insertBoard(PrBoard prboard) {
+		return sqlSession.insert("Prs.insert", prboard);
+	}
+
+	
 }

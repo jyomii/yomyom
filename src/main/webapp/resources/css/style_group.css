@@ -9,7 +9,7 @@ Last change:  4/september/18
 ====INDEX=====
 
 01- general styling
-02- sticky header 
+02- sticky header
 03- login/landing page
 04- home page topbar
 05- timeline area
@@ -527,7 +527,7 @@ header.sticky {
 }
 
 .login-reg-bg {
-	background-color: rgba(255, 255, 255, 0.3);
+	background: #f4f7f6 none repeat scroll 0 0;
 	float: left;
 	height: 100vh;
 	position: relative;
@@ -592,7 +592,7 @@ header.sticky {
 	width: 100%;
 }
 
-.log-reg-area.reg, .log-reg-area.reg2 {
+.log-reg-area.reg {
 	display: none;
 }
 
@@ -602,14 +602,6 @@ header.sticky {
 
 .login-reg-bg.show .log-reg-area.sign {
 	display: none;
-}
-
-.login-reg-bg.show.detail .log-reg-area.reg {
-	display: none;
-}
-
-.login-reg-bg.show.detail .log-reg-area.reg2 {
-	display: block;
 }
 
 /*--- topbar ---*/
@@ -776,7 +768,6 @@ header.sticky {
 .timeline-info {
 	background: #fff none repeat scroll 0 0;
 	display: block;
-	line-height: 59px;
 	width: 100%;
 }
 
@@ -3355,7 +3346,7 @@ nav.breadcrumb {
 }
 
 .accordion .card h5 button::before {
-	content: "�꼪";
+	content: "";
 	float: right;
 	font-family: fontawesome;
 }
@@ -4774,7 +4765,7 @@ canvas {
 }
 
 .top-area>ul.main-menu>li::after {
-	content: "�꼪";
+	content: "";
 	font-family: fontawesome;
 	font-size: 13px;
 	position: absolute;
@@ -5207,7 +5198,7 @@ canvas {
 	background: #ffffff none repeat scroll 0 0;
 	float: left;
 	overflow: hidden;
-	padding-top: 120px;
+	padding-top: 0px;
 	position: relative;
 	width: 100%;
 }
@@ -5215,7 +5206,6 @@ canvas {
 .mesages-lists>form {
 	left: 50%;
 	max-width: 92%;
-	position: absolute;
 	top: 40px;
 	transform: translate(-50%);
 	width: 100%;
@@ -5231,7 +5221,6 @@ canvas {
 	padding: 7px 20px;
 	width: 100%;
 }*/
-
 .message-list {
 	float: left;
 	list-style: outside none none;
@@ -5529,16 +5518,38 @@ keyframes slidedown { 0% {
 100%
 {
 background-position
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 -2000
 px
+
+
+
  
+
+
+
 2000
 px
-;
 
-    
+
+
+
+
+
+;
 }
 }
 @
@@ -5551,43 +5562,82 @@ keyframes slide { 0% {
 100%
 {
 background-position
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 -4000
 px
+
+
+
  
+
+
+
 0;
 background-position-x
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 -4000
 px
-;
 
-        
+
+
+
+
+
+;
 background-position-y
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 0
 px
-;
 
-    
+
+
+
+
+
+;
 }
 }
 
 /*--- blog grid post ---*/
-.g-post-classic-recommands {
-	background: #fdfdfd none repeat scroll 0 0;
-	border: 1px solid #ede9e9;
-	border-radius: 3px;
-	display: inline-block;
-	width: 100%;
-	margin-bottom: 20px;
-	padding: 25px;
-	width: 100%;
-}
-
 .g-post-classic {
 	background: #fff none repeat scroll 0 0;
 	border: 1px solid #ede9e9;
@@ -5597,13 +5647,13 @@ px
 	-ms-transition: all 0.2s linear 0s;
 	-o-transition: all 0.2s linear 0s;
 	transition: all 0.2s linear 0s;
-	width: 32.85%;
+	width: 100%;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	-ms-border-radius: 3px;
 	-o-border-radius: 3px;
 	border-radius: 3px;
-	margin: auto;
+	margin-bottom: 40px;
 }
 
 .blog-sec {
@@ -7000,12 +7050,36 @@ keyframes fadeInRight { 0% {
 100%
 {
 opacity
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 1;
 left
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 0;
 }
 }
@@ -7025,24 +7099,62 @@ keyframes blobby { 0% {
 50%
 {
 transform
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 scale
+
+
+
+
+
+
 (1
 .08
-);
 
-    
+
+
+
+
+
+);
 }
 100%
 {
 transform
-:
- 
-scale
-(1);
 
-    
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+scale
+
+
+
+
+
+
+(1);
 }
 }
 @
@@ -7053,24 +7165,62 @@ keyframes blobby2 { 0% {
 50%
 {
 transform
+
+
+
+
+
+
 :
+
+
+
  
+
+
+
 scale
+
+
+
+
+
+
 (1
 .18
-);
 
-    
+
+
+
+
+
+);
 }
 100%
 {
 transform
-:
- 
-scale
-(1);
 
-    
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+scale
+
+
+
+
+
+
+(1);
 }
 }
 
@@ -9628,13 +9778,13 @@ button.submit-checkout {
 .forum-list table {
 	border: 1px solid #dee2e6;
 }
-/*
+
 .forum-list table tbody tr td {
-    padding: 20px;
-    text-align: center;
-    width: 100%;
+	padding: 20px;
+	text-align: center;
+	width: 100%;
 }
-*/
+
 .forum-list table tbody tr td:first-child {
 	text-align: left;
 }

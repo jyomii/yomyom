@@ -10,6 +10,11 @@
 		</layout>
 	</appender>
 	
+	<!-- post -->
+	<logger name = "post">
+		<level value = "trace"/>
+	</logger>
+	
 	<!-- group -->
 	<logger name = "group">
 		<level value = "trace"/>

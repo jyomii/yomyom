@@ -1062,16 +1062,32 @@ NULL,NULL,2,1,'F','plain64@naver.com',sysdate,'Y','N',0,null,0);
 
 
 
--- 고여니 테스트 ###############################
-SELECT COUNT(USERKEY) FROM GGROUPMEMBER WHERE GROUPKEY = 3;  
-SELECT * FROM GGROUPMEMBER WHERE GROUPKEY = 3;
+-- ############################### 고여니 테스트 ###############################
+
+-- ### 기본 조회 ###
+-- 모임에 속해있는 회원 조회
 SELECT * FROM GGROUPMEMBER;
+
+-- 모임 조회
 SELECT * FROM GGROUP;
 
-SELECT * FROM GGROUP WHERE GROUPKEY IN (SELECT GROUPKEY FROM GGROUPMEMBER WHERE USERKEY = 1); -- 회원수 조인해서 구해야 되는데.. 모르겠어 일단 보류 
-
+-- 게시글 조회
 SELECT * FROM POST;
 
+-- 댓글 조회
+SELECT * FROM GCOMMENT;
+
+-- 회원 조회
+SELECT * FROM GUSERS;
+
+-- 좋아요 조회
+SELECT * FROM POSTLIKE;
+-- #############
+
+SELECT COUNT(USERKEY) FROM GGROUPMEMBER WHERE GROUPKEY = 3;  
+SELECT * FROM GGROUPMEMBER WHERE GROUPKEY = 3;
+
+SELECT * FROM GGROUP WHERE GROUPKEY IN (SELECT GROUPKEY FROM GGROUPMEMBER WHERE USERKEY = 1); -- 회원수 조인해서 구해야 되는데.. 모르겠어 일단 보류 
 
 -- 작성한 댓글
 -- POST의 POSTTITLE, POSTCONTENT, POSTDATE를 받아오자..
@@ -1140,3 +1156,199 @@ FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
 ORDER BY GROUPDATE DESC;
 
 
+
+
+-- 댓글 달기
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 15, 2, '아뇨 할 수 있어요!!', 1, 0, 0, sysdate, 3); 			-- 3번 모임의 15번 글에 2번 유저가 댓글을 달 것임 
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 14, 2, '노력하면 속도 붙을 거예요 홧팅', 1, 0, 0, sysdate, 3); 	-- 3번 모임의 14번 글에 2번 유저가 댓글을 달 것임 
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 16, 2, '미 친 듯 이 달 려 라 아 자', 1, 0, 0, sysdate, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 17, 2, '왕오아오아앙ㅇ', 1, 0, 0, sysdate, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 13, 2, '노.. 유 아 낫 바 보', 1, 0, 0, sysdate, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 11, 2, '노.. 유 아 낫 바 보', 1, 0, 0, sysdate, 6); 			-- 6번 모임의 11번 글에 2번 유저가 댓글을 달 것임
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 15, 3, 'ㅇㅇㅇㅇ', 1, 0, 0, SYSDATE, 3);
+INSERT INTO GCOMMENT VALUES (GCOMMENTSEQ.NEXTVAL, 15, 4, 'SSSSS', 1, 0, 0, SYSDATE, 3);
+
+
+-- 현재 모임(3번)에서 해당 유저가(2번) 어떤 글에 무슨 댓글을 달았는지
+SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY FROM GCOMMENT WHERE USERKEY = 2 AND GROUPKEY = 3 ORDER BY COMMENTDATE DESC;
+
+SELECT POSTKEY, POSTTITLE, POSTDATE FROM POST WHERE POSTKEY IN (13, 17);
+SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY 
+FROM GCOMMENT WHERE USERKEY = 2 AND GROUPKEY = 3
+
+-- 글에 달린 댓글 개수 
+SELECT POSTKEY, POSTTITLE, USERKEY, COMMENTCONTENT, GROUPKEY
+FROM POST NATURAL JOIN (	SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY 
+							FROM GCOMMENT 
+							WHERE USERKEY = 2 AND GROUPKEY = 3
+							ORDER BY COMMENTDATE DESC) 
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+SELECT POSTKEY, POSTTITLE, POSTCONTENT, USERKEY, GROUPKEY
+FROM POST NATURAL JOIN (SELECT POSTKEY, COUNT(USERKEY), COMMENTCONTENT, GROUPKEY FROM GCOMMENT WHERE GROUPKEY = 3)
+
+SELECT C.POSTKEY, C.COMMENTCONTENT, C.GROUPKEY
+FROM GCOMMENT C JOIN (	SELECT POSTKEY, COUNT(POSTKEY) AS "#COUNT#"
+						FROM GCOMMENT C
+						GROUP BY POSTKEY);	
+
+SELECT *
+FROM POST
+WHERE POSTKEY IN (	SELECT POSTKEY 
+					FROM GCOMMENT 
+					WHERE USERKEY = 2 AND GROUPKEY = 3 )	
+
+-- 댓글이 어느 글에 달렸는지 알 수 있는 원문글 번호
+-- 어떤 유저가 댓글을 달았는지 알 수 있는 유저번호
+-- 유저가 단 댓글
+-- 유저가 댓글 쓴 날짜
+-- 어느 모임에서 썼는지에 대한 모임번호
+-- 글제목
+SELECT C.POSTKEY AS POSTKEY, C.USERKEY AS USERKEY, C.COMMENTCONTENT AS COMMENTCONTENT, C.COMMENTDATE AS COMMENTDATE, C.GROUPKEY AS GROUPKEY, P.POSTTITLE AS POSTTITLE
+FROM GCOMMENT C LEFT JOIN POST P
+ON C.POSTKEY = P.POSTKEY
+
+-- 글번호와 그 글들에 대한 댓글수 
+SELECT POSTKEY, COUNT(POSTKEY) AS COMMENTCOUNT
+FROM (	SELECT C.POSTKEY AS POSTKEY, C.USERKEY AS USERKEY, C.COMMENTCONTENT AS COMMENTCONTENT, C.COMMENTDATE AS COMMENTDATE, C.GROUPKEY AS GROUPKEY, P.POSTTITLE AS POSTTITLE
+		FROM GCOMMENT C LEFT JOIN POST P
+		ON C.POSTKEY = P.POSTKEY)
+GROUP BY POSTKEY
+-- 노답인데;
+
+SELECT POSTKEY, COUNT(POSTKEY) AS "COMMENTCOUNT"
+FROM GCOMMENT
+GROUP BY POSTKEY
+
+select * from GCOMMENT a left join post using(postkey) where a.userkey=2
+
+select count(*),postkey from gcomment group by postkey
+select commentcount, posttitle from post left join (select count(postkey) commentcount, postkey from gcomment group by userkey) using(postkey) where groupkey=3
+
+select count(postkey) from post group by postkey having userkey = 2;
+
+select * 
+from post a left outer join (select count(b.postkey) commentcount, b.postkey 
+							from gcomment b 
+							group by b.postkey) p 
+							on a.postkey = p.postkey
+							where groupkey = 3 and userkey = 2;
+							
+SELECT POSTKEY, POSTTITLE, COMMENTDATE, USERKEY, COMMENTCONTENT, GROUPKEY
+FROM POST NATURAL JOIN ( 	SELECT POSTKEY, USERKEY, COMMENTCONTENT, GROUPKEY, COMMENTDATE 
+							FROM GCOMMENT 
+							WHERE USERKEY = 2 AND GROUPKEY = 3
+							ORDER BY COMMENTDATE DESC) 							
+							
+-- 모임 회원의 프사를 위해,,
+ALTER TABLE GGROUPMEMBER ADD(PROFILEFILE VARCHAR2(100) NULL);			
+ALTER TABLE GGROUPMEMBER ADD(PROFILEORIGIN VARCHAR2(100) NULL);			
+													
+INSERT INTO GGROUPMEMBER
+VALUES (3, 8, '프사테스트', '1', '/2020-1-20/group202012096380152.jpeg', '');
+
+INSERT INTO POST
+VALUES (POSTSEQ.NEXTVAL, '테스트입니다 테스트', '테스트인데 사진 넣을 땐 어떡하징', SYSDATE, 8, 3, 'N', 'N', 2, 0);
+							
+게시글을 조회하면 할 것
+게시글의 조회수 1 증가	OK
+게시글의 작성자 닉네임 	
+작성자의 프사		PROFILEFILE
+게시글 제목			POSTTITLE 
+게시글 작성일		POSTDATE 
+게시글 내용			POSTCONTENT
+게시글 조회수 		POSTREADCOUNT
+게시글 댓글수 	
+게시글 좋아요수	
+게시글에 달린 댓글 	
+
+-- 작성자 닉네임, 작성자 프사, 게시글키값, 제목, 내용, 작성일, 작성자키값, 글 조회수
+SELECT GROUPNICKNAME, PROFILEFILE, POSTKEY, POSTTITLE, POSTCONTENT, POSTDATE, USERKEY, POSTREADCOUNT 
+FROM GGROUPMEMBER JOIN POST 
+USING (USERKEY) 
+WHERE POSTKEY = 19;
+
+-- 글키값, 글제목, 댓글수
+SELECT POSTKEY, POSTTITLE, REPLYCOUNT
+FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
+					 FROM GCOMMENT
+					 GROUP BY POSTKEY)
+USING (POSTKEY)
+
+-- 회원의 작성한 댓글 쿠ㅓ리
+SELECT USERKEY, POSTKEY, COMMENTCONTENT, GROUPKEY, REPLYCOUNT, POSTTITLE, COMMENTDATE 
+FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT
+						 FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
+					 						  FROM GCOMMENT
+					 						  GROUP BY POSTKEY)
+					 	 USING (POSTKEY)) 
+USING(POSTKEY)					 						  
+WHERE USERKEY = 2 AND GROUPKEY = 3
+
+-------------------------------------------------------------------------------------------
+SELECT USERKEY, POSTKEY, COMMENTCONTENT, GROUPKEY, REPLYCOUNT, POSTTITLE, COMMENTDATE, POSTREADCOUNT 
+FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT, POSTREADCOUNT
+						 FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
+					 						  FROM GCOMMENT
+					 						  GROUP BY POSTKEY)
+					 	 USING (POSTKEY)) 
+USING(POSTKEY)					 						  
+WHERE USERKEY = 2 AND GROUPKEY = 3
+
+-- 좋아요 데이터 생성
+INSERT INTO POSTLIKE VALUES(10, 2, 3);	-- 3번 모임의 10번 게시글에 2번 유저가 좋아요 함
+INSERT INTO POSTLIKE VALUES(10, 8, 3);	-- 3번 모임의 10번 게시글에 8번 유저가 좋아요 함	
+
+-- 3번 모임의 10번 게시글의 좋아요 수 구하기
+SELECT POSTKEY, COUNT(POSTKEY) LIKECOUNT FROM POSTLIKE GROUP BY POSTKEY;
+
+
+-- 모임 가입양식 예상 쿼리
+-- JOINQUEST TABLE
+DROP TABLE JOINQUEST;
+DROP TABLE JOINANSWER;
+
+CREATE TABLE JOINQUEST(
+	QUESTKEY	NUMBER			NOT NULL,
+	GROUPKEY	NUMBER			NOT NULL,
+	QUEST1		VARCHAR2(100)	NULL,
+	QUEST2		VARCHAR2(100)	NULL,
+	QUEST3		VARCHAR2(100)	NULL,
+	QUEST4		VARCHAR2(100)	NULL,
+	QUEST5		VARCHAR2(100)	NULL,
+	INTRODUCE	VARCHAR2(100)	NULL,
+	CONSTRAINT JOINQUESTPK PRIMARY KEY (GROUPKEY)
+);
+-- 모임의 가입양식 데이터 생성
+INSERT INTO JOINQUEST VALUES(NVL((SELECT MAX(QUESTKEY) FROM JOINQUEST), 0) + 1, 3, '어디 사세요?', '왜 사세요?', '잘 사세요?', '살만 하세요?', '왜 살만 하세요?', '자기소개 해주세요');
+INSERT INTO JOINQUEST VALUES(NVL((SELECT MAX(QUESTKEY) FROM JOINQUEST), 0) + 1, 1, '어디 사세요?', '왜 사세요?', '', '', '', '자기소개 해주세요');
+
+SELECT * FROM JOINQUEST;
+
+--------------------------------------------------------------------------------------
+QUESTKEY	GROUPKEY	QUEST1		QUEST2		QUSET3		QUEST4		INTRODUCE
+	1			3		"어디사냐"		"왜 사냐"		"잘 사냐"		"살만 하냐"		"자기소개를 해주세요"
+	2			1		"옵치주캐?"	"난장판 좋냐"	"힐딜탱?"		"경쟁/빠대"	"자기소개를 해주세요"
+---------------------------------------------------------------------------------------
+
+CREATE TABLE JOINANSWER(
+	GROUPKEY	NUMBER			NOT NULL,
+	USERKEY		NUMBER			NOT NULL,
+	ANSWER1		VARCHAR2(500),
+	ANSWER2		VARCHAR2(500),
+	ANSWER3		VARCHAR2(500),
+	ANSWER4		VARCHAR2(500),
+	ANSWER5		VARCHAR2(500),
+	INTRODUCE	VARCHAR2(800),
+	CONSTRAINT JOINANSWERPK PRIMARY KEY (GROUPKEY, USERKEY)
+);
+
+-- 모임이 사라지는 경우 / 질문을 받았다가 아예 질문을 지워버리는 경우가 있을 수도 있다.
+ALTER TABLE JOINANSWER
+ADD CONSTRAINT FKJOINANSWERTOQUESTKEY FOREIGN KEY (GROUPKEY)
+REFERENCES JOINQUEST (GROUPKEY) ON DELETE CASCADE;
+---------------------------------------------------------------------------------------------------
+QUESTKEY	GROUPKEY	USERKEY		QUEST1		QUEST2		QUSET3		QUEST4		INTRODUCE
+	1			3			2		"어디사냐"		"왜 사냐"		"잘 사냐"		"살만 하냐"		"자기소개를 해주세요"
+	1			3			1		"옵치주캐?"	"난장판 좋냐"	"힐딜탱?"		"경쟁/빠대"	"자기소개를 해주세요"
+---------------------------------------------------------------------------------------------------
