@@ -40,7 +40,6 @@
 		<typeAlias alias = "calendarlist" type = "co.pr.fi.domain.CalendarList"/>
 <typeAlias alias="memberlist"
 			type="co.pr.fi.domain.MemberList" />
-	</typeAliases>
 
 		
 		<typeAlias alias="memberlist" type="co.pr.fi.domain.MemberList" /> 
