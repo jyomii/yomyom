@@ -35,6 +35,13 @@
 
 		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
 		<typeAlias alias = "comment" type = "co.pr.fi.domain.GComment"/>
+
+		<typeAlias alias = "calendarmember" type = "co.pr.fi.domain.CalendarMember"/>
+		<typeAlias alias = "calendarlist" type = "co.pr.fi.domain.CalendarList"/>
+<typeAlias alias="memberlist"
+			type="co.pr.fi.domain.MemberList" />
+	</typeAliases>
+
 		
 		<typeAlias alias="memberlist" type="co.pr.fi.domain.MemberList" /> 
 
