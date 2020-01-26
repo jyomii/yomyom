@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.GroupDAO;
 import co.pr.fi.domain.GGroupBoard;
+import co.pr.fi.domain.CalendarList;
+import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.Post;
@@ -80,9 +82,9 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<Post> groupmeetinglist(int groupkey) {
+	public List<Post> groupmeetinglist(int groupkey, int userkey) {
 		List<Post> MeetingList = dao.groupmeetinglist(groupkey);
-		for(int i = 0;i<MeetingList.size();i++) {
+		for(int i = 0;i<3;i++) {
 			String date = MeetingList.get(i).getCstartdate();
 
 			String year = date.substring(0,4)+"년 ";  
@@ -97,6 +99,17 @@ public class GroupServiceImpl implements GroupService {
 			if(minute.equals("00분"))
 				minute="";
 			MeetingList.get(i).setCstartdate(year+month+day+time+minute);
+			int postkey = MeetingList.get(i).getPostKey();
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("postkey", postkey);
+			map.put("groupkey", groupkey);
+			map.put("userkey", userkey);
+			List<CalendarMember> calendarmember = dao.calendarmemberjoinbtn(map);
+			if(calendarmember.size()==0) {
+				MeetingList.get(i).setJoinbtn("yes");
+			}else {
+				MeetingList.get(i).setJoinbtn("no");
+			}
 		}
 		return MeetingList;
 	}
@@ -107,6 +120,46 @@ public class GroupServiceImpl implements GroupService {
 		map.put("postkey", postkey);
 		map.put("groupkey", groupkey);
 		return dao.groupcalendarmemberlist(map);
+	}
+
+
+	@Override
+	public void calendarmemberinsert(int postkey, int groupkey, int userkey) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("postkey", postkey);
+		map.put("groupkey", groupkey);
+		map.put("userkey", userkey);
+		dao.groupcalendarmemberinsert(map);
+		
+	}
+
+
+	@Override
+	public void calendarmemberdelete(int postkey, int groupkey, int userkey) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("postkey", postkey);
+		map.put("groupkey", groupkey);
+		map.put("userkey", userkey);
+		dao.groupcalendarmemberdelete(map);
+	}
+
+
+	@Override
+	public List<CalendarList> groupcalendarlist(int userkey, int month, int year) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userkey", userkey);
+		String m = month+"";
+		if(m.length()==1) {
+			m="0"+m;
+		}
+		String date = year+"-"+m+"%";
+		map.put("date", date);
+		List<CalendarList> groupcalendarlist = dao.groupcalendarlist(map);
+		for(int i = 0 ; i<groupcalendarlist.size(); i++) {
+			String d = groupcalendarlist.get(i).getStartdate().substring(8,10);
+			groupcalendarlist.get(i).setStartdate(d);
+		}
+		return groupcalendarlist;
 	}
 
 
