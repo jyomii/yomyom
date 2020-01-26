@@ -622,63 +622,36 @@ header.sticky {
 	z-index: 99;
 	position: relative;
 }
-
-.logo {
-	display: inline-block;
-	vertical-align: inherit;
-	width: 15%;
-	position: relative;
-	z-index: 10;
+.topbar .logo {
+	float:left;
+	margin-top:9px;
 }
-
-.topbar>form {
-	display: inline-block;
-	vertical-align: sub;
-	width: 26%;
-	position: relative;
+.topbar .top-area {
+	float:left;
+	width:900px;
+	margin-left:70px;
 }
-
-.top-area {
-	display: inline-block;
-	text-align: right;
-	vertical-align: middle;
-	width: 84%;
-}
-
-.top-area>ul {
+.topbar .top-area > ul {
 	display: inline-block;
 	list-style: outside none none;
 	margin-bottom: 0;
 	padding-left: 0;
 	vertical-align: middle;
 }
-
-.top-area>ul>li {
+.topbar .top-area > ul > li {
 	display: inline-block;
-	margin-right: 25px;
+	margin-left: 25px;
 	position: relative;
 	vertical-align: top;
 	z-index: 2;
 }
-
-.top-area>ul>li>a {
+.topbar .top-area > ul > li:first-child {
+	margin-left:0;
+}
+.topbar .top-area > ul > li > a {
 	color: #999;
 }
-
-.top-area .user-img {
-	cursor: pointer;
-	display: inline-block;
-	vertical-align: middle;
-	position: relative;
-	line-height: 60px;
-}
-
-.top-area .user-img>span.status {
-	bottom: 10px;
-	right: 5px;
-}
-
-.top-area>span.main-menu {
+.topbar .top-area > span.main-menu {
 	cursor: pointer;
 	display: inline-block;
 	font-size: 20px;
@@ -686,14 +659,63 @@ header.sticky {
 	margin-right: -10px;
 	vertical-align: inherit;
 }
-
-.top-area .user-img>img {
+.topbar .right-menu {
+	float:right;
+}
+.topbar .right-menu .setting-area {
+	display: inline-block;
+	list-style: outside none none;
+	margin-bottom: 0;
+	padding-left: 0;
+	vertical-align: middle;
+}
+.topbar .right-menu .setting-area li {
+	display: inline-block;
+	margin-right: 20px;
+	position: relative;
+	vertical-align: middle;
+	z-index: 2;
+}
+.topbar .right-menu .setting-area li a {
+	color:#999;
+}
+.topbar .right-menu .setting-area .box-search {
+	width:200px;
+}
+.topbar .right-menu .setting-area .box-search .form-search {
+	position:relative;
+}
+.topbar .right-menu .setting-area .box-search .form-search input {
+	width:100%;
+	height:35px;
+	padding:0 34px 0 10px;
+	border:1px solid #ddd;
+	border-radius:17px;
+}
+.topbar .right-menu .setting-area .box-search .form-search button {
+	position:absolute;
+	right:0;
+	top:6px;
+	border: medium none;
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	color:#999;
+	font-size:14px;
+}
+.topbar .right-menu .user-img {
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	line-height: 60px;
+}
+.topbar .right-menu .user-img > img {
 	border-radius: 50%;
 	display: inline-block;
 	transform: scale(0.7);
 	vertical-align: inherit;
 }
 
+/*
 .form-search {
 	position: absolute;
 	right: -15px;
@@ -725,6 +747,7 @@ header.sticky {
 	right: 5px;
 	top: 9px;
 }
+*/
 
 .top-area>ul>li>a>span {
 	bottom: -10px;
@@ -4730,7 +4753,37 @@ canvas {
 }
 
 /*--- main menu ---*/
-.top-area>ul.main-menu>li ul {
+.top-area > ul.main-menu {
+	float: left;
+	margin-left: 0px;
+	line-height: 60px;
+}
+.top-area > ul.main-menu > li {
+	line-height: 59px;
+	margin-left: 30px;
+	padding-left: 30px;
+	position: relative;
+}
+.top-area > ul.main-menu > li:first-child {
+	margin-left:0;
+	padding-left:0;
+}
+.top-area > ul.main-menu > li::after {
+	content: "";
+	font-family: fontawesome;
+	font-size: 13px;
+	position: absolute;
+	right: 10px;
+	top: 0;
+}
+.top-area > ul.main-menu > li a {
+	color: #575b5f;
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: capitalize;
+	letter-spacing: 0.3px;
+}
+.top-area > ul.main-menu > li ul {
 	left: 0;
 	list-style: outside none none;
 	padding-left: 0;
@@ -4746,47 +4799,10 @@ canvas {
 	border-radius: 0 0 5px 5px;
 	border-top: 2px solid;
 }
-
-.top-area>ul.main-menu>li:hover>ul {
-	opacity: 1;
-	visibility: visible;
-}
-
-.top-area>ul.main-menu {
-	float: left;
-	margin-left: 0px;
-	line-height: 60px;
-}
-
-.top-area>ul.main-menu>li {
-	line-height: 59px;
-	margin-right: 30px;
-	padding-right: 30px;
-	position: relative;
-}
-
-.top-area>ul.main-menu>li a {
-	color: #575b5f;
-	font-size: 14px;
-	font-weight: 700;
-	text-transform: capitalize;
-	letter-spacing: 0.3px;
-}
-
-.top-area>ul.main-menu>li::after {
-	content: "ï¿½ê¼ª";
-	font-family: fontawesome;
-	font-size: 13px;
-	position: absolute;
-	right: 10px;
-	top: 0;
-}
-
-.top-area>ul.main-menu>li>ul li {
+.top-area > ul.main-menu > li > ul li {
 	line-height: initial;
 }
-
-.top-area>ul.main-menu>li>ul li a {
+.top-area > ul.main-menu > li > ul li a {
 	color: #5f5f5f;
 	display: inline-block;
 	font-size: 13.5px;
@@ -4797,10 +4813,56 @@ canvas {
 	transition: all 0.2s linear 0s;
 	border-radius: 0 0 5px 5px;
 }
-
-.top-area>ul.main-menu>li>ul li a:hover {
+.top-area > ul.main-menu > li:hover > ul {
+	opacity: 1;
+	visibility: visible;
+}
+.top-area > ul.main-menu > li > ul li a:hover {
 	background: #f5f5f5 none repeat scroll 0 0;
 	padding-left: 17px;
+}
+
+/* ÀüÃ¼Ä«Å×°í¸® */
+#all-menu {
+	display:none;
+	position:absolute;
+	left:0;
+	top:60px;
+	width:100%;
+	border-top:1px solid #eee;
+	background:#fff;
+	font-size:0;
+}
+#all-menu .inner {
+	width:900px;
+	margin:0 0 0 165px;
+	padding:0 48px;
+}
+#all-menu dl {
+	display:table-cell;
+	width:180px;
+	padding-left:20px;
+	border-left:1px solid #eee;
+}
+#all-menu dl:first-child {
+	padding-left:0;
+	border-left:0;
+}
+#all-menu dl dt {
+	padding:10px 0;
+	color:#333;
+	font-size:18px;
+	font-weight:bold;
+}
+#all-menu dl dd {
+	color:#888;
+	font-size:14px;
+}
+#all-menu dl dd a {
+	display:block;
+	padding:3px 0;
+	color:inherit;
+	font-size:inherit;
 }
 
 /*--- side chat message box ---*/

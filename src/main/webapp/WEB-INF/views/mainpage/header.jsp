@@ -125,23 +125,16 @@
 
 		<!-- 기존 화면 header 시작 -->
 		<div class="topbar stick">
-			<div class="logo">
-				<a title="" href="newsfeed.html"> <img
-					src="resources/images/logo.png" alt=""></a>
-			</div>
-
+			<!-- 로고 -->
+			<div class="logo"><a title="" href="newsfeed.html"> <img src="resources/images/logo.png" alt=""></a></div>
+			<!-- //로고 -->
+			
+			<!-- 카테고리 -->
 			<div class="top-area">
 				<ul class="main-menu">
-					<li><a href="#" title="">카테고리</a>
-						<ul>
-							<li><a href="index-2.html" title="">Home Social</a></li>
-							<li><a href="index2.html" title="">Home Social 2</a></li>
-							<li><a href="index-company.html" title="">Home Company</a></li>
-							<li><a href="landing.html" title="">Login page</a></li>
-							<li><a href="logout.html" title="">Logout Page</a></li>
-							<li><a href="newsfeed.html" title="">news feed</a></li>
-						</ul></li>
-					<li><a href="#" title="">timeline</a>
+					<li><a href="#" title="" onclick="allMenu(); return false;">전체카테고리</a></li>
+					<li>
+						<a href="#" title="">timeline</a>
 						<ul>
 							<li><a href="time-line.html" title="">timeline</a></li>
 							<li><a href="timeline-friends.html" title="">timeline
@@ -158,8 +151,10 @@
 							<li><a href="groups.html" title="">groups page</a></li>
 							<li><a href="page-likers.html" title="">Likes page</a></li>
 							<li><a href="people-nearby.html" title="">people nearby</a></li>
-						</ul></li>
-					<li><a href="#" title="">account settings</a>
+						</ul>
+					</li>
+					<li>
+						<a href="#" title="">account settings</a>
 						<ul>
 							<li><a href="create-fav-page.html" title="">create fav
 									page</a></li>
@@ -175,8 +170,10 @@
 							<li><a href="inbox.html" title="">Inbox</a></li>
 							<li><a href="notifications.html" title="">notifications
 									page</a></li>
-						</ul></li>
-					<li><a href="#" title="">more pages</a>
+						</ul>
+					</li>
+					<li>
+						<a href="#" title="">more pages</a>
 						<ul>
 							<li><a href="404.html" title="">404 error page</a></li>
 							<li><a href="about.html" title="">about</a></li>
@@ -186,44 +183,107 @@
 							<li><a href="knowledge-base.html" title="">knowledge
 									base</a></li>
 							<li><a href="widgets.html" title="">Widgts</a></li>
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
+				
+				<!-- 전체카테고리 -->
+				<div id="all-menu" class="all-menu">
+					<div class="inner">
+						<dl>
+							<dt>중분류1</dt>
+							<dd><a href="">소분류1</a></dd>
+							<dd><a href="">소분류2</a></dd>
+							<dd><a href="">소분류3</a></dd>
+							<dd><a href="">소분류4</a></dd>
+							<dd><a href="">소분류5</a></dd>
+						</dl>
+						<dl>
+							<dt>중분류2</dt>
+							<dd><a href="">소분류1</a></dd>
+							<dd><a href="">소분류2</a></dd>
+							<dd><a href="">소분류3</a></dd>
+							<dd><a href="">소분류4</a></dd>
+							<dd><a href="">소분류5</a></dd>
+							<dd><a href="">소분류5</a></dd>
+							<dd><a href="">소분류5</a></dd>
+							<dd><a href="">소분류5</a></dd>
+							<dd><a href="">소분류5</a></dd>
+						</dl>
+						<dl>
+							<dt>중분류3</dt>
+							<dd><a href="">소분류1</a></dd>
+							<dd><a href="">소분류2</a></dd>
+							<dd><a href="">소분류3</a></dd>
+							<dd><a href="">소분류4</a></dd>
+							<dd><a href="">소분류5</a></dd>
+						</dl>
+						<dl>
+							<dt>중분류4</dt>
+							<dd><a href="">소분류1</a></dd>
+							<dd><a href="">소분류2</a></dd>
+							<dd><a href="">소분류3</a></dd>
+							<dd><a href="">소분류4</a></dd>
+							<dd><a href="">소분류5</a></dd>
+						</dl>
+						<dl>
+							<dt>중분류5</dt>
+							<dd><a href="">소분류1</a></dd>
+							<dd><a href="">소분류2</a></dd>
+							<dd><a href="">소분류3</a></dd>
+							<dd><a href="">소분류4</a></dd>
+							<dd><a href="">소분류5</a></dd>
+							<dd><a href="">소분류5</a></dd>
+							<dd><a href="">소분류5</a></dd>
+						</dl>
+					</div>
+				</div>
+				<!-- //전체카테고리 -->
+				
 
-				<!-- header의 아이콘 모음 -->
+			</div>
+			<!-- //카테고리 -->
+			
+			<!-- 우측메뉴 -->
+			<div class="right-menu">
 				<ul class="setting-area">
 					<li>
-						<a href="#" title="Home" data-ripple=""> 
-							<i class="ti-search"></i>
-						</a>
-							<div class="searched">
-								<form method="post" class="form-search">
-									<input type="text" placeholder="">
-									<button data-ripple>
-										<i class="ti-search"></i>
-									</button>
-								</form>
-							</div>
+						<div class="box-search">
+							<form method="post" class="form-search">
+								<input type="text" placeholder="">
+								<button data-ripple>
+									<i class="ti-search"></i>
+								</button>
+							</form>
+						</div>
 					</li>
-
+					<!-- 검색창 bak -->
+					<!--
 					<li>
-						<a href="newsfeed.html" title="Home" data-ripple=""> 
-							<i class="ti-home"></i>
-						</a>
+						<a href="#" title="Home" data-ripple=""><i class="ti-search"></i></a>
+						<div class="searched">
+							<form method="post" class="form-search">
+								<input type="text" placeholder="">
+								<button data-ripple>
+									<i class="ti-search"></i>
+								</button>
+							</form>
+						</div>
 					</li>
-						
+					-->
+					<!-- //검색창 bak -->
+					<li><a href="newsfeed.html" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
+					<li><a href="#" title="Messages" data-ripple=""><i class="ti-pencil"></i></a></li>
+					<!--
 					<li>
-						<a href="#" title="Messages" data-ripple="">
-							<i class="ti-pencil"></i>
-						</a>
-					</li>
-						
-					<!-- <li><a href="#" title="Languages" data-ripple=""><i
-							class="fa fa-globe"></i></a>
+						<a href="#" title="Languages" data-ripple=""><i	class="fa fa-globe"></i></a>
 						<div class="dropdowns languages">
 							<a href="#" title=""><i class="ti-check"></i>English</a> <a
 								href="#" title="">Arabic</a> <a href="#" title="">Dutch</a> <a
 								href="#" title="">French</a>
-						</div></li> -->
+						</div>
+					</li>
+					-->
 				</ul>
 				<div class="user-img">
 					<img src="resources/images/resources/admin.jpg" alt="">
@@ -232,7 +292,6 @@
 						<a href="#" title=""><i class="ti-power-off"></i>로그아웃</a>
 					</div>
 				</div>
-
 			</div>
 		</div>
 		<!-- 기존 화면 header 끝 -->

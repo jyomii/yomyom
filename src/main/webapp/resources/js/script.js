@@ -5,7 +5,8 @@ jQuery(document)
 					"use strict";
 
 					// ------- Notifications Dropdowns
-					$('.top-area > .setting-area > li').on(
+					/*
+					$('.topbar .right-menu .setting-area > li').on(
 							"click",
 							function() {
 								$(this).siblings().children('div').removeClass(
@@ -13,19 +14,23 @@ jQuery(document)
 								$(this).children('div').addClass('active');
 								return false;
 							});
+					*/
 					// ------- remove class active on body
-					$("body *").not('.top-area > .setting-area > li').on(
+					/*
+					$("body *").not('.topbar .right-menu .setting-area > li').on(
 							"click",
 							function() {
-								$(".top-area > .setting-area > li > div")
+								$(".topbar .right-menu .setting-area > li > div")
 										.removeClass('active');
 							});
-
+					*/
 					// --- user setting dropdown on topbar
+					/*
 					$('.user-img').on('click', function() {
 						$('.user-setting').toggleClass("active");
 						return false;
 					});
+					*/
 
 					// --- side message box
 					$('.friendz-list > li, .chat-users > li').on('click',
@@ -428,4 +433,12 @@ jQuery(document)
 							});
 
 				});// document ready end
+
+function allMenu() {
+	if ($('#all-menu').css('display') == 'none') {
+		$('#all-menu').show();
+	} else {
+		$('#all-menu').hide();
+	}
+}
 
