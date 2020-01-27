@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace = "group">
+<mapper namespace="group">
 	<!-- 가입한 모임 보기 -->
-	<select id = "userInGroup" resultType = "group">
-		SELECT GROUPKEY, GROUPNAME, GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE, MEMBERCOUNT
-		FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
-									FROM GGROUPMEMBER
-									GROUP BY GROUPKEY
-									HAVING GROUPKEY IN (SELECT GROUPKEY 
-														FROM GGROUPMEMBER
-														WHERE USERKEY = #{USERKEY})) 
+	<select id="userInGroup" resultType="group">
+		SELECT GROUPKEY, GROUPNAME,
+		GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE, MEMBERCOUNT
+		FROM GGROUP NATURAL JOIN ( SELECT GROUPKEY, COUNT(GROUPKEY) AS
+		MEMBERCOUNT
+		FROM GGROUPMEMBER
+		GROUP BY GROUPKEY
+		HAVING GROUPKEY IN (SELECT GROUPKEY
+		FROM GGROUPMEMBER
+		WHERE USERKEY = #{USERKEY}))
 		ORDER BY GROUPDATE DESC
 	</select>
-	
+
 	<!-- 모임의 가입 양식 가져오기 -->
-	<select id = "getJoinSample" resultType = "joinQuest">
-		SELECT * FROM JOINQUEST WHERE GROUPKEY = #{GROUPKEY}
+	<select id="getJoinSample" resultType="joinQuest">
+		SELECT * FROM JOINQUEST
+		WHERE GROUPKEY = #{GROUPKEY}
 	</select>
-	
+
 	<select id="groupinfo" resultType="group" parameterType="int">
 		select *
 		from ggroup where groupkey =#{groupkey}
@@ -92,9 +95,11 @@
 		from post left join calendar
 		using(postkey) left join (select count(*)
 		currentperson,postkey from calendarmember left join
-		(select * from post left join ggroupboard using(boardkey) where
+		(select * from post
+		left join ggroupboard using(boardkey) where
 		boardtype='N')
-		using (postkey) left join calendar using (postkey) group by postkey) using
+		using
+		(postkey) left join calendar using (postkey) group by postkey) using
 		(postkey)
 		where groupkey=1 order by
 		cstartdate) A
@@ -106,23 +111,53 @@
 		join GGROUPMEMBER using(userkey) left join calendarmember a
 		using(userkey) where a.groupkey=#{groupkey} and a.postkey=#{postkey}
 	</select>
-	
-	<insert id="groupcalendarmemberinsert" parameterType="java.util.Map">
-		insert into calendarmember values(#{userkey},#{postkey},#{groupkey})
+
+	<insert id="groupcalendarmemberinsert"
+		parameterType="java.util.Map">
+		insert into calendarmember
+		values(#{userkey},#{postkey},#{groupkey})
 	</insert>
-	
-	<select id="calendarmemberjoinbtn" parameterType="java.util.Map" resultType="calendarmember">
-		select * from calendarmember where groupkey=#{groupkey} and postkey=#{postkey} and userkey=#{userkey} 
+
+	<select id="calendarmemberjoinbtn" parameterType="java.util.Map"
+		resultType="calendarmember">
+		select * from calendarmember where groupkey=#{groupkey} and
+		postkey=#{postkey} and userkey=#{userkey}
 	</select>
-	
-	<delete id="groupcalendarmemberdelete" parameterType="java.util.Map">
-		delete from calendarmember where groupkey=#{groupkey} and postkey=#{postkey} and userkey=#{userkey}
+
+	<delete id="groupcalendarmemberdelete"
+		parameterType="java.util.Map">
+		delete from calendarmember where groupkey=#{groupkey}
+		and postkey=#{postkey} and userkey=#{userkey}
 	</delete>
 	
 	<select id="groupcalendarlist" resultType="calendarlist"
 		parameterType="java.util.Map">
 		select rownum, startdate from
-		(select to_char(cstartdate, 'YYYY-MM-DD HH24:MI') startdate, groupkey, userkey from calendar left join calendarmember using(postkey))
-		where userkey=#{userkey} and startdate like #{date} order by startdate
+		(select to_char(cstartdate,
+		'YYYY-MM-DD HH24:MI') startdate, groupkey, userkey from calendar left
+		join calendarmember using(postkey))
+		where userkey=#{userkey} and
+		startdate like #{date} order by startdate
 	</select>
+
+	<select id="shortschedule" resultType="shortschedule"
+		parameterType="java.util.Map">
+		select * from (select posttitle, to_char(cstartdate, 'YYYY-MM-DD
+		HH24:MI') startdate, location, groupname from (select * from
+		calendarmember left join calendar using(postkey) where userkey=#{userkey}) left
+		join (select * from post left join GGROUP using(groupkey))
+		using(postkey))
+		where startdate like #{date}
+	</select>
+	
+	<select id="shortscheduleselected" resultType="shortschedule"
+		parameterType="java.util.Map">
+		select * from (select posttitle, to_char(cstartdate, 'YYYY-MM-DD
+		HH24:MI') startdate, location, groupname from (select * from
+		calendarmember left join calendar using(postkey) where userkey=#{userkey}) left
+		join (select * from post left join GGROUP using(groupkey))
+		using(postkey))
+		where startdate like #{fulldate}
+	</select>
+
 </mapper>
