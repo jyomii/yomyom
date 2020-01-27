@@ -26,6 +26,7 @@ import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.Post;
+import co.pr.fi.domain.Shortschedule;
 import co.pr.fi.domain.MemberList;
 import co.pr.fi.service.GroupService;
 
@@ -39,10 +40,11 @@ public class GroupController {
 	@GetMapping("/group_main.net")
 	public ModelAndView group_main(ModelAndView mv) {
 		int groupkey = 1;
-		int userkey = 10;
+		int userkey = 1;
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
+		int date = c.get(Calendar.DATE);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.setViewName("groupin_group_main");
 		mv.addObject("groupkey", groupkey);
@@ -72,12 +74,19 @@ public class GroupController {
 		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey,month,year);
 		mv.addObject("groupcalendarlist",groupcalendarlist);
 		mv.addObject("groupcalendarlistCount",groupcalendarlist.size());
+		for(int i = 0; i < groupcalendarlist.size();i++) {
+			if(Integer.parseInt(groupcalendarlist.get(i).getStartdate())==date) {
+				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
+				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
+				mv.addObject("shortschedule", shortschedule);
+			}
+		}
 		return mv;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/group_main_ajax.net")
-	public Object boardListAjaxJ(@RequestParam(value = "postkey") int postkey,
+	public Object ajaxMemberList(@RequestParam(value = "postkey") int postkey,
 			@RequestParam(value = "groupkey") int groupkey) throws Exception {
 		groupservice.calendarmemberlist(postkey, groupkey);
 		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
@@ -88,7 +97,7 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/group_main_ajaxJoin.net")
-	public Object boardListAjaxJoin(@RequestParam(value = "postkey") int postkey,
+	public Object ajaxJoin(@RequestParam(value = "postkey") int postkey,
 			@RequestParam(value = "groupkey") int groupkey, @RequestParam(value = "userkey") int userkey) throws Exception {
 		groupservice.calendarmemberinsert(postkey, groupkey, userkey);
 		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
@@ -100,13 +109,57 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/group_main_ajaxJoinCancel.net")
-	public Object boardListAjaxJoinCancel(@RequestParam(value = "postkey") int postkey,
+	public Object ajaxJoinCancel(@RequestParam(value = "postkey") int postkey,
 			@RequestParam(value = "groupkey") int groupkey, @RequestParam(value = "userkey") int userkey) throws Exception {
 		groupservice.calendarmemberdelete(postkey, groupkey, userkey);
 		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("groupcalendarmemberlist", groupcalendarmemberlist);
 		map.put("currentperson", groupcalendarmemberlist.size());
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/group_main_ajaxCalList.net")
+	public Object ajaxCalList(@RequestParam(value = "userkey") int userkey,
+			@RequestParam(value = "date") String date) throws Exception {
+		String ym = date.replace("년", "");
+		String ym1 = ym.replace("월", "");
+		String ym2 = ym1.replace(" ", "");
+		int year = Integer.parseInt(ym2.substring(0,4));
+		int month = 0;
+		if(ym2.length()==6) {
+			month = Integer.parseInt(ym2.substring(ym2.length()-2,ym2.length()));
+		}else {
+			month = Integer.parseInt(ym2.substring(ym2.length()-1,ym2.length()));
+		}
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey,month,year);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("groupcalendarlist", groupcalendarlist);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/group_main_shortschedule.net")
+	public Object shortSchedule(@RequestParam(value = "userkey") int userkey,
+			@RequestParam(value = "date") String date, @RequestParam(value = "day") String day) throws Exception {
+		String ym = date.replace("년", "");
+		String ym1 = ym.replace("월", "");
+		String ym2 = ym1.replace(" ", "");
+		String year = ym2.substring(0,4)+"-";
+		String month = "";
+		if(ym2.length()==6) {
+			month = ym2.substring(ym2.length()-2,ym2.length())+"-";
+		}else {
+			month = "0"+ym2.substring(ym2.length()-1,ym2.length())+"-";
+		}
+		if(day.length()==1) {
+			day = "0"+day;
+		}
+		String fulldate = year+month+day+"%";
+		List<Shortschedule> shortscheduleSelected = groupservice.shortscheduleSelected(userkey,fulldate);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("shortscheduleSelected", shortscheduleSelected);
 		return map;
 	}
 

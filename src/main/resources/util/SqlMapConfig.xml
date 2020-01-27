@@ -4,48 +4,64 @@
 
 <configuration>
 
-  <settings>            <!-- <settings>이 없으면 만들어줍니다. -->
+	<settings>            <!-- <settings>이 없으면 만들어줍니다. -->
 
-     <setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="jdbcTypeForNull" value="NULL" />
 
-   </settings>
-   
+	</settings>
+
 	<typeAliases>
 		<typeAlias alias="member" type="co.pr.fi.domain.GUsers" />
 		<typeAlias alias="location" type="co.pr.fi.domain.GLocation" />
-		<typeAlias alias="statisticsAge" type="co.pr.fi.domain.StatisticsAge" />
-		<typeAlias alias="statisticsLocation" type="co.pr.fi.domain.StatisticsLocation" />
-		<typeAlias alias="statisticsJoinDate" type="co.pr.fi.domain.StatisticsJoinDate" />
-		<typeAlias alias="statisticsCategory" type="co.pr.fi.domain.StatisticsCategory" />
-		<typeAlias alias="gusercategory" type="co.pr.fi.domain.GUserCategory" />
-		<typeAlias alias="policeResult" type="co.pr.fi.domain.PoliceResult" />
-		<typeAlias alias="gcategoryname" type="co.pr.fi.domain.GCategoryName" />
-		<typeAlias alias="requestcategory" type="co.pr.fi.domain.RequestCategory" />
-		<typeAlias alias="usermessage" type="co.pr.fi.domain.UserMessage" />
-		<typeAlias alias="groupmember" type="co.pr.fi.domain.GGroupMember" />
-		<typeAlias alias="groupBoard" type="co.pr.fi.domain.GGroupBoard" />
-		<typeAlias alias="policeDetail" type="co.pr.fi.domain.PoliceDetail" />
-		
-		<typeAlias alias="dcategory" type="co.pr.fi.domain.GCategory" />
-		<typeAlias alias="scategory" type="co.pr.fi.domain.GCategory2" />
-		
-		<typeAlias alias="group" type="co.pr.fi.domain.GGroup"/>
+		<typeAlias alias="statisticsAge"
+			type="co.pr.fi.domain.StatisticsAge" />
+		<typeAlias alias="statisticsLocation"
+			type="co.pr.fi.domain.StatisticsLocation" />
+		<typeAlias alias="statisticsJoinDate"
+			type="co.pr.fi.domain.StatisticsJoinDate" />
+		<typeAlias alias="statisticsCategory"
+			type="co.pr.fi.domain.StatisticsCategory" />
+		<typeAlias alias="gusercategory"
+			type="co.pr.fi.domain.GUserCategory" />
+		<typeAlias alias="policeResult"
+			type="co.pr.fi.domain.PoliceResult" />
+		<typeAlias alias="gcategoryname"
+			type="co.pr.fi.domain.GCategoryName" />
+		<typeAlias alias="requestcategory"
+			type="co.pr.fi.domain.RequestCategory" />
+		<typeAlias alias="usermessage"
+			type="co.pr.fi.domain.UserMessage" />
+		<typeAlias alias="groupmember"
+			type="co.pr.fi.domain.GGroupMember" />
+		<typeAlias alias="groupBoard"
+			type="co.pr.fi.domain.GGroupBoard" />
+		<typeAlias alias="policeDetail"
+			type="co.pr.fi.domain.PoliceDetail" />
 
-		<typeAlias alias="prboard" type="co.pr.fi.domain.PrBoard"/>
+		<typeAlias alias="dcategory"
+			type="co.pr.fi.domain.GCategory" />
+		<typeAlias alias="scategory"
+			type="co.pr.fi.domain.GCategory2" />
 
-		<typeAlias alias="post" type="co.pr.fi.domain.Post"/>
-		<typeAlias alias = "comment" type = "co.pr.fi.domain.GComment"/>
+		<typeAlias alias="group" type="co.pr.fi.domain.GGroup" />
 
-		<typeAlias alias = "calendarmember" type = "co.pr.fi.domain.CalendarMember"/>
-		<typeAlias alias = "calendarlist" type = "co.pr.fi.domain.CalendarList"/>
-<typeAlias alias="memberlist"
+		<typeAlias alias="prboard" type="co.pr.fi.domain.PrBoard" />
+
+		<typeAlias alias="post" type="co.pr.fi.domain.Post" />
+		<typeAlias alias="comment" type="co.pr.fi.domain.GComment" />
+
+		<typeAlias alias="calendarmember"
+			type="co.pr.fi.domain.CalendarMember" />
+		<typeAlias alias="calendarlist"
+			type="co.pr.fi.domain.CalendarList" />
+		<typeAlias alias="memberlist"
 			type="co.pr.fi.domain.MemberList" />
-
-		
-		<typeAlias alias="memberlist" type="co.pr.fi.domain.MemberList" /> 
-
-		<typeAlias alias = "joinQuest" type = "co.pr.fi.domain.JoinQuest"/>
-		<typeAlias alias = "joinAnswer" type = "co.pr.fi.domain.JoinAnswer"/>
+		<typeAlias alias="joinQuest"
+			type="co.pr.fi.domain.JoinQuest" />
+		<typeAlias alias="joinAnswer"
+			type="co.pr.fi.domain.JoinAnswer" />
+			<typeAlias alias="shortschedule"
+			type="co.pr.fi.domain.Shortschedule" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="sql/message.xml"></mapper>
@@ -56,6 +72,6 @@
 		<mapper resource="sql/category.xml"></mapper>
 		<mapper resource="sql/mypage.xml"></mapper>
 		<mapper resource="sql/prboard.xml"></mapper>
-    	<mapper resource="sql/post.xml"></mapper>
+		<mapper resource="sql/post.xml"></mapper>
 	</mappers>
 </configuration>

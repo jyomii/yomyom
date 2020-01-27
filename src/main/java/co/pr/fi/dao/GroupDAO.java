@@ -14,6 +14,7 @@ import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.Post;
+import co.pr.fi.domain.Shortschedule;
 import co.pr.fi.domain.MemberList;
 
 @Repository
@@ -91,6 +92,12 @@ public class GroupDAO {
 		return sqlSession.selectList("group.groupcalendarlist", map);
 	}
 
-	
+	public List<Shortschedule> shortschedule(Map<String, Object> map) {
+		return sqlSession.selectList("group.shortschedule", map);
+	}
+
+	public List<Shortschedule> shortscheduleselected(Map<String, Object> map) {
+		return sqlSession.selectList("group.shortscheduleselected", map);
+	}
 }
 

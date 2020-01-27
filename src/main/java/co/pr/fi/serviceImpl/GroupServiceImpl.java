@@ -14,6 +14,7 @@ import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.Post;
+import co.pr.fi.domain.Shortschedule;
 import co.pr.fi.service.GroupService;
 import co.pr.fi.domain.MemberList;
 
@@ -157,9 +158,37 @@ public class GroupServiceImpl implements GroupService {
 		List<CalendarList> groupcalendarlist = dao.groupcalendarlist(map);
 		for(int i = 0 ; i<groupcalendarlist.size(); i++) {
 			String d = groupcalendarlist.get(i).getStartdate().substring(8,10);
+			if(d.charAt(0)=='0') {
+				d = d.replace("0","");
+			}
 			groupcalendarlist.get(i).setStartdate(d);
 		}
 		return groupcalendarlist;
+	}
+
+
+	@Override
+	public List<Shortschedule> shortschedule(int userkey,int d, int year, int month) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userkey", userkey);
+		String day = d+"";
+		String m = month+"";
+		if(day.length()==1)
+			day="0"+day;
+		if(m.length()==1)
+			m="0"+m;
+		String date = year+"-"+m+"-"+day+"%"; 
+		map.put("date", date);
+		return dao.shortschedule(map);
+	}
+
+
+	@Override
+	public List<Shortschedule> shortscheduleSelected(int userkey, String fulldate) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userkey", userkey);
+		map.put("fulldate", fulldate);
+		return dao.shortscheduleselected(map);
 	}
 
 

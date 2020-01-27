@@ -196,12 +196,19 @@
 .height-for-white {
 	height: 70px !important;
 }
+
+.calendarBtn{
+cursor:pointer}
+
+#calendar td{
+cursor:pointer
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
 <section>
 	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
-		type="hidden" id="UserKey" value="10">
+		type="hidden" id="UserKey" value="1">
 	<div class="feature-photo">
 		<figure>
 			<img id="groupPageImg"
@@ -801,10 +808,10 @@
 										<table id="calendar" class="calendarTable">
 											<tr>
 												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th><label onclick="prevCalendar()"><i
+												<th id="prevcal"><label><i
 														class="fas fa-angle-left calendarBtn"></i></label></th>
 												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th><label onclick="nextCalendar()"><i
+												<th id="nextcal"><label><i
 														class="fas fa-angle-right calendarBtn"></i></label></th>
 											</tr>
 											<tr>
@@ -820,16 +827,18 @@
 									</div>
 									<div class="scheduleDiv">
 										<hr>
-										<ul class="short-profile scheduleUl">
-											<li><span>17회 동.탁 모임</span>
-												<p>
-													시간: 오후6시<br>장소: 동선탁구장
-												</p></li>
-											<li><span>성북구 친목 송년회</span>
-												<p>
-													시간: 오후10시<br>장소: 술집
-												</p></li>
+										<ul class="short-profile scheduleUl" id="shortschedule">
+											<c:if test="${empty shortschedule}">
 											<li><span>일정 없음</span></li>
+											</c:if>
+											<c:if test="${not empty shortschedule}">
+											<c:forEach var="ss" items="${shortschedule }">
+												<li><span>${ss.posttitle }</span>
+												<p>
+													모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소: ${ss.location }
+												</p></li>
+											</c:forEach>
+											</c:if>
 										</ul>
 									</div>
 
@@ -950,9 +959,29 @@ $(function() {
 	var mycalendarlistcount = $('#gclc').val();
 	for(var i = 1; i<=mycalendarlistcount;i++){
 		var temp = $('#cal'+i).val();
-		console.log(temp)
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
+	
+	$("#calendar").on('click', '#prevcal', function(event) {
+		var userkey = $('#UserKey').val();
+		prevCalendar();
+		var date = $('#tbCalendarYM').text();
+		ajaxcallist(userkey,date);
+		$('#shortschedule').empty();
+		$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		
+    })
+    
+    $("#calendar").on('click', '#nextcal', function(event) {
+    	var userkey = $('#UserKey').val();
+    	nextCalendar();
+    	var date = $('#tbCalendarYM').text();
+    	ajaxcallist(userkey,date);
+    	$('#shortschedule').empty();
+    	$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+    })
+    
+    
 	$(".nearby-contct").on('click', '.gmtljoinbtn', function(event) {
 		var userkey = $('#UserKey').val();
         var postkey = $(this).next().val();
@@ -978,6 +1007,15 @@ $(function() {
         if ($(this).text() != "" || $(this).text().length() > 2) {
             $('td').removeClass('calendarCellSelected');
             $(this).addClass('calendarCellSelected');
+            var userkey = $('#UserKey').val(); 
+            var date = $('#tbCalendarYM').text();
+            var day = $(this).text();
+            if($(this).hasClass('calendarCellMy')){
+            	ajaxcal(userkey,date,day);
+            }else{
+            	$('#shortschedule').empty();
+            	$('#shortschedule').append('<li><span>일정이 없습니다</span></li>');
+            }
         }
     })
     
@@ -1507,6 +1545,53 @@ $(function() {
                         output += "<i class='__cf_email__'>모임장</i></div></li>";
                     })
                 $("#" + empty).append(output);
+            },
+            error: function() {
+                console.log('에러')
+            }
+        }) // ajax
+    } // function ajax end
+    function ajaxcallist(userkey,date) {
+        output = "";
+        var data = "userkey=" + userkey + "&date=" + date;
+        $.ajax({
+            type: "post",
+            url: "group_main_ajaxCalList.net",
+            data: data,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+                $(data.groupcalendarlist).each(
+                    function(index, item) {
+                       if(!$('#day'+item.startdate).parent().hasClass('calendarCellMy')){
+                    		$('#day'+item.startdate).parent().addClass('calendarCellMy');
+                       }
+                    })
+
+            },
+            error: function() {
+                console.log('에러')
+            }
+        }) // ajax
+    } // function ajax end
+    function ajaxcal(userkey,date,day) {
+        output = "";
+        var data = "userkey=" + userkey + "&date=" + date + "&day=" + day;
+        $.ajax({
+            type: "post",
+            url: "group_main_shortschedule.net",
+            data: data,
+            dataType: "json",
+            cache: false,
+            success: function(data) {
+            	$('#shortschedule').empty();
+                output = "";
+            	$(data.shortscheduleSelected).each(
+                        function(index, item) {
+                        	output += "<li><span>"+item.posttitle+"</span>";
+                        	output += "<p>모임명: "+item.groupname +"<br>시간: "+item.startdate+"<br>장소:"+item.location+"</p></li>";
+                        })
+                        $('#shortschedule').append(output);
             },
             error: function() {
                 console.log('에러')
