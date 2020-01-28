@@ -528,7 +528,6 @@ ALTER TABLE postlike
 
 
 
-
 CREATE TABLE maps
 (
     mapkey    NUMBER         NOT NULL, 
@@ -537,8 +536,12 @@ CREATE TABLE maps
     lng         NUMBER(5,20)    NOT NULL, 
     mapoption  CHAR(1)   		NOT NULL, 
     mapseq    NUMBER         NOT NULL, 
+    maplevel  number 		 null,
+    maplat         NUMBER(5,20)     NULL, 
+    maplng         NUMBER(5,20)     NULL, 
     CONSTRAINT MAPS_PK PRIMARY KEY (mapkey)
 );
+
 
 
 ALTER TABLE maps
