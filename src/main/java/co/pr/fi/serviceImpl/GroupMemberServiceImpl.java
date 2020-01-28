@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import co.pr.fi.dao.GroupMemberDAO;
 import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GGroupMember;
+import co.pr.fi.domain.JoinAnswer;
 import co.pr.fi.domain.JoinQuest;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupMemberService;
@@ -37,5 +39,24 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 	@Override
 	public List<JoinQuest> getJoinSample(int groupKey) {
 		return dao.getJoinSample(groupKey);
+	}
+
+	@Override
+	public int joinGroup(GGroupMember mem) {
+		return dao.joinGroup(mem);
+	}
+
+	@Override
+	public int setJoinSample(JoinAnswer answer) {
+		return dao.setJoinSample(answer);
+	}
+
+	@Override
+	public int nickCheck(Map<String, String> check) {
+		Map<Object, String> map = dao.nickCheck(check);
+		if (map != null) {
+			return 1;
+		}
+		return 0;
 	}
 }

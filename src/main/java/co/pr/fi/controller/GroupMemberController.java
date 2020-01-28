@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.pr.fi.domain.GGroup;
@@ -46,8 +49,8 @@ public class GroupMemberController {
 	public ModelAndView signGroup (ModelAndView mv) {
 		System.out.println("모임 가입 페이지 이동");
 		// 모임의 가입 양식을 가져온다.
-		int groupKey = 1;
-		int userKey = 1;
+		int groupKey = 3;
+		int userKey = 7;
 		
 		List<JoinQuest> list = groupMemberService.getJoinSample(groupKey);
 		System.out.println("###################" + list.get(0).getQuest3());
@@ -60,22 +63,73 @@ public class GroupMemberController {
 		mv.addObject("groupKey", groupKey);
 		mv.addObject("userKey", userKey);
 		mv.setViewName("G_signup");
+		
+		/* ########### 모임키, 유저키 받아서 이미 현재 모임에 유저가 가입한 경우엔 이미 가입한 모임이라 띄우고 다른 데로 이동 ########## */
 		return mv;
 	}
 	
 	// 모임 가입하기
 	@PostMapping("/joinGroupAction")
-	public String joinGroupAction(GGroupMember mem, JoinAnswer answer, int groupKey, int userKey) {
+	public String joinGroupAction(GGroupMember mem, JoinAnswer answer) throws IOException {
+		String filePath = "C:/groupin";	// 파일 저장 경로
 		
-		String filePath = "C:/groupin"; // 파일 저장 경로, 설정파일로 따로 관리한다.
-		File dir = new File(filePath); 	// 파일 저장 경로 확인, 없으면 만든다.
-		if (!dir.exists()) {
+		File dir = new File(filePath);	// 파일 저장 경로 확인
+		if (!dir.exists()) {	// 존재하지 않을 시 폴더 생성
 			dir.mkdirs();
 		}
 		
-		// 이미지 갖고오는 거 하기 ################ 
-		// int result = groupMemberService.joinGroup(groupKey, userKey, mem);
-		return "";
+		MultipartFile uploadfile = mem.getUploadfile();
+		
+		if (!uploadfile.isEmpty()) {	// 유저가 프사 등록을 했을 때
+			String fileName = uploadfile.getOriginalFilename();	// 유저가 올린 파일의 찐 이름 가져온다.
+			mem.setProfileOrigin(fileName);
+			
+			// 새로운 폴더 이름 : 오늘 년-월-일
+			Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR); // 오늘 년도 구한다.
+			int month = c.get(Calendar.MONTH) + 1; // 오늘 월 구한다.
+			int date = c.get(Calendar.DATE); // 오늘 일 구한다.
+			
+			// 이클립스 관리 경로
+			String saveFolder = filePath + "/";								// C:/groupin/
+			String homedir = saveFolder + year + "-" + month + "-" + date;	// C:/groupin/2020-01-27
+			
+			File path1 = new File(homedir);
+			if (!(path1.exists())) {
+				path1.mkdir();		// 새로운 폴더 생성
+			}
+
+			// 난수를 구한다.
+			Random r = new Random();
+			int random = r.nextInt(100000000);
+
+			/**** 확장자 구하기 시작 ****/
+			int index = fileName.lastIndexOf(".");
+
+			String fileExtension = fileName.substring(index + 1);
+			
+			// 새로운 파일명
+			String refileName = "group" + year + month + date + random + "." + fileExtension;
+
+			// 오라클 디비에 저장될 파일명
+			String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;
+			
+			// transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장한다.
+			uploadfile.transferTo(new File(saveFolder + fileDBName));
+
+			// 바뀐 파일명으로 저장
+			mem.setProfileFile(fileDBName);
+		} // if end
+		
+		// 추가해야댐 @@@@@@@@@@@@@@@@@@@@@@@
+		
+		// 가입한 회원의 기본 정보
+		int result = groupMemberService.joinGroup(mem);
+		
+		// 가입한 회원의 가입양식 작성 리스트 
+		int result2 = groupMemberService.setJoinSample(answer);
+		
+		return "groupin_group_main";
 	}
 	
 	// 모임 추천 페이지 이동
@@ -153,5 +207,18 @@ public class GroupMemberController {
 			break;
 		}
 		return result;
+	}
+	
+	// 닉네임 중복체크 -- ajax
+	@ResponseBody
+	@PostMapping("/groupNickCheck")
+	public String nickCheck (String nickname, String groupKey) {
+		System.out.println("### 닉네임 체크 ### " + nickname);
+		
+		Map<String, String> check = new HashMap<String, String>();
+		check.put("nickname", nickname);
+		check.put("groupKey", groupKey);
+		int result = groupMemberService.nickCheck(check);
+		return Integer.toString(result);
 	}
 }

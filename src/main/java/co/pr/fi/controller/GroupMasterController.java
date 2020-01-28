@@ -66,7 +66,7 @@ public class GroupMasterController {
 					group.setGroupIdOrigin(fileName); // 대표사진 저장
 				else
 					group.setGroupCOrigin(fileName); // 커버사진 저장
-
+				
 				// 새로운 폴더 이름 : 오늘 년, 월, 일
 				Calendar c = Calendar.getInstance();
 				int year = c.get(Calendar.YEAR);
@@ -108,7 +108,7 @@ public class GroupMasterController {
 				String fileExtension = fileName.substring(index + 1); // 확장자만 따로 뻄
 				System.out.println("fileExtension = " + fileExtension);
 				/* 확장자 구하기 끝 */
-
+					
 				// 새로운 파일명
 				String refileName = "group" + year + month + date + random + "." + fileExtension;
 

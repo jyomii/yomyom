@@ -48,25 +48,70 @@
 	<script>
 		$(function () {
 			$('#nickname').keyup(function(){
-				var reg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2, 10}$/;
+				// 형식에 맞든 안 맞든 첫 메시지가 계속 뜨기 때문에 keyup 이벤트 발생할 때마다 메시지 비운다.
+				$('.nick-status').empty();	
 				
-				if (reg.test($(this).val())) {
+				var reg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2,10}$/;
+				var nick = $('#nickname').val();
+				if (reg.test(nick)) {	// 정규표현식에 맞을 때 
+					console.log('### keyup 테스트 ### ' + nick);
 					$.ajax({
 						type : "POST",
 						url : "groupNickCheck",
-						data : {},
+						data : {nickname : nick, groupKey : $('input[name=groupKey]').val()},
 						cache : false,
 						success : function (data) {
+							console.log('data = ' + data + ', isNaN(data) = ' + isNaN(data));
 							if (data == 1) {
-								var tag = '<span class = "nick-status" style = "color : red">이미 존재하는 닉네임입니다.</span>';
+								$('.nick-status').css('color', 'red').text('이미 존재하는 닉네임입니다.');
+							} else {
+								$('.nick-status').css('color', 'blue').text('사용 가능한 닉네임입니다.');
 							}
-							var tag = '<span class = "nick-status" style = "color : blue">사용가능한 닉네임입니다.</span>';
-							$('.form-group.half').append(tag);
+						},
+						error : function(request, status, error) {
+							console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
 						}
-					})
+					}); // ajax end
+				} else {
+					if ($(this).val().length == 1) {
+						$('.nick-status').css('color', 'lightgray').text('한글, 영어, 숫자로 2~10글자만 작성해주세요.');
+					} else if ($(this).val().length == 11) {
+						var input = '';
+						input = $(this).val().substr(0, $(this).val().length-1);
+						console.log('input = ' + input);
+						$(this).val(input);
+						$('.nick-status').css('color', 'lightgray').text('한글, 영어, 숫자로 2~10글자만 작성해주세요.');
+					}
 				}
-			});
-		});
+			}); // keyup end
+			
+			$('#uploadfile').on('change', view);
+			
+			function view (e) {
+				// 선택한 그림의 File 객체를 취득
+				var file = e.target.files[0]; // File 객체 리스트에서 첫 번째 File 객체를 가져온다.
+				
+				// file.type : 파일의 형식 (MIME 타입 - 예) text/html)
+				if (!file.type.match('image.*')) {	// 파일 타입이 image인지 확인한다.
+					alert('확장자는 이미지 확장자만 가능합니다.');
+					return;
+				}
+
+				// 파일을 읽기 위한 객체 생성
+				var reader = new FileReader();
+				
+				// DataURL 형식으로 파일을 읽어온다.
+				// 읽어온 결과는 reader 객체의 result 속성에 저장된다.
+				reader.readAsDataURL(file);
+				
+				// 읽기에 성공했을 때 실행되는 이벤트 핸들러
+				reader.onload = function(e) {
+					// result : 읽기 결과가 저장된다.
+					// reader.result 또는 e.target.result
+					$('#upImg').attr('src', e.target.result);
+				} // reader.onload end
+			}; // view end
+		});	// function end
 	</script>
 </head>
 <body>
@@ -616,15 +661,16 @@
 											<!-- 프사 -->
 											<div class = "profile-img">
 												<label>
-													<input type = "file" name = "profileFile" accept = "image/gif, image/jpeg, image/png" style = "display : none">
-													<img src = "resources/images/default.png" alt = "default" class = "avatar">
+													<input type = "file" id = "uploadfile" name = "uploadfile" accept = "image/gif, image/jpeg, image/png" style = "display : none">
+													<img src = "resources/images/default.png" id = "upImg" alt = "default" class = "avatar">
 												</label>
 											</div>
 											<!-- 반쪽짜리 -->
 											<!-- 닉네임 -->
-											<div class="form-group half">	
+											<div class="form-group half">
 											  <input type = "text" id = "nickname" name = "groupNickname" required = "required"/>
 											  <label class="control-label" for="nickname">닉네임</label><i class="mtrl-select"></i>
+											  <span class = "nick-status"></span>
 											</div>
 											<!-- 효율적으로 코드 좀 짜보쟈 -->
 											<c:if test = "${quest1 ne null}">
