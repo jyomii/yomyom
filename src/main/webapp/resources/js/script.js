@@ -25,12 +25,12 @@ jQuery(document)
 							});
 					*/
 					// --- user setting dropdown on topbar
-					/*
+					
 					$('.user-img').on('click', function() {
 						$('.user-setting').toggleClass("active");
 						return false;
 					});
-					*/
+					
 
 					// --- side message box
 					$('.friendz-list > li, .chat-users > li').on('click',
@@ -434,11 +434,5 @@ jQuery(document)
 
 				});// document ready end
 
-function allMenu() {
-	if ($('#all-menu').css('display') == 'none') {
-		$('#all-menu').show();
-	} else {
-		$('#all-menu').hide();
-	}
-}
+
 
