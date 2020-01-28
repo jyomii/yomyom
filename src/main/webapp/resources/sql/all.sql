@@ -527,10 +527,9 @@ ALTER TABLE postlike
 
 
 
-
 CREATE TABLE maps
 (
- 
+
     postkey    NUMBER         NOT NULL, 
     lat         NUMBER(5,20)    NOT NULL, 
     lng         NUMBER(5,20)    NOT NULL, 
@@ -538,7 +537,7 @@ CREATE TABLE maps
     mapseq    NUMBER         NOT NULL, 
     maplevel  number 		 null,
     maplat         NUMBER(5,20)     NULL, 
-    maplng         NUMBER(5,20)     NULL, 
+    maplng         NUMBER(5,20)     NULL
  
 );
 
@@ -547,7 +546,6 @@ CREATE TABLE maps
 ALTER TABLE maps
     ADD CONSTRAINT FK_maps_post_key_post_post_key FOREIGN KEY (postkey)
         REFERENCES post (postkey);
-        
                                                  
                                                  
         
