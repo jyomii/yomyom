@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Drawing Library에서 데이터 얻기</title>
+<title>지도 첨부 예제</title>
 <style>
 #menu_wrap {
 	display: none; position : absolute;
@@ -60,7 +60,8 @@
 
 #drawingMap {
 	width: 100%;
-	height: 500px;
+	height: 100vh;
+	
 }
 </style>
 </head>
@@ -72,6 +73,7 @@
 			<button onclick="selectPlace()" style="float: right;">장소 검색</button>
 			<button onclick="selectOverlay('MARKER')" style="float: right;">마커</button>
 			<button onclick="selectOverlay('POLYLINE')" style="float: right;">선</button>
+			<button onclick="sendToParent()" style="float: right;">저장</button>
 
 		</div>
 
@@ -102,11 +104,14 @@
 
 		// 검색된 마커를 담을 배열입니다
 		var search_markers = [];
+		
+		//현재 지도의 레벨, 중심 좌표
+		var level = 3, latlng = new kakao.maps.LatLng(33.450701, 126.570667);
 
 		// Drawing Manager로 도형을 그릴 지도 div
 		var drawingMapContainer = document.getElementById('drawingMap'), drawingMap = {
-			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			level : 3
+			center : this.latlng, // 지도의 중심좌표
+			level : this.level
 		// 지도의 확대 레벨
 		};
 
@@ -465,6 +470,35 @@
 
 			return path;
 		}
-	</script>
+		
+		
+		
+	
+		
+		// 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+		kakao.maps.event.addListener(drawingMap, 'center_changed', function() {
+
+		    // 지도의  레벨을 얻어옵니다
+		    level = drawingMap.getLevel();
+
+		    // 지도의 중심좌표를 얻어옵니다 
+		    latlng = drawingMap.getCenter(); 
+
+		});
+		
+
+      function sendToParent(){
+    	  
+    	// Drawing Manager에서 그려진 데이터 정보를 가져옵니다 
+    	var data = manager.getData();
+    	//부모 페이지에 넘겨줍니다.
+       	window.opener.getReturnValue(data, level, latlng);
+
+    
+       window.close();
+      }
+    </script>
+  
+	
 </body>
 </html>

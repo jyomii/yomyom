@@ -16,7 +16,7 @@ public class MainHeaderController {
 	//메인페이지로 이동하는 mapping
 	@RequestMapping(value="/main2")
 	public String main() {
-		return "mainpage/main2";
+		return "uploadMap";
 	}
 	
 	//메인페이지로 이동하는 mapping
