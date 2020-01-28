@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GGroupMember;
+import co.pr.fi.domain.JoinAnswer;
 import co.pr.fi.domain.JoinQuest;
 import co.pr.fi.domain.Post;
 
@@ -37,5 +39,20 @@ public class GroupMemberDAO {
 	// 모임의 가입 양식 가져오기
 	public List<JoinQuest> getJoinSample(int groupKey) {
 		return sqlSession.selectList("group.getJoinSample", groupKey);
+	}
+	
+	// 회원의 모임 가입
+	public int joinGroup(GGroupMember mem) {
+		return sqlSession.insert("group.joinGroup", mem);
+	}
+	
+	// 회원이 작성한 가입양식 
+	public int setJoinSample(JoinAnswer answer) {
+		return sqlSession.insert("group.setJoinSample", answer);
+	}
+	
+	// 닉네임 중복체크
+	public Map<Object, String> nickCheck(Map<String, String> check) {
+		return sqlSession.selectOne("group.nickCheck", check);
 	}
 }

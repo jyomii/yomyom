@@ -1066,7 +1066,7 @@ NULL,NULL,2,1,'F','plain64@naver.com',sysdate,'Y','N',0,null,0);
 
 -- ### 기본 조회 ###
 -- 모임에 속해있는 회원 조회
-SELECT * FROM GGROUPMEMBER;
+SELECT * FROM GGROUPMEMBER ORDER BY GROUPKEY, USERKEY;
 
 -- 모임 조회
 SELECT * FROM GGROUP;
@@ -1082,6 +1082,12 @@ SELECT * FROM GUSERS;
 
 -- 좋아요 조회
 SELECT * FROM POSTLIKE;
+
+-- 가입 양식 조회
+SELECT * FROM JOINQUEST;
+
+-- 가입 양식 입력 조회
+SELECT * FROM JOINANSWER;
 -- #############
 
 SELECT COUNT(USERKEY) FROM GGROUPMEMBER WHERE GROUPKEY = 3;  
@@ -1352,3 +1358,12 @@ QUESTKEY	GROUPKEY	USERKEY		QUEST1		QUEST2		QUSET3		QUEST4		INTRODUCE
 	1			3			2		"어디사냐"		"왜 사냐"		"잘 사냐"		"살만 하냐"		"자기소개를 해주세요"
 	1			3			1		"옵치주캐?"	"난장판 좋냐"	"힐딜탱?"		"경쟁/빠대"	"자기소개를 해주세요"
 ---------------------------------------------------------------------------------------------------
+
+SELECT * FROM GGROUPMEMBER;
+
+SELECT NVL(GROUPNICKNAME, -1)
+		FROM GGROUPMEMBER
+		WHERE GROUPNICKNAME = '하마';
+		
+SELECT * FROM GGROUPMEMBER;
+SELECT * FROM GUSERS;

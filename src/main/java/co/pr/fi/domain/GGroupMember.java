@@ -1,5 +1,7 @@
 package co.pr.fi.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 //모임참여자 
 public class GGroupMember {
 
@@ -15,12 +17,13 @@ public class GGroupMember {
  // 유저등급 
  private int userGrade; //일반: 0 // 모임장: 1 // 모임가입예정 : -1
  
- // 만들어보자,,,,,,
  // 유저 프사
- private String profileFile;
+ private String profileFile = "resources/images/default.png";	// 이미지 선택 안 했을 시 디폴트 이미지
  
  // 유저 프사 원본
- private String profileOrigin;
+ private String profileOrigin = "resources/images/default.png";	// 이미지 선택 안 했을 시 디폴트 이미지
+ 
+ private MultipartFile uploadfile;
  
  public int getGroupKey() {
      return groupKey;
@@ -70,6 +73,14 @@ public void setProfileOrigin(String profileOrigin) {
 	this.profileOrigin = profileOrigin;
 }
 
+public MultipartFile getUploadfile() {
+	return uploadfile;
+}
+
+public void setUploadfile(MultipartFile uploadfile) {
+	this.uploadfile = uploadfile;
+}
+
 // GGroupMember 모델 복사
  public void CopyData(GGroupMember param)
  {
@@ -80,4 +91,5 @@ public void setProfileOrigin(String profileOrigin) {
      this.profileFile = param.getProfileFile();
      this.profileOrigin = param.getProfileOrigin();
  }
+
 }
