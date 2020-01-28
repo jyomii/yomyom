@@ -5,7 +5,8 @@ jQuery(document)
 					"use strict";
 
 					// ------- Notifications Dropdowns
-					$('.top-area > .setting-area > li').on(
+					/*
+					$('.topbar .right-menu .setting-area > li').on(
 							"click",
 							function() {
 								$(this).siblings().children('div').removeClass(
@@ -13,19 +14,23 @@ jQuery(document)
 								$(this).children('div').addClass('active');
 								return false;
 							});
+					*/
 					// ------- remove class active on body
-					$("body *").not('.top-area > .setting-area > li').on(
+					/*
+					$("body *").not('.topbar .right-menu .setting-area > li').on(
 							"click",
 							function() {
-								$(".top-area > .setting-area > li > div")
+								$(".topbar .right-menu .setting-area > li > div")
 										.removeClass('active');
 							});
-
+					*/
 					// --- user setting dropdown on topbar
+					
 					$('.user-img').on('click', function() {
 						$('.user-setting').toggleClass("active");
 						return false;
 					});
+					
 
 					// --- side message box
 					$('.friendz-list > li, .chat-users > li').on('click',
@@ -38,12 +43,10 @@ jQuery(document)
 						return false;
 					});
 
-					// ------ scrollbar plugin
-					if ($.isFunction($.fn.perfectScrollbar)) {
-						$(
-								'.dropdowns, .twiter-feed, .invition, .followers, .chatting-area, .peoples, #people-list, .chat-list > ul, .message-list, .chat-users, .left-menu')
-								.perfectScrollbar();
-					}
+					 //------ scrollbar plugin
+				    if ($.isFunction($.fn.perfectScrollbar)) {
+				        $('.dropdowns, .twiter-feed, .invition, .followers, .chatting-area, .peoples, #people-list, #people-list1, #people-list2, #people-list3, #people-list4, #people-list5, #people-list6, #people-list7, .chat-list > ul, .message-list, .chat-users, .left-menu').perfectScrollbar();
+				    }
 
 					/*--- socials menu scritp ---*/
 					$('.trigger').on("click", function() {
@@ -430,4 +433,6 @@ jQuery(document)
 							});
 
 				});// document ready end
+
+
 

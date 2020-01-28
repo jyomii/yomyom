@@ -17,12 +17,6 @@
 
 <script src="resources/js/main.min.js"></script>
 <script src="resources/js/script.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<!--<div class="se-pre-con"></div>-->
@@ -125,22 +119,17 @@
 
 		<!-- 기존 화면 header 시작 -->
 		<div class="topbar stick">
+			<!-- 로고 -->
 			<div class="logo">
 				<a title="" href="newsfeed.html"> <img
 					src="resources/images/logo.png" alt=""></a>
 			</div>
+			<!-- //로고 -->
 
+			<!-- 카테고리 -->
 			<div class="top-area">
 				<ul class="main-menu">
-					<li><a href="#" title="">카테고리</a>
-						<ul>
-							<li><a href="index-2.html" title="">Home Social</a></li>
-							<li><a href="index2.html" title="">Home Social 2</a></li>
-							<li><a href="index-company.html" title="">Home Company</a></li>
-							<li><a href="landing.html" title="">Login page</a></li>
-							<li><a href="logout.html" title="">Logout Page</a></li>
-							<li><a href="newsfeed.html" title="">news feed</a></li>
-						</ul></li>
+					<li><a href="#" title="" onclick="allMenu(); return false;">전체카테고리</a></li>
 					<li><a href="#" title="">timeline</a>
 						<ul>
 							<li><a href="time-line.html" title="">timeline</a></li>
@@ -189,50 +178,188 @@
 						</ul></li>
 				</ul>
 
-				<!-- header의 아이콘 모음 -->
+				<!-- 전체카테고리 -->
+				<div id="all-menu" class="all-menu">
+					<div class="inner">
+						<dl>
+							<dt>중분류1</dt>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+						</dl>
+						<dl>
+							<dt>중분류2</dt>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+						</dl>
+						<dl>
+							<dt>중분류3</dt>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+						</dl>
+						<dl>
+							<dt>중분류4</dt>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+						</dl>
+						<dl>
+							<dt>중분류5</dt>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<!-- //전체카테고리 -->
+
+
+			</div>
+			<!-- //카테고리 -->
+
+			<!-- 우측메뉴 -->
+			<div class="right-menu">
 				<ul class="setting-area">
 					<li>
-						<a href="#" title="Home" data-ripple=""> 
-							<i class="ti-search"></i>
-						</a>
-							<div class="searched">
-								<form method="post" class="form-search">
-									<input type="text" placeholder="">
-									<button data-ripple>
-										<i class="ti-search"></i>
-									</button>
-								</form>
-							</div>
+						<div class="box-search">
+							<form method="post" class="form-search">
+								<input type="text" placeholder="">
+								<button data-ripple>
+									<i class="ti-search"></i>
+								</button>
+							</form>
+						</div>
 					</li>
-
+					<!-- 검색창 bar -->
+					<!--
 					<li>
-						<a href="newsfeed.html" title="Home" data-ripple=""> 
-							<i class="ti-home"></i>
-						</a>
+						<a href="#" title="Home" data-ripple=""><i class="ti-search"></i></a>
+						<div class="searched">
+							<form method="post" class="form-search">
+								<input type="text" placeholder="">
+								<button data-ripple>
+									<i class="ti-search"></i>
+								</button>
+							</form>
+						</div>
 					</li>
-						
+					-->
+					<!-- //검색창 bar -->
+					<li><a href="newsfeed.html" title="Home" data-ripple=""><i
+							class="ti-home"></i></a></li>
+					<li><a href="#" title="Messages" data-ripple=""><i
+							class="ti-pencil"></i></a></li>
+					<!--
 					<li>
-						<a href="#" title="Messages" data-ripple="">
-							<i class="ti-pencil"></i>
-						</a>
-					</li>
-						
-					<!-- <li><a href="#" title="Languages" data-ripple=""><i
-							class="fa fa-globe"></i></a>
+						<a href="#" title="Languages" data-ripple=""><i	class="fa fa-globe"></i></a>
 						<div class="dropdowns languages">
 							<a href="#" title=""><i class="ti-check"></i>English</a> <a
 								href="#" title="">Arabic</a> <a href="#" title="">Dutch</a> <a
 								href="#" title="">French</a>
-						</div></li> -->
+						</div>
+					</li>
+					-->
 				</ul>
 				<div class="user-img">
 					<img src="resources/images/resources/admin.jpg" alt="">
 					<div class="user-setting">
-						<a href="#" title=""><i class="ti-pencil-alt"></i>정보 수정</a> 
-						<a href="#" title=""><i class="ti-power-off"></i>로그아웃</a>
+						<a href="#" title=""><i class="ti-pencil-alt"></i>정보 수정</a> <a
+							href="#" title=""><i class="ti-power-off"></i>로그아웃</a>
 					</div>
 				</div>
-
 			</div>
 		</div>
 		<!-- 기존 화면 header 끝 -->
+
+		<script>
+			function allMenu() {
+				if ($('#all-menu').css('display') == 'none') {
+					$('#all-menu').show();
+				} else {
+					$('#all-menu').hide();
+				}
+			}
+		</script>
