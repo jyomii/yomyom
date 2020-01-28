@@ -23,12 +23,12 @@ public class GroupBoardController {
 		// ## 가져와야 할 List ##
 		// 유저 프사(profileFile), 유저 닉네임(groupNickname)															-- GGROUPMEMBER
 		// 글제목(POSTTITLE), 글 작성일(POSTDATE), 글내용(POSTCONTENT), 조회수(VIEWCOUNT), 댓글수(REPLYCOUNT), 좋아요수(LIKE)	-- POST
-		// 해당 글에 달린 댓글								-- gcomment
+		// 해당 글에 달린 댓글																							-- GCOMMENT
 		// userkey, postkey, commentkey
 		
 		List<Post> list = new ArrayList<Post>();
 		
-		list = groupBoardService.detailBoard(postkey);	
+		list = groupBoardService.detailBoard(postkey);	// list = 글키값, 글제목, 글내용, 작성일, 글작성자, 댓글수
 		
 		if (list != null) {
 			mv.addObject("list", list);

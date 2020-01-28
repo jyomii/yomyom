@@ -22,6 +22,25 @@
 		WHERE GROUPKEY = #{GROUPKEY}
 	</select>
 
+	<!-- 가입하기 -->
+	<insert id = "joinGroup" parameterType = "groupmember">
+		INSERT INTO GGROUPMEMBER
+		VALUES(#{groupKey}, #{userKey}, #{groupNickname}, -1, #{profileFile}, #{profileOrigin})
+	</insert>
+	
+	<!-- 가입양식 작성 -->
+	<insert id = "setJoinSample" parameterType = "joinAnswer">
+		INSERT INTO JOINANSWER
+		VALUES(#{groupKey}, #{userKey}, #{answer1}, #{answer2}, #{answer3}, #{answer4}, #{answer5}, #{introduce})
+	</insert>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id = "nickCheck" parameterType = "map" resultType = "map">
+		SELECT GROUPNICKNAME
+		FROM GGROUPMEMBER
+		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupKey}
+	</select>
+
 	<select id="groupinfo" resultType="group" parameterType="int">
 		select *
 		from ggroup where groupkey =#{groupkey}

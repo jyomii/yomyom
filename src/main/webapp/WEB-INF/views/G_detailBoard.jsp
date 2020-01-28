@@ -912,7 +912,7 @@
 															<li>
 																<span class="views" data-toggle="tooltip" title="views">
 																	<i class="fa fa-eye"></i>
-																	<ins>${postReadcount}</ins>
+																	<ins>${list.postReadcount}</ins>
 																</span>
 															</li>
 															<li>
