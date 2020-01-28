@@ -529,19 +529,17 @@ ALTER TABLE postlike
 
 
 
-     
--- glocation Table Create SQL
-CREATE TABLE maps
+                             
+ CREATE TABLE maps
 (
-    mapskey          NUMBER           NOT NULL, 
-    postkey          NUMBER           NOT NULL, 
-    lat               NUMBER(5,8)      NOT NULL, 
-    lng               NUMBER(5,8)      NOT NULL, 
-    markername       VARCHAR2(100)    NULL, 
-    markercontent    VARCHAR2(100)    NULL, 
-    mapsseq          NUMBER           NOT NULL, 
-    CONSTRAINT MAPSPK PRIMARY KEY (mapskey)
-);
+    maps_key    NUMBER         NOT NULL, 
+    post_key    NUMBER         NOT NULL, 
+    lat         NUMBER(5,10)    NOT NULL, 
+    lng         NUMBER(5,10)    NOT NULL, 
+    option      CHAR(1)        NOT NULL, 
+    maps_seq    NUMBER         NOT NULL, 
+    CONSTRAINT MAPS_PK PRIMARY KEY (maps_key)
+)
 
 
 
