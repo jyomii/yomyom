@@ -533,8 +533,8 @@ CREATE TABLE maps
 (
     mapkey    NUMBER         NOT NULL, 
     postkey    NUMBER         NOT NULL, 
-    lat         NUMBER(5,8)    NOT NULL, 
-    lng         NUMBER(5,8)    NOT NULL, 
+    lat         NUMBER(5,20)    NOT NULL, 
+    lng         NUMBER(5,20)    NOT NULL, 
     mapoption  CHAR(1)   		NOT NULL, 
     mapseq    NUMBER         NOT NULL, 
     CONSTRAINT MAPS_PK PRIMARY KEY (mapkey)
