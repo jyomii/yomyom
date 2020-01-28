@@ -17,12 +17,6 @@
 
 <script src="resources/js/main.min.js"></script>
 <script src="resources/js/script.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<!--<div class="se-pre-con"></div>-->
@@ -126,15 +120,17 @@
 		<!-- 기존 화면 header 시작 -->
 		<div class="topbar stick">
 			<!-- 로고 -->
-			<div class="logo"><a title="" href="newsfeed.html"> <img src="resources/images/logo.png" alt=""></a></div>
+			<div class="logo">
+				<a title="" href="newsfeed.html"> <img
+					src="resources/images/logo.png" alt=""></a>
+			</div>
 			<!-- //로고 -->
-			
+
 			<!-- 카테고리 -->
 			<div class="top-area">
 				<ul class="main-menu">
 					<li><a href="#" title="" onclick="allMenu(); return false;">전체카테고리</a></li>
-					<li>
-						<a href="#" title="">timeline</a>
+					<li><a href="#" title="">timeline</a>
 						<ul>
 							<li><a href="time-line.html" title="">timeline</a></li>
 							<li><a href="timeline-friends.html" title="">timeline
@@ -151,10 +147,8 @@
 							<li><a href="groups.html" title="">groups page</a></li>
 							<li><a href="page-likers.html" title="">Likes page</a></li>
 							<li><a href="people-nearby.html" title="">people nearby</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="#" title="">account settings</a>
+						</ul></li>
+					<li><a href="#" title="">account settings</a>
 						<ul>
 							<li><a href="create-fav-page.html" title="">create fav
 									page</a></li>
@@ -170,10 +164,8 @@
 							<li><a href="inbox.html" title="">Inbox</a></li>
 							<li><a href="notifications.html" title="">notifications
 									page</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="#" title="">more pages</a>
+						</ul></li>
+					<li><a href="#" title="">more pages</a>
 						<ul>
 							<li><a href="404.html" title="">404 error page</a></li>
 							<li><a href="about.html" title="">about</a></li>
@@ -183,67 +175,131 @@
 							<li><a href="knowledge-base.html" title="">knowledge
 									base</a></li>
 							<li><a href="widgets.html" title="">Widgts</a></li>
-						</ul>
-					</li>
+						</ul></li>
 				</ul>
-				
+
 				<!-- 전체카테고리 -->
 				<div id="all-menu" class="all-menu">
 					<div class="inner">
 						<dl>
 							<dt>중분류1</dt>
-							<dd><a href="">소분류1</a></dd>
-							<dd><a href="">소분류2</a></dd>
-							<dd><a href="">소분류3</a></dd>
-							<dd><a href="">소분류4</a></dd>
-							<dd><a href="">소분류5</a></dd>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
 						</dl>
 						<dl>
 							<dt>중분류2</dt>
-							<dd><a href="">소분류1</a></dd>
-							<dd><a href="">소분류2</a></dd>
-							<dd><a href="">소분류3</a></dd>
-							<dd><a href="">소분류4</a></dd>
-							<dd><a href="">소분류5</a></dd>
-							<dd><a href="">소분류5</a></dd>
-							<dd><a href="">소분류5</a></dd>
-							<dd><a href="">소분류5</a></dd>
-							<dd><a href="">소분류5</a></dd>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
 						</dl>
 						<dl>
 							<dt>중분류3</dt>
-							<dd><a href="">소분류1</a></dd>
-							<dd><a href="">소분류2</a></dd>
-							<dd><a href="">소분류3</a></dd>
-							<dd><a href="">소분류4</a></dd>
-							<dd><a href="">소분류5</a></dd>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
 						</dl>
 						<dl>
 							<dt>중분류4</dt>
-							<dd><a href="">소분류1</a></dd>
-							<dd><a href="">소분류2</a></dd>
-							<dd><a href="">소분류3</a></dd>
-							<dd><a href="">소분류4</a></dd>
-							<dd><a href="">소분류5</a></dd>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
 						</dl>
 						<dl>
 							<dt>중분류5</dt>
-							<dd><a href="">소분류1</a></dd>
-							<dd><a href="">소분류2</a></dd>
-							<dd><a href="">소분류3</a></dd>
-							<dd><a href="">소분류4</a></dd>
-							<dd><a href="">소분류5</a></dd>
-							<dd><a href="">소분류5</a></dd>
-							<dd><a href="">소분류5</a></dd>
+							<dd>
+								<a href="">소분류1</a>
+							</dd>
+							<dd>
+								<a href="">소분류2</a>
+							</dd>
+							<dd>
+								<a href="">소분류3</a>
+							</dd>
+							<dd>
+								<a href="">소분류4</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
+							<dd>
+								<a href="">소분류5</a>
+							</dd>
 						</dl>
 					</div>
 				</div>
 				<!-- //전체카테고리 -->
-				
+
 
 			</div>
 			<!-- //카테고리 -->
-			
+
 			<!-- 우측메뉴 -->
 			<div class="right-menu">
 				<ul class="setting-area">
@@ -257,7 +313,7 @@
 							</form>
 						</div>
 					</li>
-					<!-- 검색창 bak -->
+					<!-- 검색창 bar -->
 					<!--
 					<li>
 						<a href="#" title="Home" data-ripple=""><i class="ti-search"></i></a>
@@ -271,9 +327,11 @@
 						</div>
 					</li>
 					-->
-					<!-- //검색창 bak -->
-					<li><a href="newsfeed.html" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
-					<li><a href="#" title="Messages" data-ripple=""><i class="ti-pencil"></i></a></li>
+					<!-- //검색창 bar -->
+					<li><a href="newsfeed.html" title="Home" data-ripple=""><i
+							class="ti-home"></i></a></li>
+					<li><a href="#" title="Messages" data-ripple=""><i
+							class="ti-pencil"></i></a></li>
 					<!--
 					<li>
 						<a href="#" title="Languages" data-ripple=""><i	class="fa fa-globe"></i></a>
@@ -288,10 +346,20 @@
 				<div class="user-img">
 					<img src="resources/images/resources/admin.jpg" alt="">
 					<div class="user-setting">
-						<a href="#" title=""><i class="ti-pencil-alt"></i>정보 수정</a> 
-						<a href="#" title=""><i class="ti-power-off"></i>로그아웃</a>
+						<a href="#" title=""><i class="ti-pencil-alt"></i>정보 수정</a> <a
+							href="#" title=""><i class="ti-power-off"></i>로그아웃</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- 기존 화면 header 끝 -->
+
+		<script>
+			function allMenu() {
+				if ($('#all-menu').css('display') == 'none') {
+					$('#all-menu').show();
+				} else {
+					$('#all-menu').hide();
+				}
+			}
+		</script>
