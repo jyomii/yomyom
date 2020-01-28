@@ -1,6 +1,6 @@
 package co.pr.fi.dao;
 
-import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,8 @@ public class GroupBoardDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	// 게시글 조회
-	public List<Post> detailBoard(String postkey) {
-		return sqlSession.selectList("post.detailBoard", postkey);
+	public Post detailBoard(Map<String, String> keys) {
+		return sqlSession.selectOne("post.detailBoard", keys);
 	}
 	
 	// 게시글 조회수 증가

@@ -1,50 +1,56 @@
 
 package co.pr.fi.domain;
 
-//紐⑥엫寃뚯떆湲� 
+// 게시글 
 public class Post {
 	private int rownum;
-	// 紐⑥엫寃뚯떆湲��궎媛�
+	// 작성글키값
 	private int postKey;
 
-	// �젣紐�
+	// 글 제목
 	private String postTitle;
 
-	// �궡�슜
+	// 글 내용
 	private String postContent;
 
-	// �옉�꽦�궇吏�
+	// 글 작성일
 	private String postDate;
 
-	// 紐⑥엫�궎媛�
+	// 모임키
 	private int groupKey;
 
-	// �쑀���궎媛�
+	// 유저키
 	private int userKey;
 
-	// �뙎湲��뿀�슜�뿬遺�
+	// 댓글 허용 여부
 	private String postOptionReply;
 
-	// 寃��깋�뿀�슜�뿬遺�
+	// 검색 허용 여부
 	private String postOptionSearch;
 
-	// 紐⑥엫寃뚯떆�뙋�궎媛�
+	// 게시판 키값
 	private int boardKey;
 
-	// 議고쉶�닔
+	// 글 조회수
 	private int postReadcount;
 
-	// �뙎湲��닔
+	// 댓글수
 	private int replyCount;
 	
-	// �뙎湲� �궡�슜
+	// 댓글 내용
 	private String commentContent;
 	
-	// �뙎湲� �옉�꽦�씪
+	// 댓글 작성일
 	private String commentDate;
 	
-	// 醫뗭븘�슂 �닔
+	// 좋아요 수
 	private int postlike;
+	
+	// 작성자 프사
+	private String profileFile;
+	
+	// 작성자 닉네임
+	private String groupNickname;
 	
 	private String cstartdate;
 	private String cenddate;
@@ -229,6 +235,22 @@ public class Post {
 		this.postlike = postlike;
 	}
 
+	public String getProfileFile() {
+		return profileFile;
+	}
+
+	public void setProfileFile(String profileFile) {
+		this.profileFile = profileFile;
+	}
+
+	public String getGroupNickname() {
+		return groupNickname;
+	}
+
+	public void setGroupNickname(String groupNickname) {
+		this.groupNickname = groupNickname;
+	}
+
 	// Post 紐⑤뜽 蹂듭궗
 	public void CopyData(Post param) {
 		this.postKey = param.getPostKey();
@@ -245,6 +267,8 @@ public class Post {
 		this.commentContent = param.getCommentContent();
 		this.commentDate = param.getCommentDate();
 		this.postlike = param.getPostlike();
+		this.groupNickname = param.getGroupNickname();
+		this.profileFile = param.getProfileFile();
 	}
 
 }
