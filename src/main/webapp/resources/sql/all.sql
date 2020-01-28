@@ -531,13 +531,13 @@ CREATE TABLE maps
 (
 
     postkey    NUMBER         NOT NULL, 
-    lat         NUMBER(5,20)    NOT NULL, 
-    lng         NUMBER(5,20)    NOT NULL, 
+    lat         NUMBER(20,15)    NOT NULL, 
+    lng         NUMBER(20,15)    NOT NULL, 
     mapoption  CHAR(1)   		NOT NULL, 
     mapseq    NUMBER         NOT NULL, 
     maplevel  number 		 null,
-    maplat         NUMBER(5,20)     NULL, 
-    maplng         NUMBER(5,20)     NULL
+    maplat         NUMBER(20,15)     NULL, 
+    maplng         NUMBER(20,15)     NULL
  
 );
 
