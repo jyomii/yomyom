@@ -10,8 +10,6 @@ import co.pr.fi.domain.Post;
 public interface GroupBoardService {
 	Post detailBoard (Map<String, String> keys);
   
-	List<Post> detailBoard (String postkey);
-
 	int uploadMap(List<Maps> list);
 
 	List<Maps> getMap(int postkey);
