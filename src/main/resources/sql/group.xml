@@ -70,14 +70,13 @@
 
 	<select id="groupdcategory" resultType="String"
 		parameterType="int">
-		select dcategoryname from gcategory where dcategorykey
-		=#{categorykey}
+		select dcategoryname from gcategory where dcategorykey=(select dcategorykey from gcategory2 where scategorykey=(select categorykey from ggroup where groupkey=#{groupkey}))
+		
 	</select>
 
 	<select id="groupscategory" resultType="String"
 		parameterType="int">
-		select scategoryname from gcategory2 where dcategorykey
-		=#{categorykey}
+		select scategoryname from gcategory2 where scategorykey=(select categorykey from ggroup where groupkey=#{groupkey})
 	</select>
 
 	<select id="groupmembers" resultType="int" parameterType="int">
@@ -179,4 +178,26 @@
 		where startdate like #{fulldate}
 	</select>
 
+	<update id="groupboardupdate" parameterType="java.util.Map">
+		update ggroupboard set
+		boardname=#{boardname}, boardseq=#{seq} where
+		boardkey=#{boardkey}
+	</update>
+	<insert id="groupboardinsert"
+		parameterType="java.util.Map">
+		insert into ggroupboard
+		values((select nvl(max(boardkey),0)+1 from ggroupboard),#{groupkey},#{boardname},'Y',#{seq})
+	</insert>
+	
+	<delete id="groupboarddelete" parameterType="int">
+		delete from ggroupboard where boardkey=#{boardkey}
+	</delete>
+	
+	<select id="userkey" resultType="member" parameterType="String">
+		select userKey from gusers where userId=#{id}
+	</select>
+	
+	<select id="groupmasterkey" resultType="int" parameterType="int">
+		select userKey from ggroupmember where usergrade=1 and groupkey=#{groupkey}
+	</select>
 </mapper>

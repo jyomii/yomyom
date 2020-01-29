@@ -66,6 +66,8 @@ DROP TABLE gage;
 DROP SEQUENCE glocationSEQ;
 DROP TABLE glocation;
 
+DROP TABLE JOINQUEST;
+DROP TABLE JOINANSWER;
 
 
 CREATE TABLE glocation
@@ -160,6 +162,8 @@ CREATE TABLE gusers
     logintype 			number 			 NOT NULL,
     CONSTRAINT GUSERSPK PRIMARY KEY (userkey)
 );
+
+
 
 
 
@@ -440,7 +444,8 @@ CREATE TABLE usermessage
     CONSTRAINT USERMESSAGEPK PRIMARY KEY (mgkey)
 );
 
-
+ALTER TABLE usermessage ADD(checkDate date);
+						 
         
 CREATE SEQUENCE usermessageSEQ
 START WITH 1
@@ -527,29 +532,27 @@ ALTER TABLE postlike
 
 
 
-
-
-     
--- glocation Table Create SQL
 CREATE TABLE maps
 (
-    mapskey          NUMBER           NOT NULL, 
-    postkey          NUMBER           NOT NULL, 
-    lat               NUMBER(5,8)      NOT NULL, 
-    lng               NUMBER(5,8)      NOT NULL, 
-    markername       VARCHAR2(100)    NULL, 
-    markercontent    VARCHAR2(100)    NULL, 
-    mapsseq          NUMBER           NOT NULL, 
-    CONSTRAINT MAPSPK PRIMARY KEY (mapskey)
+
+    postkey    NUMBER         NOT NULL, 
+    lat         NUMBER(20,15)    NOT NULL, 
+    lng         NUMBER(20,15)    NOT NULL, 
+    mapoption  CHAR(1)   		NOT NULL, 
+    mapseq    NUMBER         NOT NULL, 
+    maplevel  number 		 null,
+    maplat         NUMBER(20,15)     NULL, 
+    maplng         NUMBER(20,15)     NULL
+ 
 );
 
 
 
 ALTER TABLE maps
-    ADD CONSTRAINT FKmapspostkeypostpostkey FOREIGN KEY (postkey)
-        REFERENCES post (postkey) on delete cascade;
-        
-        
+    ADD CONSTRAINT FK_maps_post_key_post_post_key FOREIGN KEY (postkey)
+        REFERENCES post (postkey);
+                                                 
+                                                 
         
 -- glocation Table Create SQL
 CREATE TABLE ladder
@@ -708,8 +711,36 @@ ALTER TABLE userlikegroup
 ALTER TABLE userlikegroup
     ADD CONSTRAINT FKuserlikegroupgroupkeyg FOREIGN KEY (groupkey)
         REFERENCES ggroup (groupkey) on delete cascade;
-                                                 
-                   
+                  
+        
+CREATE TABLE JOINQUEST(
+	QUESTKEY	NUMBER			NOT NULL,
+	GROUPKEY	NUMBER			NOT NULL,
+	QUEST1		VARCHAR2(100)	NULL,
+	QUEST2		VARCHAR2(100)	NULL,
+	QUEST3		VARCHAR2(100)	NULL,
+	QUEST4		VARCHAR2(100)	NULL,
+	QUEST5		VARCHAR2(100)	NULL,
+	INTRODUCE	VARCHAR2(100)	NULL,
+	CONSTRAINT JOINQUESTPK PRIMARY KEY (GROUPKEY)
+);  
+
+CREATE TABLE JOINANSWER(
+	GROUPKEY	NUMBER			NOT NULL,
+	USERKEY		NUMBER			NOT NULL,
+	ANSWER1		VARCHAR2(500),
+	ANSWER2		VARCHAR2(500),
+	ANSWER3		VARCHAR2(500),
+	ANSWER4		VARCHAR2(500),
+	ANSWER5		VARCHAR2(500),
+	INTRODUCE	VARCHAR2(800),
+	CONSTRAINT JOINANSWERPK PRIMARY KEY (GROUPKEY, USERKEY)
+);
+
+-- 모임이 사라지는 경우 / 질문을 받았다가 아예 질문을 지워버리는 경우가 있을 수도 있다.
+ALTER TABLE JOINANSWER
+ADD CONSTRAINT FKJOINANSWERTOQUESTKEY FOREIGN KEY (GROUPKEY)
+REFERENCES JOINQUEST (GROUPKEY) ON DELETE CASCADE;
         
  insert into glocation values(0,'		','		');
 insert into glocation values(glocationSEQ.nextval,'	서울특별시	','		');

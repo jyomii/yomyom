@@ -6,8 +6,11 @@
 <insert id="sendMessage" parameterType="usermessage">
 
 insert into usermessage values(nvl((select max(mgkey) from
-		usermessage)+1,0), #{mgSort}, #{mgContent}, sysdate, #{mgReceive},#{mgSend})
+		usermessage)+1,0), #{mgSort}, #{mgContent}, sysdate, #{mgReceive},#{mgSend}, null)
 </insert>
 
 
+<select id="getMyMessage" parameterType="int" resultType="usermessage">
+select * from usermessage where mgReceive = #{key} or (mgsend = 0 and mgsort = 'N') order by mgDate desc
+ </select>
 </mapper>

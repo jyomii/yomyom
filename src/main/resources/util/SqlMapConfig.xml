@@ -42,7 +42,7 @@
 			type="co.pr.fi.domain.GCategory" />
 		<typeAlias alias="scategory"
 			type="co.pr.fi.domain.GCategory2" />
-
+		<typeAlias alias="maps" type="co.pr.fi.domain.Maps" />
 		<typeAlias alias="group" type="co.pr.fi.domain.GGroup" />
 
 		<typeAlias alias="prboard" type="co.pr.fi.domain.PrBoard" />
@@ -73,5 +73,6 @@
 		<mapper resource="sql/mypage.xml"></mapper>
 		<mapper resource="sql/prboard.xml"></mapper>
 		<mapper resource="sql/post.xml"></mapper>
+		<mapper resource="sql/search.xml"></mapper>
 	</mappers>
 </configuration>

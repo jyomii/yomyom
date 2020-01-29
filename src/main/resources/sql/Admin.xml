@@ -4,36 +4,40 @@
 <mapper namespace="Admin">
 
 
-
+	<!-- 그룹 정보  -->
 	<select id="getGroup" parameterType="int" resultType="group">
 	select * from ggroup where groupkey = #{key}
 	</select>
 	
-	
+	<!-- 휴지통에 파일 넣기 -->
 	<insert id="insert_deleteFile" parameterType="String">
 	insert into delete_File values(#{before_file})
 	</insert>
 	
+	<!-- 휴지통 목록 가져오기 -->
 	<select id="selectDeletelist" resultType="String">
 	select * from delete_File
 	</select>
 	
+	<!-- 전체 삭제 -->
 	<delete id="deleteList">
 	delete from delete_File
 	</delete>
 	
 	
-	
+<!-- 정지 회원 중에서 풀 회원 있는지 조회 -->	
 <update id="stopCancelUsers">
 update gusers set userstatuscode = null, userstatus = 0 
 where userstatus = 3 and ROUND((sysdate-userstatuscode)*24*60) > 30
 </update>
 
+<!-- 신고 정보 지우기 -->
 <delete id="deletePolice" parameterType="int">
 delete from userpolice where reciveuserKey  = #{userkey}
 </delete>
 
 
+<!-- 신고 정보 목록 -->
 <select id="policeMDetail" parameterType="int" resultType="policeDetail">
   select distinct policeboardsort,policenumber,commentcontent postcontent
    from userpolice, gcomment 
@@ -42,6 +46,8 @@ delete from userpolice where reciveuserKey  = #{userkey}
    and commnetnum in (policenumber)
     
 </select>
+
+<!-- 신고 세부 목록 -->
 <select id="policeBDetail" parameterType="int" resultType="policeDetail">
   select distinct policeboardsort, policenumber,postcontent 
   from userpolice,post 
@@ -49,19 +55,23 @@ delete from userpolice where reciveuserKey  = #{userkey}
   and reciveuserKey = post.userkey and postkey in (policenumber)
 </select>
 
+<!-- 유저 상태 수정 -->
 <update id="setUserStatus" parameterType="map">
 update gusers set userstatus = #{status} where userid = #{id}
 </update>
 
+<!-- 유저 상태가 수정된 날짜 -->
 <update id="setUserStatusDate">
 update gusers set userstatuscode = sysdate where userid = #{id}
 </update>
 
 
-
+<!-- 모임 삭제 -->
 <delete id="negativeGroup">
 delete from ggroup where groupKey = #{groupKey}
 </delete>
+
+<!-- 모임 승인 -->
 <update id="acceptGroup" parameterType="int">
 	update ggroup set groupstatus = 0 where groupKey = #{groupKey}
 </update>
