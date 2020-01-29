@@ -13,6 +13,7 @@ import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
+import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
 import co.pr.fi.domain.Shortschedule;
 import co.pr.fi.service.GroupService;
@@ -52,12 +53,18 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public String groupdcategory(int categorykey) {
+	public String groupdcategory(int categorykey,int groupkey) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("categorykey", categorykey);
+		map.put("groupkey", groupkey);
 		return dao.groupdcategory(categorykey);
 	}
 
 	@Override
-	public String groupscategory(int categorykey) {
+	public String groupscategory(int categorykey,int groupkey) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("categorykey", categorykey);
+		map.put("groupkey", groupkey);
 		return dao.groupscategory(categorykey);
 	}
 
@@ -189,6 +196,45 @@ public class GroupServiceImpl implements GroupService {
 		map.put("userkey", userkey);
 		map.put("fulldate", fulldate);
 		return dao.shortscheduleselected(map);
+	}
+
+
+	@Override
+	public void groupboardupdate(int groupkey, String boardname, int boardkey, int seq) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupkey", groupkey);
+		map.put("boardname", boardname);
+		map.put("boardkey", boardkey);
+		map.put("seq", seq);
+		dao.groupboardupdate(map);
+	}
+
+
+	@Override
+	public void groupboardinsert(int groupkey, String boardname, int seq) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupkey", groupkey);
+		map.put("boardname", boardname);
+		map.put("seq", seq);
+		dao.groupboardinsert(map);
+	}
+
+
+	@Override
+	public void groupboarddelete(int boardkey) {
+		dao.groupboarddelete(boardkey);
+	}
+
+
+	@Override
+	public GUsers userkey(String id) {
+		return dao.userkey(id);
+	}
+
+
+	@Override
+	public int groupmasterkey(int groupkey) {
+		return dao.groupmasterkey(groupkey);
 	}
 
 
