@@ -2,20 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>      
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>   
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
+<jsp:include page = "mainpage/header.jsp"/>
 	<title>모임 회원 상세 정보 페이지 forum.jsp</title>
-    <link rel="icon" href="resources/images/fav.png" type="image/png" sizes="16x16"> 
-
-    <link rel="stylesheet" href="resources/css/main.min.css">
-    <link rel="stylesheet" href="resources/css/style.css">
-    <link rel="stylesheet" href="resources/css/color.css">
-    <link rel="stylesheet" href="resources/css/responsive.css">
 	<!-- 제이쿼리 -->
 	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src = "resources/js/g_mem_detail.js"></script>
@@ -104,8 +92,6 @@
 			width : 23%;
 		}
 	</style>
-</head>
-<body>
 <div class="theme-layout">
 	<section>
 		<div class="gap100">
@@ -246,94 +232,6 @@
 			</div>
 		</div>
 	</section>
-
-	<!-- 원트 웅앵 있어서 지워버림 푸터가 허전한 건 기분탓이 아니라 사실이야 -->
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4">
-					<div class="widget">
-						<div class="foot-logo">
-							<div class="logo">
-								<a href="index-2.html" title=""><img src="resources/images/logo.png" alt=""></a>
-							</div>	
-							<p>
-								The trio took this simple idea and built it into the world’s leading carpooling platform.
-							</p>
-						</div>
-						<ul class="location">
-							<li>
-								<i class="ti-map-alt"></i>
-								<p>33 new montgomery st.750 san francisco, CA USA 94105.</p>
-							</li>
-							<li>
-								<i class="ti-mobile"></i>
-								<p>+1-56-346 345</p>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4">
-					<div class="widget">
-						<div class="widget-title"><h4>follow</h4></div>
-						<ul class="list-style">
-							<li><i class="fa fa-facebook-square"></i> <a href="https://web.facebook.com/shopcircut/" title="">facebook</a></li>
-							<li><i class="fa fa-twitter-square"></i><a href="https://twitter.com/login?lang=en" title="">twitter</a></li>
-							<li><i class="fa fa-instagram"></i><a href="https://www.instagram.com/?hl=en" title="">instagram</a></li>
-							<li><i class="fa fa-google-plus-square"></i> <a href="https://plus.google.com/discover" title="">Google+</a></li>
-							<li><i class="fa fa-pinterest-square"></i> <a href="https://www.pinterest.com/" title="">Pintrest</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4">
-					<div class="widget">
-						<div class="widget-title"><h4>Navigate</h4></div>
-						<ul class="list-style">
-							<li><a href="about.html" title="">about us</a></li>
-							<li><a href="contact.html" title="">contact us</a></li>
-							<li><a href="terms.html" title="">terms & Conditions</a></li>
-							<li><a href="#" title="">RSS syndication</a></li>
-							<li><a href="sitemap.html" title="">Sitemap</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4">
-					<div class="widget">
-						<div class="widget-title"><h4>useful links</h4></div>
-						<ul class="list-style">
-							<li><a href="#" title="">leasing</a></li>
-							<li><a href="#" title="">submit route</a></li>
-							<li><a href="#" title="">how does it work?</a></li>
-							<li><a href="#" title="">agent listings</a></li>
-							<li><a href="#" title="">view All</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4">
-					<div class="widget">
-						<div class="widget-title"><h4>download apps</h4></div>
-						<ul class="colla-apps">
-							<li><a href="https://play.google.com/store?hl=en" title=""><i class="fa fa-android"></i>android</a></li>
-							<li><a href="https://www.apple.com/lae/ios/app-store/" title=""><i class="ti-apple"></i>iPhone</a></li>
-							<li><a href="https://www.microsoft.com/store/apps" title=""><i class="fa fa-windows"></i>Windows</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer><!-- footer -->
-	<div class="bottombar">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<span class="copyright"><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></span>
-					<i><img src="resources/images/credit-cards.png" alt=""></i>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 </div>
-	<script src="resources/js/main.min.js"></script>
-	<script src="resources/js/script.js"></script>
-</body>	
-</html> 
+<jsp:include page="mainpage/footer.jsp" />

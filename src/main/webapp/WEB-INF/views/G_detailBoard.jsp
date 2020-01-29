@@ -11,11 +11,6 @@
     
 	<title>게시글 페이지</title>
 	
-    <link rel="icon" href="resources/images/fav.png" type="image/png" sizes="16x16"> 
-    <link rel="stylesheet" href="resources/css/main.min.css">
-    <link rel="stylesheet" href="resources/css/style.css">
-    <link rel="stylesheet" href="resources/css/color.css">
-    <link rel="stylesheet" href="resources/css/responsive.css">
     <!-- 댓글 등록 아이콘 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <!-- 자물쇠 아이콘 -->
