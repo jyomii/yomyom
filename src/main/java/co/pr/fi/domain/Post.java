@@ -46,6 +46,9 @@ public class Post {
 	// 醫뗭븘�슂 �닔
 	private int postlike;
 	
+	//모임 이름
+	private String groupName;
+	
 	private String cstartdate;
 	private String cenddate;
 	private String cmoney;
@@ -54,6 +57,15 @@ public class Post {
 	private int currentperson;
 	private String joinbtn;
 	
+	
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
 	public String getJoinbtn() {
 		return joinbtn;
 	}

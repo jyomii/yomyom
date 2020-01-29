@@ -30,11 +30,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sun.mail.handlers.message_rfc822;
+
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.UserMessage;
 import co.pr.fi.service.CategoryService;
 import co.pr.fi.service.MemberService;
+import co.pr.fi.service.MessageService;
 import co.pr.fi.serviceImpl.KakaoAPI;
 
 @Controller
@@ -42,6 +46,9 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 
+	@Autowired
+	MessageService messageService;
+	
 	@Autowired
 	CategoryService categoryService;
 	
@@ -51,13 +58,22 @@ public class MemberController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 
-	@RequestMapping(value = "/kokoalogout")
+	
+	
+	
+	@ResponseBody
+	@GetMapping("/getMyMessage")
+	public List<UserMessage> getMyMessage(HttpSession session){
+		GUsers users = memberService.getUsers((String)session.getAttribute("id"));
+		return messageService.getMyMessage(users.getUserKey());
+	}
+	
+	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
+		if(session.getAttribute("access_Token") != null)
 		kakao.kakaoLogout((String) session.getAttribute("access_Token"));
-		session.removeAttribute("access_Token");
-		session.removeAttribute("logintype");
-		session.removeAttribute("id");
-		return "index";
+		session.invalidate();
+		return "redirect:main2";
 	}
 
 	@GetMapping("/kakao")
@@ -310,6 +326,7 @@ public class MemberController {
 			if (user.getUserStatus() == 0) {
 
 				session.setAttribute("id", id);
+				session.setAttribute("image", user.getUserImageFile());
 				session.setAttribute("logintype", 0); // 0: 일반 1: kakao 2: naver 3. facebook
 
 				Cookie cookie = new Cookie("saveid", id);
@@ -326,7 +343,7 @@ public class MemberController {
 
 				res.addCookie(cookie);
 
-				return "redirect:admin";
+				return "redirect:main2";
 
 			} else if (user.getUserStatus() == 1) {
 				// 탈퇴 예정
