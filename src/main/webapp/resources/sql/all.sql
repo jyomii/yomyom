@@ -444,7 +444,8 @@ CREATE TABLE usermessage
     CONSTRAINT USERMESSAGEPK PRIMARY KEY (mgkey)
 );
 
-
+ALTER TABLE usermessage ADD(checkDate date);
+						 
         
 CREATE SEQUENCE usermessageSEQ
 START WITH 1
