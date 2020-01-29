@@ -5,7 +5,7 @@ jQuery(document)
 					"use strict";
 
 					// ------- Notifications Dropdowns
-					/*
+					
 					$('.topbar .right-menu .setting-area > li').on(
 							"click",
 							function() {
@@ -14,16 +14,16 @@ jQuery(document)
 								$(this).children('div').addClass('active');
 								return false;
 							});
-					*/
+					
 					// ------- remove class active on body
-					/*
+					
 					$("body *").not('.topbar .right-menu .setting-area > li').on(
 							"click",
 							function() {
 								$(".topbar .right-menu .setting-area > li > div")
 										.removeClass('active');
 							});
-					*/
+					
 					// --- user setting dropdown on topbar
 					
 					$('.user-img').on('click', function() {

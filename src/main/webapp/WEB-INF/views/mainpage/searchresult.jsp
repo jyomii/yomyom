@@ -48,97 +48,98 @@
 						<!-- content  -->
 						<div class="col-lg-6">
 							<!-- 검색바 -->
-							
-							
-							
+
+
+
 							<!-- 결과 페이지 -->
 							<div class="central-meta">
 								<div class="groups">
-									<span><i class="fa fa-users"></i>모임 목록</span>
+									<span><i class="fa fa-users"></i>검색된 모임 목록</span>
 								</div>
-								<ul class="nearby-contct">
-									<li>
-										<div class="nearly-pepls">
-											<figure>
-												<a href="time-line.html" title=""><img
-													src="resources/images/resources/group1.jpg" alt=""></a>
-											</figure>
-											<div class="pepl-info">
-												<h4>
-													<a href="time-line.html" title="">funparty</a>
-												</h4>
-												<span>public group</span> <em>32k Members</em> <a href="#"
-													title="" class="add-butn" data-ripple="">leave group</a>
+								<ul class="nearby-contct" id="searchGroup">
+									<c:forEach items="${groupList}" var="item">
+										<li>
+											<div class="nearly-pepls">
+												<figure>
+													<a> <c:choose>
+															<c:when test="${empty item.groupDFile }">
+																<img src="resources/images/resources/photo1.jpg" alt="">
+															</c:when>
+															<c:otherwise>
+																<img
+																	src="<spring:url value='/image${item.groupDFile }'/>" />
+															</c:otherwise>
+														</c:choose>
+													</a>
+												</figure>
+												<div class="pepl-info">
+													<h4>
+														<a title="">${item.groupName}</a>
+													</h4>
+													<span> ${item.categoryName }/ <c:choose>
+															<c:when test="${item.ageKey == 0}">
+                            연령대 제한 없음/
+                        </c:when>
+															<c:otherwise>
+                            ${item.ageKey* 10}대/
+                        </c:otherwise>
+														</c:choose> <c:choose>
+															<c:when test="${item.whereKey == 0}">
+                            지역 없음/
+                        </c:when>
+															<c:otherwise>
+                            ${item.locationName}/
+                        </c:otherwise>
+														</c:choose> ${item.memberCount }명
+													</span> <input type="hidden" value="${item.groupKey }">
+												</div>
 											</div>
-										</div>
-									</li>
-									<li>
-										<div class="nearly-pepls">
-											<figure>
-												<a href="time-line.html" title=""><img
-													src="resources/images/resources/group2.jpg" alt=""></a>
-											</figure>
-											<div class="pepl-info">
-												<h4>
-													<a href="time-line.html" title="">ABC News</a>
-												</h4>
-												<span>Private group</span> <em>5M Members</em> <a href="#"
-													title="" class="add-butn" data-ripple="">leave group</a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="nearly-pepls">
-											<figure>
-												<a href="time-line.html" title=""><img
-													src="resources/images/resources/group3.jpg" alt=""></a>
-											</figure>
-											<div class="pepl-info">
-												<h4>
-													<a href="time-line.html" title="">SEO Zone</a>
-												</h4>
-												<span>Public group</span> <em>32k Members</em> <a href="#"
-													title="" class="add-butn" data-ripple="">leave group</a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="nearly-pepls">
-											<figure>
-												<a href="time-line.html" title=""><img
-													src="resources/images/resources/group4.jpg" alt=""></a>
-											</figure>
-											<div class="pepl-info">
-												<h4>
-													<a href="time-line.html" title="">Max Us</a>
-												</h4>
-												<span>Public group</span> <em> 756 Members</em> <a href="#"
-													title="" class="add-butn" data-ripple="">leave group</a>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="nearly-pepls">
-											<figure>
-												<a href="time-line.html" title=""><img
-													src="resources/images/resources/group5.jpg" alt=""></a>
-											</figure>
-											<div class="pepl-info">
-												<h4>
-													<a href="time-line.html" title="">Banana Group</a>
-												</h4>
-												<span>Friends Group</span> <em>32k Members</em> <a href="#"
-													title="" class="add-butn" data-ripple="">leave group</a>
-											</div>
-										</div>
-									</li>
-
+										</li>
+									</c:forEach>
 								</ul>
 								<div class="lodmore">
-									<button class="btn-view btn-load-more"></button>
+									<button class="btn-view btn-load-more"
+									<c:if test="${groupListCount < 10}">
+														 style="visibility:hidden;"
+														</c:if>></button>
 								</div>
 							</div>
-							<!-- photos -->
+							
+							
+							
+							
+							<div class="central-meta">
+								<div class="groups">
+									<span><i class="fa fa-users"></i>검색된 글 목록</span>
+								</div>
+								<ul class="nearby-contct" id="searchPost">
+									<c:forEach items="${postList}" var="item">
+															<li>
+																<div class="nearly-pepls">
+																	
+																	<div class="pepl-info">
+																		<h4>
+																			<a>${item.postTitle }</a>
+																			
+																		</h4>
+																			<p>${item.postContent }</p>
+																			<span>${item.groupName }</span>
+																			
+																	
+																	</div>
+																</div>
+															</li>
+
+														</c:forEach>
+								</ul>
+								<div class="lodmore">
+									<button class="btn-view btn-load-more"
+									<c:if test="${postListCount < 10}">
+														 style="visibility:hidden;"
+														</c:if>
+									></button>
+								</div>
+							</div>
 						</div>
 
 
@@ -359,6 +360,127 @@
 <!-- footer -->
 <jsp:include page="footer.jsp" />
 <!-- footer end -->
+
+
+<script>
+
+var postPage = 1;
+var groupPage = 1;
+
+//더보기 클릭 시 더 불러오기
+$(document).on("click", ".btn-load-more", function(event) {
+
+	 var type = $(".btn-load-more").index(this);
+
+	
+	if(type == 0)
+		groupPage++;
+	else
+		postPage++;
+	
+	var text = '${text}';
+	
+	
+	$.ajax({
+		url : "moreSearchList",
+		method: "post",
+		data : {"page" : type == 0 ? groupPage : postPage,
+				"type" : type,
+				"text" : text},
+		success : function(r){
+			
+			
+			var more = (r.result.length < 3);
+			
+			if (r.result.length > 0) {
+				var html1 = print(r.result,type);
+				
+			}
+			
+			if(more)
+				if(type == 0)
+				$('#searchGroup .btn-load-more').css('visibility','hidden');
+				else
+				$('#searchPost .btn-load-more').css('visibility','hidden');
+			
+	
+		}
+		
+	});
+	
+});
+
+	function print(result, type){
+		
+		var text = "";
+		
+		if(type == 0){
+			for(var i = 0; i < result.length; i++){
+			
+				
+				text += '<li>';
+				text += '<div class="nearly-pepls">';
+				text += '<figure>';
+				text += '<a>';
+				if(result[i].item.groupDFile == null)
+				text += '<img src="resources/images/resources/photo1.jpg" alt="">';
+				else
+				text += "<img src= \'<spring:url value='/image"+result[i].groupDFile +"'/>\'/>";
+				text += '</a>';
+				text += '	</figure>';
+				text += '<div class="pepl-info">';
+				text += '<h4>';
+				text += '<a title="">'+result[i].groupName+'</a>';
+				text += '</h4>';
+				text += '	<span> '+result[i].categoryName+'/';
+				if(result[i].ageKey == 0)
+				text += '연령대 제한 없음/';
+				else
+				text += result[i].ageKey* 10+'대/';
+				
+				if(result[i].whereKey == 0)
+					text += '지역 없음/';
+					else
+					text += result[i].whereKey+'/';
+				
+				text += result[i].memberCount+'명';
+				text += '</span> <input type="hidden" value="'+result[i].groupKey+'">';
+				text += '</div>';
+				text += '</div>';
+				text += '</li>';
+			}
+			
+		}else{
+			
+			for(var i = 0; i < result.length; i++){
+				
+			text += '<li>';
+			text += '<div class="nearly-pepls">';
+			text += '<div class="pepl-info">';
+			text += '<h4>';
+			text += '<a>'+result[i].postTitle+'</a>';
+			text += '</h4>';
+			text += '<p>'+result[i].postContent+'</p>';
+			text += '<span>'+result[i].groupName+'</span>';
+			text += '</div>';
+			text += '</div>';
+			text += '</li>';
+			
+			}
+		}
+		
+		console.log('check : ' +text);
+			if(type == 0)
+				$('#searchGroup').append(text);
+			else
+				$('#searchPost').append(text);
+			
+	
+	}
+
+
+
+</script>
 
 </body>
 
