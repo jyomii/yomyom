@@ -17,8 +17,8 @@ public class GroupBoardDAO {
 	private SqlSessionTemplate sqlSession;
 
 	// 게시글 조회
-	public List<Post> detailBoard(String postkey) {
-		return sqlSession.selectList("post.detailBoard", postkey);
+	public Post detailBoard(Map<String, String> keys) {
+		return sqlSession.selectOne("post.detailBoard", keys);
 	}
 
 	// 게시글 조회수 증가
