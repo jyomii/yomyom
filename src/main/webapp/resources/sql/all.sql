@@ -164,6 +164,10 @@ CREATE TABLE gusers
 );
 
 
+ALTER TABLE gusers ADD(lastdate date);
+
+
+
 
 ALTER TABLE gusers
     ADD CONSTRAINT FKgusersuseragegageage FOREIGN KEY (userage)
