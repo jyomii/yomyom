@@ -121,7 +121,7 @@
 		<div class="topbar stick">
 			<!-- 로고 -->
 			<div class="logo">
-				<a title="" href="newsfeed.html"> <img
+				<a title="" href="index.jsp"> <img
 					src="resources/images/logo.png" alt=""></a>
 			</div>
 			<!-- //로고 -->
@@ -129,53 +129,10 @@
 			<!-- 카테고리 -->
 			<div class="top-area">
 				<ul class="main-menu">
-					<li><a href="#" title="" onclick="allMenu(); return false;">전체카테고리</a></li>
-					<li><a href="#" title="">timeline</a>
-						<ul>
-							<li><a href="time-line.html" title="">timeline</a></li>
-							<li><a href="timeline-friends.html" title="">timeline
-									friends</a></li>
-							<li><a href="timeline-groups.html" title="">timeline
-									groups</a></li>
-							<li><a href="timeline-pages.html" title="">timeline
-									pages</a></li>
-							<li><a href="timeline-photos.html" title="">timeline
-									photos</a></li>
-							<li><a href="timeline-videos.html" title="">timeline
-									videos</a></li>
-							<li><a href="fav-page.html" title="">favourit page</a></li>
-							<li><a href="groups.html" title="">groups page</a></li>
-							<li><a href="page-likers.html" title="">Likes page</a></li>
-							<li><a href="people-nearby.html" title="">people nearby</a></li>
-						</ul></li>
-					<li><a href="#" title="">account settings</a>
-						<ul>
-							<li><a href="create-fav-page.html" title="">create fav
-									page</a></li>
-							<li><a href="edit-account-setting.html" title="">edit
-									account setting</a></li>
-							<li><a href="edit-interest.html" title="">edit-interest</a></li>
-							<li><a href="edit-password.html" title="">edit-password</a></li>
-							<li><a href="edit-profile-basic.html" title="">edit
-									profile basics</a></li>
-							<li><a href="edit-work-eductation.html" title="">edit
-									work educations</a></li>
-							<li><a href="messages.html" title="">message box</a></li>
-							<li><a href="inbox.html" title="">Inbox</a></li>
-							<li><a href="notifications.html" title="">notifications
-									page</a></li>
-						</ul></li>
-					<li><a href="#" title="">more pages</a>
-						<ul>
-							<li><a href="404.html" title="">404 error page</a></li>
-							<li><a href="about.html" title="">about</a></li>
-							<li><a href="contact.html" title="">contact</a></li>
-							<li><a href="faq.html" title="">faq's page</a></li>
-							<li><a href="insights.html" title="">insights</a></li>
-							<li><a href="knowledge-base.html" title="">knowledge
-									base</a></li>
-							<li><a href="widgets.html" title="">Widgts</a></li>
-						</ul></li>
+					<li><a href="#" title="" onclick="allMenu(); return false;">카테고리</a></li>
+					<li><a href="#" title="">베스트 모임</a></li>
+					<li><a href="prboard" title="">홍보 게시판</a></li>
+					<li><a href="#" title="">모임 만들기</a></li>
 				</ul>
 
 				<!-- 전체카테고리 -->
@@ -305,55 +262,48 @@
 				<ul class="setting-area">
 					<li>
 						<div class="box-search">
+							<select name="searchType" id="searchType">
+								<option value="all">전체</option>
+								<option value="title">제목</option>
+								<option value="Content">본문</option>
+								<option value="reg_id">작성자</option>
+							</select>
 							<form method="post" class="form-search">
-								<input type="text" placeholder="">
+								<input type="text" name="keyword" id="keyword" placeholder="">
 								<button data-ripple>
-									<i class="ti-search"></i>
+									<i class="ti-search" id="btnSearch"></i>
 								</button>
 							</form>
 						</div>
 					</li>
-					<!-- 검색창 bar -->
-					<!--
-					<li>
-						<a href="#" title="Home" data-ripple=""><i class="ti-search"></i></a>
-						<div class="searched">
-							<form method="post" class="form-search">
-								<input type="text" placeholder="">
-								<button data-ripple>
-									<i class="ti-search"></i>
-								</button>
-							</form>
-						</div>
-					</li>
-					-->
-					<!-- //검색창 bar -->
-					<li><a href="newsfeed.html" title="Home" data-ripple=""><i
-							class="ti-home"></i></a></li>
-					<li><a href="#" title="Messages" data-ripple=""><i
-							class="ti-pencil"></i></a></li>
-					<!--
-					<li>
-						<a href="#" title="Languages" data-ripple=""><i	class="fa fa-globe"></i></a>
-						<div class="dropdowns languages">
-							<a href="#" title=""><i class="ti-check"></i>English</a> <a
-								href="#" title="">Arabic</a> <a href="#" title="">Dutch</a> <a
-								href="#" title="">French</a>
-						</div>
-					</li>
-					-->
 				</ul>
+
 				<div class="user-img">
-					<img src="resources/images/resources/admin.jpg" alt="">
-					<div class="user-setting">
-						<a href="#" title=""><i class="ti-pencil-alt"></i>정보 수정</a> <a
-							href="#" title=""><i class="ti-power-off"></i>로그아웃</a>
+
+					<div class="nomember">
+						<a href="login"><img src="resources/images/default.png" alt=""></a>
 					</div>
+					<c:if test="$!{empty id}">
+						<img src="resources/images/resources/book-icon.jpg" alt="">
+						<div class="user-setting">
+							<a href="/mypage" title=""><i class="ti-pencil-alt"></i>마이페이지</a>
+							<a href="/kokoalogout" title=""><i class="ti-power-off"></i>로그아웃</a>
+						</div>
+					</c:if>
+					<c:if test="${id=='admin'}">
+						<img src="resources/images/resources/admin.jpg" alt="">
+						<div class="user-setting">
+							<a href="/mypage" title=""><i class="ti-pencil-alt"></i>관리자페이지</a>
+							<a href="/kokoalogout" title=""><i class="ti-power-off"></i>로그아웃</a>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
 		<!-- 기존 화면 header 끝 -->
 
+
+		<c:url var="getBoardListURL" value="/board/getBoardList"></c:url>
 		<script>
 			function allMenu() {
 				if ($('#all-menu').css('display') == 'none') {
@@ -362,4 +312,15 @@
 					$('#all-menu').hide();
 				}
 			}
+			$(function() {
+				$(document).on('click', '#btnSearch', function(e) {
+					e.preventDefault();
+					var url = "${getBoardList}";
+					url = url + "?searchType=" + $('#searchType').val();
+					url = url + "&keyword=" + $('#keyword').val();
+					location.href = url;
+					console.log(url);
+				});
+
+			})
 		</script>

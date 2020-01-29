@@ -15,8 +15,7 @@
 				data-ride="carousel">
 				<!-- Indicators -->
 				<ol class="carousel-indicators">
-					<li data-target="#carousel-example-generic" data-slide-to="0"
-						class="active"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
 					<li data-target="#carousel-example-generic" data-slide-to="1"></li>
 					<li data-target="#carousel-example-generic" data-slide-to="2"></li>
 				</ol>
@@ -266,23 +265,23 @@
 												<h4>
 													<a href="time-line.html" title="">Max Us</a>
 												</h4>
-												<span>Public group</span> <em> 756 Members</em> <a href="#"
-													title="" class="add-butn" data-ripple="">leave group</a>
+												<span>Public group</span> <em> 756 Members</em> 
+												<a href="#" title="" class="add-butn" data-ripple="">leave group</a>
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="nearly-pepls">
 											<figure>
-												<a href="time-line.html" title=""><img
-													src="resources/images/resources/group5.jpg" alt=""></a>
+												<a href="time-line.html" title="">
+												<img src="resources/images/resources/group5.jpg" alt=""></a>
 											</figure>
 											<div class="pepl-info">
 												<h4>
 													<a href="time-line.html" title="">Banana Group</a>
 												</h4>
-												<span>Friends Group</span> <em>32k Members</em> <a href="#"
-													title="" class="add-butn" data-ripple="">leave group</a>
+												<span>Friends Group</span> <em>32k Members</em> 
+												<a href="#" title="" class="add-butn" data-ripple="">leave group</a>
 											</div>
 										</div>
 									</li>

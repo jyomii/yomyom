@@ -20,8 +20,10 @@ public class MainHeaderController {
 	}
 	
 	//메인페이지로 이동하는 mapping
-		@RequestMapping(value="/searchresult")
-		public String resultpage() {
-			return "mainpage/searchresult";
-		}
+	@RequestMapping(value="/searchresult")
+	public String resultpage() {
+		return "mainpage/searchresult";
+	}
+	
+	
 }

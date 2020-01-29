@@ -12,7 +12,7 @@
 								<a href="index-2.html" title=""><img src="resources/images/logo.png" alt=""></a>
 							</div>	
 							<p>
-								The trio took this simple idea and built it into the world’s leading carpooling platform.
+								The trio toodk this simple idea and built it into the world’s leading carpooling platform.
 							</p>
 						</div>
 						<ul class="location">

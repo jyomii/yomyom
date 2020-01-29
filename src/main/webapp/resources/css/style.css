@@ -715,6 +715,13 @@ header.sticky {
 	vertical-align: inherit;
 }
 
+ .topbar .right-menu .user-img > .nomember > a > img{
+ 	border-radius: 50%;
+	display: inline-block;
+	transform: scale(0.7);
+	vertical-align: inherit;
+ }
+
 /*
 .form-search {
 	position: absolute;
