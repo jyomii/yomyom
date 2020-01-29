@@ -164,8 +164,6 @@ CREATE TABLE gusers
 );
 
 
-ALTER TABLE gusers ADD(lastdate date);
-
 
 
 
