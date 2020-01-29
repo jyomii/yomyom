@@ -91,7 +91,7 @@ $(function(){
 			$(data.list).each(function(index, item){
 				doc += '	<tr>';
 				doc += '		<td>';
-				doc += '			<a href = "detailBoard?postkey=' + item.postKey + '" title = "">' + item.postTitle + '</a>';
+				doc += '			<a href = "detailBoard?postkey=' + item.postKey + '&groupkey=' + item.groupKey + '" title = "">' + item.postTitle + '</a>';
 				doc += '		</td>';
 				doc += '		<td>';
 				doc += 				item.postReadcount;
