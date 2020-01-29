@@ -108,55 +108,19 @@
 											<li>
 												<div class="nearly-pepls">
 													<figure>
-														<a href="time-line.html" title=""><img
-															src="resources/images/resources/group1.jpg" alt=""></a>
+													    <span>${list.prKey }</span>
+														<img src="resources/images/resources/group1.jpg" alt=""></a>
+														<input type="hidden" name="userkey" value="${list.userKey }" id="user">
 													</figure>
 													<div class="pepl-info">
-														<h4>
-															<a href="time-line.html" title="">마포구 걷기 모임</a>
+														<h4> <!-- 클릭하면 이 모임 페이지로 넘어가야함... -->
+															<a href="time-line.html">${list.groupName }</a>
 														</h4>
-														<span>운동 취미 친목</span>
-														<p>
-															<br>마포구의 걷기 좋은 산책로를 탐방하고 거니는 마포구민 친목 모임입니다^^<br>
-															20대, 30대 위주로 구성되어 있으며, 활발히 활동 중이니 같이 걸어요~!
-														</p>
-														<a class="add-butn" data-toggle="modal"
-															data-target="#prModal">상세보기</a>
+														<span>${list.dateWrite}</span>
+														<p>${list.content }</p>
+														
 													</div>
-												</div> <!-- 게시글 모달로 보기 -->
-												<div class="modal" id="prModal">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<!-- Modal body -->
-															<div class="modal-body">
-																<form name=pr_join_form method=post>
-																	<div class="viewpage">
-																		<div class="prtitle">
-																			<span>마포구 걷기 모임</span>
-																			<p>이지연</p>
-																		</div>
-																		
-																		<div class="prcontent">
-																			<p>
-																				마포구의 걷기 좋은 산책로를 탐방하고 날이 좋을 때 번개 모임도 갖기도 합니다^^ 동네 친구
-																				만들기에 딱! 놀러오세요~~ <br> 마포구의 걷기 좋은 산책로를 탐방하고 날이 좋을
-																				때 번개 모임도 갖기도 합니다^^ 동네 친구 만들기에 딱! 놀러오세요~~ <br>
-																				마포구의 걷기 좋은 산책로를 탐방하고 날이 좋을 때 번개 모임도 갖기도 합니다^^ 동네 친구
-																				만들기에 딱! 놀러오세요~~ <br> 마포구의 걷기 좋은 산책로를 탐방하고 날이 좋을
-																				때 번개 모임도 갖기도 합니다^^ 동네 친구 만들기에 딱! 놀러오세요~~
-																			</p>
-																		</div>
-																		<div class=prsubmit>
-																			<button type="button" class="add-butn">가입</button>
-																			<button type="button" data-dismiss="modal"
-																				class="add-butn">닫기</button>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div> <!-- 모달 끝 -->
+												</div>
 											</li>
 											<li>
 												<div class="nearly-pepls">
@@ -168,7 +132,6 @@
 														<h4>
 															<a href="time-line.html" title="">퇴근 후 감성충전</a>
 														</h4>
-														<span>독서 친목 모임</span>
 														<p>
 															<br>퇴근 후 직장인들끼리 모여 같이 책을 읽고 대화하는 모임입니다^^<br> 매
 															달 한 권의 책을 선정하여 읽고 마지막 주 금요일에는 같이 토론도 해보아요~^^
@@ -205,80 +168,6 @@
 												</div> <!-- 모달 끝 -->
 											</li>
 											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img
-															src="resources/images/resources/group3.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4>
-															<a href="time-line.html" title="">오늘은 영어왕</a>
-														</h4>
-														<span>공부 언어 모임</span>
-														<p>
-															<br>더 이상 미룰 수 없다! 오늘은 영어왕이 되기 위한 사람들이 모인 곳!<br>
-															다 같이 즐거운 스터디를 통해 영어왕이 되어보아요~ ^^
-														</p>
-														<a href="#" title="" class="add-butn" data-ripple="">가입하기</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img
-															src="resources/images/resources/group4.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4>
-															<a href="time-line.html" title="">공연이 좋다</a>
-														</h4>
-														<span>음악 공연 연극 친목</span>
-														<p>
-															<br>같이 공연 보러 갈 사람을 구하고 싶을 때! 우리 모임에서 함께 가요^^<br>
-														</p>
-														<a href="#" title="" class="add-butn" data-ripple="">가입하기</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img
-															src="resources/images/resources/group5.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4>
-															<a href="time-line.html" title="">마포구 걷기 모임</a>
-														</h4>
-														<span>운동 취미 친목</span>
-														<p>
-															<br>마포구의 걷기 좋은 산책로를 탐방하고 거니는 마포구민 친목 모임입니다^^<br>
-															20대, 30대 위주로 구성되어 있으며, 활발히 활동 중이니 같이 걸어요~!
-														</p>
-														<a href="#" title="" class="add-butn" data-ripple="">가입하기</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<a href="time-line.html" title=""><img
-															src="resources/images/resources/group3.jpg" alt=""></a>
-													</figure>
-													<div class="pepl-info">
-														<h4>
-															<a href="time-line.html" title="">마포구 걷기 모임</a>
-														</h4>
-														<span>운동 취미 친목</span>
-														<p>
-															<br>마포구의 걷기 좋은 산책로를 탐방하고 거니는 마포구민 친목 모임입니다^^<br>
-															20대, 30대 위주로 구성되어 있으며, 활발히 활동 중이니 같이 걸어요~!
-														</p>
-														<a href="#" title="" class="add-butn" data-ripple="">가입하기</a>
-													</div>
-												</div>
-											</li>
 										</ul>
                                         <br><br><br>
 										<div class="center-block">

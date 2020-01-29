@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,43 +25,23 @@ public class MyPageController {
 	@Autowired
 	MyPageService myPageService;
 	
-	/*
-	@RequestMapping(value="/mypage")
-	public String mypageMain() {
-		return "/mypage";
-	}
-	*/
+
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
-	@RequestMapping(value="/mypage2", method = RequestMethod.GET)
-	public String myedit() {
-		return "/mypage2";
-	}
 	
 	@RequestMapping(value="/mypage3", method = RequestMethod.GET)
 	public String myedit2() {
-		return "/mypage3";
+		return "mypage/mypage3";
 	}
-	/*
-	@GetMapping(value="/mypage")
-	public ModelAndView mypageInfo(ModelAndView mv) {
-		
-		mv.setViewName("mypage/info");
-		mv.addObject("userId", userId);
-		mv.addObject("user", r_listCount);
-		mv.addObject("defaultGroup", defaultGroup);
-		mv.addObject("requestGroup", requestGroup);
-		
-		return mv;
-		
-	}
-	*/
+
 	
 	  @RequestMapping(value = "/mypage")
 	   public ModelAndView mypageinfo(HttpSession session, 
 	          HttpServletRequest request, ModelAndView mv) throws Exception {
 		  String id = (String) session.getAttribute("id");
 	      GUsers user = myPageService.userinfo(id);
-	      mv.setViewName("mypage");
+	      mv.setViewName("mypage/mypage");
 	      mv.addObject("mypage", user);
 	      return mv;
 	   }
@@ -71,17 +52,25 @@ public class MyPageController {
 	    public ModelAndView update(HttpSession session, ModelAndView mv) throws Exception {
 	    	String id = (String) session.getAttribute("id");
 	    	GUsers user = myPageService.userinfo(id);
-	    	mv.setViewName("mypage/myupdate");
+	    	mv.setViewName("mypage/mypage2");
 	    	mv.addObject("mypage", user);
 	    	return mv;
 	    }
 			
 	    //수정처리
 	    @RequestMapping(value="/updateprocess", method= RequestMethod.POST)
-	    public ModelAndView updateProcess(GUsers user,
+	    public ModelAndView updateProcess(GUsers user, HttpSession session,
 	            HttpServletResponse response) throws Exception {
 	       response.setContentType("text/html;charset=utf-8");
 	       PrintWriter out = response.getWriter();
+	       String id = (String) session.getAttribute("id");
+	       user.setUserId(id);
+	       
+	       //비밀번호 암호화처리
+	       //일반 가입자일 경우 패스워드encoding
+	       String encPassword = passwordEncoder.encode(user.getUserPassword());
+	       user.setUserPassword(encPassword);
+	       
 	       int result = myPageService.myupdate(user);
 	       out.println("<script>");
 	       //수정 된 경우

@@ -46,6 +46,10 @@
 		<level value = "trace"/>
 	</logger>
 	
+    <!-- mypage -->
+	<logger name = "Mypages">
+		<level value = "trace"/>
+	</logger>
 	
 	<!-- Application Loggers -->
 	<logger name="co.pr.fi">
