@@ -390,7 +390,7 @@
 						text += '<span class="tag green">NEW</span>';
 						break;
 					}
-					
+						
 					text += '</li>';
 					
 					
