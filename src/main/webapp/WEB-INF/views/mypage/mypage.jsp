@@ -80,7 +80,7 @@
 														<i>2019-12-27</i> <span><a href="#" title="">2019
 																슬픔의 케이팝 파티</a></span>
 														<h6>
-															by <a href="time-line.html">케즐모</a>
+															by 케즐모
 														</h6>
 													</div>
 												</li>
@@ -89,7 +89,7 @@
 														<i>2019-11-19</i> <span><a href="#" title="">남양주
 																북한강 라이딩 정모</a></span>
 														<h6>
-															by <a href="time-line.html">자연이 좋다!!!</a>
+															by 자연이 좋다!!!
 														</h6>
 													</div>
 												</li>
@@ -98,7 +98,7 @@
 														<i>2019-10-30</i> <span><a href="#" title="">알고리즘
 																스터디</a></span>
 														<h6>
-															by<a href="#">나는 나는 개발자</a>
+															by 나는 나는 개발자
 														</h6>
 													</div>
 												</li>
@@ -126,18 +126,26 @@
 												<div class="tab-content">
 													<div class="tab-pane fade show active" id="basic">
 														<ul class="basics">
-															<input type="hidden" name="userid" value="${id }"
-																id="user">
 															<li><i class="ti-user"></i>${id}</li>
-															<li><i class="ti-map-alt"></i>${mypage.userLocation}</li>
+															<li><i class="ti-pencil"></i>
+															<c:if test="${mypage.userAge == '1'}">10대</c:if>
+															<c:if test="${mypage.userAge == '2'}">20대</c:if>
+															<c:if test="${mypage.userAge == '3'}">30대</c:if>
+															<c:if test="${mypage.userAge == '4'}">40대</c:if>
+															<c:if test="${mypage.userAge == '5'}">50대</c:if>
+															<c:if test="${mypage.userAge == '6'}">60대</c:if>
+															</li>
+															<li><i class="ti-heart"></i>
+															<c:if test="${mypage.gender == 'F'}">여성</c:if>
+															<c:if test="${mypage.gender == 'M'}">남성</c:if></li>
+															<li><i class="ti-map-alt"></i>${mypage.locationName}</li>
 															<li><i class="ti-email"></i>${mypage.userEmail}</li>
 															<li><i class="ti-calendar"></i>${mypage.userJoinDate}</li>
 														</ul>
 													</div>
 													<div class="tab-pane fade" id="interest" role="tabpanel">
 														<ul class="basics">
-															<input type="hidden" name="USER_ID" value="${id }"
-																id="USER_ID">
+															<input type="hidden" name="userid" value="${id }" id="userid">
 															<li>인터넷</li>
 															<li>등산</li>
 															<li>음악</li>
@@ -364,6 +372,8 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
 	<script>
+
+	
 		//회원 정보 수정 이동
 		$(".jungbo").click(function() {
 			location.href = "mypage2";
@@ -374,11 +384,11 @@
 			location.href = "mypage3";
 		});
 		
-		//아 근데 비밀번호 암호화라서... 일단 보류..
+		
 		function exitGroup() {       
 			var pass = prompt('탈퇴하려면 비밀번호를 입력하세요.');
 			
-			if(pass == userpassword){
+			if(pass == userPassword){
 				alert('탈퇴 되었습니다.');
 			}
 			else{

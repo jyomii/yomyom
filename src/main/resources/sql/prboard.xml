@@ -15,12 +15,27 @@
 
     <insert id="insert" parameterType="prboard">
         insert into PrBoard(
-           prKey, userKey, groupKey, content, datewrite
-        )    
-        values (
-           #{prKey}, #{userKey}, #{groupKey}, #{content}, sysdate
-        )
+           prKey, userKey, groupKey, content, datewrite)    
+        values (#{prKey}, #{userKey}, #{groupKey}, #{content}, sysdate)
     </insert>
 
+    <select id="Detail" parameterType="int" resultType="prboard">
+        select * from board where userKey = #{userKey}
+    </select>
+    
+    <update id="modify" parameterType="prboard">
+        update PrBoard
+        set groupKey = #{groupKey},
+            content = #{content}
+        where prKey = #{prKey}
+    </update>
 
+    <select id="boardWriter" parameterType="int" resultType="prboard">
+        select * from PrBoard
+        where userKey = #{userKey}
+    </select>
+   
+    <select id="info" parameterType="String" resultType="group">
+         select groupName from GGroup where userKey = (select userKey from GUsers where userId = #{id})
+    </select>
 </mapper>

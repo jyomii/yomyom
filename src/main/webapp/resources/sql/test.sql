@@ -218,6 +218,8 @@ CREATE TABLE ggroup
     CONSTRAINT GGROUPPK PRIMARY KEY (groupkey)
 );
 
+
+
 -- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
 -- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
 -- ALTER TABLE ggroup ADD (groupstatus NUMBER NOT NULL);
@@ -1367,3 +1369,49 @@ SELECT NVL(GROUPNICKNAME, -1)
 		
 SELECT * FROM GGROUPMEMBER;
 SELECT * FROM GUSERS;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select * from ggroup;
+INSERT INTO GGROUP VALUES (ggroupSEQ.NEXTVAL, '나랑LOL자', 1, 2, 2, 1, 'LOL에 미친 사람만 들어오ㅏ', 'pic.png', 'pic.png', 'cov.png', 'cov.png', 'n', 'n', SYSDATE, 1);
+INSERT INTO GGROUP VALUES (ggroupSEQ.NEXTVAL, '코딩수다', 1, 2, 4, 1, '고통받는 개발자들 환영합니다.', 'OV.png', 'OV.png', 'ER.png', 'ER.png', 'N', 'n', SYSDATE, 1);
+INSERT INTO GGROUP VALUES (ggroupSEQ.NEXTVAL, '마포구 워치처돌이', 1, 1, 2, 1, '오버워치 때문에 현생을 잃어버린 마포구 주민들@_@', 'OV.png', 'OV.png', 'ER.png', 'ER.png', 'n', 'n', SYSDATE, 1);
+
+ select * from ggroupmember;                  
+ insert into ggroupmember values (1,1,'지지',0);
+ insert into ggroupmember values (2,1,'지지',0);
+ insert into ggroupmember values (3,1,'지지',0);
+
+ select * from gusers;
+
+     select groupName from GGroup where userKey = (select userKey from GUsers where userId = #{id});
+ 
+ 
+ select g.userId, g.userAge, g.gender, g.userEmail,  g.userJoinDate, c.sWhere || c.dwhere as locationName
+ from GUsers g, glocation c
+where userId = 'haha2'
+and locationKey=(select userLocation from GUsers where userId = 'haha2')
+
+;
+		
+		select locationkey, sWhere || dwhere
+		from glocation, emp
+ 
+ 

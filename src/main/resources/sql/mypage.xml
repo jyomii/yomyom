@@ -4,18 +4,18 @@
 <mapper namespace="Mypages">
 
 	<select id="info" resultType="member" parameterType="String">
-		select * from gusers 
-		where userid = #{id}
+	 select g.userId, g.userAge, g.gender, g.userEmail, l.sWhere || l.dwhere as locationName, g.userJoinDate
+     from GUsers g, GLocation l
+		where userId = #{id}
+		and locationKey=(select userLocation from GUsers where userId = #{id})
 	</select>
 
-	<update id="update" parameterType="member">
-	    update gusers
-	    set userage = #{userage}, userlocation = #{userlocation},
-	        gender = #{gender}, useremail = #{useremail},
-	        userjoindate = #{userjoindate}
-	    where userid = #{id}
+	<update id="update" parameterType="member" >
+	    update GUsers
+	    set userPassword = #{userPassword}, userAge = #{userAge}, userLocation = #{userLocation},
+	        gender = #{gender}, userEmail = #{userEmail}, userOptionGroup = #{userOptionGroup}
+	    where userId = #{userId}
 	</update>
-
 
 	
 </mapper>
