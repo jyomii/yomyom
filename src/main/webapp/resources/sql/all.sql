@@ -527,29 +527,27 @@ ALTER TABLE postlike
 
 
 
-
-
-     
--- glocation Table Create SQL
 CREATE TABLE maps
 (
-    mapskey          NUMBER           NOT NULL, 
-    postkey          NUMBER           NOT NULL, 
-    lat               NUMBER(5,8)      NOT NULL, 
-    lng               NUMBER(5,8)      NOT NULL, 
-    markername       VARCHAR2(100)    NULL, 
-    markercontent    VARCHAR2(100)    NULL, 
-    mapsseq          NUMBER           NOT NULL, 
-    CONSTRAINT MAPSPK PRIMARY KEY (mapskey)
+
+    postkey    NUMBER         NOT NULL, 
+    lat         NUMBER(20,15)    NOT NULL, 
+    lng         NUMBER(20,15)    NOT NULL, 
+    mapoption  CHAR(1)   		NOT NULL, 
+    mapseq    NUMBER         NOT NULL, 
+    maplevel  number 		 null,
+    maplat         NUMBER(20,15)     NULL, 
+    maplng         NUMBER(20,15)     NULL
+ 
 );
 
 
 
 ALTER TABLE maps
-    ADD CONSTRAINT FKmapspostkeypostpostkey FOREIGN KEY (postkey)
-        REFERENCES post (postkey) on delete cascade;
-        
-        
+    ADD CONSTRAINT FK_maps_post_key_post_post_key FOREIGN KEY (postkey)
+        REFERENCES post (postkey);
+                                                 
+                                                 
         
 -- glocation Table Create SQL
 CREATE TABLE ladder
