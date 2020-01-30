@@ -6,7 +6,11 @@
 <!-- Header -->
 <jsp:include page="header.jsp" />
 <!-- Header end -->
-
+<style>
+.carousel-caption {
+	font-weight: bold;
+}
+</style>
 <!-- content -->
 <section>
 	<div class="feature-photo">
@@ -24,41 +28,61 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner" role="listbox">
 
-					<div class="item active">
-						<img src="resources/images/resources/main1.jpg"
-							style="height: 500px; width: 80%; margin:auto; " alt="...">
-						<div class="carousel-caption">
-							<h3>모임명을 입력해주세요</h3>
-							<p>여기는 모임 소개를 한줄로 쓰는 라인이다.</p>
-						</div>
-					</div>
+					<c:forEach items="${bestgroup}" var="item" varStatus="status">
 
-					<div class="item">
-						<img src="resources/images/resources/main2.jpg"
-							style="height: 500px; width: 80%; margin:auto;" alt="...">
-						<div class="carousel-caption">
-							<h3>모임명을 입력해주세요</h3>
-							<p>여기는 모임 소개를 한줄로 쓰는 라인이다2</p>
-						</div>
-					</div>
+						<c:choose>
+							<c:when test="${status.first eq true}">
+								<div class="item active">
 
-					<div class="item">
-						<img src="resources/images/resources/main3.jpg"
-							style="height: 500px; width: 80%; margin:auto;" alt="...">
-						<div class="carousel-caption">
-							<h3>모임명을 입력해주세요</h3>
-							<p>여기는 모임 소개를 한줄로 쓰는 라인이다3</p>
-						</div>
-					</div>
+
+
+									<c:choose>
+										<c:when test="${empty item.groupCFile }">
+											<img src="resources/images/resources/photo1.jpg"
+												style="height: 500px; width: 80%; margin: auto;" alt="...">
+										</c:when>
+										<c:otherwise>
+
+											<img style="height: 500px; width: 80%; margin: auto;"
+												alt="..."
+												src="<spring:url value='/image${item.groupCFile }'/>" />
+										</c:otherwise>
+									</c:choose>
+
+									<div class="carousel-caption">
+										<h2>${item.groupName }</h2>
+										<p>${item.groupInfo }</p>
+									</div>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="item">
+
+									<img src="resources/images/resources/main1.jpg"
+										style="height: 500px; width: 80%; margin: auto;" alt="...">
+									<div class="carousel-caption">
+										<h3>${item.groupName }</h3>
+										<p>${item.groupInfo }</p>
+									</div>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+
+
+
 
 				</div>
 
 				<!-- Controls -->
-				<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> 
-				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<a class="left carousel-control" href="#carousel-example-generic"
+					role="button" data-slide="prev"> <span
+					class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					<span class="sr-only">Previous</span>
-				</a> <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"> 
-				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				</a> <a class="right carousel-control" href="#carousel-example-generic"
+					role="button" data-slide="next"> <span
+					class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 					<span class="sr-only">Next</span>
 				</a>
 			</div>
@@ -128,82 +152,45 @@
 								<div class="groups recommands">
 									<span><i class="fa fa-users"></i> 추천 모임</span>
 								</div>
+								<c:forEach items="${reList}" varStatus="status" var="item">
+									<div class="g-post-classic">
+										<figure>
+										
+										<c:choose>
+										<c:when test="${empty item.groupCFile }">
+											<img src="resources/images/resources/bloggrid-1.jpg"
+												style="height: 500px; width: 80%; margin: auto;" alt="...">
+										</c:when>
+										<c:otherwise>
 
-								<div class="g-post-classic">
-									<figure>
-										<img alt="" src="resources/images/resources/bloggrid-1.jpg">
-										<i class="fa fa-video-camera"></i>
-									</figure>
-									<div class="g-post-meta">
-										<div class="post-title">
-											<h4>
-												<a title="" href="#">how to create content that get
-													traffic</a>
-											</h4>
-											<p>We got really awesome shots for the new catalog,
-												Here’s a photo from last month’s photoshoot.</p>
-											<span class="p-date">by <a href="#" title="">JACK
-													Sparo</a> - 12 hours ago
-											</span>
-										</div>
-										<div class="g-post-ranking">
-											<a title="" href="#" class="likes"><i
-												class="fa fa-heart-o"></i>10 likes</a> <a title="" href="#"
-												class="coments"><i class="fa fa-comment-o"></i>5
-												comments</a>
-										</div>
-									</div>
-								</div>
-								<div class="g-post-classic">
-									<figure>
-										<img alt="" src="resources/images/resources/bloggrid-2.jpg">
-										<i class="fa fa-soundcloud"></i>
-									</figure>
-									<div class="g-post-meta">
-										<div class="post-title">
-											<h4>
-												<a title="" href="#">how to create content that get
-													traffic</a>
-											</h4>
-											<p>We got really awesome shots for the new catalog,
-												Here’s a photo from last month’s photoshoot.</p>
-											<span class="p-date">by <a href="#" title="">JACK
-													Sparo</a> - 12-Sep-2018
-											</span>
-										</div>
-										<div class="g-post-ranking">
-											<a title="" href="#" class="likes"><i
-												class="fa fa-heart-o"></i>10 likes</a> <a title="" href="#"
-												class="coments"><i class="fa fa-comment-o"></i>5
-												comments</a>
+											<img style="height: 500px; width: 80%; margin: auto;"
+												alt="..."
+												src="<spring:url value='/image${item.groupDFile }'/>" />
+										</c:otherwise>
+									</c:choose>
+									
+										</figure>
+										<div class="g-post-meta">
+											<div class="post-title">
+												<h4>
+													<a title="" href="#">${item.groupName }</a>
+												</h4>
+												<p>${item.groupInfo }</p>
+												<span class="p-date">by <a href="#" title="">JACK
+														Sparo</a> - 12 hours ago
+												</span>
+											</div>
+											<div class="g-post-ranking">
+												<a title="" href="#" class="likes"><i
+													class="fa fa-heart-o"></i>10 likes</a> <a title="" href="#"
+													class="coments"><i class="fa fa-comment-o"></i>5
+													comments</a>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="g-post-classic">
-									<figure>
-										<img alt="" src="resources/images/resources/bloggrid-4.jpg">
-										<i class="fa fa-video-camera"></i>
-									</figure>
-									<div class="g-post-meta">
-										<div class="post-title">
-											<h4>
-												<a title="" href="#">how to create content that get
-													traffic</a>
-											</h4>
-											<p>We got really awesome shots for the new catalog,
-												Here’s a photo from last month’s photoshoot.</p>
-											<span class="p-date">by <a href="#" title="">JACK
-													Sparo</a> - 12 hours ago
-											</span>
-										</div>
-										<div class="g-post-ranking">
-											<a title="" href="#" class="likes"><i
-												class="fa fa-heart-o"></i>10 likes</a> <a title="" href="#"
-												class="coments"><i class="fa fa-comment-o"></i>5
-												comments</a>
-										</div>
-									</div>
-								</div>
+								</c:forEach>
+
+
 							</div>
 
 							<div class="central-meta">
@@ -519,11 +506,11 @@
 
 <!-- 각 content에서 사용하는 script -->
 <script>
-$(function(){
-	$('.carousel').carousel({
-		interval : 5000
-	})
-});
+	$(function() {
+		$('.carousel').carousel({
+			interval : 5000
+		})
+	});
 </script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
