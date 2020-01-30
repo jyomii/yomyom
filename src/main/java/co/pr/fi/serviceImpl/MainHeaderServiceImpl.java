@@ -28,7 +28,6 @@ public class MainHeaderServiceImpl implements MainHeaderService {
 
 	@Override
 	public List<GGroup> getNotUserCategoryGroup() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getNotUserCategoryGroup();	
 	}
 }

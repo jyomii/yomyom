@@ -21,4 +21,9 @@ public class MainHeaderDAO {
 	public List<GGroup> getUserCategoryGroup(int i) {
 		return sqlSession.selectList("maingroup.BestUserCateogryGroup",i);
 	}
+
+	public List<GGroup> getNotUserCategoryGroup() {
+	
+		return sqlSession.selectList("maingroup.BestNotUserCateogryGroup");
+	}
 }

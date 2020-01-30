@@ -16,8 +16,7 @@
 	</select>
 
 
-	<!-- 메인 모임 목록- 로그인했을 경우 관심 카테고리의 인원 많은 순 -->
-
+	<!-- 메인 추천 목록- 로그인했을 경우 관심 카테고리의 인원 많은 순 -->
 	<select id="BestUserCateogryGroup" resultType="group" parameterType="int">
   <![CDATA[ 
 		select * from ggroup
@@ -33,10 +32,40 @@
 		#{userkey})
 			]]>
 	</select>
+	
+	
+	
+	
+	<!-- 메인 추천 목록- 로그안했을 경우 인원 많은 순 -->
+	<select id="BestNotUserCateogryGroup" resultType="group">
+  <![CDATA[ 
+	select * from ggroup
+
+		where groupkey in (
+		select groupkey from (select groupkey, count(*)
+		from ggroupmember
+		group by groupkey
+		order by count(*) desc)
+		where rownum <= 3)
+
+		and categoryKey in (
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1
+)
+			]]>
+	</select>
 
 	
 	
-	<!-- 추천모임 : 로그인 상태일 경우 : 관심카테고리 중 post 등록개수가 일주일간 제일 많은 순 -->
+	<!-- 모임 목록 : 로그인 상태일 경우 : 관심카테고리 중 post 등록개수가 일주일간 제일 많은 순 -->
 	<select id="recoGroupsUsers" resultType="group" parameterType="int">
 	  <![CDATA[ 
 	select * from 
