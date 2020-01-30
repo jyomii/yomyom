@@ -9,5 +9,7 @@ public interface MessageService {
 	int sendMessage(UserMessage message);
 
 	List<UserMessage> getMyMessage(int key);
+
+	void readMessage(int userKey);
 	
 }

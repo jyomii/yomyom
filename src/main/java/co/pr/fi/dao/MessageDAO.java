@@ -28,4 +28,11 @@ public class MessageDAO {
 		return sqlSession.selectList("message.getMyMessage",key);
 	}
 
+
+
+	public void readMessage(int userKey) {
+		sqlSession.update("message.readMessage",userKey);
+		
+	}
+
 }

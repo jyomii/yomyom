@@ -13,4 +13,8 @@ insert into usermessage values(nvl((select max(mgkey) from
 <select id="getMyMessage" parameterType="int" resultType="usermessage">
 select * from usermessage where mgReceive = #{key} or (mgsend = 0 and mgsort = 'N') order by mgDate desc
  </select>
+ 
+ <update id="readMessage" parameterType="int">
+ update usermessage set checkDate = sysdate where mgReceive = #{userkey} and mgSort != 'D'</update>
 </mapper>
+

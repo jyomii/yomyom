@@ -26,4 +26,11 @@ public class MessageServiceImpl implements MessageService {
 		return dao.getMyMessage(key);
 	}
 
+
+	@Override
+	public void readMessage(int userKey) {
+		dao.readMessage(userKey);
+		
+	}
+
 }
