@@ -17,4 +17,10 @@ public interface MainHeaderService {
 
 	List<GGroup> getNotUserActiveGroupList();
 
+	List<GGroup> getBestGroups(int categorykey, int getCount);
+
+	List<GGroup> getCategoryActiveGroupList(int categorykey);
+
+
+
 }

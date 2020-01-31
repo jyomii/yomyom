@@ -158,7 +158,7 @@ a.add-butn.more-action {
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
 																			data-joindate='${item.userJoinDate}'><img
-																			src="resources/images/resources/friend-avatar9.jpg"
+																			src="resources/images/default.png"
 																			alt=""></a>
 																	</figure>
 																	<div class="pepl-info">
@@ -234,7 +234,7 @@ a.add-butn.more-action {
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
 																			data-joindate='${item.userJoinDate}'><img
-																			src="resources/images/resources/friend-avatar9.jpg"
+																			src="resources/images/default.png"
 																			alt=""></a>
 																	</figure>
 																	<div class="pepl-info">
@@ -308,7 +308,7 @@ a.add-butn.more-action {
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
 																			data-joindate='${item.userJoinDate}'><img
-																			src="resources/images/resources/friend-avatar9.jpg"
+																			src="resources/images/default.png"
 																			alt=""></a>
 																	</figure>
 																	<div class="pepl-info">
@@ -383,7 +383,7 @@ a.add-butn.more-action {
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
 																			data-joindate='${item.userJoinDate}'><img
-																			src="resources/images/resources/friend-avatar9.jpg"
+																			src="resources/images/default.png"
 																			alt=""></a>
 																	</figure>
 																	<div class="pepl-info">
@@ -870,7 +870,7 @@ class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="but
 				html += ' data-gender="'+result[i].gender+'"';
 				html += ' data-joindate="'+result[i].userJoinDate+'"';
 				html += '><img';
-				html += ' src="resources/images/resources/friend-avatar9.jpg"';
+				html += ' src="resources/images/default.png"';
 				html += 'alt=""></a>';
 				html += '</figure>';
 				html += '<div class="pepl-info">';

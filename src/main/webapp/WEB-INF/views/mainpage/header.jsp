@@ -146,7 +146,7 @@
 					<c:choose>
 
 						<c:when test="${empty id }">
-							<img src="resources/images/resources/admin.jpg" alt="">
+							<img src="resources/images/default.png" style="width:40px;" alt="">
 
 							<div class="user-setting" onclick="location.href='login'">
 								<a title=""><i class="ti-pencil-alt"></i>로그인</a>
@@ -158,7 +158,7 @@
 
 							<c:choose>
 								<c:when test="${empty image}">
-									<img src="resources/images/resources/admin.jpg" alt="">
+									<img src="resources/images/default.png" style="width:40px;" alt="">
 								</c:when>
 								<c:otherwise>
 									<img src="<spring:url value='/image${image}'/>" />
@@ -214,6 +214,7 @@
 				
 				$.ajax({
 					url : "allCategory",
+					
 					success : function(result){
 						console.log(result);
 						
@@ -236,10 +237,10 @@
 								if(result.dcategory[i].dcategoryKey == 
 									result.scategory[j].dcategoryKey){
 									tag += '<dd>';
-									tag += '<a href="">'+result.scategory[j].scategoryName+'</a>';
+									tag += '<a href="CateogryMain?categorykey='+result.scategory[j].scategoryKey+'">'+result.scategory[j].scategoryName+'</a>';
 									tag += '</dd>';
 									
-									tag2 +='<li><span><a href="#">'+result.scategory[j].scategoryName+'</a></span></li>';
+									tag2 +='<li><span><a href="CateogryMain?categorykey='+result.scategory[j].scategoryKey+'">'+result.scategory[j].scategoryName+'</a></span></li>';
 								}
 							}
 							tag2 += '</ul>';
