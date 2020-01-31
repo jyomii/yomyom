@@ -128,12 +128,12 @@
 														<ul class="basics">
 															<li><i class="ti-user"></i>${id}</li>
 															<li><i class="ti-pencil"></i>
-															<c:if test="${mypage.userAge == '1'}">10대</c:if>
-															<c:if test="${mypage.userAge == '2'}">20대</c:if>
-															<c:if test="${mypage.userAge == '3'}">30대</c:if>
-															<c:if test="${mypage.userAge == '4'}">40대</c:if>
-															<c:if test="${mypage.userAge == '5'}">50대</c:if>
-															<c:if test="${mypage.userAge == '6'}">60대</c:if>
+															<c:if test="${mypage.userAge == 1}">10대</c:if>
+															<c:if test="${mypage.userAge == 2}">20대</c:if>
+															<c:if test="${mypage.userAge == 3}">30대</c:if>
+															<c:if test="${mypage.userAge == 4}">40대</c:if>
+															<c:if test="${mypage.userAge == 5}">50대</c:if>
+															<c:if test="${mypage.userAge == 6}">60대</c:if>
 															</li>
 															<li><i class="ti-heart"></i>
 															<c:if test="${mypage.gender == 'F'}">여성</c:if>
@@ -145,12 +145,9 @@
 													</div>
 													<div class="tab-pane fade" id="interest" role="tabpanel">
 														<ul class="basics">
-															<input type="hidden" name="userid" value="${id }" id="userid">
-															<li>인터넷</li>
-															<li>등산</li>
-															<li>음악</li>
-															<li>춤</li>
-															<li>게임</li>
+															<c:forEach var="userInterest" items="${userInterest}">
+															<li>${userInterest.sCategoryName}</li>
+															</c:forEach>
 														</ul>
 													</div>
 												</div>
@@ -161,141 +158,52 @@
 										<div class="frnds">
 											<ul class="nav nav-tabs">
 												<li class="nav-item"><a class="active" href="#frends"
-													data-toggle="tab">가입한 모임</a> <span>5</span></li>
+													data-toggle="tab">가입한 모임</a> <span>${joincount}</span></li>
 												<li class="nav-item"><a class="" href="#frends-req"
-													data-toggle="tab">만든 모임</a><span>3</span></li>
+													data-toggle="tab">만든 모임</a><span>${makecount}</span></li>
 											</ul>
 
 											<!-- Tab panes -->
 											<div class="tab-content">
 												<div class="tab-pane active fade show " id="frends">
 													<ul class="nearby-contct">
-
+													<c:forEach var="list" items="${list}">
 														<li>
 															<div class="nearly-pepls">
 																<figure>
-																	<a href="time-line.html" title=""><img
-																		src="resources/images/resources/nearly1.jpg" alt=""></a>
+																	<img src="resources/images/resources/nearly1.jpg" alt=""></a>
 																</figure>
 																<div class="pepl-info">
 																	<h4>
-																		<a href="time-line.html" title="">케즐모</a>
+																		<a href="time-line.html" >${list.groupName }</a>
 																	</h4>
-																	<span>케이팝을 즐기는 모임</span>
-																	<!-- <a href="#" title="" class="add-butn more-action" data-ripple="">unfriend</a> -->
-																	<a href="#" title="" class="add-butn" data-ripple="">모임
-																		탈퇴</a>
-
-																</div>
-																
-															</div>
-														</li>
-														<li>
-															<div class="nearly-pepls">
-																<figure>
-																	<a href="time-line.html" title=""><img
-																		src="resources/images/resources/friend-avatar9.jpg"
-																		alt=""></a>
-																</figure>
-																<div class="pepl-info">
-																	<h4>
-																		<a href="time-line.html" title="">도시탐험가들</a>
-																	</h4>
-																	<span>이곳저곳을 탐방하는 모임입니다</span> <a href="#" title=""
-																		class="add-butn" data-ripple="">모임 탈퇴</a>
+																	<a href="#" title="" class="add-butn" data-ripple="">모임 탈퇴</a>
 																</div>
 															</div>
 														</li>
-														<li>
-															<div class="nearly-pepls">
-																<figure>
-																	<a href="time-line.html" title=""><img
-																		src="resources/images/resources/nearly6.jpg" alt=""></a>
-																</figure>
-																<div class="pepl-info">
-																	<h4>
-																		<a href="time-line.html" title="">365일 춤만 출래 예예예
-																			미러미러미러</a>
-																	</h4>
-																	<span>취미로 춤추는 사람들의 모임</span> <a href="#" title=""
-																		class="add-butn" data-ripple="">모임 탈퇴</a>
-																</div>
-															</div>
-														</li>
-														<li>
-															<div class="nearly-pepls">
-																<figure>
-																	<a href="time-line.html" title=""><img
-																		src="resources/images/resources/nearly2.jpg" alt=""></a>
-																</figure>
-																<div class="pepl-info">
-																	<h4>
-																		<a href="time-line.html" title="">뷰파인더</a>
-																	</h4>
-																	<span>사진 속에 많은 것을 담아내고 싶은 사람들의 모임입니다^^</span> <a
-																		href="#" title="" class="add-butn" data-ripple="">모임
-																		탈퇴</a>
-																</div>
-															</div>
-														</li>
+														</c:forEach>
 													</ul>
-													<div class="lodmore">
-														<button class="btn-view btn-load-more"></button>
-													</div>
 												</div>
 												<!-- 내가 만든 모임 -->
 												<div class="tab-pane fade" id="frends-req">
 													<ul class="nearby-contct">
+													  <c:forEach var="mylist" items="${mylist}">
 														<li>
 															<div class="nearly-pepls">
 																<figure>
-																	<a href="time-line.html" title=""><img
-																		src="resources/images/resources/nearly5.jpg" alt=""></a>
+																	<img src="resources/images/resources/nearly1.jpg" alt=""></a>
 																</figure>
 																<div class="pepl-info">
 																	<h4>
-																		<a href="time-line.html" title="">자연이 좋다!!!</a>
+																		<a href="time-line.html" >${mylist.groupName }</a>
 																	</h4>
-																	<span>산과 강과 들로 나가는 사람들</span> <a href="#" title=""
-																		class="add-butn" data-ripple="">모임 관리</a>
+																	<a href="#" title="" class="add-butn" data-ripple="">모임 설정</a>
 																</div>
 															</div>
 														</li>
-
-														<li>
-															<div class="nearly-pepls">
-																<figure>
-																	<a href="time-line.html" title=""><img
-																		src="resources/images/resources/friend-avatar9.jpg"
-																		alt=""></a>
-																</figure>
-																<div class="pepl-info">
-																	<h4>
-																		<a href="time-line.html" title="">은평구 소모임</a>
-																	</h4>
-																	<span>은평구 동네친구</span> <a href="#" title=""
-																		class="add-butn" data-ripple="">모임 관리</a>
-																</div>
-															</div>
-														</li>
-														<li>
-															<div class="nearly-pepls">
-																<figure>
-																	<a href="time-line.html" title=""><img
-																		src="resources/images/resources/nearly2.jpg" alt=""></a>
-																</figure>
-																<div class="pepl-info">
-																	<h4>
-																		<a href="time-line.html" title="">등산조아</a>
-																	</h4>
-																	<span>주말에 산 오르는 사람들의 모임</span> <a href="#" title=""
-																		class="add-butn" data-ripple="">모임 관리</a>
-																</div>
-															</div>
-														</li>
-
+														</c:forEach>
 													</ul>
-													<button class="btn-view btn-load-more"></button>
+													
 												</div>
 											</div>
 										</div>
@@ -363,6 +271,7 @@
 				</div>
 			</div>
 		</section>
+		
 
     <jsp:include page="../mainpage/footer.jsp"></jsp:include>
 
@@ -421,7 +330,5 @@
 		}//function end
 		console.log("test");
 		getInterests();
+		
 	</script>
-</body>
-
-</html>
