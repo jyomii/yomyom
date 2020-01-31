@@ -13,12 +13,12 @@
 }
 
 .forgroupnamewidth {
-	width: 29%;
+	width: 30%;
 	display: inline-block;
 }
 
 .forgroupnamewidth1 {
-	width: 69%;
+	width: 60%;
 	display: inline-block;
 	position: relative;
 	top: 7px;
@@ -300,31 +300,86 @@ top:-9px;
 	margin-left: 20px;
     width: 55% !important;
 }
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom{
+	margin-bottom: 0px !important;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
 <section>
-	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
+	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
 		type="hidden" id="UserKey" value="${userkey }">
 	<div class="feature-photo">
 		<figure>
 			<img id="groupPageImg"
-				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
+				src="<spring:url value='/image${groupdfile }'/>" alt="" />
 			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
 		</figure>
-		<c:if test="${userinfo.userGrade==1}">
 		<!-- **********모임 대문 사진 수정*********** -->
 		<form class="edit-phto" id="groupMainImgForm"
 			enctype="multipart/form-data" action="group_mainImgUpdate.net"
 			method="post">
-			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
+			<input type="hidden" name="groupkey" value="${groupkey }"> <i
 				class="fa fa-camera-retro"></i>
 			<!-- 대문 사진 수정 버튼 -->
 			<label class="fileContainer"> 대문 사진 수정 <input type="file"
 				name="groupMainImgUpload" />
 			</label>
 		</form>
-		</c:if>
 		<!-- **********모임 대문 사진 수정*********** -->
 
 		<div class="container-fluid height-for-white">
@@ -334,22 +389,20 @@ top:-9px;
 						<!-- 그룹 사진 -->
 						<figure>
 							<img id="groupImg"
-								src="<spring:url value='/image${group.groupCFile }'/>" />
+								src="<spring:url value='/image${groupcfile }'/>" />
 							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 							<!-- **********모임 사진 수정*********** -->
-							<c:if test="${userinfo.userGrade==1}">
 							<form class="edit-phto" id="groupImgForm"
 								enctype="multipart/form-data" action="group_ImgUpdate.net"
 								method="post">
 								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
+									value="${groupkey }"> <i class="fa fa-camera-retro"></i>
 								<!-- 그룹 사진 수정 버튼 -->
 								<label class="fileContainer"> 그룹 사진 수정하기 <input
 									type="file" name="groupImgUpload" />
 								</label>
 								<!-- 그룹 사진 수정 버튼 -->
 							</form>
-							</c:if>
 							<!-- **********모임 사진 수정*********** -->
 						</figure>
 						<!-- 그룹 사진 -->
@@ -361,7 +414,7 @@ top:-9px;
 							<!-- 그룹 이름 -->
 							<ul>
 								<li class="admin-name forgroupname">
-									<h5 class="groupname">${group.groupName}</h5>
+									<h5 class="groupname">${groupname}</h5>
 								</li>
 							</ul>
 							<!-- 그룹 이름 -->
@@ -369,11 +422,10 @@ top:-9px;
 						<div class="forgroupnamewidth1">
 							<!-- 그룹 간단 정보 -->
 							<ul>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
 								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
+								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
 							</ul>
 							<!-- 그룹 간단 정보 -->
 						</div>
@@ -400,18 +452,16 @@ top:-9px;
 									<h4 class="widget-title">게시판</h4>
 									<ul class="naves">
 										<c:forEach var="gbl" items="${groupboardlist }">
-											<li><i class="ti-clipboard"></i> <input type="hidden"
-												value="${gbl.boardType }">
-												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}"
-												title="">${gbl.boardName}</a></li>
-												
+											<li><i class="ti-clipboard"></i> <a href="newsfeed.html"
+												title="">${gbl.boardName}</a> <input type="hidden"
+												value="${gbl.boardType }"></li>
 										</c:forEach>
 									</ul>
 								</div>
 								<!-- 그룹 게시판 위젯 -->
 
 								<!-- 모임 관리 게시판 위젯 -->
-								<c:if test="${userinfo.userGrade==1}">
+								<c:if test="${userkey==groupmasterkey}">
 								<div class="widget">
 									<h4 class="widget-title">모임 관리</h4>
 									<ul class="naves">
@@ -429,7 +479,6 @@ top:-9px;
 								<!-- 모임 관리 게시판 위젯 -->
 
 								<!-- 그룹 카톡방 위젯 -->
-								<c:if test="${not empty group.groupkatalk }">
 								<div class="widget">
 									<div class="banner medium-opacity">
 										<div
@@ -448,7 +497,6 @@ top:-9px;
 										</div>
 									</div>
 								</div>
-								</c:if>
 								<!-- 그룹 카톡방 위젯 -->
 
 								<!-- 그룹 가입 회원 목록 -->
@@ -480,42 +528,11 @@ top:-9px;
 						<div class="col-lg-6">
 
 							<!-- 그룹장 간단 그룹 소개 -->
-							<div class="central-meta item">
-								<div class="user-post">
-									<div class="friend-info">
-										<!-- 그룹 사진 -->
-										<figure>
-											<img src="resources/images/resources/friend-avatar10.jpg"
-												alt="">
-										</figure>
-										<!-- 그룹 사진 -->
-
-										<!-- 그룹 이름-->
-										<div class="friend-name">
-											<ins>
-												<a href="time-line.html" title="">${group.groupName }</a>
-											</ins>
-											<span>모임장 : ${groupmaster}</span>
+							<div class="central-meta">
+										<div class="groups">
+											<span><i class="fa fa-users"></i>모임 일정 게시판</span>
 										</div>
-										<!-- 그룹 이름-->
-
-										<!-- 그룹 소개 본문-->
-										<div class="description">
-											<p>${group.groupInfo}</p>
-										</div>
-										<!-- 그룹 소개 본문-->
-									</div>
-								</div>
-							</div>
-							<!-- 그룹장 간단 그룹 소개 -->
-
-
-							<!-- 그룹 정모 예정 목록 -->
-							<div class="central-meta item">
-								<div class="groups">
-									<span><i class="fa fa-users"></i>예정 모임</span>
-								</div>
-								<ul class="nearby-contct">
+										<ul class="nearby-contct">
 									<c:forEach var="gmtl" items="${groupmeetinglist }" begin="0"
 										end="2">
 										<c:choose>
@@ -527,9 +544,25 @@ top:-9px;
 												<c:set var="l" value="Two" />
 												<c:set var="n" value="2" />
 											</c:when>
-											<c:otherwise>
+											<c:when test="${gmtl.rownum+0 ==3}">
 												<c:set var="l" value="Three" />
 												<c:set var="n" value="3" />
+											</c:when>
+											<c:when test="${gmtl.rownum+0 ==4}">
+												<c:set var="l" value="Four" />
+												<c:set var="n" value="4" />
+											</c:when>
+											<c:when test="${gmtl.rownum+0 ==5}">
+												<c:set var="l" value="Five" />
+												<c:set var="n" value="5" />
+											</c:when>
+											<c:when test="${gmtl.rownum+0 ==6}">
+												<c:set var="l" value="Six" />
+												<c:set var="n" value="6" />
+											</c:when>
+											<c:otherwise>
+												<c:set var="l" value="Seven" />
+												<c:set var="n" value="7" />
 											</c:otherwise>
 										</c:choose>
 										<li>
@@ -604,204 +637,47 @@ top:-9px;
 										</li>
 									</c:forEach>
 								</ul>
-								<!-- photos -->
-							</div>
-							<!-- 그룹 정모 예정 목록 -->
+<!-- 페이지네이션 -->
+										<div class="row row-pagination">
+											<div class="col">
+												<ul class="pagination pagination-sm center-pagination"
+													id="pempty">
 
-							<!-- 그룹 정모 후기 목록 -->
-							<div class="central-meta item">
-								<div class="groups">
-									<span><i class="fa fa-users"></i>정모 후기</span>
-								</div>
-								<br>
-								<div class="user-post">
-									<div class="friend-info">
-										<figure>
-											<img src="resources/images/resources/friend-avatar10.jpg"
-												alt="">
-										</figure>
-										<div class="friend-name">
-											<ins>
-												<a href="time-line.html" title="">이지연</a>
-											</ins>
-											<span>2019년 12월 31일 송년회 후기</span>
-										</div>
-										<div class="post-meta">
-											<img src="resources/images/resources/user-post.jpg" alt="">
-											<div class="we-video-info">
-												<ul>
-
-													<li><span class="views" data-toggle="tooltip"
-														title="views"> <i class="fa fa-eye"></i> <ins>1.2k</ins>
-													</span></li>
-													<li><span class="comment" data-toggle="tooltip"
-														title="Comments"> <i class="fa fa-comments-o"></i>
-															<ins>52</ins>
-													</span></li>
-													<li><span class="like" data-toggle="tooltip"
-														title="like"> <i class="ti-heart"></i> <ins>2.2k</ins>
-													</span></li>
-													<li><span class="dislike" data-toggle="tooltip"
-														title="dislike"> <i class="ti-heart-broken"></i> <ins>200</ins>
-													</span></li>
-													<li class="social-media">
-														<div class="menu">
-															<div class="btn trigger">
-																<i class="fa fa-share-alt"></i>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-html5"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-facebook"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-google-plus"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-twitter"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-css3"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-instagram"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-dribbble"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-pinterest"></i></a>
-																</div>
-															</div>
-
-														</div>
+													<li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
 													</li>
+
+													<li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
+													</li>
+
 												</ul>
 											</div>
-											<div class="description">
-
-												<p>
-													졸잼 <a href="#" title="">#test drive booking !</a> 꽐롸됐어요
-													힘들었어요 그래도 탁구쳤어요
-												</p>
-											</div>
 										</div>
-									</div>
-									<div class="coment-area">
-										<ul class="we-comet">
-											<li>
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
+										<!-- 페이지네이션 -->
+
+										<div class="text-align-center">
+											<form>
+												<div class="checkbox inline-flex margin-Bottom">
+													<label class="search-condition"> <input
+														type="checkbox" id="moneyCheck"><i
+														class="check-box forcheckbox"></i>제목
+													</label> <label class="search-condition"> <input
+														type="checkbox" id="moneyCheck"><i
+														class="check-box forcheckbox"></i>내용
+													</label> <label class="search-condition"> <input
+														type="checkbox" id="moneyCheck"><i
+														class="check-box forcheckbox"></i>제목+내용
+													</label> <label class="search-condition"> <input
+														type="checkbox" id="moneyCheck"><i
+														class="check-box forcheckbox"></i>작성자
+													</label>
 												</div>
-												<div class="we-comment">
-													<div class="coment-head">
-														<h5>
-															<a href="time-line.html" title="">조태석</a>
-														</h5>
-														<span>1 분전</span> <a class="we-reply" href="#"
-															title="Reply"><i class="fa fa-reply"></i></a>
-													</div>
-													<p>힘들었다..</p>
-												</div>
-												<ul>
-													<li>
-														<div class="comet-avatar">
-															<img src="resources/images/resources/comet-2.jpg" alt="">
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5>
-																	<a href="time-line.html" title="">장연지</a>
-																</h5>
-																f <span>1 시간 전</span> <a class="we-reply" href="#"
-																	title="Reply"><i class="fa fa-reply"></i></a>
-															</div>
-															<p>
-																짱힘듬f <a href="#" title="">#Mercedes-Benz</a> 탁구짱
-															</p>
-														</div>
-													</li>
-													<li>
-														<div class="comet-avatar">
-															<img src="resources/images/resources/comet-3.jpg" alt="">
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5>
-																	<a href="time-line.html" title="">고연희</a>
-																</h5>
-																<span>하루 전</span> <a class="we-reply" href="#"
-																	title="Reply"><i class="fa fa-reply"></i></a>
-															</div>
-															<p>일어나보니 탁구장이네요</p>
-														</div>
-													</li>
-												</ul>
-											</li>
-											<li>
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="we-comment">
-													<div class="coment-head">
-														<h5>
-															<a href="time-line.html" title="">Donald Trump</a>
-														</h5>
-														<span>1 week ago</span> <a class="we-reply" href="#"
-															title="Reply"><i class="fa fa-reply"></i></a>
-													</div>
-													<p>
-														we are working for the dance and sing songs. this video is
-														very awesome for the youngster. please vote this video and
-														like our channel <i class="em em-smiley"></i>
-													</p>
-												</div>
-											</li>
-											<li><a href="#" title="" class="showmore underline">더보기</a></li>
-											<li class="post-comment">
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="post-comt-box">
-													<form method="post">
-														<textarea placeholder="댓글을 입력하세요"></textarea>
-														<div class="add-smiles">
-															<span class="em em-expressionless" title="add icon"></span>
-														</div>
-														<div class="smiles-bunch">
-															<i class="em em---1"></i> <i class="em em-smiley"></i> <i
-																class="em em-anguished"></i> <i class="em em-laughing"></i>
-															<i class="em em-angry"></i> <i class="em em-astonished"></i>
-															<i class="em em-blush"></i> <i class="em em-disappointed"></i>
-															<i class="em em-worried"></i> <i
-																class="em em-kissing_heart"></i> <i class="em em-rage"></i>
-															<i class="em em-stuck_out_tongue"></i>
-														</div>
-														<button type="submit"></button>
-													</form>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
+												<br> <input type="text" class="search-text-free"
+													placeholder="검색어를 입력하세요.">
+												<button class="btn btn-primary search-text-btn"
+													type="submit" id="search">검색</button>
+											</form>
+										</div>							
 							</div>
-							<!-- 그룹 정모 후기 목록 -->
 
 						</div>
 						<!-- 그룹 페이지 위젯 중간 -->
@@ -828,7 +704,7 @@ top:-9px;
 								</div>
 								</c:if>
 								<!-- 그룹 로그인 위젯 -->
-								<c:if test="${userkey!=-1}">
+
 								<!-- 그룹 나의 정보 위젯 -->
 								<div class="widget">
 									<h4 class="widget-title">나의 정보</h4>
@@ -838,8 +714,8 @@ top:-9px;
 												src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
 										</figure>
 										<div class="page-meta page-metaclass">
-											<a href="#" title="" class="underline">${userinfo.groupNickname}</a>
-											<span>가입일 : ${userinfo.regdate}</span>
+											<a href="#" title="" class="underline">동선동탁구대장</a>
+											<span>가입일 : 2020년 1월 1일</span>
 											<span><i class="far fa-bell"></i>알림 <em>55</em></span>
 												<span><i class="far fa-file-alt commentmargin"></i>내가 쓴 글 보기 <em>55</em></span>
 												<span><i class="far fa-comment"></i>내가 쓴 댓글 보기 <em>55</em></span>
@@ -856,17 +732,14 @@ top:-9px;
 												<div class="tab-pane active fade show" id="link1">
 													<div>
 														<ul class="your-page-groupList leftpadding">
-															<c:if test="${not empty userreggroup }">
-															<c:forEach var="urg" items="${userreggroup }">
-																<li><img
-																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">${urg.groupname }</a><br><hr class="hrmargin"></li>
-															</c:forEach>
-															</c:if>
-															<c:if test="${empty userreggroup }">
-																<li>가입된 모임이 없습니다.</li>
-															</c:if>
+															<li><img
+																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a><br><hr class="hrmargin"></li>
+															<li><img
+																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a><br><hr class="hrmargin"></li>
+															<li><img
+																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a></li>
 														</ul>
-												<div class="row row-pagination">
+												<div class="row row-pagination" style="padding-top: 0px !important">
 													<div class="col">
 														<ul class="pagination pagination-sm center-pagination"
 															id="pempty">
@@ -892,7 +765,7 @@ top:-9px;
 															<li><img
 																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a></li>
 														</ul>
-												<div class="row row-pagination">
+												<div class="row row-pagination" style="padding-top: 0px !important">
 													<div class="col">
 														<ul class="pagination pagination-sm center-pagination"
 															id="pempty">
@@ -910,7 +783,6 @@ top:-9px;
 										</div>
 									</div>
 								</div>
-								</c:if>
 								<!-- 나의 정보 위젯 -->
 
 								<!-- 그룹별 정모 나의 일정 위젯 -->
@@ -980,6 +852,7 @@ top:-9px;
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	//달력시작==================================================================
+	
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
 	function prevCalendar() {//이전 달
@@ -990,18 +863,13 @@ top:-9px;
 				.getDate());
 		buildCalendar(); //달력 cell 만들어 출력 
 	}
+
 	function nextCalendar() {//다음 달
 		// 다음 달을 today에 값을 저장하고 달력에 today 넣어줌
 		//today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
 		//getMonth()는 현재 달을 받아 오므로 다음달을 출력하려면 +1을 해줘야함
-		var btoday = today.getMonth();
-		today = new Date(today.getFullYear(), today.getMonth()+1, today
+		today = new Date(today.getFullYear(), today.getMonth() + 1, today
 				.getDate());
-		var atoday = today.getMonth();
-		if(atoday-btoday==2){
-			today = new Date(today.getFullYear(), today.getMonth()-1, today
-					.getDate());
-		}
 		buildCalendar();//달력 cell 만들어 출력
 	}
 	function buildCalendar() {//현재 달 달력 만들기
@@ -1022,7 +890,8 @@ top:-9px;
 		//innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
 		//new를 찍지 않아서 month는 +1을 더해줘야 한다. 
 		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
-				+ (today.getMonth()+1) + "월";
+				+ (today.getMonth() + 1) + "월";
+
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
 			//열을 지워줌
@@ -1074,16 +943,14 @@ top:-9px;
 	//달력끝==================================================================
 </script>
 <script>
-buildCalendar();
 $(function() {
+	buildCalendar();
 	var mycalendarlistcount = $('#gclc').val();
 	for(var i = 1; i<=mycalendarlistcount;i++){
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
-	$(".forLoginBtn").click(function(){
-		location.href="login";
-	})
+	
 	$("#calendar").on('click', '#prevcal', function(event) {
 		var userkey = $('#UserKey').val();
 		prevCalendar();
@@ -1117,8 +984,7 @@ $(function() {
 		if (userkey!=-1){
 		var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#thisGroupKey').val();
-        alert(n);
+        var groupkey = $('#hiddenGroupKey').val();
         ajaxJoinBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtljoinbtn');
         $(this).addClass('gmtlcancelbtn');
@@ -1133,7 +999,7 @@ $(function() {
         if (userkey!=-1){
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#thisGroupKey').val();
+        var groupkey = $('#hiddenGroupKey').val();
         ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtlcancelbtn');
         $(this).addClass('gmtljoinbtn');

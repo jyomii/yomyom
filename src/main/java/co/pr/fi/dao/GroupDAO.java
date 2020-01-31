@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import co.pr.fi.domain.GGroupBoard;
+import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
@@ -15,6 +16,7 @@ import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
 import co.pr.fi.domain.Shortschedule;
+import co.pr.fi.domain.UserRegGroup;
 import co.pr.fi.domain.MemberList;
 
 @Repository
@@ -119,5 +121,13 @@ public class GroupDAO {
 
 	public int groupmasterkey(int groupkey) {
 		return sqlSession.selectOne("group.groupmasterkey", groupkey);
+	}
+
+	public GGroupMember groupmember(int userkey) {
+		return sqlSession.selectOne("group.groupmember", userkey);
+	}
+
+	public List<UserRegGroup> userreggroup(int userkey) {
+		return sqlSession.selectList("group.userreggroup", userkey);
 	}
 }

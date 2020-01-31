@@ -25,7 +25,17 @@ public class GGroupMember {
  
  private MultipartFile uploadfile;
  
- public int getGroupKey() {
+ private String regdate; 
+ 
+ public String getRegdate() {
+	return regdate;
+}
+
+public void setRegdate(String regdate) {
+	this.regdate = regdate;
+}
+
+public int getGroupKey() {
      return groupKey;
  }
 

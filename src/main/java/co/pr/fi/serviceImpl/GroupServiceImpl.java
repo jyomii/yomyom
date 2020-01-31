@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.GroupDAO;
 import co.pr.fi.domain.GGroupBoard;
+import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
@@ -16,6 +17,7 @@ import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
 import co.pr.fi.domain.Shortschedule;
+import co.pr.fi.domain.UserRegGroup;
 import co.pr.fi.service.GroupService;
 import co.pr.fi.domain.MemberList;
 
@@ -27,7 +29,15 @@ public class GroupServiceImpl implements GroupService {
 	
 	@Override
 	public GGroup groupInfo(int groupkey) {
-		return dao.groupinfo(groupkey);
+		GGroup groupinfo = dao.groupinfo(groupkey);
+		
+		String date = groupinfo.getGroupDate();
+		String year = date.substring(0,4)+"년 ";  
+		String month = date.substring(5,7)+"월 ";
+		String day = date.substring(8,10)+"일";
+		String tdate = year+month+day;
+		groupinfo.setGroupDate(tdate);
+		return groupinfo;
 	}
 
 	
@@ -231,12 +241,28 @@ public class GroupServiceImpl implements GroupService {
 		return dao.userkey(id);
 	}
 
-
 	@Override
 	public int groupmasterkey(int groupkey) {
 		return dao.groupmasterkey(groupkey);
 	}
-
-
 	
+	@Override
+	public GGroupMember groupmember(int userkey) {
+		GGroupMember groupmember = dao.groupmember(userkey);
+		if(userkey!=-1) {
+		String date = groupmember.getRegdate();
+		String year = date.substring(0,4)+"년 ";  
+		String month = date.substring(5,7)+"월 ";
+		String day = date.substring(8,10)+"일";
+		String tdate = year+month+day;
+		groupmember.setRegdate(tdate);
+		}
+		return groupmember;
+	}
+
+
+	@Override
+	public List<UserRegGroup> userreggroup(int userkey) {
+		return dao.userreggroup(userkey);
+	}
 }
