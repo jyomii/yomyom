@@ -3,12 +3,14 @@ package co.pr.fi.service;
 import java.util.List;
 
 import co.pr.fi.domain.GGroupBoard;
+import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
 import co.pr.fi.domain.Shortschedule;
+import co.pr.fi.domain.UserRegGroup;
 import co.pr.fi.domain.MemberList;
 
 public interface GroupService {
@@ -57,4 +59,8 @@ public interface GroupService {
 	public GUsers userkey(String id);
 
 	public int groupmasterkey(int groupkey);
+
+	public GGroupMember groupmember(int userkey);
+
+	public List<UserRegGroup> userreggroup(int userkey);
 }

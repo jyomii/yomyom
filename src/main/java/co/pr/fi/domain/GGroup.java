@@ -61,9 +61,19 @@ public class GGroup {
  //모임 지역 이름(조인)
  private String locationName; 
  
+ private String groupkatalk;
+ 
  private MultipartFile groupMainImgUpload;
  private MultipartFile groupImgUpload;
  
+public String getGroupkatalk() {
+	return groupkatalk;
+}
+
+public void setGroupkatalk(String groupkatalk) {
+	this.groupkatalk = groupkatalk;
+}
+
 public MultipartFile getGroupMainImgUpload() {
 	return groupMainImgUpload;
 }
