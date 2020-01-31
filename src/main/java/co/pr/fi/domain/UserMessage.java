@@ -1,6 +1,7 @@
 package co.pr.fi.domain;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 //알람내역 
 public class UserMessage {
@@ -15,24 +16,35 @@ public class UserMessage {
  private String mgContent;
 
  // 날짜 
- private Date mgDate;
+ private LocalDateTime mgDate;
 
  // 받는유저키값 
  private int mgReceive;
 
  // 보낸유저키값 
  private int mgSend;
+ 
+ private Date checkDate;
+ 
 
  
  
- @Override
-public String toString() {
-	return "UserMessage [mgKey=" + mgKey + ", mgSort=" + mgSort + ", mgContent=" + mgContent + ", mgDate=" + mgDate
-			+ ", mgReceive=" + mgReceive + ", mgSend=" + mgSend + ", getMgKey()=" + getMgKey() + ", getMgSort()="
-			+ getMgSort() + ", getMgContent()=" + getMgContent() + ", getMgDate()=" + getMgDate() + ", getMgReceive()="
-			+ getMgReceive() + ", getMgSend()=" + getMgSend() + ", getClass()=" + getClass() + ", hashCode()="
-			+ hashCode() + ", toString()=" + super.toString() + "]";
+ public LocalDateTime getMgDate() {
+	return mgDate;
 }
+
+public void setMgDate(LocalDateTime mgDate) {
+	this.mgDate = mgDate;
+}
+
+public Date getCheckDate() {
+	return checkDate;
+}
+
+public void setCheckDate(Date checkDate) {
+	this.checkDate = checkDate;
+}
+
 
 public int getMgKey() {
      return mgKey;
@@ -58,13 +70,7 @@ public int getMgKey() {
      this.mgContent = mgContent;
  }
 
- public Date getMgDate() {
-     return mgDate;
- }
-
- public void setMgDate(Date mgDate) {
-     this.mgDate = mgDate;
- }
+ 
 
  public int getMgReceive() {
      return mgReceive;
@@ -82,14 +88,5 @@ public int getMgKey() {
      this.mgSend = mgSend;
  }
 
- // UserMessage 모델 복사
- public void CopyData(UserMessage param)
- {
-     this.mgKey = param.getMgKey();
-     this.mgSort = param.getMgSort();
-     this.mgContent = param.getMgContent();
-     this.mgDate = param.getMgDate();
-     this.mgReceive = param.getMgReceive();
-     this.mgSend = param.getMgSend();
- }
+
 }

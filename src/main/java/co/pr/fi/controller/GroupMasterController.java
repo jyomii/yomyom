@@ -268,7 +268,7 @@ public class GroupMasterController {
 		mv.addObject("dcategory", dcategory);
 		mv.addObject("scategory", scategory);
 
-		mv.setViewName("group_create");
+		mv.setViewName("group/group_create");
 		return mv;
 
 	}

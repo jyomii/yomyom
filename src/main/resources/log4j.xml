@@ -10,6 +10,12 @@
 		</layout>
 	</appender>
 	
+	
+	<!-- search -->
+	<logger name = "search">
+		<level value = "trace"/>
+	</logger>
+	
 	<!-- post -->
 	<logger name = "post">
 		<level value = "trace"/>
@@ -40,6 +46,10 @@
 		<level value = "trace"/>
 	</logger>
 	
+    <!-- mypage -->
+	<logger name = "Mypages">
+		<level value = "trace"/>
+	</logger>
 	
 	<!-- Application Loggers -->
 	<logger name="co.pr.fi">

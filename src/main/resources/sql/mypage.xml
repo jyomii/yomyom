@@ -4,18 +4,43 @@
 <mapper namespace="Mypages">
 
 	<select id="info" resultType="member" parameterType="String">
-		select * from gusers 
-		where userid = #{id}
+	 select g.userId, g.userAge, g.gender, g.userEmail, l.sWhere || l.dwhere as locationName, g.userJoinDate, userLocation
+     from GUsers g, GLocation l
+		where userId = #{id}
+		and locationKey=(select userLocation from GUsers where userId = #{id})
 	</select>
 
-	<update id="update" parameterType="member">
-	    update gusers
-	    set userage = #{userage}, userlocation = #{userlocation},
-	        gender = #{gender}, useremail = #{useremail},
-	        userjoindate = #{userjoindate}
-	    where userid = #{id}
+	<update id="update" parameterType="member" >
+	    update GUsers
+	    set userPassword = #{userPassword}, userAge = #{userAge}, userLocation = #{userLocation},
+	        gender = #{gender}, userEmail = #{userEmail}, userOptionGroup = #{userOptionGroup}
+	    where userId = #{userId}
 	</update>
 
-
+    <select id="joingroup" resultType="group" parameterType="String">
+        SELECT GROUPKEY, GROUPNAME, GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE
+        FROM GGROUP G WHERE GROUPKEY IN (SELECT M.GROUPKEY AS GROUPKEY FROM GGROUPMEMBER M WHERE USERKEY = (SELECT USERKEY FROM GUSERS WHERE USERID = #{id})
+		) OR USERKEY IN (SELECT USERKEY FROM GUSERS WHERE USERID = #{id}) 
+        ORDER BY GROUPDATE DESC
+    </select>
+    
+     <select id="makegroup" resultType="group" parameterType="String">
+         SELECT GROUPKEY, GROUPNAME, GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE
+         FROM GGROUP G WHERE USERKEY IN (SELECT USERKEY FROM GUSERS WHERE USERID = #{id})
+         ORDER BY GROUPDATE DESC
+    </select>
+	
+	<select id="joincount" resultType="int" parameterType="String">
+	      select count(*) from GGroup where groupKey IN (select groupKey from GGroupMember where userKey = (select userKey from GUsers where userId = #{id}))
+	                                        OR USERKEY = (SELECT USERKEY FROM GUSERS WHERE USERID = #{id}) 
+	</select>
+	
+	<select id="makecount" resultType="int" parameterType="String">
+	      select count(*) from GGroup where userKey = (select userKey from GUsers where userId = #{id})
+	</select>
+	
+	<select id="userInterest" resultType="scategory" parameterType="String">
+	      select * from GCategory2 where sCategoryKey IN (select categoryKey from GUserCategory where userKey = (select userKey from GUsers where userId = #{id}))
+	</select>
 	
 </mapper>

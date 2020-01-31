@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="maingroup">
+
+	<!-- 메인 베스트 모임 인원순 많은 순, 로그인 여부 상관 없음 -->
+	<select id="bestMainGroup" resultType="group">
+		   <![CDATA[ 
+		select * from ggroup where groupkey in (
+				select groupkey from (select groupkey, count(*)
+				from ggroupmember 
+				group by groupkey 
+				order by count(*) desc)
+		where rownum <= 3)
+			]]>
+	</select>
+
+
+	<!-- 추천 모임- 로그인했을 경우 관심 카테고리의 인원 많은 순 -->
+	<select id="BestUserCateogryGroup" resultType="group" parameterType="int">
+  <![CDATA[ 
+		
+select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
+(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey group by groupkey) memberCount
+from ggroup
+
+		where groupkey in (
+		select groupkey from (select groupkey, count(*)
+		from ggroupmember
+		group by groupkey
+		order by count(*) desc)
+		where rownum <= 3)
+
+		and categoryKey in (select categoryKey from gusercategory where userkey =
+		#{userkey})
+			]]>
+	</select>
+
+	<!-- 추천 모임- 로그안했을 경우 랜덤 카테고리 중 인원 많은 순 -->
+	<select id="BestNotUserCateogryGroup" resultType="group">
+  <![CDATA[ 
+	
+select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
+(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey group by groupkey) memberCount
+ from ggroup
+
+		where groupkey in (
+		select groupkey from (select groupkey, count(*)
+		from ggroupmember
+		group by groupkey
+		order by count(*) desc)
+		where rownum <= 3)
+
+		and categoryKey in (
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
+		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1
+)
+			]]>
+	</select>
+
+	
+	
+	<!-- 모임 목록 : 로그인 상태일 경우 : 관심카테고리 중 post 등록개수가 일주일간 제일 많은 순 -->
+	<select id="getUserCategoryActiveGroupList" resultType="group" parameterType="int">
+	  <![CDATA[ 	
+	  select * from (select ggroup.*, (select count(*) from post
+						  where post.groupkey = ggroup.groupkey and postdate between sysdate-7 and sysdate-1
+						  group by post.groupkey) pcount
+						  
+						  from 
+				(select * from ggroup
+					      where categoryKey
+						  in (select categoryKey from gusercategory where userkey = #{userkey})) ggroup
+						  
+						  order by pcount desc
+						  ) where rownum < 5
+					
+]]>
+	</select>
+
+
+
+<!-- <모임 목록 : 로그인 상태가 아닐 경우 : 모든 모임 중 post 등록개수가 일주일간 제일 많은 수 -->
+<select id="getNotUserActiveGroupList" resultType="group">
+  <![CDATA[ 
+	 select * from (select ggroup.*, (select count(*) from post
+						  where post.groupkey = ggroup.groupkey and postdate between sysdate-7 and sysdate-1
+						  group by post.groupkey) pcount
+						  
+						  from 
+							 ggroup
+						  
+						  order by pcount desc
+						  ) where rownum < 5
+]]>
+</select>
+</mapper>
