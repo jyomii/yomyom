@@ -1,6 +1,8 @@
 package co.pr.fi.controller;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.pr.fi.domain.GCategory2;
+import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.service.MemberService;
 import co.pr.fi.service.MyPageService;
@@ -41,8 +45,33 @@ public class MyPageController {
 	          HttpServletRequest request, ModelAndView mv) throws Exception {
 		  String id = (String) session.getAttribute("id");
 	      GUsers user = myPageService.userinfo(id);
+	      
+	      //가입한 모임
+	      List<GGroup> groupList = new ArrayList<GGroup>();
+	      groupList = myPageService.userJoinGroup(id);
+	      
+	      //만든 모임
+	      List<GGroup> mygroupList = new ArrayList<GGroup>();
+	      mygroupList = myPageService.userMakeGroup(id);
+	      
+	      //가입 모임 수
+	      int joincount = myPageService.joincount(id);
+	      
+	      //만든 모임 수
+	      int makecount = myPageService.makecount(id);
+	      
+	      //선택한 관심사
+	      List<GCategory2> userInterest = new ArrayList<GCategory2>();
+	      userInterest = myPageService.userInterest(id);
+	      System.out.println("#################"+userInterest.get(0).getSCategoryName());
+	      
 	      mv.setViewName("mypage/mypage");
 	      mv.addObject("mypage", user);
+	      mv.addObject("list", groupList);
+	      mv.addObject("mylist", mygroupList);
+	      mv.addObject("joincount", joincount);
+	      mv.addObject("makecount", makecount);
+	      mv.addObject("userInterest", userInterest);
 	      return mv;
 	   }
 	  
@@ -66,6 +95,12 @@ public class MyPageController {
 	       String id = (String) session.getAttribute("id");
 	       user.setUserId(id);
 	       
+	       //모임 초대 여부
+	       if (user.getUserOptionGroup() == null)
+	    	   user.setUserOptionGroup("N");
+			else
+				user.setUserOptionGroup("Y");
+	       
 	       //비밀번호 암호화처리
 	       //일반 가입자일 경우 패스워드encoding
 	       String encPassword = passwordEncoder.encode(user.getUserPassword());
@@ -85,5 +120,7 @@ public class MyPageController {
 	       out.close();
 	      return null;
 	   }
+	    
+	   
 	   
 }

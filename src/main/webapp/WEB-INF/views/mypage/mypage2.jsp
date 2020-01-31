@@ -105,12 +105,12 @@
 										<form method="post" action="updateprocess">
 										<c:if test="${logintype == 0 }">
 											<div class="form-group half">	
-											  <input type="text" id="userPassword" name="userPassword" required="required"/>
+											  <input type="text" id="inputPassword" name="userPassword" required="required"/>
 											  <label class="control-label" for="input">비밀번호</label><i class="mtrl-select"></i>
 											</div>
 										    
 											<div class="form-group">	
-											  <input type="text" id="input" value="${mypage.userEmail}" name="userEmail" required="required"/>
+											  <input type="text" id="inputEmail" value="${mypage.userEmail}" name="userEmail" required="required"/>
 											  <label class="control-label" for="input">이메일</label><i class="mtrl-select"></i>
 											</div>
 									        <div class="dob">
@@ -431,33 +431,36 @@
 								        <c:if test="${logintype == 1 }">
 											<div class="dob">
 												<div class="form-group">
-													<select>
+												<input type="hidden" id="inputAge" value="${mypage.userAge}"  required="required"/>
+													<select name="userAge" >
 														<option value="연령대">연령대</option>
-														  <option>10</option>
-														  <option>20</option>
-														  <option>30</option>
-														  <option>40</option>
-														  <option>50</option>
-														  <option>60</option>
+														  <option value="1" <c:if test="${mypage.userAge == 1}">selected='selected'</c:if>>10</option>
+														  <option value="2" <c:if test="${mypage.userAge == 2}">selected='selected'</c:if>>20</option>
+														  <option value="3" <c:if test="${mypage.userAge == 3}">selected='selected'</c:if>>30</option>
+														  <option value="4" <c:if test="${mypage.userAge == 4}">selected='selected'</c:if>>40</option>
+														  <option value="5" <c:if test="${mypage.userAge == 5}">selected='selected'</c:if>>50</option>
+														  <option value="6" <c:if test="${mypage.userAge == 6}">selected='selected'</c:if>>60</option>
 													</select>
 												</div>
-										
 											</div>
 											<div class="form-radio">
+											<input type="hidden" id="inputGender" value="${mypage.gender}" required="required"/>
 											  <div class="radio">
 												<label>
-												  <input type="radio" checked="checked" name="radio"><i class="check-box"></i>남
+												  <input type="radio" name="gender" value="M" <c:if test="${mypage.gender == 'M'}">checked='checked'</c:if>><i class="check-box"></i>남
 												</label>
 											  </div>
 											  <div class="radio">
 												<label>
-												  <input type="radio" name="radio"><i class="check-box"></i>여
+												  <input type="radio" name="gender" value="F" <c:if test="${mypage.gender == 'F'}">checked='checked'</c:if>><i class="check-box"></i>여
 												</label>
 											  </div>
 											</div>
 										
 											<div class="form-group">	
-											  <label> 지역 <select id="nogada2" name="location">
+											<input type="hidden" id="inputLoc" value="${mypage.userLocation}">
+											  <label>지역 
+											  <select id="nogada1" name="userLocation">
 												<option value="1">서울특별시</option>
 												<option value="2">서울특별시 종로구</option>
 												<option value="3">서울특별시 중구</option>
@@ -734,6 +737,7 @@
 											<div class="setting-row">
 												<span>모임 초대 허용</span>
 												<p>다른 회원으로부터 모임 초대를 받으시겠습니까?</p>
+												<input type="hidden" id="input" value="${mypage.userOptionGroup}" name="userOptionGroup" required="required"/>
 												<input type="checkbox" id="switch00" /> 
 												<label for="switch00" data-on-label="ON" data-off-label="OFF"></label>
 											</div>
@@ -811,7 +815,9 @@
 			</form>
 		</div><!-- side panel -->		
 	
+	
 	<script>
+
     $(function(){
     	//회원 지역
     	var loc = $("#inputLoc").val();
@@ -823,11 +829,42 @@
     	//
     	var invite = $("#switch00").val();
     	console.log(invite);
-    	
-    	if(invite == 'ON'){
-    		$("#switch00>label")
-    	}
-    });
+    
+    
+    
+    //유효성
+    var checkPassword = false;
+	var checkEmail = false;
+    
+	//비밀번호
+    $('#inputPassword').keyup(function() {
+		var password = $(this).val();
+        console.log(password);
+		//5글자 이상, 12글자 이하 영숫자포함
+		var req = /^\w{5,12}$/;
+		var label = $('#inputPassword');
+
+		if (req.test(password)) {
+			checkPassword = true;
+		} else {
+			checkPassword = false;
+			label.text('영숫자로 5글자 이상 12글자 이하로 작성하세요.');
+		}
+	});
+
+    //이메일
+	$('#inputEmail').keyup(function() {
+  		var email = $(this).val();
+		var req = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		var label = $('#inputEmail');
+			if (req.test(email)) {
+				checkEmail = true;
+			    label.text('Email');
+			} else {
+				checkEmail = false;
+			    label.text('올바른 이메일을 입력하세요.');
+			}
+	});
     
     //회원 정보 수정 이동
 	$(".jungbo").click(function(){
@@ -844,13 +881,14 @@
 		location.href="mypage";
 		return false;
 	});
-    </script>	
-		
+	
+    });
+
+	</script>	
+	
+	
 	<jsp:include page="../mainpage/footer.jsp" />
 	
 	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 	<script src="resources/js/map-init.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
-</body>	
-
-</html>
