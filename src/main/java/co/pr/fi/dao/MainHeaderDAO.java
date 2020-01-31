@@ -26,4 +26,12 @@ public class MainHeaderDAO {
 	
 		return sqlSession.selectList("maingroup.BestNotUserCateogryGroup");
 	}
+
+	public List<GGroup> getUserCategoryActiveGroupList(int userKey) {
+		return sqlSession.selectList("maingroup.getUserCategoryActiveGroupList",userKey);
+	}
+
+	public List<GGroup> getNotUserActiveGroupList() {
+		return sqlSession.selectList("maingroup.getNotUserActiveGroupList");
+	}
 }

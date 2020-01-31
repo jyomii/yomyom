@@ -30,4 +30,14 @@ public class MainHeaderServiceImpl implements MainHeaderService {
 	public List<GGroup> getNotUserCategoryGroup() {
 		return dao.getNotUserCategoryGroup();	
 	}
+
+	@Override
+	public List<GGroup> getUserCategoryActiveGroupList(int userKey) {
+		return dao.getUserCategoryActiveGroupList(userKey);	
+	}
+
+	@Override
+	public List<GGroup> getNotUserActiveGroupList() {
+		return dao.getNotUserActiveGroupList();	
+	}
 }

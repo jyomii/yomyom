@@ -52,22 +52,35 @@ public class MainHeaderController {
 		List<GGroup> bestgroup = mainHeaderService.getBestGroups();
 		
 		List<GGroup> reList;
-		//모임 목록 : 관심 카테고리 목록중에서 인원수 제일 많은 모임 리스트 5개
+		List<GGroup> groupList;
+		
+		
+		GUsers gUsers = null; 
+		//추천 : 관심 카테고리 목록중에서 인원수 제일 많은 모임 리스트 5개
 		//로그인상태가 아니면 랜덤 카테고리 모임 5개
+		
+		//모임 목록 : 관심 카테고리 중 post 등록개수가 일주일간 제일 많은 수
+				//로그인 상태가 아니면 모든 모임에서 ~
+				
+		
 		if(session.getAttribute("id") != null) {
-			GUsers gUsers = memberService.getUsers((String)session.getAttribute("id"));
+			gUsers = memberService.getUsers((String)session.getAttribute("id"));
 			reList = mainHeaderService.getUserCategoryGroup(gUsers.getUserKey());
+			groupList = mainHeaderService.getUserCategoryActiveGroupList(gUsers.getUserKey());
 		}else {
 			reList = mainHeaderService.getNotUserCategoryGroup();
+			groupList = mainHeaderService.getNotUserActiveGroupList();
 		}
 		
-		//추천모임 : 관심 카테고리 중 post 등록개수가 일주일간 제일 많은 수
 		
 		
 		mv.setViewName("mainpage/main2");
 		mv.addObject("bestgroup",bestgroup);
 		mv.addObject("reList",reList);
-		
+		mv.addObject("groupList",groupList);
+		mv.addObject("dcategory", categoryService.getDCategory());
+		mv.addObject("scategory", categoryService.getSCategory());
+		mv.addObject("userInfo",gUsers);
 		return mv;
 	}
 

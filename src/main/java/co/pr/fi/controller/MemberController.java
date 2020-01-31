@@ -48,30 +48,31 @@ public class MemberController {
 
 	@Autowired
 	MessageService messageService;
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
+
 	@Autowired
 	private KakaoAPI kakao;
 
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 
-	
-	
-	
 	@ResponseBody
 	@GetMapping("/getMyMessage")
-	public List<UserMessage> getMyMessage(HttpSession session){
-		GUsers users = memberService.getUsers((String)session.getAttribute("id"));
-		return messageService.getMyMessage(users.getUserKey());
+	public List<UserMessage> getMyMessage(HttpSession session) {
+		if (session.getAttribute("id") != null) {
+			GUsers users = memberService.getUsers((String) session.getAttribute("id"));
+			return messageService.getMyMessage(users.getUserKey());
+		}
+
+		return null;
 	}
-	
+
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
-		if(session.getAttribute("access_Token") != null)
-		kakao.kakaoLogout((String) session.getAttribute("access_Token"));
+		if (session.getAttribute("access_Token") != null)
+			kakao.kakaoLogout((String) session.getAttribute("access_Token"));
 		session.invalidate();
 		return "redirect:main2";
 	}
@@ -105,25 +106,25 @@ public class MemberController {
 			// 있으면 바로 로그인
 			if (checkId != null) {
 
-				
 				// 일반계정
 				if (checkId.getUserStatus() == 0) {
-					
+
 					session.setAttribute("id", id);
 					session.setAttribute("logintype", 1); // 0: 일반 1: kakao 2: naver 3. facebook
 					session.setAttribute("access_token", access_Token);
-					
-					return "redirect:admin";
+
+					return "redirect:main2";
 					// 탈퇴예정
-				}  else if (checkId.getUserStatus() == 1) {
+				} else if (checkId.getUserStatus() == 1) {
 					// 탈퇴 예정
 					resp.setContentType("text/html; charset=utf-8");
 					PrintWriter out = resp.getWriter();
 					out.println(
 							"<script src='http://code.jquery.com/jquery-latest.min.js'></script><script>var check = confirm('탈퇴 처리중인 계정입니다. 복구하시겠습니까?');"
-									+ "if(check){ " + "$.ajax({url:'restoreUser'," + "data:{'key':" + checkId.getUserKey() + "},"
-									+ "success : function(result){ if(result == 1){alert('복구되었습니다. 다시한번 로그인해주세요.'); }location.href='login';}})" + " } "
-									+ "</script>");
+									+ "if(check){ " + "$.ajax({url:'restoreUser'," + "data:{'key':"
+									+ checkId.getUserKey() + "},"
+									+ "success : function(result){ if(result == 1){alert('복구되었습니다. 다시한번 로그인해주세요.'); }location.href='login';}})"
+									+ " } " + "</script>");
 					out.close();
 					return null;
 				} else if (checkId.getUserStatus() == 2) {
@@ -141,9 +142,6 @@ public class MemberController {
 					return null;
 				}
 
-
-				
-
 			} else {
 				// 1회성 파라미터 전달용
 				rttr.addFlashAttribute("id", id);
@@ -159,9 +157,6 @@ public class MemberController {
 
 	}
 
-	
-	
-	
 	@GetMapping("/login")
 	public ModelAndView login(ModelAndView m, HttpServletRequest request, HttpSession session) {
 
@@ -178,7 +173,7 @@ public class MemberController {
 		m.addObject("dcategory", dcategory);
 		m.addObject("scategory", scategory);
 		m.setViewName("landing");
-		
+
 		return m;
 	}
 
@@ -308,10 +303,9 @@ public class MemberController {
 
 		// 해당 id 객체 가져오기
 		GUsers user = memberService.getUsers(id);
-		
-		
-		if(user == null) {
-			
+
+		if (user == null) {
+
 			res.setContentType("text/html; charset=utf-8");
 			PrintWriter out = res.getWriter();
 			out.println("<script>alert('정보가 없습니다.');history.back();</script>");
@@ -319,7 +313,7 @@ public class MemberController {
 
 			return null;
 		}
-		
+
 		System.out.println("password : " + user.getUserPassword());
 		if (passwordEncoder.matches(password, user.getUserPassword())) {
 

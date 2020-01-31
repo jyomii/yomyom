@@ -13,4 +13,8 @@ public interface MainHeaderService {
 
 	List<GGroup> getNotUserCategoryGroup();
 
+	List<GGroup> getUserCategoryActiveGroupList(int userKey);
+
+	List<GGroup> getNotUserActiveGroupList();
+
 }
