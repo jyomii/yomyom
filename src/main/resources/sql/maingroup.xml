@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="maingroup">
 
-	<!-- 메인 베스트 모임 인원순 많은 순, 로그인 안했을경우 모임 목록도 이걸로 하기 -->
+	<!-- 메인 베스트 모임 인원순 많은 순, 로그인 여부 상관 없음 -->
 	<select id="bestMainGroup" resultType="group">
 		   <![CDATA[ 
 		select * from ggroup where groupkey in (
@@ -16,10 +16,13 @@
 	</select>
 
 
-	<!-- 메인 추천 목록- 로그인했을 경우 관심 카테고리의 인원 많은 순 -->
+	<!-- 추천 모임- 로그인했을 경우 관심 카테고리의 인원 많은 순 -->
 	<select id="BestUserCateogryGroup" resultType="group" parameterType="int">
   <![CDATA[ 
-		select * from ggroup
+		
+select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
+(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey group by groupkey) memberCount
+from ggroup
 
 		where groupkey in (
 		select groupkey from (select groupkey, count(*)
@@ -32,14 +35,14 @@
 		#{userkey})
 			]]>
 	</select>
-	
-	
-	
-	
-	<!-- 메인 추천 목록- 로그안했을 경우 인원 많은 순 -->
+
+	<!-- 추천 모임- 로그안했을 경우 랜덤 카테고리 중 인원 많은 순 -->
 	<select id="BestNotUserCateogryGroup" resultType="group">
   <![CDATA[ 
-	select * from ggroup
+	
+select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
+(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey group by groupkey) memberCount
+ from ggroup
 
 		where groupkey in (
 		select groupkey from (select groupkey, count(*)
@@ -66,36 +69,37 @@
 	
 	
 	<!-- 모임 목록 : 로그인 상태일 경우 : 관심카테고리 중 post 등록개수가 일주일간 제일 많은 순 -->
-	<select id="recoGroupsUsers" resultType="group" parameterType="int">
-	  <![CDATA[ 
-	select * from 
- 
+	<select id="getUserCategoryActiveGroupList" resultType="group" parameterType="int">
+	  <![CDATA[ 	
+	  select * from (select ggroup.*, (select count(*) from post
+						  where post.groupkey = ggroup.groupkey and postdate between sysdate-7 and sysdate-1
+						  group by post.groupkey) pcount
+						  
+						  from 
 				(select * from ggroup
 					      where categoryKey
-						  in (select categoryKey from gusercategory where userkey = #{userkey})) ggroup,
-
-				(select groupkey, count(*) postcount from post
-						  where postdate between sysdate-7 and sysdate-1
-						  group by groupkey order by postcount desc) post
+						  in (select categoryKey from gusercategory where userkey = #{userkey})) ggroup
 						  
-where ggroup.groupkey = post.groupkey and rownum < 5;
+						  order by pcount desc
+						  ) where rownum < 5
+					
 ]]>
 	</select>
 
 
 
-<!-- <추천모임 로그인 상태가 아닐 경우 : 모든 모임 중 post 등록개수가 일주일간 제일 많은 수 -->
-<select id="recoGroupsNotUsers">
+<!-- <모임 목록 : 로그인 상태가 아닐 경우 : 모든 모임 중 post 등록개수가 일주일간 제일 많은 수 -->
+<select id="getNotUserActiveGroupList" resultType="group">
   <![CDATA[ 
-	select * from 
- 
-				 ggroup,
-
-				(select groupkey, count(*) postcount from post
-						  where postdate between sysdate-7 and sysdate-1
-						  group by groupkey order by postcount desc) post
+	 select * from (select ggroup.*, (select count(*) from post
+						  where post.groupkey = ggroup.groupkey and postdate between sysdate-7 and sysdate-1
+						  group by post.groupkey) pcount
 						  
-				where ggroup.groupkey = post.groupkey and rownum < 5;
+						  from 
+							 ggroup
+						  
+						  order by pcount desc
+						  ) where rownum < 5
 ]]>
 </select>
 </mapper>
