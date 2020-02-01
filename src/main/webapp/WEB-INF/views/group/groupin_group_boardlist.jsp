@@ -13,12 +13,12 @@
 }
 
 .forgroupnamewidth {
-	width: 30%;
+	width: 29%;
 	display: inline-block;
 }
 
 .forgroupnamewidth1 {
-	width: 60%;
+	width: 69%;
 	display: inline-block;
 	position: relative;
 	top: 7px;
@@ -357,29 +357,35 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
+
+.boardListRight {
+	float: right;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
 <section>
-	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
+	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
 		type="hidden" id="UserKey" value="${userkey }">
 	<div class="feature-photo">
 		<figure>
 			<img id="groupPageImg"
-				src="<spring:url value='/image${groupdfile }'/>" alt="" />
+				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
 			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
 		</figure>
+		<c:if test="${userinfo.userGrade==1}">
 		<!-- **********모임 대문 사진 수정*********** -->
 		<form class="edit-phto" id="groupMainImgForm"
 			enctype="multipart/form-data" action="group_mainImgUpdate.net"
 			method="post">
-			<input type="hidden" name="groupkey" value="${groupkey }"> <i
+			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
 				class="fa fa-camera-retro"></i>
 			<!-- 대문 사진 수정 버튼 -->
 			<label class="fileContainer"> 대문 사진 수정 <input type="file"
 				name="groupMainImgUpload" />
 			</label>
 		</form>
+		</c:if>
 		<!-- **********모임 대문 사진 수정*********** -->
 
 		<div class="container-fluid height-for-white">
@@ -389,20 +395,22 @@ top:-9px;
 						<!-- 그룹 사진 -->
 						<figure>
 							<img id="groupImg"
-								src="<spring:url value='/image${groupcfile }'/>" />
+								src="<spring:url value='/image${group.groupCFile }'/>" />
 							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 							<!-- **********모임 사진 수정*********** -->
+							<c:if test="${userinfo.userGrade==1}">
 							<form class="edit-phto" id="groupImgForm"
 								enctype="multipart/form-data" action="group_ImgUpdate.net"
 								method="post">
 								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${groupkey }"> <i class="fa fa-camera-retro"></i>
+									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
 								<!-- 그룹 사진 수정 버튼 -->
 								<label class="fileContainer"> 그룹 사진 수정하기 <input
 									type="file" name="groupImgUpload" />
 								</label>
 								<!-- 그룹 사진 수정 버튼 -->
 							</form>
+							</c:if>
 							<!-- **********모임 사진 수정*********** -->
 						</figure>
 						<!-- 그룹 사진 -->
@@ -414,7 +422,7 @@ top:-9px;
 							<!-- 그룹 이름 -->
 							<ul>
 								<li class="admin-name forgroupname">
-									<h5 class="groupname">${groupname}</h5>
+									<h5 class="groupname">${group.groupName}</h5>
 								</li>
 							</ul>
 							<!-- 그룹 이름 -->
@@ -422,10 +430,11 @@ top:-9px;
 						<div class="forgroupnamewidth1">
 							<!-- 그룹 간단 정보 -->
 							<ul>
+								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
 								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
+								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
 							</ul>
 							<!-- 그룹 간단 정보 -->
 						</div>
@@ -452,16 +461,17 @@ top:-9px;
 									<h4 class="widget-title">게시판</h4>
 									<ul class="naves">
 										<c:forEach var="gbl" items="${groupboardlist }">
-											<li><i class="ti-clipboard"></i> <a href="newsfeed.html"
-												title="">${gbl.boardName}</a> <input type="hidden"
-												value="${gbl.boardType }"></li>
+											<li><i class="ti-clipboard"></i> <input type="hidden"
+												value="${gbl.boardType }">
+												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}&boardname=${gbl.boardName}"
+												title="">${gbl.boardName}</a></li>
 										</c:forEach>
 									</ul>
 								</div>
 								<!-- 그룹 게시판 위젯 -->
 
 								<!-- 모임 관리 게시판 위젯 -->
-								<c:if test="${userkey==groupmasterkey}">
+								<c:if test="${userinfo.userGrade==1}">
 								<div class="widget">
 									<h4 class="widget-title">모임 관리</h4>
 									<ul class="naves">
@@ -472,13 +482,14 @@ top:-9px;
 										<li><i class="ti-heart"></i> <a href="edit-interest.html"
 											title="">모임 회원 관리</a></li>
 										<li><i class="ti-settings"></i> <a
-											href="groupin_group_admin_board.net?groupkey=${groupkey }" title="">모임 게시판 관리</a></li>
+											href="groupin_group_admin_board.net?groupkey=${group.groupKey }" title="">모임 게시판 관리</a></li>
 									</ul>
 								</div>
 								</c:if>
 								<!-- 모임 관리 게시판 위젯 -->
 
 								<!-- 그룹 카톡방 위젯 -->
+								<c:if test="${not empty group.groupkatalk }">
 								<div class="widget">
 									<div class="banner medium-opacity">
 										<div
@@ -497,6 +508,7 @@ top:-9px;
 										</div>
 									</div>
 								</div>
+								</c:if>
 								<!-- 그룹 카톡방 위젯 -->
 
 								<!-- 그룹 가입 회원 목록 -->
@@ -525,11 +537,13 @@ top:-9px;
 						<!-- 그룹 페이지 위젯 왼쪽  -->
 
 						<!-- 그룹 페이지 위젯 중간 -->
+						
 						<div class="col-lg-6">
-
-							<!-- 그룹장 간단 그룹 소개 -->
 							<div class="central-meta item">
 										<div class="inbox-lists">
+										<div class="groups">
+											<span><i class="fa fa-users"></i>${boardname}</span>
+										</div>
 											<div class="mesages-lists">
 												<ul id="message-list" class="message-list">
 													<li class="unread"><span class="sender-name">안녕하세요
@@ -638,7 +652,6 @@ top:-9px;
 
 										<!-- Inbox lists -->
 									</div>
-
 						</div>
 						<!-- 그룹 페이지 위젯 중간 -->
 
@@ -658,13 +671,13 @@ top:-9px;
 												<span>GroupIn 로그인</span>
 											</button>
 										</div>
-										<span class="loginleft"><a href="#">비밀번호 찾기</a></span>
-										<span class="loginright"><a href="#">회원가입</a></span>
+										<span class="loginleft"><a href="login">비밀번호 찾기</a></span>
+										<span class="loginright"><a href="login">회원가입</a></span>
 									</div>
 								</div>
 								</c:if>
 								<!-- 그룹 로그인 위젯 -->
-
+								<c:if test="${userkey!=-1}">
 								<!-- 그룹 나의 정보 위젯 -->
 								<div class="widget">
 									<h4 class="widget-title">나의 정보</h4>
@@ -674,8 +687,8 @@ top:-9px;
 												src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
 										</figure>
 										<div class="page-meta page-metaclass">
-											<a href="#" title="" class="underline">동선동탁구대장</a>
-											<span>가입일 : 2020년 1월 1일</span>
+											<a href="#" title="" class="underline">${userinfo.groupNickname}</a>
+											<span>가입일 : ${userinfo.regdate}</span>
 											<span><i class="far fa-bell"></i>알림 <em>55</em></span>
 												<span><i class="far fa-file-alt commentmargin"></i>내가 쓴 글 보기 <em>55</em></span>
 												<span><i class="far fa-comment"></i>내가 쓴 댓글 보기 <em>55</em></span>
@@ -692,14 +705,17 @@ top:-9px;
 												<div class="tab-pane active fade show" id="link1">
 													<div>
 														<ul class="your-page-groupList leftpadding">
-															<li><img
-																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a><br><hr class="hrmargin"></li>
-															<li><img
-																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a><br><hr class="hrmargin"></li>
-															<li><img
-																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a></li>
+															<c:if test="${not empty userreggroup }">
+															<c:forEach var="urg" items="${userreggroup }">
+																<li><img
+																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">${urg.groupname }</a><br><hr class="hrmargin"></li>
+															</c:forEach>
+															</c:if>
+															<c:if test="${empty userreggroup }">
+																<li>가입된 모임이 없습니다.</li>
+															</c:if>
 														</ul>
-												<div class="row row-pagination" style="padding-top: 0px !important">
+												<div class="row row-pagination" style="padding-top:0px !important;">
 													<div class="col">
 														<ul class="pagination pagination-sm center-pagination"
 															id="pempty">
@@ -725,7 +741,7 @@ top:-9px;
 															<li><img
 																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a></li>
 														</ul>
-												<div class="row row-pagination" style="padding-top: 0px !important">
+												<div class="row row-pagination" style="padding-top:0px !important;">
 													<div class="col">
 														<ul class="pagination pagination-sm center-pagination"
 															id="pempty">
@@ -743,6 +759,7 @@ top:-9px;
 										</div>
 									</div>
 								</div>
+								</c:if>
 								<!-- 나의 정보 위젯 -->
 
 								<!-- 그룹별 정모 나의 일정 위젯 -->
@@ -812,7 +829,6 @@ top:-9px;
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	//달력시작==================================================================
-	
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
 	function prevCalendar() {//이전 달
@@ -823,13 +839,18 @@ top:-9px;
 				.getDate());
 		buildCalendar(); //달력 cell 만들어 출력 
 	}
-
 	function nextCalendar() {//다음 달
 		// 다음 달을 today에 값을 저장하고 달력에 today 넣어줌
 		//today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
 		//getMonth()는 현재 달을 받아 오므로 다음달을 출력하려면 +1을 해줘야함
-		today = new Date(today.getFullYear(), today.getMonth() + 1, today
+		var btoday = today.getMonth();
+		today = new Date(today.getFullYear(), today.getMonth()+1, today
 				.getDate());
+		var atoday = today.getMonth();
+		if(atoday-btoday==2){
+			today = new Date(today.getFullYear(), today.getMonth()-1, today
+					.getDate());
+		}
 		buildCalendar();//달력 cell 만들어 출력
 	}
 	function buildCalendar() {//현재 달 달력 만들기
@@ -850,8 +871,7 @@ top:-9px;
 		//innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
 		//new를 찍지 않아서 month는 +1을 더해줘야 한다. 
 		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
-				+ (today.getMonth() + 1) + "월";
-
+				+ (today.getMonth()+1) + "월";
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
 			//열을 지워줌
@@ -903,14 +923,16 @@ top:-9px;
 	//달력끝==================================================================
 </script>
 <script>
+buildCalendar();
 $(function() {
-	buildCalendar();
 	var mycalendarlistcount = $('#gclc').val();
 	for(var i = 1; i<=mycalendarlistcount;i++){
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
-	
+	$(".forLoginBtn").click(function(){
+		location.href="login";
+	})
 	$("#calendar").on('click', '#prevcal', function(event) {
 		var userkey = $('#UserKey').val();
 		prevCalendar();
@@ -944,7 +966,8 @@ $(function() {
 		if (userkey!=-1){
 		var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
+        alert(n);
         ajaxJoinBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtljoinbtn');
         $(this).addClass('gmtlcancelbtn');
@@ -959,7 +982,7 @@ $(function() {
         if (userkey!=-1){
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtlcancelbtn');
         $(this).addClass('gmtljoinbtn');
@@ -993,7 +1016,7 @@ $(function() {
     $(".forMemberCountBtnOne").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseOne").hasClass("show")) {
             $('.i-changeOne').removeClass('fa-arrow-up');
@@ -1006,7 +1029,7 @@ $(function() {
     $(".forMemberCountBtnTwo").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseTwo").hasClass("show")) {
             $('.i-changeTwo').removeClass('fa-arrow-up');
@@ -1019,7 +1042,7 @@ $(function() {
     $(".forMemberCountBtnThree").click(function() {
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseThree").hasClass("show")) {
             $('.i-changeThree').removeClass('fa-arrow-up');

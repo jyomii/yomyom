@@ -311,15 +311,15 @@ public class GroupController {
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
+		mv.setViewName("group/groupin_group_schedulelist");
+		GGroupMember groupmember = groupservice.groupmember(userkey);
+		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
-		mv.setViewName("group/groupin_group_admin_board");
-		mv.addObject("groupkey", groupkey);
+		mv.addObject("group", group);
 		String groupmaster = groupservice.groupmaster(groupkey);
 		mv.addObject("groupmaster", groupmaster);
-		mv.addObject("groupname", group.getGroupName());
-		mv.addObject("groupdfile", group.getGroupDFile());
-		mv.addObject("groupcfile", group.getGroupCFile());
-		mv.addObject("groupinfo", group.getGroupInfo());
+		int groupmasterkey = groupservice.groupmasterkey(groupkey);
+		mv.addObject("groupmasterkey", groupmasterkey);
 		GLocation location = groupservice.groupwhere(group.getWhereKey());
 		mv.addObject("groupswhere", location.getSWhere());
 		mv.addObject("groupdwhere", location.getDWhere());
@@ -333,18 +333,17 @@ public class GroupController {
 		mv.addObject("groupmembers", groupmembers);
 		List<GGroupBoard> groupboardlist = groupservice.groupboardlist(groupkey);
 		mv.addObject("groupboardlist", groupboardlist);
-		mv.addObject("groupboardlistcount", groupboardlist.size());
 		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
 		mv.addObject("groupmemberlist", groupmemberlist);
-		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
+		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey,userkey);
 		mv.addObject("groupmeetinglist", groupmeetinglist);
-		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
-		mv.addObject("groupcalendarlist", groupcalendarlist);
-		mv.addObject("groupcalendarlistCount", groupcalendarlist.size());
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey,month,year);
+		mv.addObject("groupcalendarlist",groupcalendarlist);
+		mv.addObject("groupcalendarlistCount",groupcalendarlist.size());
 		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
 		mv.addObject("userreggroup", userreggroup);
-		for (int i = 0; i < groupcalendarlist.size(); i++) {
-			if (Integer.parseInt(groupcalendarlist.get(i).getStartdate()) == date) {
+		for(int i = 0; i < groupcalendarlist.size();i++) {
+			if(Integer.parseInt(groupcalendarlist.get(i).getStartdate())==date) {
 				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
 				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
 				mv.addObject("shortschedule", shortschedule);
@@ -379,7 +378,7 @@ public class GroupController {
 	}
 
 	@GetMapping("/groupin_group_board_transfer.net")
-	public ModelAndView group_board_transfer(@RequestParam(value = "groupkey") int groupkey, @RequestParam(value = "boardkey") int boardkey, @RequestParam(value = "boardtype") String boardtype, ModelAndView mv, HttpSession session) {
+	public ModelAndView group_board_transfer(@RequestParam(value = "groupkey") int groupkey, @RequestParam(value = "boardkey") int boardkey, @RequestParam(value = "boardtype") String boardtype, @RequestParam(value = "boardname") String boardname, ModelAndView mv, HttpSession session) {
 		int userkey=-1;
 		String id="";
 		if(session.getAttribute("id")!=null) {
@@ -400,20 +399,19 @@ public class GroupController {
 			mv.setViewName("group/groupin_group_boardlist");
 			mv.addObject("boardtype",boardtype);
 		}
+		mv.addObject("boardname",boardname);
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
+		GGroupMember groupmember = groupservice.groupmember(userkey);
+		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
-		mv.addObject("groupkey", groupkey);
+		mv.addObject("group", group);
 		String groupmaster = groupservice.groupmaster(groupkey);
 		mv.addObject("groupmaster", groupmaster);
 		int groupmasterkey = groupservice.groupmasterkey(groupkey);
 		mv.addObject("groupmasterkey", groupmasterkey);
-		mv.addObject("groupname", group.getGroupName());
-		mv.addObject("groupdfile", group.getGroupDFile());
-		mv.addObject("groupcfile", group.getGroupCFile());
-		mv.addObject("groupinfo", group.getGroupInfo());
 		GLocation location = groupservice.groupwhere(group.getWhereKey());
 		mv.addObject("groupswhere", location.getSWhere());
 		mv.addObject("groupdwhere", location.getDWhere());
@@ -434,6 +432,8 @@ public class GroupController {
 		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey,month,year);
 		mv.addObject("groupcalendarlist",groupcalendarlist);
 		mv.addObject("groupcalendarlistCount",groupcalendarlist.size());
+		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroup", userreggroup);
 		for(int i = 0; i < groupcalendarlist.size();i++) {
 			if(Integer.parseInt(groupcalendarlist.get(i).getStartdate())==date) {
 				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());

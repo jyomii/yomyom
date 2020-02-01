@@ -64,6 +64,7 @@ public class GroupDAO {
 		return sqlSession.selectList("group.groupboardlist", groupkey);
 	}
 
+	
 	public List<MemberList> groupmemberlist(int groupkey) {
 		return sqlSession.selectList("group.groupmemberlist", groupkey);
 	}

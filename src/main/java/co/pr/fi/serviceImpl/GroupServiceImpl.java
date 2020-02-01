@@ -104,6 +104,7 @@ public class GroupServiceImpl implements GroupService {
 		List<Post> MeetingList = dao.groupmeetinglist(groupkey);
 		for(int i = 0;i<3;i++) {
 			String date = MeetingList.get(i).getCstartdate();
+			System.out.println("!!!!!!!!!!!!!!!!!!!"+date);
 
 			String year = date.substring(0,4)+"년 ";  
 
@@ -111,9 +112,9 @@ public class GroupServiceImpl implements GroupService {
 
 			String day = date.substring(8,10)+"일 ";
 
-			String time = date.substring(11,13)+"시 ";
+			String time = date.substring(13,15)+"시 ";
 
-			String minute = date.substring(14,16)+"분";
+			String minute = date.substring(16,18)+"분";
 			if(minute.equals("00분"))
 				minute="";
 			MeetingList.get(i).setCstartdate(year+month+day+time+minute);

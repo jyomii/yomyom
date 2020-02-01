@@ -105,6 +105,7 @@
 		usergrade in(0,1)
 	</select>
 
+
 	<select id="groupmeetinglist" resultType="post"
 		parameterType="int">
 		select rownum, A.* from(select

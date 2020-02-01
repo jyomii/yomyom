@@ -300,6 +300,63 @@ top:-9px;
 	margin-left: 20px;
     width: 55% !important;
 }
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom{
+	margin-bottom: 0px !important;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -402,9 +459,8 @@ top:-9px;
 										<c:forEach var="gbl" items="${groupboardlist }">
 											<li><i class="ti-clipboard"></i> <input type="hidden"
 												value="${gbl.boardType }">
-												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}"
+												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}&boardname=${gbl.boardName}"
 												title="">${gbl.boardName}</a></li>
-												
 										</c:forEach>
 									</ul>
 								</div>
@@ -422,7 +478,7 @@ top:-9px;
 										<li><i class="ti-heart"></i> <a href="edit-interest.html"
 											title="">모임 회원 관리</a></li>
 										<li><i class="ti-settings"></i> <a
-											href="groupin_group_admin_board.net?groupkey=${groupkey }" title="">모임 게시판 관리</a></li>
+											href="groupin_group_admin_board.net?groupkey=${group.groupKey }" title="">모임 게시판 관리</a></li>
 									</ul>
 								</div>
 								</c:if>
@@ -703,6 +759,7 @@ top:-9px;
 											</div>
 										</div>
 									</div>
+									
 									<div class="coment-area">
 										<ul class="we-comet">
 											<li>
@@ -822,8 +879,8 @@ top:-9px;
 												<span>GroupIn 로그인</span>
 											</button>
 										</div>
-										<span class="loginleft"><a href="#">비밀번호 찾기</a></span>
-										<span class="loginright"><a href="#">회원가입</a></span>
+										<span class="loginleft"><a href="login">비밀번호 찾기</a></span>
+										<span class="loginright"><a href="login">회원가입</a></span>
 									</div>
 								</div>
 								</c:if>
@@ -866,7 +923,7 @@ top:-9px;
 																<li>가입된 모임이 없습니다.</li>
 															</c:if>
 														</ul>
-												<div class="row row-pagination">
+												<div class="row row-pagination" style="padding-top:0px !important;">
 													<div class="col">
 														<ul class="pagination pagination-sm center-pagination"
 															id="pempty">
@@ -892,7 +949,7 @@ top:-9px;
 															<li><img
 																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">동.탁</a></li>
 														</ul>
-												<div class="row row-pagination">
+												<div class="row row-pagination" style="padding-top:0px !important;">
 													<div class="col">
 														<ul class="pagination pagination-sm center-pagination"
 															id="pempty">
@@ -1167,7 +1224,7 @@ $(function() {
     $(".forMemberCountBtnOne").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseOne").hasClass("show")) {
             $('.i-changeOne').removeClass('fa-arrow-up');
@@ -1180,7 +1237,7 @@ $(function() {
     $(".forMemberCountBtnTwo").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseTwo").hasClass("show")) {
             $('.i-changeTwo').removeClass('fa-arrow-up');
@@ -1193,7 +1250,7 @@ $(function() {
     $(".forMemberCountBtnThree").click(function() {
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseThree").hasClass("show")) {
             $('.i-changeThree').removeClass('fa-arrow-up');
