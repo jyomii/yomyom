@@ -42,4 +42,20 @@ public class GroupBoardDAO {
 	public List<GComment> getBoardComment(Map<String, Integer> keys) {
 		return sqlSession.selectList("post.getBoardComment", keys);
 	}
+	
+	public int isLiked(Map<String, Integer> keys) {
+		return sqlSession.selectOne("post.isLiked", keys);
+	}
+
+	public int revokeLike(Map<String, Integer> keys) {
+		return sqlSession.delete("post.revokeLike", keys);
+	}
+
+	public int doLike(Map<String, Integer> keys) {
+		return sqlSession.insert("post.doLike", keys);
+	}
+
+	public int likeCount(Map<String, Integer> keys) {
+		return sqlSession.selectOne("post.likeCount", keys);
+	}
 }

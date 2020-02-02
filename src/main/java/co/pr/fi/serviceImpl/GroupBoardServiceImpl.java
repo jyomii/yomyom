@@ -53,4 +53,24 @@ public class GroupBoardServiceImpl implements GroupBoardService {
 	public List<GComment> getBoardComment(Map<String, Integer> keys) {
 		return dao.getBoardComment(keys);
 	}
+
+	@Override
+	public int isLiked(Map<String, Integer> keys) {
+		return dao.isLiked(keys);
+	}
+
+	@Override
+	public int revokeLike(Map<String, Integer> keys) {
+		return dao.revokeLike(keys);
+	}
+
+	@Override
+	public int doLike(Map<String, Integer> keys) {
+		return dao.doLike(keys);
+	}
+
+	@Override
+	public int likeCount(Map<String, Integer> keys) {
+		return dao.likeCount(keys);
+	}
 }
