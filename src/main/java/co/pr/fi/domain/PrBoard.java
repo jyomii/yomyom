@@ -21,8 +21,29 @@ public class PrBoard {
  // 작성날짜 
  private Date dateWrite;
  
+ //그룹이름 추가
+ private String groupName;
+ 
+ private String groupDFile;
+ 
 
- public int getPrKey() {
+ public String getGroupDFile() {
+	return groupDFile;
+}
+
+public void setGroupDFile(String groupDFile) {
+	this.groupDFile = groupDFile;
+}
+
+public String getGroupName() {
+	return groupName;
+}
+
+public void setGroupName(String groupName) {
+	this.groupName = groupName;
+}
+
+public int getPrKey() {
      return prKey;
  }
 

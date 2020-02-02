@@ -2,6 +2,8 @@ package co.pr.fi.domain;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 //회원 
 public class GUsers {
 
@@ -52,8 +54,28 @@ public class GUsers {
 	
 	private Date userStatusCode;
 
+	private  MultipartFile userImgUpload;
+	
+	private  MultipartFile userImgInsert;
 	
 	
+
+	public MultipartFile getUserImgUpload() {
+		return userImgUpload;
+	}
+
+	public void setUserImgUpload(MultipartFile userImgUpload) {
+		this.userImgUpload = userImgUpload;
+	}
+
+	public MultipartFile getUserImgInsert() {
+		return userImgInsert;
+	}
+
+	public void setUserImgInsert(MultipartFile userImgInsert) {
+		this.userImgInsert = userImgInsert;
+	}
+
 	public String getLocationName() {
 		return locationName;
 	}

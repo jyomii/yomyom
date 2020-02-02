@@ -22,5 +22,10 @@ public interface PrService {
 
 	public List<GGroup> userinfo(String id);
 
+	public int boardDelete(int userKey);
+
+	public List<PrBoard> writeUser(String id);
+
+
 	
 }
