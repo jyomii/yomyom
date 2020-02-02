@@ -1,6 +1,7 @@
 package co.pr.fi.controller;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GGroupBoard;
+import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.PrBoard;
 import co.pr.fi.service.PrService;
 
@@ -26,24 +29,39 @@ public class PrController {
 	@Autowired
 	PrService prService;
 	
+	
+	
+	//글쓰기
 	@GetMapping("/prwrite")
 	public ModelAndView PrWrite(PrBoard prboard, HttpSession session,
 			HttpServletRequest request, ModelAndView mv) throws Exception{
 		String id = (String)session.getAttribute("id");
 	    List<GGroup> group = prService.userinfo(id);
-	    System.out.println("!!!!!!!!!!!!!"+group.get(0).getGroupName());
+	    //System.out.println("!!!!!!!!!!!!!"+group.get(0).getGroupName());
+	    
 	    mv.setViewName("prboard/prwrite");
 	    mv.addObject("list", group); 
 		
 		return mv;
-	
 	}
+	
+	//글 쓰기처리
+    @RequestMapping(value="/prAdd", method= RequestMethod.POST)
+    public String prwrite_add(PrBoard prboard,  HttpSession session, HttpServletRequest request) throws Exception{
+    	prService.insertBoard(prboard);
+    	return "redirect:prboard";
+    	
+    }
 	
 	//글 목록 보기
 		@RequestMapping(value = "prboard")
 		   public ModelAndView boardlist(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-		         ModelAndView model) {
+				   HttpSession session, PrBoard prboard, ModelAndView model) {
 
+			String id = (String)session.getAttribute("id");
+			List<PrBoard> writeuser = prService.writeUser(id);
+		
+			
 		      int limit = 10; // 한 화면에 보여줄 갯수
 
 		      // 총 리스트 수를 받아옵니다.
@@ -64,6 +82,9 @@ public class PrController {
 		      List<PrBoard> list = prService.getBoardList(page, limit);
 		      System.out.println("page =" + page);
 		      System.out.println("limit =" + limit);
+		      System.out.println("$$$$$$$$$$"+ list.get(0).getGroupDFile());
+		     
+		      
 		      model.setViewName("prboard/prboard");
 		      model.addObject("page", page);
 		      model.addObject("maxpage", maxpage);
@@ -72,25 +93,20 @@ public class PrController {
 		      model.addObject("limit", limit);
 		      model.addObject("boardlist", list);
 		      model.addObject("listcount", listcount);
+		      model.addObject("writeuser", writeuser);
 		      return model;
 		   }
 	
 		
 	
-	//글 쓰기 
-    @PostMapping("/prAdd")
-    public String prwrite_add(PrBoard prboard, HttpServletRequest request) throws Exception{
-    	prService.insertBoard(prboard);
-    	return "redirect:prboard";
-    }
 
     
 	//글 수정
-	@GetMapping(value= "/BoardModifyView")
-	public ModelAndView BoardModifyView(int num, ModelAndView mv,
+	@GetMapping(value= "/prModifyView")
+	public ModelAndView PrModifyView(int prKey, ModelAndView mv,
 			HttpServletRequest request) throws Exception {
 		
-		PrBoard boarddata = prService.getDetail(num);
+		PrBoard boarddata = prService.getDetail(prKey);
 		//글 내용 불러오기 실패한 경우
 		if(boarddata == null) {
 			System.out.println("수정 상세보기 실패");
@@ -106,8 +122,8 @@ public class PrController {
 	}
 	
 	//글 수정
-		@PostMapping(value = "/BoardModifyAction")
-		public ModelAndView BoardModifyAction(PrBoard prboard, int userkey, 
+		@PostMapping(value = "/prModifyAction")
+		public ModelAndView PrModifyAction(PrBoard prboard, int userkey, 
 				ModelAndView mv, HttpServletRequest request, 
 				HttpServletResponse response) throws Exception{
 			boolean usercheck = 
@@ -118,7 +134,7 @@ public class PrController {
 				response.setContentType("text/html;charset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
-				out.println("alert('글쓴이가 아닙니다.');");
+				out.println("alert('글쓴이가 아닙니다. 수정불가');");
 				out.println("history.back();");
 				out.println("</script>");
 				out.close();
@@ -130,23 +146,19 @@ public class PrController {
 			
 			//수정에 실패한 경우
 			if(result == 0) {
-				System.out.println("게시판 수정 실패");
-				mv.addObject("message", "게시판 수정 실패");
+				System.out.println("수정 실패");
+				mv.addObject("message", "수정 실패");
 			}else { //수정 성공의 경우
-				System.out.println("게시판 수정 완료");
+				System.out.println("수정 완료");
 			
-				String url =
-						"redirect:BoardDetailAction?num=" + prboard.getPrKey();
-				
-				//수정한 글 내용을 보여주기 위해 글 내용 보기 보기페이지로 이동하기 위해 경로를 설정한다
-				mv.setViewName(url);
+				mv.setViewName("prboard/prboard");
 			}
 			return mv;
 		
 		}
 
-	/*	
-     @PostMapping("BoardDeleteAction.bo")
+	
+     @PostMapping("BoardDeleteAction")
      public String BoardDeleteAction(int userKey,  HttpServletResponse response) throws Exception {
      
     	 //글쓴이 맞는지 유저키로 확인
@@ -157,7 +169,7 @@ public class PrController {
     		 response.setContentType("text/html;charset=utf-8");
     		 PrintWriter out = response.getWriter();
     		 out.println("<script>");
-    		 out.println("alert('글쓴이가 아닙니다.');");
+    		 out.println("alert('글쓴이가 아닙니다. 삭제불가');");
     		 out.println("history.back();");
     		 out.println("</script>");
     		 out.close();
@@ -168,11 +180,11 @@ public class PrController {
     	 
     	 //삭제 실패한 경우
     	 if(result == 0) {
-    		 System.out.println("게시판 삭제 실패");
+    		 System.out.println("삭제 실패");
     	 }
     	 
     	 //삭제 성공한 경우 - 글 목록 보기 요청을 전송하는 부분
-    	 System.out.println("게시판 삭제 성공");
+    	 System.out.println("삭제 성공");
     	 response.setContentType("text/html;charset=utf-8");
     	 PrintWriter out = response.getWriter();
     	 out.println("<script>");
@@ -183,5 +195,5 @@ public class PrController {
 		 return null;
     	 
      }
-     */
+     
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
 
 //마이페이지 관련 DB
@@ -43,6 +44,22 @@ public class MyPageDAO {
 	public List<GCategory2> userInterest(String id) {
 		return sqlSession.selectList("Mypages.userInterest", id);
 	}
-	
+
+	public GUserCategory category(String id) {
+		return sqlSession.selectOne("Mypages.category", id);
+	}
+
+	public int myupdate2(GUserCategory category) {
+		return sqlSession.update("Mypages.myupdate2", category);
+	}
+
+	public int userImageUpdate(GUsers user) {
+		return sqlSession.update("Mypages.imgUpdate", user);
+	}
+
+	public int insertPic(GUsers user) {
+		return sqlSession.insert("Mypages.insertPic", user);
+	}
+
 	
 }
