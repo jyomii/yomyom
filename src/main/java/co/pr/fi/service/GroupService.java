@@ -50,7 +50,7 @@ public interface GroupService {
 
 	public List<Shortschedule> shortscheduleSelected(int userkey, String fulldate);
 
-	public void groupboardupdate(int groupkey, String boardname, int boardkey, int seq);
+	public void groupboardupdate(int groupkey, String boardname, int boardkey, int seq, String boardtype);
 
 	public void groupboardinsert(int groupkey, String boardname, int seq);
 

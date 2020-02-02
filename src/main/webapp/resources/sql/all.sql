@@ -1,4 +1,3 @@
-
 DROP TABLE requestCategory;
 DROP TABLE delete_File;
 
@@ -222,7 +221,8 @@ CREATE TABLE ggroup
     groupstatus        NUMBER           NOT NULL,
     CONSTRAINT GGROUPPK PRIMARY KEY (groupkey)
 );
-
+/* 그룹단톡방 주소 컬럼 추가합니다 -나상엽-*/
+ALTER TABLE ggroup ADD (groupkatalk varchar2(1000));
 -- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
 -- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
 -- ALTER TABLE ggroup ADD (groupstatus NUMBER NOT NULL);
