@@ -179,9 +179,10 @@
 		where startdate like #{fulldate}
 	</select>
 
+
 	<update id="groupboardupdate" parameterType="java.util.Map">
 		update ggroupboard set
-		boardname=#{boardname}, boardseq=#{seq} where
+		boardname=#{boardname}, boardseq=#{seq}, boardtype=#{boardtype} where
 		boardkey=#{boardkey}
 	</update>
 	<insert id="groupboardinsert"

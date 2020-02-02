@@ -211,12 +211,13 @@ public class GroupServiceImpl implements GroupService {
 
 
 	@Override
-	public void groupboardupdate(int groupkey, String boardname, int boardkey, int seq) {
+	public void groupboardupdate(int groupkey, String boardname, int boardkey, int seq, String boardtype) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("groupkey", groupkey);
 		map.put("boardname", boardname);
 		map.put("boardkey", boardkey);
 		map.put("seq", seq);
+		map.put("boardtype", boardtype);
 		dao.groupboardupdate(map);
 	}
 

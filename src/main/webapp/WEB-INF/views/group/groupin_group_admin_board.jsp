@@ -13,13 +13,15 @@
 }
 
 .forgroupnamewidth {
-	width: 30%;
+	width: 29%;
 	display: inline-block;
 }
 
 .forgroupnamewidth1 {
-	width: 60%;
+	width: 69%;
 	display: inline-block;
+	position: relative;
+	top: 7px;
 }
 
 .forgroupnameleft {
@@ -34,13 +36,15 @@
 
 .forSubmitBtnDiv {
 	margin-top: 0px !important;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
+	width:100%;
 }
 
 .forLoginBtn {
 	padding-left: 25px !important;
 	padding-right: 25px !important;
-	margin-left: 13%;
+	margin-bottom:10px;
+	width: 90%;
 }
 
 .forMemberCountBtnOne {
@@ -203,6 +207,156 @@ cursor:pointer}
 #calendar td{
 cursor:pointer
 }
+.katalkbtn{
+background-color: #423630 !important;
+color: white !important;
+}
+
+.katalkbtn:hover{
+background-color: #594941 !important;
+}
+
+.katalkbtnw{
+color: #423630 !important;
+}
+
+.logintitle{
+font-size:14px;
+margin-top:10px;
+}
+
+.logintitlehr{
+margin-top:5px;
+margin-bottom:2px;
+width:100%;
+}
+
+.logincenter{
+text-align:center;
+}
+
+.logindiv{
+margin-top:10px;
+}
+
+.loginleft{
+float:left;
+font-size:14px;
+margin-left:14px;
+}
+
+.loginright{
+float:right;
+font-size:14px;
+margin-right:14px;
+}
+.leftrightwidth{
+padding-left: 0px !important;
+padding-right: 0px !important;
+width:90%;
+}
+
+.center-pagination {
+	justify-content: center;
+	margin-bottom: 0px;
+}
+.widthpagination{
+width:18% !important;
+}
+.imground{
+border-radius:16px;
+margin-right:10px;
+}
+.hrmargin{
+margin-top:5px !important;
+margin-bottom:5px !important;
+}
+
+.leftpadding{
+padding-left:20px !important;
+padding-right:20px !important;
+}
+
+.commentmargin {
+    margin-right: 7px !important;
+}
+.groupname{
+position:relative;
+top:-9px;
+}
+
+.figure-myimg{
+	width:80px !important;
+	max-width: 100px !important;
+	margin-left: 20px;
+}
+
+.figure-myimg1{
+	width:100%;
+	
+}
+
+.page-metaclass{
+	margin-left: 20px;
+    width: 55% !important;
+}
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom{
+	margin-bottom: 0px !important;
+}
 
 .itemBox {
 	border: solid 1px black;
@@ -228,29 +382,58 @@ cursor:pointer
 	margin-top: 0px !important;
     padding: 3px 10px 1px !important;
 }
+
+.onlymaster{
+	display: inline-block;
+    margin-left: 64px;
+    margin-top: 3px;
+}
+.onlymasterYN{
+	display: inline-block;
+    margin-left: 23px;
+    margin-top: 3px;
+}
+
+.onlymaster1{
+	margin-top: 3px;
+}
+
+
+.modifymargin {
+    margin-left: 270px;
+}
+
+.outer{
+text-align: center;
+}
+.inner{
+display: inline-block;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
 <section>
-	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
-		type="hidden" id="UserKey" value="1">
+	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
+		type="hidden" id="UserKey" value="${userkey }">
 	<div class="feature-photo">
 		<figure>
 			<img id="groupPageImg"
-				src="<spring:url value='/image${groupdfile }'/>" alt="" />
+				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
 			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
 		</figure>
+		<c:if test="${userinfo.userGrade==1}">
 		<!-- **********모임 대문 사진 수정*********** -->
 		<form class="edit-phto" id="groupMainImgForm"
 			enctype="multipart/form-data" action="group_mainImgUpdate.net"
 			method="post">
-			<input type="hidden" name="groupkey" value="${groupkey }"> <i
+			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
 				class="fa fa-camera-retro"></i>
 			<!-- 대문 사진 수정 버튼 -->
 			<label class="fileContainer"> 대문 사진 수정 <input type="file"
 				name="groupMainImgUpload" />
 			</label>
 		</form>
+		</c:if>
 		<!-- **********모임 대문 사진 수정*********** -->
 
 		<div class="container-fluid height-for-white">
@@ -260,20 +443,22 @@ cursor:pointer
 						<!-- 그룹 사진 -->
 						<figure>
 							<img id="groupImg"
-								src="<spring:url value='/image${groupcfile }'/>" />
+								src="<spring:url value='/image${group.groupCFile }'/>" />
 							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 							<!-- **********모임 사진 수정*********** -->
+							<c:if test="${userinfo.userGrade==1}">
 							<form class="edit-phto" id="groupImgForm"
 								enctype="multipart/form-data" action="group_ImgUpdate.net"
 								method="post">
 								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${groupkey }"> <i class="fa fa-camera-retro"></i>
+									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
 								<!-- 그룹 사진 수정 버튼 -->
 								<label class="fileContainer"> 그룹 사진 수정하기 <input
 									type="file" name="groupImgUpload" />
 								</label>
 								<!-- 그룹 사진 수정 버튼 -->
 							</form>
+							</c:if>
 							<!-- **********모임 사진 수정*********** -->
 						</figure>
 						<!-- 그룹 사진 -->
@@ -285,7 +470,7 @@ cursor:pointer
 							<!-- 그룹 이름 -->
 							<ul>
 								<li class="admin-name forgroupname">
-									<h5>${groupname}</h5>
+									<h5 class="groupname">${group.groupName}</h5>
 								</li>
 							</ul>
 							<!-- 그룹 이름 -->
@@ -293,10 +478,11 @@ cursor:pointer
 						<div class="forgroupnamewidth1">
 							<!-- 그룹 간단 정보 -->
 							<ul>
+								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
 								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
+								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
 							</ul>
 							<!-- 그룹 간단 정보 -->
 						</div>
@@ -318,254 +504,43 @@ cursor:pointer
 						<!-- 그룹 페이지 위젯 왼쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-								<!-- 그룹 게시판 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">게시판</h4>
-									<ul class="naves">
-										<c:forEach var="gbl" items="${groupboardlist }">
-											<li><i class="ti-clipboard"></i> <a href="newsfeed.html"
-												title="">${gbl.boardName}</a> <input type="hidden"
-												value="${gbl.boardType }"><input type="hidden" id="bn${gbl.boardSeq }"
-												value="${gbl.boardName }"><input type="hidden" id="bk${gbl.boardSeq }"
-												value="${gbl.boardKey }"></li>
-										</c:forEach>
-									</ul>
-								</div>
-								<!-- 그룹 게시판 위젯 -->
-
-								<!-- 모임 관리 게시판 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">모임 관리</h4>
-
-									<ul class="naves">
-										<li><i class="ti-info-alt"></i> <a href="group_admin.net"
-											title="">모임 기본 설정</a></li>
-										<li><i class="ti-mouse-alt"></i> <a
-											href="group_admin.net" title="">모임 일정 관리</a></li>
-										<li><i class="ti-heart"></i> <a href="edit-interest.html"
-											title="">모임 회원 관리</a></li>
-										<li><i class="ti-settings"></i> <a
-											href="groupin_group_admin_board.net" title="">모임 게시판 관리</a></li>
-									</ul>
-								</div>
-								<!-- 모임 관리 게시판 위젯 -->
-
-								<!-- 그룹 카톡방 위젯 -->
-								<div class="widget">
-									<div class="banner medium-opacity bluesh">
-										<div
-											style="background-image: url(resources/images/resources/baner-widgetbg.jpg)"
-											class="bg-image"></div>
-										<!--  <div class="baner-top">
-													<span><img src="resources/images/book-icon.png"
-														alt=""></span> <i class="fa fa-ellipsis-h"></i>
-												</div>-->
-										<div class="banermeta">
-											<p>
-												그룹 카카오톡<br>채팅방에<br>참여하세요!
-											</p>
-											<!--<span>like them all</span>-->
-											<a href="#" title="" data-ripple="">카톡방 참여하기</a>
-										</div>
-									</div>
-								</div>
-								<!-- 그룹 카톡방 위젯 -->
-
-								<!-- 그룹 가입 회원 목록 -->
-								<div class="widget friend-list">
-									<h4 class="widget-title">모임의 회원들</h4>
-									<div id="searchDir"></div>
-									<ul id="people-list" class="friendz-list">
-										<c:forEach var="gml" items="${groupmemberlist }">
-											<li>
-												<figure>
-													<img src="resources/images/resources/friend-avatar.jpg"
-														alt="">
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html"></a>${gml.groupnickname } <i
-														class="__cf_email__">모임장</i>
-												</div>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
-								<!-- 그룹 가입 회원 목록 -->
-
+								<jsp:include page="group_leftWidget.jsp" />
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 왼쪽  -->
 
 						<!-- 그룹 페이지 위젯 중간 -->
 						<div class="col-lg-6">
-							<!-- 그룹 정모 후기 목록 -->
-							<div class="central-meta">
+									<div class="central-meta out">
 										<h5 class="f-title"><i class="ti-settings"></i>게시판 관리</h5>
-										
-										<div>				
+										<div class="outer">
+										<div class="inner">
+										<div class="in">				
 											<div style="clar: both;">
 												<div class="submit-btns">
 												<button type="button" class="mtr-btn" onclick="createItem();"><span>게시판 추가</span></button>
-												<button type="button" class="mtr-btn" onclick="submitboard();"><span>수정 완료</span></button>
+												<button type="button" class="mtr-btn modifymargin" onclick="submitboard();"><span>수정 완료</span></button>
 											</div>
 												
 											</div>
 										</div>
 										<br>
-										<form id="boardsettingform" action="boardSetting.net?groupkey=${groupkey }" method=post>
+										<form id="boardsettingform" action="boardSetting.net?groupkey=${group.groupKey }" method=post>
 										<div id="itemBoxWrap">
 										<input type="hidden" id="gblc" value="${groupboardlistcount }">
 										</div>
 										</form>
+										</div>
+										</div>
 									</div>
-							<!-- 그룹 정모 후기 목록 -->
-
-						</div>
+						</div>	
 						<!-- 그룹 페이지 위젯 중간 -->
 
 						<!-- 그룹 페이지 위젯 오른쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
 
-								<!-- 그룹 로그인 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title forlogintitle">로그인</h4>
-									<div class="your-page">
-										<div class="form-group">
-											<input type="text" id="input" required="required" /> <label
-												class="control-label" for="input">아이디</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="form-group">
-											<input type="password" required="required" /> <label
-												class="control-label" for="input">비밀번호</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="checkbox forRememberIdDiv">
-											<label> <input type="checkbox" checked="checked"><i
-												class="check-box forcheckbox"></i>아이디 저장
-											</label>
-										</div>
-
-										<div class="submit-btns forSubmitBtnDiv">
-											<button type="button" class="mtr-btn forLoginBtn">
-												<span>로그인</span>
-											</button>
-											<button type="button" class="mtr-btn forRegisterBtn">
-												<span>회원가입</span>
-											</button>
-										</div>
-
-									</div>
-								</div>
-								<!-- 그룹 로그인 위젯 -->
-
-								<!-- 그룹 나의 정보 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">나의 정보</h4>
-									<div class="your-page your-page-groupListDiv">
-										<figure>
-											<a href="#" title=""><img
-												src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-										</figure>
-										<div class="page-meta">
-											<a href="#" title="" class="underline">동선동탁구대장</a> <span><i
-												class="ti-comment"></i>메세지 <em>9</em></span> <span><i
-												class="ti-bell"></i>알림 <em>2</em></span>
-										</div>
-										<div class="page-likes">
-											<ul class="nav nav-tabs likes-btn">
-												<li class="nav-item"><a class="active" href="#link1"
-													data-toggle="tab">나의모임정보</a></li>
-												<li class="nav-item"><a class="" href="#link2"
-													data-toggle="tab">가입모임목록</a></li>
-											</ul>
-											<!-- Tab panes -->
-											<div class="tab-content">
-												<div class="tab-pane active fade show" id="link1">
-													<span><i class="ti-heart"></i>884</span> <a href="#"
-														title="weekly-likes">35 new likes this week</a>
-													<div class="users-thumb-list">
-														<a href="#" title="Anderw" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-1.jpg" alt="">
-														</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-2.jpg" alt="">
-														</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-3.jpg" alt="">
-														</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-4.jpg" alt="">
-														</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-5.jpg" alt="">
-														</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-6.jpg" alt="">
-														</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-7.jpg" alt="">
-														</a>
-													</div>
-												</div>
-												<div class="tab-pane fade" id="link2">
-													<div>
-														<ul class="your-page-groupList">
-															<li>동.탁</li>
-															<li>동.탁</li>
-															<li>동.탁</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 나의 정보 위젯 -->
-
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-								<div class="widget calendarCenter">
-									<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
-									<c:forEach var="gcl" items="${groupcalendarlist }">
-											<input type="hidden" id="cal${gcl.rownum}" value="${gcl.startdate }">
-									</c:forEach>
-									<h4 class="widget-title">나의 일정</h4>
-
-									<div class="calendarDiv">
-										<table id="calendar" class="calendarTable">
-											<tr>
-												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th id="prevcal"><label><i
-														class="fas fa-angle-left calendarBtn"></i></label></th>
-												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th id="nextcal"><label><i
-														class="fas fa-angle-right calendarBtn"></i></label></th>
-											</tr>
-											<tr>
-												<th align="center">일</th>
-												<th align="center">월</th>
-												<th align="center">화</th>
-												<th align="center">수</th>
-												<th align="center">목</th>
-												<th align="center">금</th>
-												<th align="center">토</th>
-											</tr>
-										</table>
-									</div>
-									<div class="scheduleDiv">
-										<hr>
-										<ul class="short-profile scheduleUl" id="shortschedule">
-											<c:if test="${empty shortschedule}">
-											<li><span>일정 없음</span></li>
-											</c:if>
-											<c:if test="${not empty shortschedule}">
-											<c:forEach var="ss" items="${shortschedule }">
-												<li><span>${ss.posttitle }</span>
-												<p>
-													모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소: ${ss.location }
-												</p></li>
-											</c:forEach>
-											</c:if>
-										</ul>
-									</div>
-
-								</div>
-								<!-- 그룹별 정모 나의 일정 위젯 -->
+								<jsp:include page="group_rightWidget.jsp" />
 
 							</aside>
 						</div>
@@ -577,7 +552,11 @@ cursor:pointer
 		</div>
 	</div>
 </section>
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
 <script type="text/javascript">
+	//달력시작==================================================================
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
 	function prevCalendar() {//이전 달
@@ -588,13 +567,18 @@ cursor:pointer
 				.getDate());
 		buildCalendar(); //달력 cell 만들어 출력 
 	}
-
 	function nextCalendar() {//다음 달
 		// 다음 달을 today에 값을 저장하고 달력에 today 넣어줌
 		//today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
 		//getMonth()는 현재 달을 받아 오므로 다음달을 출력하려면 +1을 해줘야함
-		today = new Date(today.getFullYear(), today.getMonth() + 1, today
+		var btoday = today.getMonth();
+		today = new Date(today.getFullYear(), today.getMonth()+1, today
 				.getDate());
+		var atoday = today.getMonth();
+		if(atoday-btoday==2){
+			today = new Date(today.getFullYear(), today.getMonth()-1, today
+					.getDate());
+		}
 		buildCalendar();//달력 cell 만들어 출력
 	}
 	function buildCalendar() {//현재 달 달력 만들기
@@ -615,8 +599,7 @@ cursor:pointer
 		//innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
 		//new를 찍지 않아서 month는 +1을 더해줘야 한다. 
 		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
-				+ (today.getMonth() + 1) + "월";
-
+				+ (today.getMonth()+1) + "월";
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
 			//열을 지워줌
@@ -668,8 +651,19 @@ cursor:pointer
 	//달력끝==================================================================
 </script>
 <script>
+buildCalendar();
 function submitboard(){
-	$("#boardsettingform").submit();
+	var cnt = $('#itemBoxWrap input.boardSeq').last().val();
+	var tf = true;
+	for(var i =1;i<=cnt;i++){
+		if($('#itemBoxWrap input[type="text"]:eq('+(i-1)+')').last().val()==""){
+			alert("게시판 제목을 입력해 주세요.");
+			tf=false;
+		}
+	}
+	if(tf==true){
+		$("#boardsettingform").submit();
+	}
 }
 
 function reorder() {
@@ -679,10 +673,12 @@ function reorder() {
 		$(box).find(".boardName").attr("name","ggroupboardlist["+((i+1)-1)+"].boardName");
 		$(box).find(".boardKey").attr("name","ggroupboardlist["+((i+1)-1)+"].boardKey");
 		$(box).find(".boardSeq").attr("name","ggroupboardlist["+((i+1)-1)+"].boardSeq");
+		$(box).find(".boardType").attr("name","ggroupboardlist["+((i+1)-1)+"].boardType");
 	});
 }
 
 function createItem() {
+	var bt = "<div class='checkbox onlymaster'><label><input id='writemaster' type='checkbox'><i class='check-box onlymaster1'></i>모임장만 글쓰기</label></div>";
 	$(createBox())
 			.appendTo("#itemBoxWrap")
 			.hover(function() {
@@ -692,7 +688,7 @@ function createItem() {
 				$(this).css('background', 'none');
 				$(this).find('.deleteBox').hide();
 			})
-			.append("<button type='button' class='mtr-btn deleteBox'><span>삭제</span></button>")
+			.append(bt+"<button type='button' class='mtr-btn deleteBox deleteUboard'><span>삭제</span></button><input type='hidden' class='boardKey' value='-1'>")
 			.find(".deleteBox")
 			.click(
 					function() {
@@ -718,15 +714,23 @@ function createItem() {
 function createBox() {
 	var contents = "<div class='itemBox'>" + "<div style='float:left;'>"
 			+ "<span class='itemNum'></span> "
-			+ "<input type='text' class='boardName' style='width:300px;'/>"
+			+ "<input type='text' class='boardName' style='width:200px;'/>"
 			+ "<input type='hidden' class='boardKey' value='-1'>"
 			+ "<input type='hidden' class='boardSeq' value=''>"
+			+ "<input type='hidden' class='boardType' value='Y'>"
 			+ "</div>" + "</div>";
 	return contents;
 }
 
-function createItemS(boardname,boardkey) {
-	$(createBoxS(boardname,boardkey))
+function createItemS(boardname,boardkey,boardtype) {
+	
+	var bt = "<div class='checkbox onlymaster'><label><input id='writemaster' type='checkbox'><i class='check-box onlymaster1'></i>모임장만 글쓰기</label></div>";
+	if(boardtype=="G"||boardtype=="N"){
+		bt="<div class='onlymasterYN'><span>모임장만 글쓰기가 가능합니다<span></div>";
+	}else if(boardtype=="X"){
+		bt="<div class='checkbox onlymaster'><label><input id='writemaster' type='checkbox' checked><i class='check-box onlymaster1'></i>모임장만 글쓰기</label></div>";
+	}
+	$(createBoxS(boardname,boardkey,boardtype))
 			.appendTo("#itemBoxWrap")
 			.hover(function() {
 				$(this).css('backgroundColor', '#f9f9f5');
@@ -735,7 +739,7 @@ function createItemS(boardname,boardkey) {
 				$(this).css('background', 'none');
 				$(this).find('.deleteBox').hide();
 			})
-			.append("<button type='button' class='mtr-btn deleteBox'><span>삭제</span></button><input type='hidden' value='"+boardkey+"'>")
+			.append(bt+"<button type='button' class='mtr-btn deleteBox deleteUboard'><span>삭제</span></button><input type='hidden' value='"+boardkey+"'>")
 			.find(".deleteBox")
 			.click(
 					function() {
@@ -748,7 +752,7 @@ function createItemS(boardname,boardkey) {
 									}
 								});
 						if (valueCheck) {
-							var delCheck = confirm('사용하고 계신 게시판 입니다.\n게시판의 모든 글이 삭제됩니다.\n삭제하시겠습니까?');
+							var delCheck = confirm('사용중인 게시판 입니다.\n게시판의 모든 글이 삭제됩니다.\n삭제하시겠습니까?');
 						}
 						if (!valueCheck || delCheck == true) {
 							$(this).parent().remove();
@@ -764,17 +768,18 @@ function createItemS(boardname,boardkey) {
 function deleteUboard(boardkey,groupkey){
 	location.href="boardDelete.net?boardkey="+boardkey+"&groupkey="+groupkey;
 }
-function createBoxS(boardname,boardkey) {
+function createBoxS(boardname,boardkey,boardtype) {
 	var contents = "<div class='itemBox'>" + "<div style='float:left;'>"
 			+ "<span class='itemNum'></span> "
-			+ "<input type='text' class='boardName' value='"+boardname+"' style='width:300px;'/>"
+			+ "<input type='text' class='boardName' value='"+boardname+"' style='width:200px;'/>"
 			+ "<input type='hidden' class='boardKey' value='"+boardkey+"'>"
 			+ "<input type='hidden' class='boardSeq' value=''>"
-			+ "</div>" + "</div>";
+			+ "<input type='hidden' class='boardType' value='"+boardtype+"'>"
+			+ "</div>" 
+			+ "</div>";
 	return contents;
 }
 $(function() {
-	buildCalendar();
 	var mycalendarlistcount = $('#gclc').val();
 	for(var i = 1; i<=mycalendarlistcount;i++){
 		var temp = $('#cal'+i).val();
@@ -784,11 +789,25 @@ $(function() {
 	for(var i = 1; i<=boardlistcount;i++){
 		var boardname = $('#bn'+i).val();
 		var boardkey = $('#bk'+i).val();
-		createItemS(boardname,boardkey);
+		var boardtype = $('#bt'+i).val();
+		createItemS(boardname,boardkey,boardtype);
 	}
 	
-	$("#itemBoxWrap").on('click','.deleteUboard',function(){
+	$("#itemBoxWrap").on('change','#writemaster',function(){
+		if($(this).is(":checked")==true){
+			$(this).parent().parent().prev().find('.boardType').val('X');
+		}else{
+			$(this).parent().parent().prev().find('.boardType').val('Y');
+		}
 		
+	})
+	
+	$("#itemBoxWrap").on('click','.deleteUboard',function(){
+		var groupkey = $('#thisGroupKey').val();
+		var boardkey = $(this).next().val();
+		if(boardkey!=-1){
+			location.href="boardDelete.net?boardkey="+boardkey+"&groupkey="+groupkey;
+		}
 	})
 	
 	$("#itemBoxWrap").sortable({
@@ -802,14 +821,20 @@ $(function() {
 			reorder();
 		}
 	});
-	
+	$(".forLoginBtn").click(function(){
+		location.href="login";
+	})
 	$("#calendar").on('click', '#prevcal', function(event) {
 		var userkey = $('#UserKey').val();
 		prevCalendar();
 		var date = $('#tbCalendarYM').text();
 		ajaxcallist(userkey,date);
 		$('#shortschedule').empty();
-		$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		if(userkey ==-1){
+			$('#shortschedule').append('<li><span>로그인 해주세요</span></li>');
+		}else{
+			$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		}
 		
     })
     
@@ -819,30 +844,43 @@ $(function() {
     	var date = $('#tbCalendarYM').text();
     	ajaxcallist(userkey,date);
     	$('#shortschedule').empty();
-    	$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+    	if(userkey ==-1){
+			$('#shortschedule').append('<li><span>로그인 해주세요</span></li>');
+		}else{
+			$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		}
     })
     
     
 	$(".nearby-contct").on('click', '.gmtljoinbtn', function(event) {
 		var userkey = $('#UserKey').val();
-        var postkey = $(this).next().val();
+		if (userkey!=-1){
+		var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
+        alert(n);
         ajaxJoinBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtljoinbtn');
         $(this).addClass('gmtlcancelbtn');
         $(this).children().html('취소하기');
+		}else{
+			alert("로그인 해주세요 ");
+		}
     })
 
     $(".nearby-contct").on('click', '.gmtlcancelbtn', function(event) {
         var userkey = $('#UserKey').val();
+        if (userkey!=-1){
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtlcancelbtn');
         $(this).addClass('gmtljoinbtn');
         $(this).children().html('참여하기');
+        }else{
+			alert("로그인 해주세요 ");
+		}
     })
 	$(".calendarDiv").on('click', 'td', function(event) {
         if ($(this).text() != "" || $(this).text().length() > 2) {
@@ -855,7 +893,11 @@ $(function() {
             	ajaxcal(userkey,date,day);
             }else{
             	$('#shortschedule').empty();
-            	$('#shortschedule').append('<li><span>일정이 없습니다</span></li>');
+            	if(userkey ==-1){
+        			$('#shortschedule').append('<li><span>로그인 해주세요</span></li>');
+        		}else{
+        			$('#shortschedule').append('<li><span>일정이 없습니다</span></li>');
+        		}
             }
         }
     })
@@ -865,7 +907,7 @@ $(function() {
     $(".forMemberCountBtnOne").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseOne").hasClass("show")) {
             $('.i-changeOne').removeClass('fa-arrow-up');
@@ -878,7 +920,7 @@ $(function() {
     $(".forMemberCountBtnTwo").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseTwo").hasClass("show")) {
             $('.i-changeTwo').removeClass('fa-arrow-up');
@@ -891,7 +933,7 @@ $(function() {
     $(".forMemberCountBtnThree").click(function() {
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseThree").hasClass("show")) {
             $('.i-changeThree').removeClass('fa-arrow-up');

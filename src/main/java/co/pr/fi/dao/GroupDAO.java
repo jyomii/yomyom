@@ -103,6 +103,7 @@ public class GroupDAO {
 		return sqlSession.selectList("group.shortscheduleselected", map);
 	}
 
+	
 	public void groupboardupdate(Map<String, Object> map) {
 		sqlSession.update("group.groupboardupdate", map);
 	}
