@@ -31,7 +31,13 @@ public class GComment {
 
 	// 모임키값
 	private int groupKey;
-
+	
+	// 댓글러 닉네임
+	private String groupNickname;
+	
+	// 댓글러 프사
+	private String profileFile;
+	
 	public int getCommnetNum() {
 		return commnetNum;
 	}
@@ -104,6 +110,22 @@ public class GComment {
 		this.groupKey = groupKey;
 	}
 
+	public String getGroupNickname() {
+		return groupNickname;
+	}
+
+	public void setGroupNickname(String groupNickname) {
+		this.groupNickname = groupNickname;
+	}
+
+	public String getProfileFile() {
+		return profileFile;
+	}
+
+	public void setProfileFile(String profileFile) {
+		this.profileFile = profileFile;
+	}
+
 	// GComment 모델 복사
 	public void CopyData(GComment param) {
 		this.commnetNum = param.getCommnetNum();
@@ -115,5 +137,7 @@ public class GComment {
 		this.commentReSeq = param.getCommentReSeq();
 		this.commentDate = param.getCommentDate();
 		this.groupKey = param.getGroupKey();
+		this.groupNickname = param.getGroupNickname();
+		this.profileFile = param.getProfileFile();
 	}
 }

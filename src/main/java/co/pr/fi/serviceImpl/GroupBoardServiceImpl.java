@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.GroupBoardDAO;
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.Maps;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupBoardService;
@@ -19,7 +20,7 @@ public class GroupBoardServiceImpl implements GroupBoardService {
 	GroupBoardDAO dao;
 
 	@Override
-	public Post detailBoard(Map<String, String> keys) {
+	public Post detailBoard(Map<String, Integer> keys) {
 		int result = dao.updateReadCount(keys.get("postkey"));
 		if (result == 1) {
 			return dao.detailBoard(keys);
@@ -46,5 +47,10 @@ public class GroupBoardServiceImpl implements GroupBoardService {
 	public int deleteAllMap() {
 		return dao.deleteAllMap();
 		
+	}
+
+	@Override
+	public List<GComment> getBoardComment(Map<String, Integer> keys) {
+		return dao.getBoardComment(keys);
 	}
 }

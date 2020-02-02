@@ -39,7 +39,7 @@ public class GroupController {
 	// private String saveFolder;
 	@GetMapping("/group_main.net")
 	public ModelAndView group_main(ModelAndView mv) {
-		int groupkey = 1;
+		int groupkey = 7;
 		int userkey = 1;
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1;
