@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- 제이쿼리 -->
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+    <script src = "resources/js/comment.js"></script>
     <style>
     	.ySub {
     		display : inline-block; 
@@ -64,6 +64,15 @@
     </style>
     
     <script>
+    	function memDetail(groupKey, userKey) {
+    		var f = document.memDetail;		// 폼 name
+    		f.groupKey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
+    		f.userKey.value = userKey;		// input 태그 중 name이 userKey인 값에 대해서 userkey를 넘긴다.
+    		f.action = "groupmain.net";		// 이동할 페이지
+    		f.method = "post";				// POST 방식으로 데이터 전송
+    		f.submit();						// 폼 전송
+    	};
+    	
     	$(function(){
     		/* 비밀댓글 설정 */
     		var lock = false;	// 기본 unlock
@@ -374,10 +383,14 @@
 									<div class="central-meta item">
 										<div class="user-post">
 											<div class="friend-info">
+												<form name = "memDetail">
+													<input type = "hidden" name = "userKey" value = "">
+													<input type = "hidden" name = "groupKey" value = "">
+												</form>
 												<input type = "hidden" id = "detailGroupKey" name = "groupKey" value = "${groupKey}">
 												<input type = "hidden" id = "detailPostKey" name = "postKey" value = "${postKey}">
 												<figure>
-													<a href = "javascript:memDetail(${post.userKey})">
+													<a href = "javascript:memDetail(${groupKey},${post.userKey})">
 														<img src="<spring:url value='/image${post.profileFile}'/>" class = "group-img" alt = ""/>
 													</a>
 												</figure>
@@ -469,9 +482,9 @@
 															</div>
 															<div class="we-comment">
 																<div class="coment-head">
-																	<h5><a href="G_mem_detail.net?userKey=${c.userKey}" title="">${c.groupNickname}</a></h5>
+																	<h5><a href="javascript:memDetail(${groupKey},${c.userKey})" title="">${c.groupNickname}</a></h5>
 																	<span>${c.commentDate}</span>
-																	<a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+																	<a class="we-reply" href="javascript:reply(${c.commnetNum})" title="Reply"><i class="fa fa-reply"></i></a>
 																</div>
 																<p>${c.commentContent}</p>
 															</div>
@@ -504,7 +517,8 @@
 														</div>
 														<div class="post-comt-box">
 															<!-- 댓글 등록 -->
-															<form method="post">
+															<form method = "post" id = "ReplyAction">
+																<input type = "hidden" name = "commentNum" value = "">
 																<textarea placeholder="Post your comment"></textarea>
 																<!-- 기본은 비밀댓글 X -->
 																<button type = "button" class = "ibtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>

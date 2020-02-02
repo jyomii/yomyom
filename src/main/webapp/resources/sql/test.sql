@@ -1647,10 +1647,6 @@ SELECT * FROM (	SELECT ROWNUM R, C.*
 			)
 WHERE R >= 1 AND R <= 10
 					 
-					 
-					 
-SELECT * FROM POST;					 
-					 
 INSERT INTO POST
 VALUES(POSTSEQ.NEXTVAL, '페이지네이션 오라', '커몬', SYSDATE, 2, 3, 'Y', 'Y', 2, 0);
 INSERT INTO POST
@@ -1661,23 +1657,46 @@ VALUES(POSTSEQ.NEXTVAL, '11개가 돼버렷', '빠알리잉', SYSDATE, 2, 3, 'Y'
 -- 글 좋아요 여부					 
 SELECT COUNT(*) FROM POSTLIKE WHERE USERKEY = 1 AND GROUPKEY = 3 AND POSTKEY = 21
 
-
-SELECT * FROM POSTLIKE;
-
-SELECT COUNT(POSTKEY)
-FROM POSTLIKE
-WHERE GROUPKEY = 3 AND POSTKEY = 10
-
-
-
-
-
-select * from board;
-
-
+-- 예전 예제 참고용
 SELECT * FROM 
-					(SELECT ROWNUM R, B.* 
-					 FROM (SELECT board_num, board_subject, board_re_ref, board_re_lev, board_re_seq, board_date 
-					 		FROM BOARD 
-						   ORDER BY BOARD_RE_REF DESC, BOARD_RE_SEQ ASC) B) 
-		WHERE R >= 1 and R <= 30					 
+				(SELECT ROWNUM R, B.* 
+				 FROM (SELECT board_num, board_subject, board_re_ref, board_re_lev, board_re_seq, board_date 
+					   FROM BOARD 
+					   ORDER BY BOARD_RE_REF DESC, BOARD_RE_SEQ ASC) B) 
+WHERE R >= 1 and R <= 7
+
+
+-----------------------------------------------------------------------------------------
+-- 댓글 테이블 
+-- 원댓에 새로 답댓 달리면 그 댓글은 SEQ = 1이고 기존의 답댓들 SEQ +1 된다.  
+COMMENTNUM	POSTKEY		USERKEY		COMMENTCONTENT			COMMENTREREF		COMMENTRELEV		COMMENTRESEQ		COMMENTDATE			GROUPKEY
+1			15			6			댓글 쿼리 짭시다.			1					0					0					2020-02-01			3
+2			14			3			머리 아프다..				2					0					0					2020-02-02			10	
+3			15			17			짜기 싫어					1					1					2					2020-02-03			3
+4			15			39			ㄹㅇ 하기 싫다				1					2					1					2020-02-03			3
+
+-- 댓글 달 때 첫 번째 과정
+UPDATE GCOMMENT
+SET COMMENTRESEQ = COMMENTRESEQ + 1
+WHERE COMMENTREREF = 1 AND COMMENTRESEQ > 0
+
+SELECT * FROM GCOMMENT;
+
+SELECT C.COMMNETNUM, C.POSTKEY, C.USERKEY, COMMENTCONTENT, COMMEMTREREF, COMMENTRELEV, COMMENTRESEQ, COMMENTDATE, M.GROUPKEY, GROUPNICKNAME, PROFILEFILE
+		FROM (	SELECT COMMNETNUM, POSTKEY, USERKEY, COMMENTCONTENT, COMMEMTREREF, COMMENTRELEV, COMMENTRESEQ, COMMENTDATE, GROUPKEY
+				FROM GCOMMENT INNER JOIN (	SELECT POSTKEY 
+											FROM POST 
+											WHERE POSTKEY = 15)
+				USING (POSTKEY)
+			  ) C,  
+			  (	SELECT GROUPKEY, USERKEY, GROUPNICKNAME, PROFILEFILE
+			  	FROM GGROUPMEMBER
+			  	WHERE USERKEY IN (	SELECT USERKEY
+									FROM GCOMMENT JOIN (SELECT POSTKEY 
+														FROM POST 
+														WHERE POSTKEY = 15)
+									USING (POSTKEY)) 
+				AND GROUPKEY = 3
+				) M
+		WHERE C.USERKEY = M.USERKEY AND C.POSTKEY = 15
+		ORDER BY COMMENTDATE
