@@ -83,7 +83,7 @@ a.add-butn.more-action {
 															<figure>
 																<a> <c:choose>
 																		<c:when test="${empty item.groupDFile }">
-																			<img src="resources/images/resources/photo1.jpg"
+																			<img src="resources/images/group_default.png"
 																				alt="">
 																		</c:when>
 																		<c:otherwise>
@@ -140,7 +140,7 @@ a.add-butn.more-action {
 															<figure>
 																<a> <c:choose>
 																		<c:when test="${empty item.groupDFile }">
-																			<img src="resources/images/resources/photo1.jpg"
+																			<img src="resources/images/group_default.png"
 																				alt="">
 																		</c:when>
 																		<c:otherwise>
@@ -349,7 +349,7 @@ a.add-butn.more-action {
 			html += '<a>';
 
 			if (list[i].groupDFile == null)
-				html += '<img src= "resources/images/resources/photo1.jpg" alt="">';
+				html += '<img src= "resources/images/group_default.png" alt="">';
 			else
 				html += "<img src= \'<spring:url value='/image"+list[i].groupDFile +"'/>\'/>";
 

@@ -1,6 +1,7 @@
 package co.pr.fi.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +35,13 @@ public class MainHeaderDAO {
 	public List<GGroup> getNotUserActiveGroupList() {
 		return sqlSession.selectList("maingroup.getNotUserActiveGroupList");
 	}
+
+	public List<GGroup> getBestGroups(Map<String, Integer> map) {
+		return sqlSession.selectList("maingroup.categorybestMainGroup",map);
+	}
+
+	public List<GGroup> getCategoryActiveGroupList(int categorykey) {
+		return sqlSession.selectList("maingroup.getCategoryActiveGroupList",categorykey);
+	}
+
 }

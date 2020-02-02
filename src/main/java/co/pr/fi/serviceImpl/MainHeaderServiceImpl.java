@@ -1,6 +1,8 @@
 package co.pr.fi.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,4 +42,22 @@ public class MainHeaderServiceImpl implements MainHeaderService {
 	public List<GGroup> getNotUserActiveGroupList() {
 		return dao.getNotUserActiveGroupList();	
 	}
+
+	@Override
+	public List<GGroup> getBestGroups(int categorykey, int getCount) {
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("cateogrykey", categorykey);
+		map.put("getCount", getCount);
+		
+		return dao.getBestGroups(map);
+	}
+
+	@Override
+	public List<GGroup> getCategoryActiveGroupList(int categorykey) {
+		return dao.getCategoryActiveGroupList(categorykey);
+	}
+
+
+	
 }
