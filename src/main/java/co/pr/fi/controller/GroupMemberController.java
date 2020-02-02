@@ -38,9 +38,10 @@ public class GroupMemberController {
 	
 	// 모임 메인 페이지 이동
 	@GetMapping("/groupmain")
-	public String groupmain (@RequestParam(defaultValue = "0") int groupKey, Model m, HttpSession session) {
-		// 모임 회원 상세 정보 페이지 -> 가입한 모임 -> 해당 모임 메인 페이지로 이동할 수 있게 코드 추가해야댐 
-		// 유저키 임시
+	public String groupmain (@RequestParam(defaultValue = "7") int groupKey, 
+							 @RequestParam(defaultValue = "2") int userKey,
+							 Model m, HttpSession session) {
+		
 		m.addAttribute("groupKey", 7);
 		m.addAttribute("userKey", 2);
 		return "groupin_group_main";
@@ -48,8 +49,13 @@ public class GroupMemberController {
 	
 	// 텥스틑 메인 페이지 이동
 	@PostMapping("groupmain.net")
-	public String groupMain (String groupKey, Model m) {
+	public String groupMain (@RequestParam(defaultValue = "7") int groupKey, 
+			 				 @RequestParam(defaultValue = "2") int userKey,
+			 				 Model m) {
+		
 		System.out.println("###### groupKey ######" + groupKey);
+		m.addAttribute("groupKey", groupKey);
+		m.addAttribute("userKey", userKey);
 		return "groupin_group_main";
 	}
 	
