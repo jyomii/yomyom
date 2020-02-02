@@ -8,17 +8,17 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
 
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.Maps;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupBoardService;
@@ -30,28 +30,29 @@ public class GroupBoardController {
 	GroupBoardService groupBoardService;
 
 	// 게시글 보기
-	@GetMapping("/detailBoard")
-	public ModelAndView detailBoard (String postkey, String groupkey, ModelAndView mv) {
-		// ## 가져와야 할 List ##
-		// 유저 프사(profileFile), 유저 닉네임(groupNickname)															-- GGROUPMEMBER
-		// 글제목(POSTTITLE), 글 작성일(POSTDATE), 글내용(POSTCONTENT), 조회수(VIEWCOUNT), 댓글수(REPLYCOUNT), 좋아요수(LIKE)	-- POST
-		// 해당 글에 달린 댓글																							-- GCOMMENT
-		// userkey, postkey, commentkey
-		Post post = new Post();
-		Map<String, String> keys = new HashMap<String, String>();
-		keys.put("postkey", postkey);
-		keys.put("groupkey", groupkey);
+	@PostMapping("/detailBoard.net")
+	public String detailBoard ( @RequestParam(required = false, defaultValue = "0") int postKey, 
+								@RequestParam(required = false, defaultValue = "0") int groupKey, 
+								Model m) {
+		// 확인용 sysout
+		System.out.println("##### groupkey = " + groupKey + " | postkey = " + postKey + " #####");
+		
+		Map<String, Integer> keys = new HashMap<String, Integer>();
+		Post post = new Post();	// 게시글 관련
+		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
+		
+		keys.put("postkey", postKey);
+		keys.put("groupkey", groupKey);
 		post = groupBoardService.detailBoard(keys);	
+		commentList = groupBoardService.getBoardComment(keys);
 		
 		if (post != null) {
-			mv.addObject("post", post);
-			mv.setViewName("G_detailBoard");
-			return mv;
+			m.addAttribute("post", post);
+			m.addAttribute("comment", commentList);
+			return "G_detailBoard";
 		}
-		
-		mv.addObject("죄송합니다. 게시글을 조회할 수 없습니다.", "error");
-		mv.setViewName("error");
-		return mv;
+		m.addAttribute("죄송합니다. 게시글을 조회할 수 없습니다.", "error");
+		return "error";
 	}
 
 	/* 지도 맵 추가하기 예제입니다. */

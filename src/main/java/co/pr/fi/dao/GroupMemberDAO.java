@@ -20,15 +20,19 @@ public class GroupMemberDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	// 로그인한 유저의 유저키 가져오기
+	public int getUser(String id) {
+		return sqlSession.selectOne("group.getId", id);
+	}
 	
 	// 유저의 가입한 모임 조회
-	public List<GGroup> userInGroup (int userKey) {
-		return sqlSession.selectList("group.userInGroup", userKey);
+	public List<GGroup> userInGroup (Map<String, Object> map) {
+		return sqlSession.selectList("group.userInGroup", map);
 	}
 	
 	// 해당 모임 내 유저의 작성글 조회
-	public List<Post> wroteInGroup (Map<String, Object> temp) {
-		return sqlSession.selectList("post.wroteInGroup", temp);
+	public List<Post> wroteInGroup (Map<String, Object> map) {
+		return sqlSession.selectList("post.wroteInGroup", map);
 	}
 	
 	// 해당 모임 내 유저가 댓글 단 글 조회 
@@ -54,5 +58,27 @@ public class GroupMemberDAO {
 	// 닉네임 중복체크
 	public Map<Object, String> nickCheck(Map<String, String> check) {
 		return sqlSession.selectOne("group.nickCheck", check);
+	}
+	
+	// 일단 관심 카테고리에 해당하는 모임 추천
+	public List<GGroup> preferGroup(Object id) {
+		int user = getUser((String) id);
+		return sqlSession.selectList("group.preferGroup", user);
+	}
+
+	public int isNewMem(GGroupMember mem) {
+		return sqlSession.selectOne("group.isNewMem", mem);
+	}
+
+	public int getJoinedCount(int userKey) {
+		return sqlSession.selectOne("group.getJoinedCount", userKey);
+	}
+
+	public int getWroteCount(Map<String, Object> temp) {
+		return sqlSession.selectOne("post.getWroteCount", temp);
+	}
+
+	public int getCommentedCount(Map<String, Object> temp) {
+		return sqlSession.selectOne("post.getCommentedCount", temp);
 	}
 }

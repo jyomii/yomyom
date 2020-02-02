@@ -43,6 +43,7 @@ public class GroupController {
 	// @Value("${savefolder}")
 	// private String saveFolder;
 	@GetMapping("/group_main.net")
+
 	public ModelAndView group_main(ModelAndView mv, HttpSession session) {
 		String id = "";
 		int userkey=-1;

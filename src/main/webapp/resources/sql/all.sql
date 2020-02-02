@@ -152,7 +152,6 @@ CREATE TABLE gusers
     userlocation        NUMBER            NOT NULL, 
     gender               CHAR(1)           NOT NULL, 
     useremail           VARCHAR2(50)      NOT NULL, 
-  
     userjoindate       DATE              NOT NULL, 
     useroptionadmin    CHAR(1)           NOT NULL, 
     useroptiongroup    CHAR(1)           NOT NULL, 
