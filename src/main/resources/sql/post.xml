@@ -108,6 +108,7 @@
 	]]>
 	</select>
 	
+	<!-- 댓글수 -->
 	<select id = "getCommentedCount" resultType = "int" parameterType = "map">
 		SELECT COUNT(*)
 		FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT, POSTREADCOUNT
@@ -117,5 +118,32 @@
 							 	 USING (POSTKEY)) 
 		USING(POSTKEY)					 						  
 		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}			
+	</select>
+	
+	<!-- 좋아요 여부 -->
+	<select id = "isLiked" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM POSTLIKE
+		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupkey} AND POSTKEY = #{postkey}
+	</select>
+	
+	<!-- 좋아요 취소 -->
+	<delete id = "revokeLike" parameterType = "map">
+		DELETE 
+		FROM POSTLIKE
+		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey} AND POSTKEY = #{postKey}
+	</delete>
+	
+	<!-- 좋아요 -->
+	<insert id = "doLike" parameterType = "map">
+		INSERT INTO POSTLIKE
+		VALUES (#{postKey}, #{userKey}, #{groupKey})
+	</insert>
+	
+	<!-- 글 좋아요 수 -->
+	<select id = "likeCount" parameterType = "map" resultType = "int">
+		SELECT COUNT(POSTKEY)
+		FROM POSTLIKE
+		WHERE GROUPKEY = #{groupKey} AND POSTKEY = #{postKey}
 	</select>
 </mapper>

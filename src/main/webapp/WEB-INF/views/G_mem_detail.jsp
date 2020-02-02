@@ -120,7 +120,7 @@
 						<form name = "myForm">
 							<input type = "hidden" id = "userKey" name = "userKey" value = "${userKey}">
 							<input type = "hidden" id = "groupKey" name = "groupKey" value = "${groupKey}">
-							<input type = "hidden" id = "postKey" name = "postKey" value = "${postKey}"> <!-- 글 보러 갈 때 쓸 것..? -->
+							<input type = "hidden" id = "postKey" name = "postKey" value = "${postKey}"> 
 							<input type = "hidden" id = "status" name = "status" value = "${status}">
 							<input type = "hidden" id = "page" name = "page" value = "${page}">
 						</form>
@@ -151,7 +151,7 @@
 								</c:if>
 								<!-- 가입한 모임이 없는 경우 -->
 								<c:if test = "${listcount == 0}">
-									<tr><td colspan = "3">가입한 모임이 존재하지 않습니다.</td></tr>
+									<tr><td colspan = "3">가입한 모임이 없습니다.</td></tr>
 								</c:if>
 								</tbody>
 							</c:if>
@@ -178,7 +178,7 @@
 							</c:if>
 							<!-- 작성글이 없는 경우 -->
 							<c:if test = "${listcount == 0}">
-								<tr><td colspan = "3">작성글이 존재하지 않습니다.</td></tr>
+								<tr><td colspan = "3">작성한 글이 없습니다.</td></tr>
 							</c:if>
 							</tbody>
 						</c:if>
@@ -211,7 +211,7 @@
 									</c:forEach>
 								</c:if>
 								<c:if test = "${listcount == 0}">
-									<tr><td colspan = "3">댓글이 존재하지 않습니다.</td></tr>
+									<tr><td colspan = "3">작성한 댓글이 없습니다.</td></tr>
 								</c:if>
 							</tbody>
 						</c:if>

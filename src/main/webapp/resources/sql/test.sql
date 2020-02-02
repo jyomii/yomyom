@@ -1658,4 +1658,26 @@ VALUES(POSTSEQ.NEXTVAL, '제발 편하게 가자', 'ㅠㅠ', SYSDATE, 2, 3, 'Y',
 INSERT INTO POST
 VALUES(POSTSEQ.NEXTVAL, '11개가 돼버렷', '빠알리잉', SYSDATE, 2, 3, 'Y', 'Y', 2, 0);
 					 
-					 
+-- 글 좋아요 여부					 
+SELECT COUNT(*) FROM POSTLIKE WHERE USERKEY = 1 AND GROUPKEY = 3 AND POSTKEY = 21
+
+
+SELECT * FROM POSTLIKE;
+
+SELECT COUNT(POSTKEY)
+FROM POSTLIKE
+WHERE GROUPKEY = 3 AND POSTKEY = 10
+
+
+
+
+
+select * from board;
+
+
+SELECT * FROM 
+					(SELECT ROWNUM R, B.* 
+					 FROM (SELECT board_num, board_subject, board_re_ref, board_re_lev, board_re_seq, board_date 
+					 		FROM BOARD 
+						   ORDER BY BOARD_RE_REF DESC, BOARD_RE_SEQ ASC) B) 
+		WHERE R >= 1 and R <= 30					 

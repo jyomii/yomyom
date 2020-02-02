@@ -58,6 +58,9 @@
 			box-sizing: border-box;
    			margin-right: 12px;
 		}
+		.we-video-info > ul li span ins {
+			top : -6px !important;
+		}
     </style>
     
     <script>
@@ -85,6 +88,64 @@
     				//$(this).html(b.html.replace(/\n/g, '<br/>'));
     			}
     		});
+    		
+    		var submit = '';
+    		
+    		// 하트 눌렀을 때
+    		$('.like i').click(function() {
+    			var isLiked = $('#isLiked').val();
+    			if (isLiked == 1) {	// 좋아요 했다가 취소할 것임
+    				submit = 'status=' + isLiked + '&postKey=' + $('#detailPostKey').val() + '&groupKey=' + $('#detailGroupKey').val();
+    				likes(submit);
+    			} else {	// 좋아요 이제 할 것임
+    				submit = 'status=' + isLiked + '&postKey=' + $('#detailPostKey').val() + '&groupKey=' + $('#detailGroupKey').val();
+    				likes(submit);
+    			}
+    		});
+    		
+    		function likes(data) {
+    			$.ajax({
+    				url : "changeLike",
+    				data : data,
+    				type : "POST",
+    				success : function(data) {
+    					switch (data.result) {
+    					case 0 :
+    						// 좋아요 취소 상태
+    						$('.like i').removeClass('fas fa-heart').addClass('far fa-heart');
+    						$('#isLiked').val(data.result);
+    						// ins 태그는 val() 안 먹힌다.
+    						$('.like ins').text('');
+    						$('.like ins').text(data.likeCount);
+    						break;
+    					case 1 :
+    						// 좋아요 상태
+    						$('.like i').removeClass('far fa-heart').addClass('fas fa-heart');
+    						$('#isLiked').val(data.result);
+    						$('.like ins').text('');
+    						$('.like ins').text(data.likeCount);
+    						break;
+    					case -1 :
+    						// 좋아요 취소 실패
+    						alert('좋아요 작업 실패했습니다. 다시 시도해주세요.');
+    						break;
+    					case -2 : 
+    						// 좋아요 실패
+    						alert('로그인 후 이용해주세요.');
+    						location.href = 'login';
+    						break;
+    					case -3 :
+    						// 로그인 x
+    						alert('로그인 후 이용해주세요.');
+    						location.href = 'login';
+    						break;
+    					}
+    				},
+    				error : function(request, status, error) {
+    					console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+    				}
+    			}); // ajax end
+    		};	// likes end
     	})
     </script>
     <!-- 그룹 페이지 상단 -->
@@ -313,6 +374,8 @@
 									<div class="central-meta item">
 										<div class="user-post">
 											<div class="friend-info">
+												<input type = "hidden" id = "detailGroupKey" name = "groupKey" value = "${groupKey}">
+												<input type = "hidden" id = "detailPostKey" name = "postKey" value = "${postKey}">
 												<figure>
 													<a href = "javascript:memDetail(${post.userKey})">
 														<img src="<spring:url value='/image${post.profileFile}'/>" class = "group-img" alt = ""/>
@@ -330,21 +393,33 @@
 												<div class="post-meta">
 													<div class="we-video-info">
 														<ul>
+															<!-- 조회수 -->
 															<li>
 																<span class="views" data-toggle="tooltip" title="views">
 																	<i class="fa fa-eye"></i>
 																	<ins>${post.postReadcount}</ins>
 																</span>
 															</li>
+															<!-- 댓글수 -->
 															<li>
 																<span class="comment" data-toggle="tooltip" title="Comments">
-																	<i class="fa fa-comments-o"></i>
+																	<i class="far fa-comment-dots"></i> <!-- 빈 말풍선 -->
+																	<!-- <i class="fas fa-comment-dots"></i> --> <!-- 말풍선 -->
 																	<ins>${post.replyCount}</ins>
 																</span>
 															</li>
+															<!-- 좋아요수 -->
 															<li>
 																<span class="like" data-toggle="tooltip" title="like">
-																	<i class="ti-heart"></i>
+																	<input type = "hidden" id = "isLiked" value = "${isLiked}">
+																	<!-- 현재 회원이 좋아요 눌렀을 경우 -->
+																	<c:if test = "${isLiked == 1}">
+																	<i class="fas fa-heart"></i> <!-- 하트 -->
+																	</c:if>
+																	<!-- 현재 회원이 좋아요 안 눌렀을 경우 -->
+																	<c:if test = "${isLiked == 0}">
+																	<i class="far fa-heart"></i><!-- 빈하트 -->
+																	</c:if>	
 																	<ins>${post.postlike}</ins>
 																</span>
 															</li>
@@ -386,7 +461,7 @@
 											</div>
 											<div class="coment-area">
 												<ul class="we-comet">
-													<!-- 댓글 한 개 -->
+													<!-- 댓글 -->
 													<c:forEach var = "c" items = "${comment}">
 														<li>
 															<div class="comet-avatar">
@@ -402,6 +477,7 @@
 															</div>
 														</li>
 													</c:forEach>
+													<!-- 비댓 샘플 -->
 													<li>
 														<div class="comet-avatar">
 															<img src="resources/images/resources/d.png" alt="">
@@ -416,6 +492,7 @@
 															<p style = "display : inline-block">비밀 댓글 입니다.</p>
 														</div>
 													</li>
+													
 													<!-- 댓글 더보기 -->
 													<li>
 														<a href="#" title="" class="showmore underline">more comments</a>

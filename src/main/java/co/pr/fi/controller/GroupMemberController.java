@@ -72,8 +72,9 @@ public class GroupMemberController {
 			out.println("location.href = 'login'");
 			out.println("</script>");
 			out.close();
-		} else 
+		} else {
 			userKey = groupMemberService.getUser((String) session.getAttribute("id"));
+		}
 		
 		List<JoinQuest> list = groupMemberService.getJoinSample(groupKey);
 		System.out.println("모임 가입 양식 가져오기");
