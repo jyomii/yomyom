@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.GroupDAO;
 import co.pr.fi.domain.GGroupBoard;
+import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.CalendarMember;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
+import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
 import co.pr.fi.domain.Shortschedule;
+import co.pr.fi.domain.UserRegGroup;
 import co.pr.fi.service.GroupService;
 import co.pr.fi.domain.MemberList;
 
@@ -26,7 +29,15 @@ public class GroupServiceImpl implements GroupService {
 	
 	@Override
 	public GGroup groupInfo(int groupkey) {
-		return dao.groupinfo(groupkey);
+		GGroup groupinfo = dao.groupinfo(groupkey);
+		
+		String date = groupinfo.getGroupDate();
+		String year = date.substring(0,4)+"년 ";  
+		String month = date.substring(5,7)+"월 ";
+		String day = date.substring(8,10)+"일";
+		String tdate = year+month+day;
+		groupinfo.setGroupDate(tdate);
+		return groupinfo;
 	}
 
 	
@@ -52,12 +63,18 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public String groupdcategory(int categorykey) {
+	public String groupdcategory(int categorykey,int groupkey) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("categorykey", categorykey);
+		map.put("groupkey", groupkey);
 		return dao.groupdcategory(categorykey);
 	}
 
 	@Override
-	public String groupscategory(int categorykey) {
+	public String groupscategory(int categorykey,int groupkey) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("categorykey", categorykey);
+		map.put("groupkey", groupkey);
 		return dao.groupscategory(categorykey);
 	}
 
@@ -87,6 +104,7 @@ public class GroupServiceImpl implements GroupService {
 		List<Post> MeetingList = dao.groupmeetinglist(groupkey);
 		for(int i = 0;i<3;i++) {
 			String date = MeetingList.get(i).getCstartdate();
+			System.out.println("!!!!!!!!!!!!!!!!!!!"+date);
 
 			String year = date.substring(0,4)+"년 ";  
 
@@ -94,9 +112,9 @@ public class GroupServiceImpl implements GroupService {
 
 			String day = date.substring(8,10)+"일 ";
 
-			String time = date.substring(11,13)+"시 ";
+			String time = date.substring(13,15)+"시 ";
 
-			String minute = date.substring(14,16)+"분";
+			String minute = date.substring(16,18)+"분";
 			if(minute.equals("00분"))
 				minute="";
 			MeetingList.get(i).setCstartdate(year+month+day+time+minute);
@@ -192,5 +210,61 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 
+	@Override
+	public void groupboardupdate(int groupkey, String boardname, int boardkey, int seq, String boardtype) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupkey", groupkey);
+		map.put("boardname", boardname);
+		map.put("boardkey", boardkey);
+		map.put("seq", seq);
+		map.put("boardtype", boardtype);
+		dao.groupboardupdate(map);
+	}
+
+
+	@Override
+	public void groupboardinsert(int groupkey, String boardname, int seq) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupkey", groupkey);
+		map.put("boardname", boardname);
+		map.put("seq", seq);
+		dao.groupboardinsert(map);
+	}
+
+
+	@Override
+	public void groupboarddelete(int boardkey) {
+		dao.groupboarddelete(boardkey);
+	}
+
+
+	@Override
+	public GUsers userkey(String id) {
+		return dao.userkey(id);
+	}
+
+	@Override
+	public int groupmasterkey(int groupkey) {
+		return dao.groupmasterkey(groupkey);
+	}
 	
+	@Override
+	public GGroupMember groupmember(int userkey) {
+		GGroupMember groupmember = dao.groupmember(userkey);
+		if(userkey!=-1) {
+		String date = groupmember.getRegdate();
+		String year = date.substring(0,4)+"년 ";  
+		String month = date.substring(5,7)+"월 ";
+		String day = date.substring(8,10)+"일";
+		String tdate = year+month+day;
+		groupmember.setRegdate(tdate);
+		}
+		return groupmember;
+	}
+
+
+	@Override
+	public List<UserRegGroup> userreggroup(int userkey) {
+		return dao.userreggroup(userkey);
+	}
 }

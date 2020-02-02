@@ -102,9 +102,8 @@
 											<h5 class="f-title"><i class="ti-heart"></i>나의 관심사</h5>
 											<p>관심있는 카테고리를 선택하세요^^.</p>
 											<form method="post" action="interests">
-												<label>관심사 추가: </label>
-												<input type="text" placeholder="운동, 여행, 독서">
-												<button type="submit">추가</button>
+												<label>관심사 수정</label>
+												
 												<ol class="interest-added">
 													<li><a href="#" title="">자전거</a><span class="remove" title="remove"><i class="fa fa-close"></i></span></li>
 													<li><a href="#" title="">여행</a><span class="remove" title="remove"><i class="fa fa-close"></i></span></li>
@@ -114,8 +113,8 @@
 													<li><a href="#" title="">축구</a><span class="remove" title="remove"><i class="fa fa-close"></i></span></li>
 												</ol>
 												<div class="submit-btns">
-													<button type="button" class="mtr-btn" onclick='location.href="mypage"'><span>취소</span></button>
 													<button type="button" class="mtr-btn"><span>수정</span></button>
+													<button type="button" class="mtr-btn" onclick='location.href="mypage"'><span>취소</span></button>
 												</div>
 											</form>
 										</div>

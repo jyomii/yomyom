@@ -40,24 +40,23 @@
 								<div class="central-meta">
 									<div class="editing-info">
 										<h5 class="f-title"><i class="ti-info-alt"></i> 홍보 글 작성 </h5>
-										<form method="post" action="prAdd">
+										<form method="post" action="boardwrite">
 											<div class="form-group">	
 										<!--  <label class="control-label" for="input">모임명</label><i class="mtrl-select"></i>  -->
-										
+										<c:set var="list" value="">
 											  <select name="groupName" >
-											  <c:forEach var="list" items="${list }">
 											  <!-- 지금 로그인 한 회원이 가입한 모임들을 셀렉트박스에 출력 -->
-											     <option>${list.groupName }</option>
-											  </c:forEach>
+											     <option value="${list.groupName }"></option>
 											  </select>
+									    </c:set>
 											</div>											
 											<br><br>
 											<div class="form-group">	
-											  <textarea rows="4" id="content" name="content" required="required"></textarea>
+											  <textarea rows="4" id="textarea" required="required"></textarea>
 											  <label class="control-label" for="textarea">내용</label><i class="mtrl-select"></i>
 											</div>
 											<div class="submit-btns">
-												<button type="submit" class="mtr-btn"><span>등록</span></button>
+												<button type="button" class="mtr-btn"><span>등록</span></button>
 												<button type="button" class="mtr-btn" onclick="location.href='prboard'"><span>취소</span></button>
 											</div>
 										</form>
@@ -132,16 +131,6 @@
 	</section>
 	</div>
 	</section>
-	
-	<script>
-	  $("form").submit(function(){
-		  if($.trim($("textarea").val())==""){
-			  alert("내용을 입력하세요.");
-			  $("textarea").focus();
-			  return false;
-		  }
-	  });
-	</script>
 	
     <jsp:include page="../mainpage/footer.jsp"></jsp:include>
 	

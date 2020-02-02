@@ -33,7 +33,7 @@ public class ScheduledlTask {
 	}
 	
 	
-	@Scheduled(cron = "30 * * * * *")
+	@Scheduled(cron = "00 30 * * * *")
 	public void deleteFiles() throws Exception {
 
 		//휴지통 파일 리스트 가져오기

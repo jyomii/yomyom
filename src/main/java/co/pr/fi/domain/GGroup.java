@@ -1,6 +1,6 @@
 package co.pr.fi.domain;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +43,10 @@ public class GGroup {
  // 모임공개여부 
  private String groupPrivate;
 
+ 
+ //마지막 모임 활동 날짜(조인)
+ private LocalDateTime lastDate;
+ 
  // 모임타입 
  private String groupType; // y : 원데이  n : 일반
 
@@ -61,9 +65,29 @@ public class GGroup {
  //모임 지역 이름(조인)
  private String locationName; 
  
+ private String groupkatalk;
+ 
  private MultipartFile groupMainImgUpload;
  private MultipartFile groupImgUpload;
  
+
+public String getGroupkatalk() {
+	return groupkatalk;
+}
+
+public void setGroupkatalk(String groupkatalk) {
+	this.groupkatalk = groupkatalk;
+}
+
+ 
+ public LocalDateTime getLastDate() {
+		return lastDate;
+	}
+
+	public void setLastDate(LocalDateTime lastDate) {
+		this.lastDate = lastDate;
+	}
+
 public MultipartFile getGroupMainImgUpload() {
 	return groupMainImgUpload;
 }

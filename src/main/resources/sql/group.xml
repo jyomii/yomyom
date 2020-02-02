@@ -83,7 +83,7 @@
 	</select>
 
 	<select id="groupinfo" resultType="group" parameterType="int">
-		select *
+		select groupkey, groupname, userkey, agekey, wherekey, categorykey, groupinfo, groupdfile,groupidorigin,groupcfile, groupcorigin, groupprivate, grouptype, to_char(groupdate, 'YYYY-MM-DD') groupdate, groupstatus, groupkatalk
 		from ggroup where groupkey =#{groupkey}
 	</select>
 
@@ -111,14 +111,13 @@
 
 	<select id="groupdcategory" resultType="String"
 		parameterType="int">
-		select dcategoryname from gcategory where dcategorykey
-		=#{categorykey}
+		select dcategoryname from gcategory where dcategorykey=(select dcategorykey from gcategory2 where scategorykey=(select categorykey from ggroup where groupkey=#{groupkey}))
+		
 	</select>
 
 	<select id="groupscategory" resultType="String"
 		parameterType="int">
-		select scategoryname from gcategory2 where dcategorykey
-		=#{categorykey}
+		select scategoryname from gcategory2 where scategorykey=(select categorykey from ggroup where groupkey=#{groupkey})
 	</select>
 
 	<select id="groupmembers" resultType="int" parameterType="int">
@@ -146,6 +145,7 @@
 		using(userkey) where groupkey=#{groupkey} and
 		usergrade in(0,1)
 	</select>
+
 
 	<select id="groupmeetinglist" resultType="post"
 		parameterType="int">
@@ -220,4 +220,39 @@
 		where startdate like #{fulldate}
 	</select>
 
+
+	<update id="groupboardupdate" parameterType="java.util.Map">
+		update ggroupboard set
+		boardname=#{boardname}, boardseq=#{seq}, boardtype=#{boardtype} where
+		boardkey=#{boardkey}
+	</update>
+	<insert id="groupboardinsert"
+		parameterType="java.util.Map">
+		insert into ggroupboard
+		values((select nvl(max(boardkey),0)+1 from ggroupboard),#{groupkey},#{boardname},'Y',#{seq})
+	</insert>
+	
+	<delete id="groupboarddelete" parameterType="int">
+		delete from ggroupboard where boardkey=#{boardkey}
+	</delete>
+	
+	<select id="userkey" resultType="member" parameterType="String">
+		select userKey from gusers where userId=#{id}
+	</select>
+	
+	<select id="groupmasterkey" resultType="int" parameterType="int">
+		select userKey from ggroupmember where usergrade=1 and groupkey=#{groupkey}
+	</select>
+	
+	<select id="groupmember" resultType="groupmember"
+		parameterType="int">
+		select groupnickname, usergrade, userimagefile profilefile, to_char(regdate, 'YYYY-MM-DD') regdate from ggroupmember
+		left join gusers using(userkey) where userkey=#{userkey}
+	</select>
+	
+	<select id="userreggroup" resultType="userreggroup" parameterType="int">
+		select groupcfile, groupname, groupkey from ggroup left join GGROUPMEMBER a using(groupkey) where a.userkey=#{userkey}
+	</select>
+	
+	
 </mapper>

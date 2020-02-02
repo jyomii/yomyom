@@ -90,8 +90,9 @@ input:focus, textarea:focus, select:focus, button:focus {
 }
 
 img {
-	height: auto;
+	
 	max-width: 100%;
+	height: 100%;
 }
 
 .theme-layout {
@@ -3517,6 +3518,7 @@ nav.breadcrumb {
 	min-width: 60px;
 	vertical-align: middle;
 	width: 60px;
+	height: 60px;
 }
 
 .pepl-info {
@@ -4822,7 +4824,7 @@ canvas {
 	padding-left: 17px;
 }
 
-/* ÀüÃ¼Ä«Å×°í¸® */
+/* ï¿½ï¿½Ã¼Ä«ï¿½×°ï¿½ */
 #all-menu {
 	display:none;
 	position:absolute;
@@ -5665,7 +5667,7 @@ px
 	-ms-border-radius: 3px;
 	-o-border-radius: 3px;
 	border-radius: 3px;
-	margin: auto;
+	
 }
 
 .blog-sec {
@@ -5691,6 +5693,7 @@ px
 
 .g-post-classic>figure {
 	position: relative;
+	height: 150px;
 }
 
 .g-post-classic>figure img {

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="search">
+
+<!-- 검색 결과 총 카운트 -->
+<select id="searchGroupsCount" parameterType="String" resultType="int">
+SELECT count(*) from ggroup where groupstatus = 0 and groupName like '%' ||  #{text} || '%'
+</select>
+
+
+<!-- 검색 결과 총 카운트 -->
+<select id="searchPostCount" parameterType="String" resultType="int">
+SELECT count(*) FROM POST WHERE postoptionsearch = 'Y' and posttitle LIKE '%' ||  #{text} || '%' OR 
+ postcontent LIKE '%' ||  #{text} || '%'
+</select>
+
+
+<select id="searchGroups" parameterType="map" resultType="group">
+	   <![CDATA[ 
+	 SELECT * FROM (
+				SELECT b.*,
+				( 
+
+					SELECT dcategoryname || ':'  || SCATEGORYNAME categoryName
+							
+							FROM GCATEGORY2, GCATEGORY WHERE gcategory2.dcategorykey =
+							gcategory.dcategorykey and scategorykey = b.categoryKey
+					
+					) categoryName,
+					
+					
+					( 
+					SELECT SWHERE ||' ' ||  DWHERE LocationName
+									 FROM GLOCATION WHERE LOCATIONKEY = b.whereKey
+					) LocationName,
+									
+									
+					( 
+					SELECT count(*)
+									 FROM ggroupmember WHERE groupKey = b.groupKey
+					) memberCount,
+				
+				
+				 rownum rnum
+				FROM (SELECT * from ggroup where groupstatus = 0 and groupName like '%' ||  #{text} || '%') b)
+				WHERE RNUM >= #{startrow} and rnum <= #{endrow}    
+	]]>
+</select>
+
+<select id="searchPost" parameterType="map" resultType="post">
+ <![CDATA[ 
+SELECT * FROM (SELECT b.*,
+				(SELECT groupName FROM GGROUP WHERE groupKey = b.groupKey) groupName,
+				rownum rnum
+ FROM (SELECT * FROM POST WHERE postoptionsearch = 'Y' and posttitle LIKE '%' ||  #{text} || '%' OR 
+ postcontent LIKE '%' ||  #{text} || '%') b)
+  WHERE RNUM >= #{startrow} and rnum <= #{endrow}    
+]]>
+</select>
+
+
+
+	
+</mapper>

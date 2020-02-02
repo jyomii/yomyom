@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,7 @@
 
 <script src="resources/js/main.min.js"></script>
 <script src="resources/js/script.js"></script>
+
 </head>
 <body>
 	<!--<div class="se-pre-con"></div>-->
@@ -26,103 +28,62 @@
 
 
 		<!-- 작아졌을때 나오는 헤더 (반응형) -->
-		<div class="responsive-header">
+		<!-- <div class="responsive-header">
 			<div class="mh-head first Sticky">
 				<span class="mh-btns-left"> <a class="" href="#menu"><i
 						class="fa fa-align-justify"></i></a>
-				</span> <span class="mh-text"> <a href="newsfeed.html" title="">
-						<img src="resources/images/logo2.png" alt="">
+				</span> <span class="mh-text"> <a href="main2" title=""> <img
+						src="resources/images/logo2.png" alt="">
 				</a>
 				</span> <span class="mh-btns-right"> <a class="fa fa-sliders"
 					href="#shoppingbag"></a>
 				</span>
 			</div>
 			<div class="mh-head second">
-				<form class="mh-form">
-					<input type="text" placeholder="search" /> <a href="#/"
-						class="fa fa-search"></a>
-				</form>
+		
+							<form class="form-search">
+								<input name="text" type="text" placeholder="" style="width:60%; color:black;"
+									>
+								<button class="sendAll" style="width:20%;">
+									<i class="ti-search"></i>
+								</button>
+							</form>
+						
 			</div>
 			<nav id="menu" class="res-menu">
 				<ul>
-					<li><span>카테고리</span>
-						<ul>
-							<li><a href="index-2.html" title="">Home Social</a></li>
-							<li><a href="index2.html" title="">Home Social 2</a></li>
-							<li><a href="index-company.html" title="">Home Company</a></li>
-							<li><a href="landing.html" title="">Login page</a></li>
-							<li><a href="logout.html" title="">Logout Page</a></li>
-							<li><a href="newsfeed.html" title="">news feed</a></li>
-						</ul></li>
-					<li><span>이 달의 모임</span>
-						<ul>
-							<li><a href="time-line.html" title="">timeline</a></li>
-							<li><a href="timeline-friends.html" title="">timeline
-									friends</a></li>
-							<li><a href="timeline-groups.html" title="">timeline
-									groups</a></li>
-							<li><a href="timeline-pages.html" title="">timeline
-									pages</a></li>
-							<li><a href="timeline-photos.html" title="">timeline
-									photos</a></li>
-							<li><a href="timeline-videos.html" title="">timeline
-									videos</a></li>
-							<li><a href="fav-page.html" title="">favourit page</a></li>
-							<li><a href="groups.html" title="">groups page</a></li>
-							<li><a href="page-likers.html" title="">Likes page</a></li>
-							<li><a href="people-nearby.html" title="">people nearby</a></li>
-
-
-						</ul></li>
-					<li><span>마이페이지</span>
-						<ul>
-							<li><a href="create-fav-page.html" title="">create fav
-									page</a></li>
-							<li><a href="edit-account-setting.html" title="">edit
-									account setting</a></li>
-							<li><a href="edit-interest.html" title="">edit-interest</a></li>
-							<li><a href="edit-password.html" title="">edit-password</a></li>
-							<li><a href="edit-profile-basic.html" title="">edit
-									profile basics</a></li>
-							<li><a href="edit-work-eductation.html" title="">edit
-									work educations</a></li>
-							<li><a href="messages.html" title="">message box</a></li>
-							<li><a href="inbox.html" title="">Inbox</a></li>
-							<li><a href="notifications.html" title="">notifications
-									page</a></li>
-						</ul></li>
-					<li><span>홍보게시판</span>
-						<ul>
-							<li><a href="forum.html" title="">Forum Page</a></li>
-							<li><a href="forums-category.html" title="">Fourm
-									Category</a></li>
-							<li><a href="forum-open-topic.html" title="">Forum Open
-									Topic</a></li>
-							<li><a href="forum-create-topic.html" title="">Forum
-									Create Topic</a></li>
-						</ul></li>
-					<li><span>뭐넣냐</span>
-						<ul>
-							<li><a href="shop.html" title="">Shop Products</a></li>
-							<li><a href="shop-masonry.html" title="">Shop Masonry
-									Products</a></li>
-							<li><a href="shop-single.html" title="">Shop Detail Page</a></li>
-							<li><a href="shop-cart.html" title="">Shop Product Cart</a></li>
-							<li><a href="shop-checkout.html" title="">Product
-									Checkout</a></li>
-						</ul></li>
+					<li>
+					<span>카테고리</span>
+						<ul id="categoryList">
+							
+						</ul>
+					</li>
+					
+					
+					<li><span><a href="prboard" title="">홍보게시판</a></span></li>
+					
+					<c:choose>
+						<c:when test="${empty id }">
+						<li><span><a href="login" title="">로그인</a></span></li>
+						</c:when>
+						<c:otherwise>
+						<li><span><a href="mypage" title="">마이페이지</a></span></li>
+						<li><span><a href="logout" title="">로그아웃</a></span></li>
+						</c:otherwise>
+					</c:choose>
+					
 				</ul>
 			</nav>
 		</div>
 		<!-- 작아졌을때나오는 header(반응형) 끝 -->
 
-
+ 
 		<!-- 기존 화면 header 시작 -->
 		<div class="topbar stick">
 			<!-- 로고 -->
 			<div class="logo">
-				<a title="" href="newsfeed.html"> <img
-					src="resources/images/logo.png" alt=""></a>
+				<a title="" href="main2"> <img src="resources/images/logo.png"
+					alt=""></a>
 			</div>
 			<!-- //로고 -->
 
@@ -130,169 +91,16 @@
 			<div class="top-area">
 				<ul class="main-menu">
 					<li><a href="#" title="" onclick="allMenu(); return false;">전체카테고리</a></li>
-					<li><a href="#" title="">timeline</a>
-						<ul>
-							<li><a href="time-line.html" title="">timeline</a></li>
-							<li><a href="timeline-friends.html" title="">timeline
-									friends</a></li>
-							<li><a href="timeline-groups.html" title="">timeline
-									groups</a></li>
-							<li><a href="timeline-pages.html" title="">timeline
-									pages</a></li>
-							<li><a href="timeline-photos.html" title="">timeline
-									photos</a></li>
-							<li><a href="timeline-videos.html" title="">timeline
-									videos</a></li>
-							<li><a href="fav-page.html" title="">favourit page</a></li>
-							<li><a href="groups.html" title="">groups page</a></li>
-							<li><a href="page-likers.html" title="">Likes page</a></li>
-							<li><a href="people-nearby.html" title="">people nearby</a></li>
-						</ul></li>
-					<li><a href="#" title="">account settings</a>
-						<ul>
-							<li><a href="create-fav-page.html" title="">create fav
-									page</a></li>
-							<li><a href="edit-account-setting.html" title="">edit
-									account setting</a></li>
-							<li><a href="edit-interest.html" title="">edit-interest</a></li>
-							<li><a href="edit-password.html" title="">edit-password</a></li>
-							<li><a href="edit-profile-basic.html" title="">edit
-									profile basics</a></li>
-							<li><a href="edit-work-eductation.html" title="">edit
-									work educations</a></li>
-							<li><a href="messages.html" title="">message box</a></li>
-							<li><a href="inbox.html" title="">Inbox</a></li>
-							<li><a href="notifications.html" title="">notifications
-									page</a></li>
-						</ul></li>
-					<li><a href="#" title="">more pages</a>
-						<ul>
-							<li><a href="404.html" title="">404 error page</a></li>
-							<li><a href="about.html" title="">about</a></li>
-							<li><a href="contact.html" title="">contact</a></li>
-							<li><a href="faq.html" title="">faq's page</a></li>
-							<li><a href="insights.html" title="">insights</a></li>
-							<li><a href="knowledge-base.html" title="">knowledge
-									base</a></li>
-							<li><a href="widgets.html" title="">Widgts</a></li>
-						</ul></li>
+					<li><a href="prboard" title="">홍보게시판</a></li>
+					<li><a href="prboard" title="">모임 랭킹</a></li>
+					<c:if test="${!empty id }">
+						<li><a href="groupCreate" title="">새로운 모임 만들기</a></li>
+					</c:if>
 				</ul>
 
 				<!-- 전체카테고리 -->
 				<div id="all-menu" class="all-menu">
-					<div class="inner">
-						<dl>
-							<dt>중분류1</dt>
-							<dd>
-								<a href="">소분류1</a>
-							</dd>
-							<dd>
-								<a href="">소분류2</a>
-							</dd>
-							<dd>
-								<a href="">소분류3</a>
-							</dd>
-							<dd>
-								<a href="">소분류4</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>중분류2</dt>
-							<dd>
-								<a href="">소분류1</a>
-							</dd>
-							<dd>
-								<a href="">소분류2</a>
-							</dd>
-							<dd>
-								<a href="">소분류3</a>
-							</dd>
-							<dd>
-								<a href="">소분류4</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>중분류3</dt>
-							<dd>
-								<a href="">소분류1</a>
-							</dd>
-							<dd>
-								<a href="">소분류2</a>
-							</dd>
-							<dd>
-								<a href="">소분류3</a>
-							</dd>
-							<dd>
-								<a href="">소분류4</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>중분류4</dt>
-							<dd>
-								<a href="">소분류1</a>
-							</dd>
-							<dd>
-								<a href="">소분류2</a>
-							</dd>
-							<dd>
-								<a href="">소분류3</a>
-							</dd>
-							<dd>
-								<a href="">소분류4</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-						</dl>
-						<dl>
-							<dt>중분류5</dt>
-							<dd>
-								<a href="">소분류1</a>
-							</dd>
-							<dd>
-								<a href="">소분류2</a>
-							</dd>
-							<dd>
-								<a href="">소분류3</a>
-							</dd>
-							<dd>
-								<a href="">소분류4</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-							<dd>
-								<a href="">소분류5</a>
-							</dd>
-						</dl>
-					</div>
+					<div class="inner"></div>
 				</div>
 				<!-- //전체카테고리 -->
 
@@ -305,56 +113,92 @@
 				<ul class="setting-area">
 					<li>
 						<div class="box-search">
-							<form method="post" class="form-search">
-								<input type="text" placeholder="">
-								<button data-ripple>
+							<form class="form-search">
+								<input name="text" type="text" placeholder=""
+									style="color:black;">
+								<button class="sendAll">
 									<i class="ti-search"></i>
 								</button>
 							</form>
 						</div>
 					</li>
 					<!-- 검색창 bar -->
-					<!--
-					<li>
-						<a href="#" title="Home" data-ripple=""><i class="ti-search"></i></a>
-						<div class="searched">
-							<form method="post" class="form-search">
-								<input type="text" placeholder="">
-								<button data-ripple>
-									<i class="ti-search"></i>
-								</button>
-							</form>
-						</div>
-					</li>
-					-->
-					<!-- //검색창 bar -->
-					<li><a href="newsfeed.html" title="Home" data-ripple=""><i
+
+
+					<li><a href="main2" title="Home" data-ripple=""><i
 							class="ti-home"></i></a></li>
-					<li><a href="#" title="Messages" data-ripple=""><i
-							class="ti-pencil"></i></a></li>
-					<!--
-					<li>
-						<a href="#" title="Languages" data-ripple=""><i	class="fa fa-globe"></i></a>
-						<div class="dropdowns languages">
-							<a href="#" title=""><i class="ti-check"></i>English</a> <a
-								href="#" title="">Arabic</a> <a href="#" title="">Dutch</a> <a
-								href="#" title="">French</a>
-						</div>
-					</li>
-					-->
+					<c:if test="${!empty id }">
+					<li><a href="#" id="noti" title="Notification" data-ripple="">
+							<i class="ti-bell"><span>new</span></i>
+					</a>
+						<div class="dropdowns">
+							<span>알림 내역</span>
+							<ul class="drops-menu">
+
+
+							</ul>
+							<a href="notifications.html" title="" class="more-mesg">view
+								more</a>
+						</div></li></c:if>
+
 				</ul>
 				<div class="user-img">
-					<img src="resources/images/resources/admin.jpg" alt="">
-					<div class="user-setting">
-						<a href="#" title=""><i class="ti-pencil-alt"></i>정보 수정</a> <a
-							href="#" title=""><i class="ti-power-off"></i>로그아웃</a>
-					</div>
+					<c:choose>
+
+						<c:when test="${empty id }">
+							<img src="resources/images/resources/admin.jpg" alt="">
+
+							<div class="user-setting" onclick="location.href='login'">
+								<a title=""><i class="ti-pencil-alt"></i>로그인</a>
+							</div>
+
+						</c:when>
+
+						<c:otherwise>
+
+							<c:choose>
+								<c:when test="${empty image}">
+									<img src="resources/images/resources/admin.jpg" alt="">
+								</c:when>
+								<c:otherwise>
+									<img src="<spring:url value='/image${image}'/>" />
+								</c:otherwise>
+							</c:choose>
+
+
+							<div class="user-setting">
+								<c:choose>
+									<c:when test="${id == 'admin'}">
+										<div onclick="location.href='admin'">
+											<a href="#" title=""><i class="ti-pencil-alt"></i>관리자 메뉴</a>
+										</div>
+									</c:when>
+
+									<c:otherwise>
+										<div onclick="location.href='mypage2'">
+											<a href="#" title=""><i class="ti-pencil-alt"></i>정보수정</a>
+										</div>
+									</c:otherwise>
+
+								</c:choose>
+								<div onclick="location.href='logout'">
+									<a href="" title=""><i class="ti-power-off"></i>로그아웃</a>
+								</div>
+							</div>
+
+
+						</c:otherwise>
+					</c:choose>
+
+
 				</div>
 			</div>
 		</div>
 		<!-- 기존 화면 header 끝 -->
 
 		<script>
+			init_menu();
+
 			function allMenu() {
 				if ($('#all-menu').css('display') == 'none') {
 					$('#all-menu').show();
@@ -362,4 +206,229 @@
 					$('#all-menu').hide();
 				}
 			}
+			
+			
+			
+			//카테고리 전체 목록을 셋팅합니다.
+			function init_menu(){
+				
+				$.ajax({
+					url : "allCategory",
+					success : function(result){
+						console.log(result);
+						
+						//대분류 카테고리 for문
+						var tag;
+						var tag2;
+						
+						for(var i = 0; i < result.dcategory.length; i++){
+							
+							
+							tag2 +='<li><span>'+result.dcategory[i].dcategoryName+'</span></li>';
+							tag2 += '<ul>';
+							
+							tag += '<dl>';
+							tag += '<dt>'+result.dcategory[i].dcategoryName+'</dt>';
+							
+							//해당 대분류의 소분류 for문
+							for(var j = 0; j < result.scategory.length; j++){
+								
+								if(result.dcategory[i].dcategoryKey == 
+									result.scategory[j].dcategoryKey){
+									tag += '<dd>';
+									tag += '<a href="">'+result.scategory[j].scategoryName+'</a>';
+									tag += '</dd>';
+									
+									tag2 +='<li><span><a href="#">'+result.scategory[j].scategoryName+'</a></span></li>';
+								}
+							}
+							tag2 += '</ul>';
+							tag += '</dl>';
+						}
+						
+						
+						$('#all-menu .inner').html(tag);
+						$('#categoryList').html(tag2);
+						
+						//카테고리 붙이기
+						
+						
+					}
+					
+				});
+			}
+			
+			
+			$('#noti').click(function(){
+				
+				
+				
+				//공지사항 제외하고 자신에게 온 알람  읽기
+				$.ajax({
+					url : "readMessage"
+				});
+				
+			});
+			
+			
+			
+			$('form input').keyup(function(){
+				if (window.event.keyCode == 13) {
+
+				sendSearch($(this).val());
+				}
+			});
+			
+			
+			$('.sendAll').click(function(){
+				sendSearch($(this).prev().val());
+			});
+			
+
+		
+			
+			function sendSearch(text){
+				
+				if(text){
+				location.href="searchText?text="+text;
+				}
+					
+			}
+			
+			var count = 0;
+			
+
+			var id = '${id}';
+			
+			if(id){
+				
+			setInterval(checkmessage, 10000);
+			checkmessage();
+			
+			}
+	
+			
+			function checkmessage(){
+				
+				$.ajax({
+					url : "getMyMessage",
+					success : function(result){
+						//메세지 필터
+						
+						var msg = result.filter(function (item) {
+							return item.checkDate == null 
+							});
+						
+						if(count != msg.length && count < msg.length){
+						$('.ti-bell span').text(msg.length);
+						$('.ti-bell span').css('color','red');
+						
+						printMessage(msg);
+						}
+						
+						count = msg.length;
+					}
+					
+				});
+				
+			
+			}
+		
+			
+			function printMessage(result){
+				var text = '';
+				
+
+				console.log(result);
+				
+				for(var i = 0; i < result.length; i++){
+					
+					
+					
+					var date1 = '';
+					date1 += result[i].mgDate.year+"-";
+					date1 += result[i].mgDate.monthValue+"-";
+					date1 += result[i].mgDate.dayOfYear+" ";	
+					date1 += result[i].mgDate.hour+":";	
+					date1 += result[i].mgDate.minute+":";	
+					date1 += result[i].mgDate.second;
+					
+					
+					text += '<li>';
+					text += '<a href="#" title="">';
+					text += '<div class="mesg-meta">';
+					text += '<span>'+result[i].mgContent+'</span>';
+				
+					text += '<i>'+timeBefore(new Date(date1))+'</i>';
+					text += '</div>';
+					text += '</a>';
+					switch(result[i].mgSort){
+					case 'N':
+						text += '<span class="tag green">NOTICE</span>';
+						break;
+						
+					case 'D':
+						text += '<span class="tag green">NEW</span>';
+						break;
+					}
+						
+					text += '</li>';
+					
+					
+					
+					
+				}
+				$('.drops-menu').html(text);
+			}
+			
+			
+			    function timeBefore(dd){
+			        //현재시간
+			        var now = new Date(); 
+			      
+			        //글쓴 시간 
+			        var writeDay = dd;
+			        
+			        
+			        var returnValue;
+			        
+			        var minus;
+			        if(now.getFullYear() > writeDay.getFullYear()){
+			            minus= now.getFullYear()-writeDay.getFullYear();
+			         
+			            returnValue = minus+"년 전";
+			        }else if(now.getMonth() > writeDay.getMonth()){
+			            minus= now.getMonth()-writeDay.getMonth();
+			         
+			            returnValue = minus+"달 전";
+			        }else if(now.getDate() > writeDay.getDate()){
+			            minus= now.getDate()-writeDay.getDate();
+			         
+			            returnValue = minus+"일 전";
+			        }else if(now.getDate() == writeDay.getDate()){
+			            var nowTime = now.getTime();
+			            var writeTime = writeDay.getTime();
+			            if(nowTime>writeTime){
+			                sec =parseInt(nowTime - writeTime) / 1000;
+			                day  = parseInt(sec/60/60/24);
+			                sec = (sec - (day * 60 * 60 * 24));
+			                hour = parseInt(sec/60/60);
+			                sec = (sec - (hour*60*60));
+			                min = parseInt(sec/60);
+			                sec = parseInt(sec-(min*60));
+			                if(hour>0){
+			                 
+			                	  returnValue = hour+"시간 전";
+			                }else if(min>0){
+			                 
+			                	  returnValue = min+"분 전";
+			                }else if(sec>0){
+			                 
+			                	 returnValue =sec+"초 전";
+			                }
+			            }
+			        }
+			        
+			        return returnValue;
+			    }
 		</script>

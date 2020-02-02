@@ -46,11 +46,16 @@ public class Post {
 	// 좋아요 수
 	private int postlike;
 	
+
+	//모임 이름
+	private String groupName;
+
 	// 작성자 프사
 	private String profileFile;
 	
 	// 작성자 닉네임
 	private String groupNickname;
+
 	
 	private String cstartdate;
 	private String cenddate;
@@ -60,6 +65,15 @@ public class Post {
 	private int currentperson;
 	private String joinbtn;
 	
+	
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
 	public String getJoinbtn() {
 		return joinbtn;
 	}

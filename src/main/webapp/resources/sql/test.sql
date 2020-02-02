@@ -218,6 +218,8 @@ CREATE TABLE ggroup
     CONSTRAINT GGROUPPK PRIMARY KEY (groupkey)
 );
 
+
+
 -- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
 -- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
 -- ALTER TABLE ggroup ADD (groupstatus NUMBER NOT NULL);
@@ -1373,6 +1375,8 @@ SELECT NVL(GROUPNICKNAME, -1)
 -- POSTTITLE(글제목), POSTDATE(작성일), POSTREADCOUNT(조회수), REPLYCOUNT(댓글수), POSTLIKE(좋아요), POSTCONTENT(글내용)
 -- COMMENTCONTENT(댓글내용), COMMENTDATE(댓글 작성일)
 SELECT * FROM GGROUPMEMBER;
+ 
+=======
 SELECT * FROM POST;
 SELECT * FROM GCOMMENT;
 		

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.PrDAO;
+import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.PrBoard;
 import co.pr.fi.service.PrService;
 
@@ -35,5 +36,33 @@ public class PrServiceImpl implements PrService{
 	@Override
 	public void insertBoard(PrBoard prboard) {
 	    dao.insertBoard(prboard);
+	}
+
+
+	@Override
+	public PrBoard getDetail(int prkey) {
+		return dao.getDetail(prkey);
+	}
+
+
+	@Override
+	public int boardModify(PrBoard prboard) {
+		return dao.boardModify(prboard);
+	}
+
+
+	@Override
+	public boolean isBoardWriter(int userKey) {
+		PrBoard result = dao.isBoardWriter(userKey);
+		if(result == null)
+		    return false;
+		else
+			return true;
+	}
+
+
+	@Override
+	public List<GGroup> userinfo(String id) {
+		return dao.userinfo(id);
 	}
 }
