@@ -102,4 +102,31 @@ select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.gr
 						  ) where rownum < 5
 ]]>
 </select>
+
+
+
+<!-- 해당 카테고리에서 인원 수 제일 많은 3모임 선택 -->
+<select id="categorybestMainGroup" parameterType="map" resultType="group">
+	   <![CDATA[ 
+select * from (select b.*, (select count(*) from ggroupmember where ggroupmember.groupkey = b.groupkey) memberCount
+from (select * from ggroup where ggroup.categorykey = #{cateogrykey}) b order by memberCount desc) where rownum <= #{getCount}
+			]]>
+</select>
+
+<!-- 해당 카테고리에서 post 활동량 제일 많은 순 -->
+<select id="getCategoryActiveGroupList" parameterType="int" resultType="group">
+	   <![CDATA[ 
+  select * from (select ggroup.*, (select count(*) from post
+						  where post.groupkey = ggroup.groupkey and postdate between sysdate-7 and sysdate-1
+						  group by post.groupkey) pcount
+						  
+						  from 
+				(select * from ggroup
+					      where categoryKey = #{categorykey}) ggroup
+						  
+						  order by pcount desc
+						  ) where rownum <= 5
+						  		]]>
+</select>
+
 </mapper>

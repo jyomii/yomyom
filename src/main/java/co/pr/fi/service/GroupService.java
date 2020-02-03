@@ -63,4 +63,6 @@ public interface GroupService {
 	public GGroupMember groupmember(int userkey);
 
 	public List<UserRegGroup> userreggroup(int userkey);
+
+	public List<GGroup> getGroupRank(int i, int limit, int page);
 }

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <jsp:include page="../mainpage/header.jsp" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <style>
 .modal-backdrop {
 	z-index: -1;
@@ -37,17 +38,17 @@ a.add-butn.more-action {
 								<div class="widget">
 									<h4 class="widget-title">관리자 메뉴</h4>
 									<ul class="naves">
-										<li><i class="ti-clipboard"></i> <a href="admin" title="">통계</a>
+										<li><i class="fas fa-signal"></i> <a href="admin" title="">통계</a>
 										</li>
 										<li><i class="fas fa-user"></i> <a href="adminusers"
 											title="">회원</a></li>
 										<li><i class="fas fa-users"></i> <a href="admingroup"
 											title="">모임</a></li>
 
-										<li><i class="fas fa-align-justify"></i> <a
+										<li><i class="fas fa-hashtag"></i> <a
 											href="admincategory" title="">카테고리</a></li>
 
-										<li><i class="fas fa-clipboard"></i> <a
+										<li><i class="fas fa-bell"></i> <a
 											href="adminnotice" title="">공지사항</a></li>
 
 									</ul>
@@ -95,7 +96,7 @@ a.add-butn.more-action {
 															</figure>
 															<div class="pepl-info">
 																<h4>
-																	<a title="">${item.groupName}</a>
+																	<a title="" href="group_main.net?groupkey=${item.groupKey }">${item.groupName}</a>
 																</h4>
 																<span> ${item.categoryName }/ <c:choose>
 																		<c:when test="${item.ageKey == 0}">
@@ -155,7 +156,7 @@ a.add-butn.more-action {
 															</figure>
 															<div class="pepl-info">
 																<h4>
-																	<a title="">${item.groupName}</a>
+																	<a title="" href="group_main.net?groupkey=${item.groupKey }">${item.groupName}</a>
 																</h4>
 																<span> ${item.categoryName }/ <c:choose>
 																		<c:when test="${item.ageKey == 0}">
@@ -241,9 +242,6 @@ a.add-butn.more-action {
 </div>
 
 
-
-<script src="resources/js/main.min.js"></script>
-<script src="resources/js/script.js"></script>
 <script type="text/javascript">
 	$('.accept').click(function() {
 		//모임 승인
