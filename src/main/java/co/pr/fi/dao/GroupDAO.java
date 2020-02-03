@@ -132,4 +132,10 @@ public class GroupDAO {
 	public List<UserRegGroup> userreggroup(int userkey) {
 		return sqlSession.selectList("group.userreggroup", userkey);
 	}
+
+
+
+	public List<GGroup> getGroupRank(Map<String, Integer> list) {
+		return sqlSession.selectList("group.getGroupRank", list);
+	}
 }

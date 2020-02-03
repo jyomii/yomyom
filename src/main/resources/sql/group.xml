@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="group">
+	<select id="getGroupRank" parameterType="map" resultType="group">
+		
+		select * from 
+		
+	
+		<if test="type == 0"> 
+			<![CDATA[
+		(select rownum r , list.* from (select b.*, (select count(*) from ggroupmember where ggroupmember.groupkey = b.groupkey) memberCount
+		from (select * from ggroup) b order by memberCount desc) list) where r >= #{startrow} and r <= #{endrow}
+			]]>
+			</if>
+	
+		<if test="type == 1">
+					<![CDATA[
+		(select rownum r, b.* from (select ggroup.*,(select count(groupkey) from post
+						  where post.groupkey = ggroup.groupkey
+						  group by groupkey) counta
+						  from ggroup order by counta desc) b) where r >= #{startrow} and r <= #{endrow}
+			]]></if>
+			
+	</select>
+
 	<select id = "getJoinedCount" resultType = "int" parameterType = "int">
 		SELECT COUNT(*)
 		FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
