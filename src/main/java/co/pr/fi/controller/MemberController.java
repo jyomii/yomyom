@@ -110,6 +110,7 @@ public class MemberController {
 				if (checkId.getUserStatus() == 0) {
 
 					session.setAttribute("id", id);
+					session.setAttribute("userkey", checkId.getUserKey());
 					session.setAttribute("logintype", 1); // 0: 일반 1: kakao 2: naver 3. facebook
 					session.setAttribute("access_token", access_Token);
 
@@ -320,6 +321,7 @@ public class MemberController {
 			if (user.getUserStatus() == 0) {
 
 				session.setAttribute("id", id);
+				session.setAttribute("userkey", user.getUserKey());
 				session.setAttribute("image", user.getUserImageFile());
 				session.setAttribute("logintype", 0); // 0: 일반 1: kakao 2: naver 3. facebook
 

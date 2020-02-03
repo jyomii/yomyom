@@ -47,6 +47,8 @@ public class MainHeaderController {
 	public ModelAndView main(HttpSession session, ModelAndView mv) {
 		
 		
+		if(session.getAttribute("id") == null)
+			session.setAttribute("userkey", -1);
 		
 		//베스트 : 인원수 가장 많은 모임 3개
 		List<GGroup> bestgroup = mainHeaderService.getBestGroups();

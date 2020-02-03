@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <!-- Header -->
 <jsp:include page="header.jsp" />
 
@@ -27,6 +28,9 @@
 	width: 60%;
 	display: inline-block;
 }
+
+.height_custom img{
+height:200px;}
 
 .forgroupnameleft {
 	float: left;
@@ -297,14 +301,12 @@ animation: crescendo 6s alternate infinite ease-in;
 								<c:choose>
 									<c:when test="${empty item.groupCFile }">
 										<div class="pickgradient">
-											<img src="resources/images/group_default2.jpg"
-												class="d-block" alt="...">
+											<img src="resources/images/group_default2.jpg" class="d-block" alt="...">
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="pickgradient">
-											<img class="d-block"
-												src="<spring:url value='/image${item.groupCFile }'/>" />
+											<img class="d-block" src="<spring:url value='/image${item.groupCFile }'/>" />
 										</div>
 									</c:otherwise>
 								</c:choose>
@@ -397,15 +399,15 @@ animation: crescendo 6s alternate infinite ease-in;
 						<div class="col-lg-6">
 							<div class="g-post-classic-recommands">
 								<div class="groups recommands">
-									<span><i class="fa fa-users"></i> 추천 모임</span>
+									<span><i class="fas fa-star"></i> 추천 모임</span>
 								</div>
 								<c:forEach items="${reList}" varStatus="status" var="item">
-									<div class="g-post-classic nearby-contct">
+									<div class="g-post-classic nearby-contct height_custom" >
 										<figure>
 
 											<c:choose>
 												<c:when test="${empty item.groupCFile }">
-													<img src="resources/images/resources/bloggrid-1.jpg">
+													<img src="resources/images/group_default2.jpg">
 												</c:when>
 												<c:otherwise>
 
@@ -418,7 +420,7 @@ animation: crescendo 6s alternate infinite ease-in;
 										<div class="g-post-meta">
 											<div class="post-title">
 												<h4>
-													<a title="" href="#">${item.groupName }</a>
+													<a title="이동" href="group_main.net?groupkey=${item.groupKey }">${item.groupName }</a>
 												</h4>
 												<p>${item.groupInfo }</p>
 												<span class="p-date">${item.lastDate} 마지막 활동 </span>
@@ -436,7 +438,7 @@ animation: crescendo 6s alternate infinite ease-in;
 
 							<div class="central-meta">
 								<div class="groups">
-									<span><i class="fa fa-users"></i>모임 목록</span>
+									<span><i class="fas fa-list"></i>모임 목록</span>
 								</div>
 								<ul class="nearby-contct">
 
@@ -458,7 +460,7 @@ animation: crescendo 6s alternate infinite ease-in;
 												</figure>
 												<div class="pepl-info">
 													<h4>
-														<a href="time-line.html" title="">${item.groupName }</a>
+														<a href="group_main.net?groupkey=${item.groupKey }" title="">${item.groupName }</a>
 													</h4>
 													<span>${item.groupInfo }</span>
 												</div>
@@ -475,9 +477,12 @@ animation: crescendo 6s alternate infinite ease-in;
 
 
 
+						
 						<!-- 그룹 페이지 위젯 오른쪽 -->
 						<div class="col-lg-3">
-							
+							<aside class="sidebar static">
+								<jsp:include page="../group/group_rightWidget.jsp" />
+							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 오른쪽 -->
 

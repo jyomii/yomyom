@@ -74,7 +74,7 @@
 												</figure>
 												<div class="pepl-info">
 													<h4>
-														<a title="">${item.groupName}</a>
+														<a title="group_main.net?groupkey=${item.groupKey }">${item.groupName}</a>
 													</h4>
 													<span> ${item.categoryName }/ <c:choose>
 															<c:when test="${item.ageKey == 0}">
@@ -430,7 +430,7 @@ $(document).on("click", ".btn-load-more", function(event) {
 				text += '	</figure>';
 				text += '<div class="pepl-info">';
 				text += '<h4>';
-				text += '<a title="">'+result[i].groupName+'</a>';
+				text += '<a title="" href="group_main.net?groupkey='+result[i].groupKey+'">'+result[i].groupName+'</a>';
 				text += '</h4>';
 				text += '	<span> '+result[i].categoryName+'/';
 				if(result[i].ageKey == 0)
