@@ -27,7 +27,7 @@ public class GComment {
 	private int commentReSeq;
 
 	// 댓글등록날짜
-	private Date commentDate;
+	private String commentDate;
 
 	// 모임키값
 	private int groupKey;
@@ -37,6 +37,9 @@ public class GComment {
 	
 	// 댓글러 프사
 	private String profileFile;
+	
+	// 비밀댓글 여부
+	private int commentshow;
 	
 	public int getCommnetNum() {
 		return commnetNum;
@@ -94,11 +97,11 @@ public class GComment {
 		this.commentReSeq = commentReSeq;
 	}
 
-	public Date getCommentDate() {
+	public String getCommentDate() {
 		return commentDate;
 	}
 
-	public void setCommentDate(Date commentDate) {
+	public void setCommentDate(String commentDate) {
 		this.commentDate = commentDate;
 	}
 
@@ -124,6 +127,14 @@ public class GComment {
 
 	public void setProfileFile(String profileFile) {
 		this.profileFile = profileFile;
+	}
+
+	public int getCommentshow() {
+		return commentshow;
+	}
+
+	public void setCommentshow(int commentshow) {
+		this.commentshow = commentshow;
 	}
 
 	// GComment 모델 복사

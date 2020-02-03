@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="group">
+	<!-- 프사 -->
+	<select id = "getPic" resultType = "group" parameterType = "map">
+		SELECT PROFILEFILE
+		FROM GGROUPMEMBER
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 가입한 모임의 수 -->
 	<select id = "getJoinedCount" resultType = "int" parameterType = "int">
 		SELECT COUNT(*)
 		FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT

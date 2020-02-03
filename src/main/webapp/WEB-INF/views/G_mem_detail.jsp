@@ -59,7 +59,7 @@
 		}
 		
 		.selected-menu {
-			color : blue !important; /* 나중에 색깔좀 바꿔 찐파랑 뭐야; 촌스러워 */
+			color : #088dcd !important; 
 		}
 		
 		.user-active li {
@@ -99,6 +99,10 @@
 			
 		li .current {
 			background : #faf7f7;
+		}
+		
+		.page-link {
+			color : #088dcd;
 		}
 	</style>
 <div class="theme-layout">
@@ -225,13 +229,13 @@
 											<!-- 1페이지 -->
 											<c:if test = "${page <= 1}">
 												<li class = "page-item">
-													<a class = "page-link current" href = "#">이전&nbsp;</a>
+													<a class = "page-link current" href = "#">«&nbsp;</a>
 												</li>
 											</c:if>
 											<!-- 2페이지부터 -->
 											<c:if test = "${page > 1}">
 												<li class = "page-item">
-													<a class = "page-link" href = "javascript:go(${page-1})">이전&nbsp;</a>
+													<a class = "page-link" href = "javascript:go(${page-1})">«&nbsp;</a>
 												</li>
 											</c:if>
 											<c:forEach var = "p" begin = "${startpage}" end = "${endpage}">
@@ -248,12 +252,12 @@
 											</c:forEach>
 											<c:if test = "${page >= maxpage}">
 												<li class = "page-item">
-													<a class = "page-link current" href = "#">&nbsp;다음</a>
+													<a class = "page-link current" href = "#">&nbsp;»</a>
 												</li>
 											</c:if>
 											<c:if test = "${page < maxpage}">
 												<li class = "page-item">
-													<a class = "page-link" href = "javascript:go(${page+1})">&nbsp;다음</a>
+													<a class = "page-link" href = "javascript:go(${page+1})">&nbsp;»</a>
 												</li>
 											</c:if>
 										</ul>

@@ -18,7 +18,7 @@ public class GroupBoardDAO {
 	private SqlSessionTemplate sqlSession;
 
 	// 게시글 조회
-	public Post detailBoard(Map<String, Integer> keys) {
+	public Post detailBoard(Map<String, Object> keys) {
 		return sqlSession.selectOne("post.detailBoard", keys);
 	}
 
@@ -39,23 +39,27 @@ public class GroupBoardDAO {
 		return sqlSession.delete("deleteAllMap");
 	}
 
-	public List<GComment> getBoardComment(Map<String, Integer> keys) {
+	public List<GComment> getBoardComment(Map<String, Object> keys) {
 		return sqlSession.selectList("post.getBoardComment", keys);
 	}
 	
-	public int isLiked(Map<String, Integer> keys) {
+	public int isLiked(Map<String, Object> keys) {
 		return sqlSession.selectOne("post.isLiked", keys);
 	}
 
-	public int revokeLike(Map<String, Integer> keys) {
+	public int revokeLike(Map<String, Object> keys) {
 		return sqlSession.delete("post.revokeLike", keys);
 	}
 
-	public int doLike(Map<String, Integer> keys) {
+	public int doLike(Map<String, Object> keys) {
 		return sqlSession.insert("post.doLike", keys);
 	}
 
-	public int likeCount(Map<String, Integer> keys) {
+	public int likeCount(Map<String, Object> keys) {
 		return sqlSession.selectOne("post.likeCount", keys);
+	}
+
+	public int getCommentCount(Map<String, Object> keys) {
+		return sqlSession.selectOne("post.getCommentCount", keys);
 	}
 }
