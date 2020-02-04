@@ -104,12 +104,11 @@
 		using(userkey) where groupkey=#{groupkey} and
 		usergrade in(0,1)
 	</select>
-
-
+	
 	<select id="groupmeetinglist" resultType="post"
 		parameterType="int">
 		select rownum, A.* from(select
-		postkey,posttitle,postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
+		postkey,posttitle,to_char(postdate,'YYYY-MM-DD') postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
 		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson
 		from post left join calendar
 		using(postkey) left join (select count(*)
@@ -120,7 +119,7 @@
 		using
 		(postkey) left join calendar using (postkey) group by postkey) using
 		(postkey)
-		where groupkey=1 order by
+		where groupkey=#{groupkey} order by
 		cstartdate) A
 	</select>
 
@@ -213,5 +212,26 @@
 		select groupcfile, groupname, groupkey from ggroup left join GGROUPMEMBER a using(groupkey) where a.userkey=#{userkey}
 	</select>
 	
+	<insert id="addschedule" parameterType="post">
+	<selectKey keyProperty="postKey" resultType="int" order="BEFORE">
+		select nvl((select max(postKey) from post)+1,0) from dual
+	</selectKey>	
+		insert into post
+		values(#{postKey},#{postTitle},#{postContent},sysdate,#{userKey},'n','n','n','n',#{groupKey},'n','y',#{boardKey},0)
+	</insert>
 	
+	<select id="getgroupboardkey" resultType="int" parameterType="int">
+		select boardkey from ggroupboard where boardtype='N' and groupkey=#{groupkey}
+	</select>
+	
+	<insert id="addschedulecalendar" parameterType="post">
+		insert into calendar
+		values(to_date(#{cstartdate},'yyyy-mm-dd hh24:mi'),'',#{cmoney},#{postKey},#{maxperson},#{location},#{cmoneytype})
+	</insert>
+	
+	<update id="updateboardmap" parameterType="int">
+		update post set
+		boardmap='y' where
+		postkey=#{postkey}
+	</update>
 </mapper>

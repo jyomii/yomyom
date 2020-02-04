@@ -5,101 +5,117 @@ import java.sql.Date;
 //일정 
 public class CalendarList {
 
- private int rownum;
- // 시작날짜 
- private Date cStartDate;
- 
- private String startdate;
+	private int rownum;
+	// 시작날짜
+	private Date cStartDate;
 
- // 종료날짜 
- private Date cEndDate;
+	private String startdate;
 
- // 회비 
- private int cMoney;
+	// 종료날짜
+	private Date cEndDate;
 
- // 모임게시글키값 
- private int postKey;
+	// 회비
+	private int cMoney;
 
- // 모임장소 
- private int groupLocation;
+	// 모임게시글키값
+	private int postKey;
 
- // 모임장소세부 
- private int groupLocationDetail;
+	private int maxperson;
+	// 모임장소
+	private int groupLocation;
 
- 
- 
- public int getRownum() {
-	return rownum;
-}
+	// 모임장소세부
+	private int groupLocationDetail;
 
-public void setRownum(int rownum) {
-	this.rownum = rownum;
-}
+	private String cmoneytype;
 
-public String getStartdate() {
-	return startdate;
-}
+	public int getRownum() {
+		return rownum;
+	}
 
-public void setStartdate(String startdate) {
-	this.startdate = startdate;
-}
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
 
-public Date getCStartDate() {
-     return cStartDate;
- }
+	public Date getcStartDate() {
+		return cStartDate;
+	}
 
- public void setCStartDate(Date cStartDate) {
-     this.cStartDate = cStartDate;
- }
+	public void setcStartDate(Date cStartDate) {
+		this.cStartDate = cStartDate;
+	}
 
- public Date getCEndDate() {
-     return cEndDate;
- }
+	public String getStartdate() {
+		return startdate;
+	}
 
- public void setCEndDate(Date cEndDate) {
-     this.cEndDate = cEndDate;
- }
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
 
- public int getCMoney() {
-     return cMoney;
- }
+	public Date getcEndDate() {
+		return cEndDate;
+	}
 
- public void setCMoney(int cMoney) {
-     this.cMoney = cMoney;
- }
+	public void setcEndDate(Date cEndDate) {
+		this.cEndDate = cEndDate;
+	}
 
- public int getPostKey() {
-     return postKey;
- }
+	public int getcMoney() {
+		return cMoney;
+	}
 
- public void setPostKey(int postKey) {
-     this.postKey = postKey;
- }
+	public void setcMoney(int cMoney) {
+		this.cMoney = cMoney;
+	}
 
- public int getGroupLocation() {
-     return groupLocation;
- }
+	public int getPostKey() {
+		return postKey;
+	}
 
- public void setGroupLocation(int groupLocation) {
-     this.groupLocation = groupLocation;
- }
+	public void setPostKey(int postKey) {
+		this.postKey = postKey;
+	}
 
- public int getGroupLocationDetail() {
-     return groupLocationDetail;
- }
+	public int getMaxperson() {
+		return maxperson;
+	}
 
- public void setGroupLocationDetail(int groupLocationDetail) {
-     this.groupLocationDetail = groupLocationDetail;
- }
+	public void setMaxperson(int maxperson) {
+		this.maxperson = maxperson;
+	}
 
- // Calendar 모델 복사
- public void CopyData(CalendarList param)
- {
-     this.cStartDate = param.getCStartDate();
-     this.cEndDate = param.getCEndDate();
-     this.cMoney = param.getCMoney();
-     this.postKey = param.getPostKey();
-     this.groupLocation = param.getGroupLocation();
-     this.groupLocationDetail = param.getGroupLocationDetail();
- }
+	public int getGroupLocation() {
+		return groupLocation;
+	}
+
+	public void setGroupLocation(int groupLocation) {
+		this.groupLocation = groupLocation;
+	}
+
+	public int getGroupLocationDetail() {
+		return groupLocationDetail;
+	}
+
+	public void setGroupLocationDetail(int groupLocationDetail) {
+		this.groupLocationDetail = groupLocationDetail;
+	}
+
+	public String getCmoneytype() {
+		return cmoneytype;
+	}
+
+	public void setCmoneytype(String cmoneytype) {
+		this.cmoneytype = cmoneytype;
+	}
+
+// Calendar 모델 복사
+	public void CopyData(CalendarList param) {
+		this.cStartDate = param.getcStartDate();
+		this.cEndDate = param.getcEndDate();
+		this.cMoney = param.getcMoney();
+		this.postKey = param.getPostKey();
+		this.groupLocation = param.getGroupLocation();
+		this.groupLocationDetail = param.getGroupLocationDetail();
+	}
 }

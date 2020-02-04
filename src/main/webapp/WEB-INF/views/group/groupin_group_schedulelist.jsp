@@ -452,7 +452,7 @@ top:-9px;
 						<!-- 그룹 페이지 위젯 왼쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-								<jsp:include page="group_rightWidget.jsp" />
+								<jsp:include page="group_leftWidget.jsp" />
 
 							</aside>
 						</div>
@@ -466,8 +466,7 @@ top:-9px;
 											<span><i class="fa fa-users"></i>${boardname }</span>
 										</div>
 										<ul class="nearby-contct">
-									<c:forEach var="gmtl" items="${groupmeetinglist }" begin="0"
-										end="2">
+									<c:forEach var="gmtl" items="${groupmeetinglist }">
 										<c:choose>
 											<c:when test="${gmtl.rownum+0 ==1}">
 												<c:set var="l" value="One" />
@@ -737,6 +736,9 @@ $(function() {
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
 	$(".forLoginBtn").click(function(){
+		location.href="login";
+	})
+	$(".forLoginBtnx").click(function(){
 		location.href="login";
 	})
 	$("#calendar").on('click', '#prevcal', function(event) {
