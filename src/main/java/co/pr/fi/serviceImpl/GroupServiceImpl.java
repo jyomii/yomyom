@@ -27,6 +27,8 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	GroupDAO dao;
 
+	
+	
 	@Override
 	public GGroup groupInfo(int groupkey) {
 		GGroup groupinfo = dao.groupinfo(groupkey);
@@ -303,7 +305,7 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public void updateboardmap(int postkey) {
 		dao.updateboardmap(postkey);
-
+	}
 	@Override
 	public List<GGroup> getGroupRank(int i, int limit, int page) {
 		Map<String, Integer> list = new HashMap<String, Integer>();
