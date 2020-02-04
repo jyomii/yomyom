@@ -1,4 +1,6 @@
 -- glocation Table Create SQL
+DROP TABLE delete_File;
+drop table requestcategory;
 DROP TABLE userlikegroup;
 DROP SEQUENCE userlikegroupSEQ;
 
@@ -361,7 +363,7 @@ CREATE TABLE calendar
     postkey                 NUMBER    NOT NULL, 
     grouplocation           NUMBER    NOT NULL, 
     grouplocationdetail    NUMBER    NULL, 
-    cmoneytype varchar2(5)
+    cmoneytype varchar2(5),
     CONSTRAINT CALENDARPK PRIMARY KEY (postkey)
 );
 /*나상엽 추가*/
