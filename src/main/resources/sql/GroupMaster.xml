@@ -38,7 +38,8 @@
 	 #{groupPrivate},
 	 #{groupType},
 	sysdate,
-	#{groupstatus}
+	#{groupstatus},
+	null
 	
 	 )
 	 
