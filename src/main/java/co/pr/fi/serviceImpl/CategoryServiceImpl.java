@@ -114,5 +114,10 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 
+	@Override
+	public int interestupdate(Map<String, Object> category) {
+		return dao.interestupdate(category);
+	}
+
 	
 }

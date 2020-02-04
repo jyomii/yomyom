@@ -79,4 +79,8 @@ public class CategoryDAO {
 	
 		return sqlSession.selectOne("category.alreadyRequestCategory", request);
 	}
+	
+	public int interestupdate(Map<String, Object>  category) {
+		return sqlSession.update("category.interestupdate", category);
+	}
 }

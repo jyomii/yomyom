@@ -68,6 +68,12 @@
 	display: flex;
 	justify-content: center;
 }
+
+ .btn {
+    padding: .12rem .12rem;
+
+
+ }
 </style>
 
 <section>
@@ -77,34 +83,20 @@
 				<div class="col-lg-12">
 					<div class="row" id="page-contents">
 						<div class="col-lg-3">
-							<aside class="sidebar static">
+								<aside class="sidebar static">
 								<div class="widget">
 									<h4 class="widget-title">카테고리</h4>
 									<ul class="naves">
-										<li><i class="ti-clipboard"></i> <a href="newsfeed.html"
-											title="">운동</a></li>
-										<li><i class="ti-mouse-alt"></i> <a href="inbox.html"
-											title="">공연</a></li>
-										<li><i class="ti-files"></i> <a href="fav-page.html"
-											title="">음악</a></li>
-										<li><i class="ti-user"></i> <a
-											href="timeline-friends.html" title="">취미</a></li>
-										<li><i class="ti-image"></i> <a
-											href="timeline-photos.html" title="">친목</a></li>
-										<li><i class="ti-video-camera"></i> <a
-											href="timeline-videos.html" title="">게임</a></li>
-										<li><i class="ti-video-camera"></i> <a
-											href="timeline-videos.html" title="">공부</a></li>
+										<c:forEach items="${dcategory }" var="item" varStatus="status">
+											<li><a data-toggle="collapse" href="#collapseExample${status.index }" role="button"
+												aria-expanded="false" aria-controls="collapseExample${status.index }">
+												${item.DCategoryName }</a>
+												
+											</li>
+										</c:forEach>
 									</ul>
 								</div>
 								<!-- Shortcuts -->
-								<!-- <div class="col-lg-1">
-									<aside class="sidebar static">
-										
-									</aside>
-								</div>
-								<!-- sidebar -->
-								<div class="col-lg-8">-->
 							</aside>
 						</div>
 						<!-- sidebar -->
@@ -128,15 +120,17 @@
 														<h4>${boardlist.groupName }</h4>
 														<span>${boardlist.dateWrite}</span>
 														<p>${boardlist.content }</p>
-														<a class="add-butn" href="time-line.html"> 방문하기</a>
+														
+														<a class="add-butn" href="groupmain?groupkey=${boardlist.groupKey}"> 방문하기</a>
 														<!-- 작성자와 관리자만 수정/삭제 가능하게 -->
-														<c:if test="${'boardlist.userKey' eq 'writeuser.userKey'}"> 
-															<a href="prmodify?prkey=${boardlist.prKey}">
+														<c:if test="${boardlist.userKey == userInfo.userKey || id == 'admin'}"> 
+															<a href="./prmodify?prKey=${boardlist.prKey}">
 																<button type="button" class="btn btn-outline-info">수정</button>
 															</a>
 															<!-- 글 삭제 -->
 															<a href="#">
-																<button class="btn btn-outline-danger"
+															<input type="hidden" name="prKey" value="${boardlist.prKey}" />
+																<button class="btn btn-outline-danger" id="myModalbtn"
 																	data-toggle="modal" data-target="#myModal">삭제</button>
 															</a>
 														</c:if> 
@@ -195,55 +189,76 @@
 						<!-- centerl meta -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-								<div class="widget">
-									<h4 class="widget-title">최근 뜨는 모임</h4>
-									<ul class="followers">
-										<li>
-											<figure>
-												<img src="resources/images/resources/friend-avatar2.jpg"
-													alt="">
-											</figure>
-											<div class="friend-meta">
-												<h4>
-													<a href="time-line.html" title="">광진구 자전거 매니아</a>
-												</h4>
+							<!-- 그룹 로그인 위젯 -->
+								<c:if test="${empty id}">
+									
+								</c:if>
+								<!-- 그룹 로그인 위젯 -->
+
+								<!-- 그룹 나의 정보 위젯 -->
+								<c:if test="${!empty id}">
+									<div class="widget">
+										<h4 class="widget-title">나의 정보</h4>
+										<div class="your-page your-page-groupListDiv">
+
+											<div class="page-meta">
+												<a title="" class="underline">
+											 <c:choose>
+												<c:when test="${userInfo.logintype == 0}">
+													${userInfo.userId }
+												</c:when>
+												<c:otherwise>
+												카카오톡 유저
+												</c:otherwise>
+											</c:choose>
+
+												</a> <em><i class="ti-bell"></i>정보수정</em>
 											</div>
-										</li>
-										<li>
-											<figure>
-												<img src="resources/images/resources/friend-avatar4.jpg"
-													alt="">
-											</figure>
-											<div class="friend-meta">
-												<h4>
-													<a href="time-line.html" title="">무초 구스또!</a>
-												</h4>
+											<div class="page-likes">
+												<ul class="nav nav-tabs likes-btn">
+													<li class="nav-item"><a class="active" href="#link1"
+														data-toggle="tab">나의모임정보</a></li>
+													<li class="nav-item"><a class="" href="#link2"
+														data-toggle="tab">가입모임목록</a></li>
+												</ul>
+												<!-- Tab panes -->
+												<div class="tab-content">
+													<div class="tab-pane active fade show" id="link1">
+														<span><i class="ti-heart"></i>884</span> <a href="#"
+															title="weekly-likes">35 new likes this week</a>
+														<div class="users-thumb-list">
+															<a href="#" title="Anderw" data-toggle="tooltip"> <img
+																src="resources/images/resources/userlist-1.jpg" alt="">
+															</a> <a href="#" title="frank" data-toggle="tooltip"> <img
+																src="resources/images/resources/userlist-2.jpg" alt="">
+															</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
+																src="resources/images/resources/userlist-3.jpg" alt="">
+															</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
+																src="resources/images/resources/userlist-4.jpg" alt="">
+															</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
+																src="resources/images/resources/userlist-5.jpg" alt="">
+															</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
+																src="resources/images/resources/userlist-6.jpg" alt="">
+															</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
+																src="resources/images/resources/userlist-7.jpg" alt="">
+															</a>
+														</div>
+													</div>
+													<div class="tab-pane fade" id="link2">
+														<div>
+															<ul class="your-page-groupList">
+																<li>동.탁</li>
+																<li>동.탁</li>
+																<li>동.탁</li>
+															</ul>
+														</div>
+													</div>
+												</div>
 											</div>
-										</li>
-										<li>
-											<figure>
-												<img src="resources/images/resources/friend-avatar6.jpg"
-													alt="">
-											</figure>
-											<div class="friend-meta">
-												<h4>
-													<a href="time-line.html" title="">옵치고고</a>
-												</h4>
-											</div>
-										</li>
-										<li>
-											<figure>
-												<img src="resources/images/resources/friend-avatar8.jpg"
-													alt="">
-											</figure>
-											<div class="friend-meta">
-												<h4>
-													<a href="time-line.html" title="">치킨먹자 배그냠냠</a>
-												</h4>
-											</div>
-										</li>
-									</ul>
-								</div>
+										</div>
+									</div>
+								</c:if>
+								<!-- 나의 정보 위젯 -->
 								<!-- who's following -->
 								<div class="widget">
 									<button type="button" class="mtr-btn" id="prwritebtn">
@@ -263,6 +278,26 @@
 </section>
 </div>
 
+<%-- modal 시작 --%>
+      <div class="modal" id="myModal" >
+      <div class="modal-dialog" >
+         <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body">
+               <form name="deleteForm" action="prDeleteAction"  method="post">
+                <input type="hidden" name="prKey">
+                  <div class="form-group">
+                                                         정말 삭제 하시겠습니까?
+                  </div>
+                  <button type="submit" class="btn btn-primary" >삭제</button>
+                   <button type="button" class="btn btn-danger" data-dismiss="modal" >취소</button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div> <!-- 삭제 모달 끝 -->
+
+
 <jsp:include page="../mainpage/footer.jsp" />
 
 
@@ -272,9 +307,30 @@
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
 <script>
+   
+   //삭제 모달 안에 히든 키값 넣는거
+    $("#myModalbtn").on('click', function(){
+    	var prkey = $(this).prev().val(); //클릭한 그 버튼의 값..
+    	$('input[name=prKey]').attr('value', prkey);
+    })
+   
+   
 	$("#prwritebtn").click(function() {
+		
+	  /*
+		//하루 글 수 제한
+		if(userwrite == 5){
+			alert("홍보글은 하루 5회만 작성 가능합니다.");
+			location.href = "prboard";
+		}else{
+			location.href = "prwrite";
+		}
+	  */
+
 		location.href = "prwrite";
 	});
+	
+	
 </script>
 </body>
 

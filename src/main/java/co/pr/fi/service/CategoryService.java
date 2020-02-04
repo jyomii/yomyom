@@ -37,5 +37,6 @@ public interface CategoryService {
 
 	int alreadyRequestCategory(RequestCategory request);
 
+	int interestupdate(Map<String, Object> usercategory);
 
 }
