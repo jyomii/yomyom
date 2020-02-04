@@ -106,6 +106,15 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		return dao.getPic(keys);
 	}
 	
+	@Override
+	public int isGroupMem(int loginuser, int groupKey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("userkey", loginuser);
+		keys.put("groupkey", groupKey);
+		keys.put("grade", 0);
+		return dao.isGroupMem(keys);
+	}
+	
 	public Map<String, Object> range (int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int startrow = (page - 1) * limit + 1;
@@ -114,5 +123,6 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		map.put("END", endrow);
 		return map;
 	}
+
 
 }

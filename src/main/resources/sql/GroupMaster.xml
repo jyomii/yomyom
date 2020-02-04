@@ -57,4 +57,46 @@
 	<select id="checkGroupName" parameterType="String" resultType="int">
 		select count(*) from ggroup where groupName = #{name}
 	</select>
+	
+	<!-- 현재 모임 가입한 회원 리스트  -->
+	<select id = "groupMembers" resultType = "groupmember" parameterType = "map">
+		SELECT GROUPKEY, USERKEY, GROUPNICKNAME, USERGRADE, PROFILEFILE
+		FROM GGROUPMEMBER
+		WHERE GROUPKEY = #{groupkey} AND USERGRADE = #{grade}
+	</select>
+	
+	<!-- 현재 모임 가입한 회원수  -->
+	<select id = "memberCount" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM GGROUPMEMBER
+		WHERE GROUPKEY = #{groupkey} AND USERGRADE = #{grade}
+	</select>
+	
+	<!-- 모임 가입 요청한 회원 리스트 -->
+	<select id = "yetGroupMember" resultType = "groupmember" parameterType = "map">
+		SELECT GROUPKEY, USERKEY, GROUPNICKNAME, USERGRADE, PROFILEFILE
+		FROM GGROUPMEMBER
+		WHERE GROUPKEY = #{groupkey} AND USERGRADE = #{grade}
+	</select>
+	
+	<!-- 모임 가입 요청 회원수 -->
+	<select id = "yetMemberCount" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM GGROUPMEMBER
+		WHERE GROUPKEY = #{groupkey} AND USERGRADE = #{grade}
+	</select>
+	
+	<!-- 모임 관리자 여부 -->
+	<select id = "isAdmin" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM GGROUP
+		WHERE GROUPKEY = #{groupkey} AND USERKEY = #{userkey}
+	</select>
+	
+	<!-- 회원 모임에서 강퇴처리 -->
+	<delete id = "expelMem" parameterType = "map">
+		DELETE FROM
+		GGROUPMEMBER
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+	</delete>
 </mapper>

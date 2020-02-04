@@ -1,5 +1,9 @@
 package co.pr.fi.serviceImpl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +41,49 @@ public class GroupMasterServiceImpl implements GroupMasterService {
 	public void insertGroupBoard(GGroupBoard Board) {
 		 dao.insertGroupMember(Board);
 		
+	}
+	
+	@Override
+	public int isAdmin(Map<String, Object> map) {
+		return dao.isAdmin(map);
+	}
+
+	@Override
+	public List<GGroupMember> getGroupMembers(int groupkey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("groupkey", groupkey);
+		keys.put("grade", 0);
+		return dao.getGroupMembers(keys);
+	}
+
+
+	@Override
+	public int getMemberCount(int groupkey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("groupkey", groupkey);
+		keys.put("grade", 0);
+		return dao.getMemberCount(keys);
+	}
+
+	@Override
+	public int getYetMemberCount(int groupkey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("groupkey", groupkey);
+		keys.put("grade", -1);
+		return dao.getYetMemberCount(keys);
+	}
+
+	@Override
+	public List<GGroupMember> getYetGroupMember(int groupkey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("groupkey", groupkey);
+		keys.put("grade", -1);
+		return dao.getYetGroupMember(keys);
+	}
+
+	@Override
+	public int expelMem(Map<String, Object> map) {
+		return dao.expelMem(map);
 	}
 
 }

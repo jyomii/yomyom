@@ -242,7 +242,7 @@ cursor:pointer
 								enctype="multipart/form-data" action="group_ImgUpdate.net"
 								method="post">
 								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${groupkey }"> <i class="fa fa-camera-retro"></i>
+									value="${groupkey}"> <i class="fa fa-camera-retro"></i>
 								<!-- 그룹 사진 수정 버튼 -->
 								<label class="fileContainer"> 그룹 사진 수정하기 <input
 									type="file" name="groupImgUpload" />
@@ -298,10 +298,16 @@ cursor:pointer
 									<h4 class="widget-title">게시판</h4>
 									<ul class="naves">
 										<c:forEach var="gbl" items="${groupboardlist }">
-											<li><i class="ti-clipboard"></i> <a href="newsfeed.html"
-												title="">${gbl.boardName}</a> <input type="hidden"
-												value="${gbl.boardType }"></li>
+											<li><i class="ti-clipboard"></i> 
+											<a href="newsfeed.html"title="">${gbl.boardName}</a> 
+											<input type="hidden"value="${gbl.boardType }"></li>
 										</c:forEach>
+										
+										<!-- ## 모임 회원 관리 페이지 임시 ## -->
+										<li>
+											<i class="ti-clipboard"></i> 
+											<a href="groupMember?groupKey=3" title="">모임 회원 게시판</a> 
+										</li>
 									</ul>
 								</div>
 								<!-- 그룹 게시판 위젯 -->
@@ -870,7 +876,7 @@ function test (userKey, groupKey) {
 	var f = document.myForm;		// 폼 name
 	f.userKey.value = userKey;		// input 태그 중 name이 groupKey인 값에 대해서 userKey를 넘긴다.
 	f.groupKey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupKey를 넘긴다.
-	f.action = "G_mem_detail";		// 이동할 페이지
+	f.action = "G_mem_detail.net";	// 이동할 페이지
 	f.method = "post";				// POST 방식으로 데이터 전송
 	f.submit();		
 }

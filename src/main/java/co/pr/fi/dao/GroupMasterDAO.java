@@ -1,5 +1,8 @@
 package co.pr.fi.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -31,5 +34,29 @@ public class GroupMasterDAO {
 
 	public void insertGroupMember(GGroupBoard board) {
 		sqlSession.insert("GroupMaster.insertGroupBoard",board);
+	}
+
+	public List<GGroupMember> getGroupMembers(Map<String, Object> keys) {
+		return sqlSession.selectList("GroupMaster.groupMembers", keys);
+	}
+
+	public int getMemberCount(Map<String, Object> keys) {
+		return sqlSession.selectOne("GroupMaster.memberCount", keys);
+	}
+	
+	public List<GGroupMember> getYetGroupMember(Map<String, Object> keys) {
+		return sqlSession.selectList("GroupMaster.yetGroupMember", keys);
+	}
+	
+	public int getYetMemberCount(Map<String, Object> keys) {
+		return sqlSession.selectOne("GroupMaster.yetMemberCount", keys);
+	}
+	
+	public int isAdmin(Map<String, Object> map) {
+		return sqlSession.selectOne("GroupMaster.isAdmin", map);
+	}
+
+	public int expelMem(Map<String, Object> map) {
+		return sqlSession.delete("GroupMaster.expelMem", map);
 	}
 }

@@ -96,6 +96,13 @@
 		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupKey}
 	</select>
 	
+	<!-- 지금 모임에 가입승인된 회원인지 -->
+	<select id = "isGroupMem" parameterType = "map" resultType = "int">
+		SELECT COUNT(*)
+		FROM GGROUPMEMBER
+		WHERE GROUPKEY = #{groupkey} AND USERKEY = #{userkey} AND USERGRADE = #{grade}
+	</select>
+	
 	<select id = "preferGroup" parameterType = "int" resultType = "group">
 		SELECT GROUPKEY, MEMBERCOUNT, GROUPDFILE, GROUPNAME, GROUPPRIVATE
 		FROM (	SELECT GROUPKEY, COUNT(GROUPKEY) MEMBERCOUNT
@@ -295,7 +302,8 @@
 		select boardkey from ggroupboard where boardtype='N' and groupkey=#{groupkey}
 	</select>
 	
-	<insert id="addschedulecalendar" parameterType="post">
+	<insert id="
+              schedulecalendar" parameterType="post">
 		insert into calendar
 		values(to_date(#{cstartdate},'yyyy-mm-dd hh24:mi'),'',#{cmoney},#{postKey},#{maxperson},#{location},#{cmoneytype})
 	</insert>
