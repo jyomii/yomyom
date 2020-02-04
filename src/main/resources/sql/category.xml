@@ -37,6 +37,14 @@
 			and sname = #{sname}
 		</if>
 	</delete>
+	
+	<select id="getUserRequestCategory" parameterType="map" resultType="member">
+		select userkey from gusers where userkey in (select userkey  from requestcategory where dname = #{dname}
+		<if test="sname != null">
+			and sname = #{sname}
+		</if>
+		)
+	</select>
 
 
 	<select id="getRequestCategory" resultType="requestcategory">
@@ -70,7 +78,7 @@
 	</insert>
 
 	<select id="isDCategory" parameterType="String" resultType="int">
-		SELECT dcategorykey
+		SELECT distinct dcategorykey
 		FROM GCATEGORY WHERE dcategoryname=#{dname}
 	</select>
 
