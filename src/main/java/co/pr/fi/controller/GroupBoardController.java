@@ -28,13 +28,21 @@ import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.Maps;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupBoardService;
+
+import co.pr.fi.service.GroupService;
+
 import co.pr.fi.service.GroupMemberService;
+
 
 @Controller
 public class GroupBoardController {
 
 	@Autowired
 	GroupBoardService groupBoardService;
+
+	@Autowired
+	private GroupService groupservice;
+
 	
 	@Autowired
 	GroupMemberService groupMemberService;
@@ -171,12 +179,10 @@ public class GroupBoardController {
 	/*새롭게 만든 지도 저장하기*/
 	@ResponseBody
 	@PostMapping("/saveMap")
-	public int saveMap(@RequestParam String info) throws JsonParseException, JsonMappingException, IOException {
+	public int saveMap(@RequestParam(value = "info") String info,@RequestParam(value = "postkey") int postkey) throws JsonParseException, JsonMappingException, IOException {
+		groupservice.updateboardmap(postkey);
 		ObjectMapper mapper = new ObjectMapper();
-		
-	
 		List<Maps> list = Arrays.asList(mapper.readValue(info, Maps[].class));
-
 		for(int i = 0; i < list.size(); i++)
 			System.out.println(list.get(i).toString());
 		return groupBoardService.uploadMap(list);

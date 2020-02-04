@@ -1,0 +1,350 @@
+.forgroupname {
+	list-style: none;
+	padding-top: 20px;
+}
+
+.forgroupnamewidth {
+	width: 29%;
+	display: inline-block;
+}
+
+.forgroupnamewidth1 {
+	width: 69%;
+	display: inline-block;
+	position: relative;
+	top: 7px;
+}
+
+.forgroupnameleft {
+	float: left;
+	list-style: none;
+	margin-right: 20px;
+}
+
+.forlogintitle {
+	margin-bottom: 10px !important;
+}
+
+.forSubmitBtnDiv {
+	margin-top: 0px !important;
+	margin-bottom: 5px;
+	width:100%;
+}
+
+.forLoginBtn {
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+	margin-bottom:10px;
+	width: 90%;
+}
+
+.forMemberCountBtnOne {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnTwo {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnThree {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnFour {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnFive {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSix {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSeven {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forJoinBtn {
+	margin-top: 0px !important;
+	padding: 5px !important;
+	float: right;
+	font-size: 14px !important;
+}
+
+.forRegisterBtn {
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+	margin-left: 10%;
+}
+
+.forRememberIdDiv {
+	margin-bottom: 0px !important;
+	margin-top: 5px !important;
+}
+
+.forcheckbox {
+	margin-top: 3px;
+}
+
+.calendarDiv {
+	text-align: center;
+	width: 95%;
+	margin: 0 auto;
+}
+
+.calendarTable {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.calendarBtn {
+	cursor: pointer;
+}
+
+.calendarCell {
+	cursor: pointer;
+}
+
+.calendarDiv td {
+	border-radius: 13px;
+}
+
+.calendarCellSelected {
+	background-color: #4F93CE;
+	color: white !important;
+}
+
+.calendarCellMy {
+	background-color: black;
+	color: white !important;
+}
+
+.scheduleDiv {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.scheduleUl {
+	padding-left: 0px !important;
+}
+
+.card-header-bgcolor {
+	background: white none repeat scroll 0 0 !important;
+}
+
+.schedule-span {
+	margin-bottom: 7px;
+	width: 70% !important;
+}
+
+.schedule-span1 {
+	width: 35% !important;
+}
+
+.nearby-contct>li {
+	padding: 15 px !important;
+}
+
+.paddingZero[aria-expanded="true"] {
+	background: #088dcd;
+	color: #fff;
+	text-decoration: none;
+}
+
+.groupMember {
+	display: inline-block;
+	list-style: outside none none;
+	margin-bottom: 0;
+	padding: 0 25px 20px;
+	width: 100%;
+	max-height: 300px !important;
+}
+
+.groupMember li {
+	display: inline-block;
+	margin-bottom: 20px;
+	position: relative;
+	width: 100%;
+}
+
+.your-page-groupList li {
+	margin-bottom: 3px !important;
+}
+
+.your-page-groupListDiv {
+	min-height: 273px;
+}
+
+.min-width-h4 {
+	margin-bottom: 0px !important;
+}
+
+.height-for-white {
+	height: 70px !important;
+}
+
+.calendarBtn{
+cursor:pointer}
+
+#calendar td{
+cursor:pointer
+}
+.katalkbtn{
+background-color: #423630 !important;
+color: white !important;
+}
+
+.katalkbtn:hover{
+background-color: #594941 !important;
+}
+
+.katalkbtnw{
+color: #423630 !important;
+}
+
+.logintitle{
+font-size:14px;
+margin-top:10px;
+}
+
+.logintitlehr{
+margin-top:5px;
+margin-bottom:2px;
+width:100%;
+}
+
+.logincenter{
+text-align:center;
+}
+
+.logindiv{
+margin-top:10px;
+}
+
+.loginleft{
+float:left;
+font-size:14px;
+margin-left:14px;
+}
+
+.loginright{
+float:right;
+font-size:14px;
+margin-right:14px;
+}
+.leftrightwidth{
+padding-left: 0px !important;
+padding-right: 0px !important;
+width:90%;
+}
+
+.center-pagination {
+	justify-content: center;
+	margin-bottom: 0px;
+}
+.widthpagination{
+width:18% !important;
+}
+.imground{
+border-radius:16px;
+margin-right:10px;
+}
+.hrmargin{
+margin-top:5px !important;
+margin-bottom:5px !important;
+}
+
+.leftpadding{
+padding-left:20px !important;
+padding-right:20px !important;
+}
+
+.commentmargin {
+    margin-right: 7px !important;
+}
+.groupname{
+position:relative;
+top:-9px;
+}
+
+.figure-myimg{
+	width:80px !important;
+	max-width: 100px !important;
+	margin-left: 20px;
+}
+
+.figure-myimg1{
+	width:100%;
+	
+}
+
+.page-metaclass{
+	margin-left: 20px;
+    width: 55% !important;
+}
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom{
+	margin-bottom: 0px !important;
+}

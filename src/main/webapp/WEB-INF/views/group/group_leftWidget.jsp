@@ -10,7 +10,11 @@
 											<li><i class="ti-clipboard"></i> <input type="hidden"
 												value="${gbl.boardType }">
 												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}&boardname=${gbl.boardName}"
-												title="">${gbl.boardName}</a></li>
+												title="">${gbl.boardName}</a>
+												<input type="hidden" id="bn${gbl.boardSeq }" value="${gbl.boardName }">
+												<input type="hidden" id="bk${gbl.boardSeq }" value="${gbl.boardKey }">
+												<input type="hidden" id="bt${gbl.boardSeq }" value="${gbl.boardType }">
+												</li>
 										</c:forEach>
 									</ul>
 								</div>
@@ -24,8 +28,8 @@
 										<li><i class="ti-info-alt"></i> <a href="group_admin.net"
 											title="">모임 기본 설정</a></li>
 										<li><i class="ti-mouse-alt"></i> <a
-											href="group_admin.net" title="">모임 일정 관리</a></li>
-										<li><i class="ti-heart"></i> <a href="edit-interest.html"
+											href="groupin_group_admin_scheduleList.net?groupkey=${group.groupKey }" title="">모임 일정 관리</a></li>
+										<li><i class="ti-heart"></i> <a href="#"
 											title="">모임 회원 관리</a></li>
 										<li><i class="ti-settings"></i> <a
 											href="groupin_group_admin_board.net?groupkey=${group.groupKey }" title="">모임 게시판 관리</a></li>
