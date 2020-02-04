@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import co.pr.fi.dao.MyPageDAO;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.service.MyPageService;
 
@@ -48,6 +49,26 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public List<GCategory2> userInterest(String id) {
 		return dao.userInterest(id);
+	}
+
+	@Override
+	public GUserCategory category(String id) {
+		return dao.category(id);
+	}
+
+	@Override
+	public int myupdate2(GUserCategory category) {
+		return dao.myupdate2(category);
+	}
+
+	@Override
+	public int userImgUpdate(GUsers user) {
+ 		return dao.userImageUpdate(user);
+	}
+
+	@Override
+	public int insertPic(GUsers user) {
+        return dao.insertPic(user);		
 	}
 	
 }

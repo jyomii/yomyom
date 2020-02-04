@@ -2,18 +2,73 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="group">
+	<!-- 프사 -->
+	<select id = "getPic" resultType = "group" parameterType = "map">
+		SELECT PROFILEFILE
+		FROM GGROUPMEMBER
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 가입한 모임의 수 -->
+	<select id="getGroupRank" parameterType="map" resultType="group">
+		
+		select * from 
+		
+	
+		<if test="type == 0"> 
+			<![CDATA[
+		(select rownum r , list.* from (select b.*, (select count(*) from ggroupmember where ggroupmember.groupkey = b.groupkey) memberCount
+		from (select * from ggroup) b order by memberCount desc) list) where r >= #{startrow} and r <= #{endrow}
+			]]>
+			</if>
+	
+		<if test="type == 1">
+					<![CDATA[
+		(select rownum r, b.* from (select ggroup.*,(select count(groupkey) from post
+						  where post.groupkey = ggroup.groupkey
+						  group by groupkey) counta
+						  from ggroup order by counta desc) b) where r >= #{startrow} and r <= #{endrow}
+			]]></if>
+			
+	</select>
+
+	<select id = "getJoinedCount" resultType = "int" parameterType = "int">
+		SELECT COUNT(*)
+		FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
+									FROM GGROUPMEMBER
+									GROUP BY GROUPKEY
+									HAVING GROUPKEY IN (SELECT GROUPKEY
+														FROM GGROUPMEMBER
+														WHERE USERKEY = #{USERKEY}))
+	</select>
+	
+	<!-- 가입 전 이미 가입한 회원인지 판단 -->
+	<select id = "isNewMem" resultType = "int" parameterType = "groupmember">
+		SELECT COUNT(*)
+		FROM GGROUPMEMBER
+		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
+	</select>
+	
+	<!-- 현재 로그인한 유저의 유저키 가져오기 -->
+	<select id = "getId" resultType = "int" parameterType = "String">
+		SELECT USERKEY FROM GUSERS WHERE USERID = #{ID}
+	</select>
+	
 	<!-- 가입한 모임 보기 -->
-	<select id="userInGroup" resultType="group">
-		SELECT GROUPKEY, GROUPNAME,
-		GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE, MEMBERCOUNT
-		FROM GGROUP NATURAL JOIN ( SELECT GROUPKEY, COUNT(GROUPKEY) AS
-		MEMBERCOUNT
-		FROM GGROUPMEMBER
-		GROUP BY GROUPKEY
-		HAVING GROUPKEY IN (SELECT GROUPKEY
-		FROM GGROUPMEMBER
-		WHERE USERKEY = #{USERKEY}))
-		ORDER BY GROUPDATE DESC
+	<select id = "userInGroup" parameterType = "map" resultType = "group">
+		<![CDATA[		
+		SELECT * FROM (	SELECT ROWNUM R, G.*
+						FROM (	SELECT GROUPKEY, GROUPNAME, GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE, MEMBERCOUNT
+								FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
+															FROM GGROUPMEMBER
+															GROUP BY GROUPKEY
+															HAVING GROUPKEY IN (SELECT GROUPKEY
+																				FROM GGROUPMEMBER
+																				WHERE USERKEY = #{USERKEY}))
+								ORDER BY GROUPDATE DESC	) G
+						)
+		WHERE R >= #{START} AND R <= #{END}	
+		]]>
 	</select>
 
 	<!-- 모임의 가입 양식 가져오기 -->
@@ -39,6 +94,22 @@
 		SELECT GROUPNICKNAME
 		FROM GGROUPMEMBER
 		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupKey}
+	</select>
+	
+	<select id = "preferGroup" parameterType = "int" resultType = "group">
+		SELECT GROUPKEY, MEMBERCOUNT, GROUPDFILE, GROUPNAME, GROUPPRIVATE
+		FROM (	SELECT GROUPKEY, COUNT(GROUPKEY) MEMBERCOUNT
+				FROM GGROUPMEMBER
+				GROUP BY GROUPKEY)
+			 JOIN
+			 (	SELECT GROUPKEY, GROUPDFILE, GROUPNAME, GROUPPRIVATE
+				FROM GGROUP 
+				WHERE CATEGORYKEY IN (	SELECT CATEGORYKEY
+										FROM GUSERCATEGORY
+										WHERE USERKEY = #{USERKEY}
+									 )
+			)
+		USING (GROUPKEY)
 	</select>
 
 	<select id="groupinfo" resultType="group" parameterType="int">

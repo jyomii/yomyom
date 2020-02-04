@@ -92,13 +92,22 @@ input:focus, textarea:focus, select:focus, button:focus {
 img {
 	
 	max-width: 100%;
-	height: 100%;
 }
 
 .theme-layout {
 	float: left;
 	position: relative;
 	width: 100%;
+}
+
+
+.g-post-meta p {
+	width: inherit;
+	display: inline-block;
+	 white-space: nowrap; 
+	 overflow: hidden; 
+	 text-overflow: ellipsis; }
+
 }
 
 .theme-layout.boxed {
@@ -4752,6 +4761,11 @@ canvas {
 	.conversation-head>figure img, .peoples-mesg-box>ul li>figure img,
 	.your-page>figure img, .notification-box>ul li figure img {
 	border-radius: 100%;
+
+}
+
+.nearly-pepls img{
+	height:100%;
 }
 
 /*--- main menu ---*/
@@ -4840,11 +4854,13 @@ canvas {
 	margin:0 0 0 165px;
 	padding:0 48px;
 }
-#all-menu dl {
-	display:table-cell;
-	width:180px;
-	padding-left:20px;
-	border-left:1px solid #eee;
+#all-menu dl {   
+	display: table-cell;
+    /* width: 180px; */
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 1px solid #eee;
+    width: auto;
 }
 #all-menu dl:first-child {
 	padding-left:0;
@@ -5693,7 +5709,6 @@ px
 
 .g-post-classic>figure {
 	position: relative;
-	height: 150px;
 }
 
 .g-post-classic>figure img {

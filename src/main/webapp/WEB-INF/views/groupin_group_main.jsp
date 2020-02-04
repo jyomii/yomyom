@@ -517,7 +517,7 @@ cursor:pointer
 										</figure>
 										<div class="friend-name">
 											<ins>
-												<a href="time-line.html" title="">이지연</a>
+												<a href = "javascript:test(2, 3)" title="">이지연</a>
 											</ins>
 											<span>2019년 12월 31일 송년회 후기</span>
 										</div>
@@ -607,7 +607,7 @@ cursor:pointer
 												<div class="we-comment">
 													<div class="coment-head">
 														<h5>
-															<a href="time-line.html" title="">조태석</a>
+															<a href="javascript:test(42, 7)" title="">조태석</a>
 														</h5>
 														<span>1 분전</span> <a class="we-reply" href="#"
 															title="Reply"><i class="fa fa-reply"></i></a>
@@ -848,7 +848,10 @@ cursor:pointer
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 오른쪽 -->
-
+						<form name = "myForm">
+							<input type = "hidden" name = "userKey" value = "">
+							<input type = "hidden" name = "groupKey" value = "">
+						</form>
 					</div>
 				</div>
 			</div>
@@ -861,6 +864,17 @@ cursor:pointer
 <jsp:include page="mainpage/footer.jsp" />
 <!-- footer end -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+// ### TEST ###
+function test (userKey, groupKey) {
+	var f = document.myForm;		// 폼 name
+	f.userKey.value = userKey;		// input 태그 중 name이 groupKey인 값에 대해서 userKey를 넘긴다.
+	f.groupKey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupKey를 넘긴다.
+	f.action = "G_mem_detail";		// 이동할 페이지
+	f.method = "post";				// POST 방식으로 데이터 전송
+	f.submit();		
+}
+</script>
 <script type="text/javascript">
 	//달력시작==================================================================
 	
@@ -1598,7 +1612,6 @@ $(function() {
             }
         }) // ajax
     } // function ajax end
-    
 })
 </script>
 

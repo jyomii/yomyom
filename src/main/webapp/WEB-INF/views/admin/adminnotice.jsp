@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <jsp:include page="../mainpage/header.jsp" />
 <style>
 .newpst-input {
@@ -48,17 +48,17 @@
 								<div class="widget">
 									<h4 class="widget-title">관리자 메뉴</h4>
 									<ul class="naves">
-										<li><i class="ti-clipboard"></i> <a href="admin" title="">통계</a>
+										<li><i class="fas fa-signal"></i> <a href="admin" title="">통계</a>
 										</li>
 										<li><i class="fas fa-user"></i> <a href="adminusers"
 											title="">회원</a></li>
 										<li><i class="fas fa-users"></i> <a href="admingroup"
 											title="">모임</a></li>
 
-										<li><i class="fas fa-align-justify"></i> <a
+										<li><i class="fas fa-hashtag"></i> <a
 											href="admincategory" title="">카테고리</a></li>
 
-										<li><i class="fas fa-clipboard"></i> <a
+										<li><i class="fas fa-bell"></i> <a
 											href="adminnotice" title="">공지사항</a></li>
 
 									</ul>
@@ -73,7 +73,7 @@
 							<div class="central-meta">
 								<div class="inbox-lists">
 									<h5 class="f-title">
-										<i class="ti-heart"></i>공지사항
+										<i class="fas fa-bell"></i>공지사항
 									</h5>
 
 									<div class="inbox-action">
@@ -193,8 +193,6 @@
 	</div>
 </div>
 
-<script src="resources/js/main.min.js"></script>
-<script src="resources/js/script.js"></script>
 <script>
 	var page = 1;
 

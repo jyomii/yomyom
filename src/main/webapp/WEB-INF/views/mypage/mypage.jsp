@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 
 <jsp:include page="../mainpage/header.jsp" />
 
@@ -15,24 +16,21 @@
 
 		<section>
 			<div class="feature-photo">
-				<figure>
-					<img src="resources/images/resources/timeline-1.jpg" alt="">
+				<figure> <!-- 기본 배경 -->
+				<img src="resources/images/resources/backpic.jpg"/>
 				</figure>
 
-				<form class="edit-phto">
-					<i class="fa fa-camera-retro"></i> <label class="fileContainer">
-						배경 사진 변경 <input type="file" />
-					</label>
-				</form>
 				<div class="container-fluid">
 					<div class="row merged">
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="resources/images/resources/user-avatar.jpg" alt="">
-									<form class="edit-phto">
+									<img src="<spring:url value='/image${mypage.userImageOrigin }'/>"/>
+									<form class="edit-phto" id="userImageForm" enctype="multipart/form-data" 
+									action="userImage" method="post">
+									<input type="hidden" name="userKey" value="${mypage.userKey }">
 										<i class="fa fa-camera-retro"></i> <label
-											class="fileContainer"> 프로필 사진 변경 <input type="file" />
+											class="fileContainer"> 프로필 사진 변경 <input type="file" name="userImageUpdate"/>
 										</label>
 									</form>
 								</figure>
@@ -42,7 +40,7 @@
 							<div class="timeline-info">
 								<ul>
 									<li class="admin-name">
-										<h5>이지연</h5> <!-- <span>일반 회원</span> -->
+										<h5>${id}님의 마이페이지</h5> <!-- <span>일반 회원</span> -->
 									</li>
 
 								</ul>
@@ -101,7 +99,7 @@
 															by 나는 나는 개발자
 														</h6>
 													</div>
-												</li>
+												</li> 
 											</ul>
 										</div>
 										<!-- recent activites -->
@@ -146,7 +144,7 @@
 													<div class="tab-pane fade" id="interest" role="tabpanel">
 														<ul class="basics">
 															<c:forEach var="userInterest" items="${userInterest}">
-															<li>${userInterest.sCategoryName}</li>
+															<li>${userInterest.SCategoryName}</li>
 															</c:forEach>
 														</ul>
 													</div>
@@ -213,24 +211,9 @@
 
 								<div class="col-lg-3">
 									<aside class="sidebar static">
+									
 										<div class="widget">
-											<div class="editing-interest">
-												<h4 class="widget-title">
-													<i class="ti-bell"></i>최근 쪽지
-												</h4>
-												<div class="notification-box">
-													<ul>
-														<li>
-															<div>
-																<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;받은 쪽지가 없습니다.</p>
-															</div>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="widget">
-											<h4 class="widget-title">최근 알림</h4>
+											<h4 class="widget-title"><i class="ti-bell"></i>최근 알림</h4>
 											<ul class="activitiez">
 												<li>
 													<div class="activity-meta">
@@ -305,30 +288,5 @@
 			}
 			
 		}
-		
-
-		function getInterest() {
-			$.ajax({
-				type : "post",
-				url : "mypage2",
-				data : {
-					"userId" : $("#userId").val()
-				},
-				dataType : "json",
-				success : function(rdata) {
-					if (rdata.length > 0) {
-						$("#interest").text('');
-						output = '';
-						$(rdata).each(function() {
-							output += "<span>" + this.interest + "</span>";
-
-						})
-						$("#Interests").append(output);
-					}
-				}
-			}) //ajax end
-		}//function end
-		console.log("test");
-		getInterests();
 		
 	</script>

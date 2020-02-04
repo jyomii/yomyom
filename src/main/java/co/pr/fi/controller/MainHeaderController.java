@@ -47,6 +47,8 @@ public class MainHeaderController {
 	public ModelAndView main(HttpSession session, ModelAndView mv) {
 		
 		
+		if(session.getAttribute("id") == null)
+			session.setAttribute("userkey", -1);
 		
 		//베스트 : 인원수 가장 많은 모임 3개
 		List<GGroup> bestgroup = mainHeaderService.getBestGroups();
@@ -148,5 +150,35 @@ public class MainHeaderController {
 		messageService.readMessage(user.getUserKey());
 		
 		
+	}
+	
+	
+	
+	
+	//카테고리 메인
+	@GetMapping("/CateogryMain")
+	public ModelAndView CateogryMain(ModelAndView mv, int categorykey) {
+		
+		
+		
+		//베스트 : 해당 카테고리의 인원수 가장 많은 모임 3개
+		List<GGroup> bestgroup = mainHeaderService.getBestGroups(categorykey,3);
+		
+		//추천 : 해당 카테고리에서 인원수 제일 많은 모임 리스트 5개
+		List<GGroup>reList = mainHeaderService.getBestGroups(categorykey,5);
+		
+		//모임 목록 : 해당 카테고리 중 post 등록개수가 일주일간 제일 많은 수
+		List<GGroup> groupList = mainHeaderService.getCategoryActiveGroupList(categorykey);
+	
+		
+		
+		mv.setViewName("group/category_main");
+		mv.addObject("bestgroup",bestgroup);
+		mv.addObject("reList",reList);
+		mv.addObject("groupList",groupList);
+		mv.addObject("dcategory", categoryService.getDCategory());
+		mv.addObject("scategory", categoryService.getSCategory());
+
+		return mv;
 	}
 }

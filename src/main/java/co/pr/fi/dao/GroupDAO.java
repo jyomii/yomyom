@@ -149,5 +149,9 @@ public class GroupDAO {
 	public void updateboardmap(int postkey) {
 		sqlSession.update("group.updateboardmap",postkey);
 		
+
+	public List<GGroup> getGroupRank(Map<String, Integer> list) {
+		return sqlSession.selectList("group.getGroupRank", list);
+
 	}
 }

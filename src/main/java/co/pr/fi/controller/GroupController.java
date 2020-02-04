@@ -1,3 +1,4 @@
+
 package co.pr.fi.controller;
 
 import java.io.File;
@@ -51,7 +52,28 @@ public class GroupController {
 	private GroupBoardService groupBoardService;
 	// @Value("${savefolder}")
 	// private String saveFolder;
-	@GetMapping("/group_main.net")
+	
+  @GetMapping("/groupRank")
+	public ModelAndView groupRank(ModelAndView mv) {
+		int limit = 10;
+		int page = 1;
+		
+		List<GGroup> groups = groupservice.getGroupRank(0,limit,page); /*0 : 그룹 멤버수  추후 시간되면 추가작업*/
+		mv.addObject("groups",groups);
+		mv.setViewName("group/groupRank");
+		return mv;
+	}
+	
+	@ResponseBody
+	@PostMapping("/groupRank")
+	public List<GGroup> groupRank(int page){
+		int limit = 10;
+
+		List<GGroup> groups = groupservice.getGroupRank(0,limit,page);
+		return groups;
+	}
+  
+  @GetMapping("/group_main.net")
 	public ModelAndView group_main(ModelAndView mv, HttpSession session) {
 		String id = "";
 		int groupkey=1;
@@ -636,3 +658,4 @@ public class GroupController {
 	}
 
 }
+

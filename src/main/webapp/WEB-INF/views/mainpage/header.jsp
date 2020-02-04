@@ -92,7 +92,7 @@
 				<ul class="main-menu">
 					<li><a href="#" title="" onclick="allMenu(); return false;">전체카테고리</a></li>
 					<li><a href="prboard" title="">홍보게시판</a></li>
-					<li><a href="prboard" title="">모임 랭킹</a></li>
+					<li><a href="groupRank" title="">모임 랭킹</a></li>
 					<c:if test="${!empty id }">
 						<li><a href="groupCreate" title="">새로운 모임 만들기</a></li>
 					</c:if>
@@ -146,7 +146,7 @@
 					<c:choose>
 
 						<c:when test="${empty id }">
-							<img src="resources/images/resources/admin.jpg" alt="">
+							<img src="resources/images/default.png" style="width:40px;" alt="">
 
 							<div class="user-setting" onclick="location.href='login'">
 								<a title=""><i class="ti-pencil-alt"></i>로그인</a>
@@ -158,7 +158,7 @@
 
 							<c:choose>
 								<c:when test="${empty image}">
-									<img src="resources/images/resources/admin.jpg" alt="">
+									<img src="resources/images/default.png" style="width:40px;" alt="">
 								</c:when>
 								<c:otherwise>
 									<img src="<spring:url value='/image${image}'/>" />
@@ -169,21 +169,21 @@
 							<div class="user-setting">
 								<c:choose>
 									<c:when test="${id == 'admin'}">
-										<div onclick="location.href='admin'">
-											<a href="#" title=""><i class="ti-pencil-alt"></i>관리자 메뉴</a>
-										</div>
+									
+											<a onclick="admin('admin');" title=""><i class="ti-pencil-alt"></i>관리자 메뉴</a>
+									
 									</c:when>
 
 									<c:otherwise>
-										<div onclick="location.href='mypage2'">
-											<a href="#" title=""><i class="ti-pencil-alt"></i>정보수정</a>
-										</div>
+									
+											<a onclick="admin('mypage2');" title=""><i class="ti-pencil-alt"></i>정보수정</a>
+									
 									</c:otherwise>
 
 								</c:choose>
-								<div onclick="location.href='logout'">
-									<a href="" title=""><i class="ti-power-off"></i>로그아웃</a>
-								</div>
+								
+									<a onclick="admin('logout');"  title=""><i class="ti-power-off"></i>로그아웃</a>
+							
 							</div>
 
 
@@ -198,6 +198,11 @@
 
 		<script>
 			init_menu();
+			
+			function admin(link){
+				location.href=link;
+				
+			}
 
 			function allMenu() {
 				if ($('#all-menu').css('display') == 'none') {
@@ -214,6 +219,7 @@
 				
 				$.ajax({
 					url : "allCategory",
+					
 					success : function(result){
 						console.log(result);
 						
@@ -236,10 +242,10 @@
 								if(result.dcategory[i].dcategoryKey == 
 									result.scategory[j].dcategoryKey){
 									tag += '<dd>';
-									tag += '<a href="">'+result.scategory[j].scategoryName+'</a>';
+									tag += '<a href="CateogryMain?categorykey='+result.scategory[j].scategoryKey+'">'+result.scategory[j].scategoryName+'</a>';
 									tag += '</dd>';
 									
-									tag2 +='<li><span><a href="#">'+result.scategory[j].scategoryName+'</a></span></li>';
+									tag2 +='<li><span><a href="CateogryMain?categorykey='+result.scategory[j].scategoryKey+'">'+result.scategory[j].scategoryName+'</a></span></li>';
 								}
 							}
 							tag2 += '</ul>';

@@ -8,14 +8,18 @@
     </select>
 
 	<select id="boardList" parameterType="java.util.Map" resultType="prboard">
-	  <![CDATA[	select * from PrBoard order by prKey desc ]]>
+	  <![CDATA[					
+         select *  from (select p.* from 
+         (select B.* , groupName, groupDFile from PrBoard B, GGroup 
+          where GGroup.groupKey = B.groupKey order by prKey desc) p) 
+          where rownum >= #{start} and rownum <= #{end}		 ]]>
 	</select>
 	
-<!-- select * from (select * rownum rnum, p.* from (select * from PrBoard order by prKey desc) p) where rnum >= #{start} and rnum <= #{end} -->
-
     <insert id="insert" parameterType="prboard">
-        insert into PrBoard(
-           prKey, userKey, groupKey, content, datewrite)    
+    <selectKey resultType="int" order="BEFORE" keyProperty="prKey">
+          select nvl(max(prKey),0)+1 from PrBoard
+       </selectKey>
+        insert into PrBoard(prKey, userKey, groupKey, content, dateWrite)    
         values (#{prKey}, #{userKey}, #{groupKey}, #{content}, sysdate)
     </insert>
 
@@ -36,6 +40,16 @@
     </select>
    
     <select id="info" parameterType="String" resultType="group">
-         select groupName from GGroup where userKey = (select userKey from GUsers where userId = #{id})
+          SELECT GROUPNAME FROM GGROUP G WHERE GROUPKEY IN 
+          (SELECT M.GROUPKEY AS GROUPKEY FROM GGROUPMEMBER M WHERE USERKEY = (SELECT USERKEY FROM GUSERS WHERE USERID = #{id})
+		   ) OR USERKEY IN (SELECT USERKEY FROM GUSERS WHERE USERID = #{id}) 
+    </select>
+    
+    <delete id="delete" parameterType="prboard">
+         delete from PrBoard where prKey = #{prKey}
+    </delete> 
+    
+    <select id="writeuser" parameterType="String" resultType="prboard">
+         select * from PrBoard where userKey = (select userKey from GUsers where userId = #{id})
     </select>
 </mapper>

@@ -65,4 +65,20 @@ public class PrServiceImpl implements PrService{
 	public List<GGroup> userinfo(String id) {
 		return dao.userinfo(id);
 	}
+
+
+	@Override
+	public int boardDelete(int userKey) {
+		return dao.boardDelete(userKey);
+	}
+
+
+	@Override
+	public List<PrBoard> writeUser(String id) {
+		return dao.writeUser(id);
+	}
+
+
+
+
 }

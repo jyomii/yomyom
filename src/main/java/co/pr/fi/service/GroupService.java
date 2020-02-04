@@ -71,4 +71,7 @@ public interface GroupService {
 	public void addschedulecalendar(Post post);
 
 	public void updateboardmap(int postkey);
+
+	public List<GGroup> getGroupRank(int i, int limit, int page);
+
 }

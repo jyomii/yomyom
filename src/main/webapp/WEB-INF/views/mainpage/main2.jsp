@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <!-- Header -->
 <jsp:include page="header.jsp" />
 
@@ -27,6 +28,9 @@
 	width: 60%;
 	display: inline-block;
 }
+
+.height_custom img{
+height:200px;}
 
 .forgroupnameleft {
 	float: left;
@@ -270,7 +274,7 @@ animation: crescendo 6s alternate infinite ease-in;
 								<c:choose>
 									<c:when test="${empty item.groupCFile }">
 										<div class="pickgradient">
-											<img src="resources/images/resources/photo1.jpg"
+											<img src="resources/images/group_default2.jpg"
 												class="d-block" alt="...">
 										</div>
 									</c:when>
@@ -297,14 +301,12 @@ animation: crescendo 6s alternate infinite ease-in;
 								<c:choose>
 									<c:when test="${empty item.groupCFile }">
 										<div class="pickgradient">
-											<img src="resources/images/resources/photo1.jpg"
-												class="d-block" alt="...">
+											<img src="resources/images/group_default2.jpg" class="d-block" alt="...">
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="pickgradient">
-											<img class="d-block"
-												src="<spring:url value='/image${item.groupCFile }'/>" />
+											<img class="d-block" src="<spring:url value='/image${item.groupCFile }'/>" />
 										</div>
 									</c:otherwise>
 								</c:choose>
@@ -373,7 +375,7 @@ animation: crescendo 6s alternate infinite ease-in;
 															<c:forEach items="${scategory}" var="item2">
 
 																<c:if test="${item.DCategoryKey ==  item2.DCategoryKey}">
-																	<li><a href="${item2.SCategoryKey}">${item2.SCategoryName}</a></li>
+																	<li><a href="CateogryMain?categorykey=${item2.SCategoryKey}">${item2.SCategoryName}</a></li>
 																</c:if>
 															</c:forEach>
 
@@ -397,20 +399,20 @@ animation: crescendo 6s alternate infinite ease-in;
 						<div class="col-lg-6">
 							<div class="g-post-classic-recommands">
 								<div class="groups recommands">
-									<span><i class="fa fa-users"></i> 추천 모임</span>
+									<span><i class="fas fa-star"></i> 추천 모임</span>
 								</div>
 								<c:forEach items="${reList}" varStatus="status" var="item">
-									<div class="g-post-classic nearby-contct">
+									<div class="g-post-classic nearby-contct height_custom" >
 										<figure>
 
 											<c:choose>
 												<c:when test="${empty item.groupCFile }">
-													<img src="resources/images/resources/bloggrid-1.jpg">
+													<img src="resources/images/group_default2.jpg">
 												</c:when>
 												<c:otherwise>
 
 													<img alt="..."
-														src="<spring:url value='/image${item.groupDFile }'/>" />
+														src="<spring:url value='/image${item.groupCFile }'/>" />
 												</c:otherwise>
 											</c:choose>
 
@@ -418,7 +420,7 @@ animation: crescendo 6s alternate infinite ease-in;
 										<div class="g-post-meta">
 											<div class="post-title">
 												<h4>
-													<a title="" href="#">${item.groupName }</a>
+													<a title="이동" href="group_main.net?groupkey=${item.groupKey }">${item.groupName }</a>
 												</h4>
 												<p>${item.groupInfo }</p>
 												<span class="p-date">${item.lastDate} 마지막 활동 </span>
@@ -436,7 +438,7 @@ animation: crescendo 6s alternate infinite ease-in;
 
 							<div class="central-meta">
 								<div class="groups">
-									<span><i class="fa fa-users"></i>모임 목록</span>
+									<span><i class="fas fa-list"></i>모임 목록</span>
 								</div>
 								<ul class="nearby-contct">
 
@@ -445,8 +447,8 @@ animation: crescendo 6s alternate infinite ease-in;
 											<div class="nearly-pepls">
 												<figure>
 													<c:choose>
-														<c:when test="${empty item.groupCFile }">
-															<img src="resources/images/resources/group1.jpg" alt="">
+														<c:when test="${empty item.groupDFile }">
+															<img src="resources/images/group_default.png" alt="">
 														</c:when>
 														<c:otherwise>
 
@@ -458,7 +460,7 @@ animation: crescendo 6s alternate infinite ease-in;
 												</figure>
 												<div class="pepl-info">
 													<h4>
-														<a href="time-line.html" title="">${item.groupName }</a>
+														<a href="group_main.net?groupkey=${item.groupKey }" title="">${item.groupName }</a>
 													</h4>
 													<span>${item.groupInfo }</span>
 												</div>
@@ -475,133 +477,11 @@ animation: crescendo 6s alternate infinite ease-in;
 
 
 
+						
 						<!-- 그룹 페이지 위젯 오른쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-
-								<!-- 그룹 로그인 위젯 -->
-								<c:if test="${empty id}">
-									
-								</c:if>
-								<!-- 그룹 로그인 위젯 -->
-
-								<!-- 그룹 나의 정보 위젯 -->
-								<c:if test="${!empty id}">
-									<div class="widget">
-										<h4 class="widget-title">나의 정보</h4>
-										<div class="your-page your-page-groupListDiv">
-
-											<div class="page-meta">
-												<a title="" class="underline"> <c:choose>
-														<c:when test="${userInfo.logintype  == 0}">
-													${userInfo.userId }
-												</c:when>
-														<c:otherwise>
-												카카오톡 유저
-												</c:otherwise>
-													</c:choose>
-
-												</a> <em> <i class="ti-bell"></i>정보수정
-												</em>
-											</div>
-											<div class="page-likes">
-												<ul class="nav nav-tabs likes-btn">
-													<li class="nav-item"><a class="active" href="#link1"
-														data-toggle="tab">나의모임정보</a></li>
-													<li class="nav-item"><a class="" href="#link2"
-														data-toggle="tab">가입모임목록</a></li>
-												</ul>
-												<!-- Tab panes -->
-												<div class="tab-content">
-													<div class="tab-pane active fade show" id="link1">
-														<span><i class="ti-heart"></i>884</span> <a href="#"
-															title="weekly-likes">35 new likes this week</a>
-														<div class="users-thumb-list">
-															<a href="#" title="Anderw" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-1.jpg" alt="">
-															</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-2.jpg" alt="">
-															</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-3.jpg" alt="">
-															</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-4.jpg" alt="">
-															</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-5.jpg" alt="">
-															</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-6.jpg" alt="">
-															</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-7.jpg" alt="">
-															</a>
-														</div>
-													</div>
-													<div class="tab-pane fade" id="link2">
-														<div>
-															<ul class="your-page-groupList">
-																<li>동.탁</li>
-																<li>동.탁</li>
-																<li>동.탁</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:if>
-								<!-- 나의 정보 위젯 -->
-
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-								<div class="widget calendarCenter">
-
-									<h4 class="widget-title">나의 일정</h4>
-
-									<div class="calendarDiv">
-										<table id="calendar" class="calendarTable">
-											<tr>
-												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th id="prevcal"><label><i
-														class="fas fa-angle-left calendarBtn"></i></label></th>
-												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th id="nextcal"><label><i
-														class="fas fa-angle-right calendarBtn"></i></label></th>
-											</tr>
-											<tr>
-												<th align="center">일</th>
-												<th align="center">월</th>
-												<th align="center">화</th>
-												<th align="center">수</th>
-												<th align="center">목</th>
-												<th align="center">금</th>
-												<th align="center">토</th>
-											</tr>
-										</table>
-									</div>
-									<div class="scheduleDiv">
-										<hr>
-										<ul class="short-profile scheduleUl" id="shortschedule">
-											<c:if test="${empty id}">
-												<li><span>로그인 해주세요</span></li>
-											</c:if>
-											<c:if test="${!empty id}">
-												<c:if test="${empty shortschedule}">
-													<li><span>일정 없음</span></li>
-												</c:if>
-												<c:if test="${not empty shortschedule}">
-													<c:forEach var="ss" items="${shortschedule }">
-														<li><span>${ss.posttitle }</span>
-															<p>
-																모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소:
-																${ss.location }
-															</p></li>
-													</c:forEach>
-												</c:if>
-											</c:if>
-										</ul>
-									</div>
-
-								</div>
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-
+								<jsp:include page="../group/group_rightWidget.jsp" />
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 오른쪽 -->

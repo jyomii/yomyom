@@ -4,7 +4,7 @@
 <mapper namespace="Mypages">
 
 	<select id="info" resultType="member" parameterType="String">
-	 select g.userId, g.userAge, g.gender, g.userEmail, l.sWhere || l.dwhere as locationName, g.userJoinDate, userLocation
+	 select g.userId, g.userAge, g.gender, g.userEmail, l.sWhere || l.dwhere as locationName, g.userJoinDate, g.userImageOrigin, g.userImageFile, userLocation
      from GUsers g, GLocation l
 		where userId = #{id}
 		and locationKey=(select userLocation from GUsers where userId = #{id})
@@ -43,4 +43,18 @@
 	      select * from GCategory2 where sCategoryKey IN (select categoryKey from GUserCategory where userKey = (select userKey from GUsers where userId = #{id}))
 	</select>
 	
+	<insert id="insertPic" parameterType="member">
+	    insert into gusers (userImageOrigin, userImageFile)
+	    values(#{userImageOrigin}, #{userImageFile})
+	    where userKey = (select userKey from GUsers where userId = #{id})
+	</insert>
+	
+	<update id="imgUpdate" parameterType="member">
+	    update gusers set
+		userImageOrigin=#{userImageOrigin}, userImageFile=#{userImageFile} 
+		where userKey= (select userKey from GUsers where userId = #{id})
+	</update>
+	
+
+
 </mapper>

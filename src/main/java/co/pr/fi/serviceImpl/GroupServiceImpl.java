@@ -304,5 +304,19 @@ public class GroupServiceImpl implements GroupService {
 	public void updateboardmap(int postkey) {
 		dao.updateboardmap(postkey);
 
+	@Override
+	public List<GGroup> getGroupRank(int i, int limit, int page) {
+		Map<String, Integer> list = new HashMap<String, Integer>();
+		
+		int startrow = (page - 1) * limit + 1;
+		// 읽기 시작할 row 번호(1 11 21 31
+		int endrow = startrow + limit - 1;
+		// 읽을 마지막 row 번호 (10 20 30
+
+		list.put("type", i);
+		list.put("startrow", startrow);
+		list.put("endrow", endrow);
+		return dao.getGroupRank(list);
+
 	}
 }

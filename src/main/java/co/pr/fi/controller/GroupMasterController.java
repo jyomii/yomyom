@@ -66,7 +66,7 @@ public class GroupMasterController {
 					group.setGroupIdOrigin(fileName); // 대표사진 저장
 				else
 					group.setGroupCOrigin(fileName); // 커버사진 저장
-				
+
 				// 새로운 폴더 이름 : 오늘 년, 월, 일
 				Calendar c = Calendar.getInstance();
 				int year = c.get(Calendar.YEAR);
@@ -108,7 +108,7 @@ public class GroupMasterController {
 				String fileExtension = fileName.substring(index + 1); // 확장자만 따로 뻄
 				System.out.println("fileExtension = " + fileExtension);
 				/* 확장자 구하기 끝 */
-					
+
 				// 새로운 파일명
 				String refileName = "group" + year + month + date + random + "." + fileExtension;
 
@@ -150,54 +150,45 @@ public class GroupMasterController {
 
 		}
 
-		
 		int result = groupMasterService.insertGroup(group);
-		
-		
-		
+
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		out.print("<script>");
 		if (result > 0) {
-			
-			 
-			
 
-			 
-			 
-			 GGroupMember member = new GGroupMember();
-			 member.setGroupKey(group.getGroupKey());
-			 member.setUserKey(user.getUserKey());
-			 member.setGroupNickname("모임장");
-			 member.setUserGrade(1);
-			 //일반: 0 // 모임장: 1 // 모임가입예정 : -1
-			 
-			 
+			GGroupMember member = new GGroupMember();
+			member.setGroupKey(group.getGroupKey());
+			member.setUserKey(user.getUserKey());
+			member.setGroupNickname("모임장");
+			member.setUserGrade(1);
+			// 일반: 0 // 모임장: 1 // 모임가입예정 : -1
+
 			groupMasterService.insertGroupMember(member);
-			
-			if (group.getGroupstatus() == 0)
-				out.print("alert('모임이 생성되었습니다.');");
-			else
-				out.print("alert('원데이 클래스 모임은 관리자의 승인 후 모임이 생성됩니다.');");
 
-			
-			//기본적으로 공지사항 게시판 생성
+			if (group.getGroupstatus() == 0) {
+				out.print("alert('모임이 생성되었습니다.');");
+				out.print("location.href='group_main.net?groupkey="+group.getGroupKey()+"';");
+			} else {
+				out.print("alert('원데이 클래스 모임은 관리자의 승인 후 모임이 생성됩니다.');");
+				out.print("location.href='main2';");
+			}
+			// 기본적으로 공지사항 게시판 생성
 			GGroupBoard noticeBoard = new GGroupBoard();
 			noticeBoard.setGroupKey(group.getGroupKey());
 			noticeBoard.setBoardName("공지사항 게시판");
 			noticeBoard.setBoardType("N");
-			
+
 			groupMasterService.insertGroupBoard(noticeBoard);
-			
-			//기본적으로 모임일정 게시판 생성
+
+			// 기본적으로 모임일정 게시판 생성
 			GGroupBoard groupBoard = new GGroupBoard();
 			groupBoard.setGroupKey(group.getGroupKey());
 			groupBoard.setBoardName("모임 일정 게시판");
 			groupBoard.setBoardType("Y");
-			
+
 			groupMasterService.insertGroupBoard(groupBoard);
-			
-			out.print("location.href='groupCreate';");
+
 		} else {
 			out.print("alert('모임 생성에 실패했습니다.');history.back();");
 		}

@@ -626,17 +626,20 @@ jQuery(document).ready(function($) {
     }
 
     /** Post a Comment **/
+    /*
     jQuery(".post-comt-box textarea").on("keydown", function(event) {
-
+    	// 엔터 쳤을 때
         if (event.keyCode == 13) {
             var comment = jQuery(this).val();
             var parent = jQuery(".showmore").parent("li");
+            // 댓글 달리는 것처럼 보이게
             var comment_HTML = '	<li><div class="comet-avatar"><img src="images/resources/comet-1.jpg" alt=""></div><div class="we-comment"><div class="coment-head"><h5><a href="time-line.html" title="">Jason borne</a></h5><span>1 year ago</span><a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a></div><p>' + comment + '</p></div></li>';
             $(comment_HTML).insertBefore(parent);
             jQuery(this).val('');
         }
     });
-
+     */
+    
     //inbox page 	
     //***** Message Star *****//  
     $('.message-list > li > span.star-this').on("click", function() {

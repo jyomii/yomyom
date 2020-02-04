@@ -10,6 +10,10 @@
 		</layout>
 	</appender>
 	
+	<!-- comment -->
+	<logger name = "comment">
+		<level value = "trace"/>
+	</logger>
 	
 	<!-- search -->
 	<logger name = "search">

@@ -590,9 +590,7 @@
 	</div>
 
 
-	<script src="resources/js/main.min.js"></script>
-
-	<script src="resources/js/script.js"></script>
+	
 	<script>
 		var checkGname = false;
 		var checkCategory = false;

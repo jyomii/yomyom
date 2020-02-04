@@ -77,5 +77,6 @@
 		<mapper resource="sql/post.xml"></mapper>
 		<mapper resource="sql/search.xml"></mapper>
 		<mapper resource="sql/maingroup.xml"></mapper>
+		<mapper resource="sql/comment.xml"></mapper>
 	</mappers>
 </configuration>

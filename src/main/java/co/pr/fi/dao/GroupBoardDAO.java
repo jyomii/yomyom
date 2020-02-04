@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.Maps;
 import co.pr.fi.domain.Post;
 
@@ -17,12 +18,12 @@ public class GroupBoardDAO {
 	private SqlSessionTemplate sqlSession;
 
 	// 게시글 조회
-	public Post detailBoard(Map<String, String> keys) {
+	public Post detailBoard(Map<String, Object> keys) {
 		return sqlSession.selectOne("post.detailBoard", keys);
 	}
 
 	// 게시글 조회수 증가
-	public int updateReadCount(String postkey) {
+	public int updateReadCount(int postkey) {
 		return sqlSession.update("post.updateReadCount", postkey);
 	}
 
@@ -36,5 +37,29 @@ public class GroupBoardDAO {
 
 	public int deleteAllMap() {
 		return sqlSession.delete("deleteAllMap");
+	}
+
+	public List<GComment> getBoardComment(Map<String, Object> keys) {
+		return sqlSession.selectList("post.getBoardComment", keys);
+	}
+	
+	public int isLiked(Map<String, Object> keys) {
+		return sqlSession.selectOne("post.isLiked", keys);
+	}
+
+	public int revokeLike(Map<String, Object> keys) {
+		return sqlSession.delete("post.revokeLike", keys);
+	}
+
+	public int doLike(Map<String, Object> keys) {
+		return sqlSession.insert("post.doLike", keys);
+	}
+
+	public int likeCount(Map<String, Object> keys) {
+		return sqlSession.selectOne("post.likeCount", keys);
+	}
+
+	public int getCommentCount(Map<String, Object> keys) {
+		return sqlSession.selectOne("post.getCommentCount", keys);
 	}
 }

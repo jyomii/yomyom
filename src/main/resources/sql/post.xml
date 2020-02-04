@@ -48,24 +48,121 @@
 		WHERE POSTKEY = #{POSTKEY}
 	</update>
 	
-	<!-- 해당 모임에서 작성한 글 -->
-	<select id = "wroteInGroup" resultType = "post" parameterType = "map">
-		SELECT POSTKEY, GROUPKEY, POSTTITLE, POSTREADCOUNT, TO_CHAR(POSTDATE, 'YYYY-MM-DD') AS POSTDATE
-		FROM POST
-		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
-		ORDER BY POSTDATE DESC
+	<!-- 게시글에 해당하는 댓글 리스트 -->
+	<select id = "getBoardComment" resultType = "comment" parameterType = "map">
+	<![CDATA[	
+		SELECT * 
+		FROM (	SELECT ROWNUM R, B.* 
+				FROM (	SELECT C.COMMNETNUM, C.POSTKEY, C.USERKEY, COMMENTCONTENT, COMMEMTREREF, COMMENTRELEV, COMMENTRESEQ, COMMENTDATE, M.GROUPKEY, GROUPNICKNAME, PROFILEFILE, COMMENTSHOW
+						FROM (	SELECT COMMNETNUM, POSTKEY, USERKEY, COMMENTCONTENT, COMMEMTREREF, COMMENTRELEV, COMMENTRESEQ, TO_CHAR(COMMENTDATE, 'YYYY-MM-DD') COMMENTDATE, GROUPKEY, COMMENTSHOW
+								FROM GCOMMENT INNER JOIN (	SELECT POSTKEY 
+															FROM POST 
+															WHERE POSTKEY = #{postkey})
+								USING (POSTKEY)
+								ORDER BY COMMEMTREREF DESC, COMMENTRESEQ ASC
+							  ) C,  
+					  (	SELECT GROUPKEY, USERKEY, GROUPNICKNAME, PROFILEFILE
+					  	FROM GGROUPMEMBER
+					  	WHERE USERKEY IN (	SELECT USERKEY
+											FROM GCOMMENT JOIN (SELECT POSTKEY 
+																FROM POST 
+																WHERE POSTKEY = #{postkey})
+											USING (POSTKEY)) 
+						AND GROUPKEY = #{groupkey}
+						) M
+				WHERE C.USERKEY = M.USERKEY AND C.POSTKEY = #{postkey}
+				ORDER BY COMMENTDATE) B) 
+		WHERE R >= #{START} AND R <= #{END}
+	]]>
 	</select>
 	
-	<!-- 유저가 댓글 단 글 -->
-	<select id = "postByCommented" resultType = "post" parameterType = "map">
-		SELECT USERKEY, POSTKEY, COMMENTCONTENT, GROUPKEY, REPLYCOUNT, POSTTITLE, TO_CHAR(COMMENTDATE, 'YYYY-MM-DD') COMMENTDATE, POSTREADCOUNT 
+	<!-- 댓글수 -->
+	<select id = "getCommentedCount" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
 		FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT, POSTREADCOUNT
 								 FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
 							 						  FROM GCOMMENT
 							 						  GROUP BY POSTKEY)
 							 	 USING (POSTKEY)) 
 		USING(POSTKEY)					 						  
-		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}							
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}			
 	</select>
 	
+	<!-- 댓글수 -->
+	<!-- <select id = "getCommentedCount" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM GCOMMENT
+		WHERE POSTKEY = #{postkey}
+	</select> -->
+	
+	<select id = "getCommentCount" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM GCOMMENT
+		WHERE POSTKEY = #{postkey} AND GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 해당 모임에서 작성한 글 -->
+	<select id = "wroteInGroup" resultType = "post" parameterType = "map">
+	<![CDATA[	
+		SELECT * FROM (	SELECT ROWNUM R, P.*
+						FROM (	SELECT POSTKEY, GROUPKEY, POSTTITLE, POSTREADCOUNT, TO_CHAR(POSTDATE, 'YYYY-MM-DD') AS POSTDATE
+								FROM POST
+								WHERE USERKEY = #{USERKEY} AND GROUPKEY = #{GROUPKEY}
+								ORDER BY POSTDATE DESC) P
+					  )
+		WHERE R >= #{START} AND R <= #{END}	
+	]]>
+	</select>
+	
+	<select id = "getWroteCount" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM POST
+		WHERE USERKEY = #{USERKEY} AND GROUPKEY = #{GROUPKEY}
+		ORDER BY POSTDATE DESC
+	</select>
+	
+	<!-- 유저가 댓글 단 글 -->
+	<select id = "postByCommented" resultType = "post" parameterType = "map">
+	<![CDATA[	
+		SELECT * FROM (	SELECT ROWNUM R, C.*
+						FROM (	SELECT USERKEY, POSTKEY, COMMENTCONTENT, GROUPKEY, REPLYCOUNT, POSTTITLE, TO_CHAR(COMMENTDATE, 'YYYY-MM-DD') COMMENTDATE, POSTREADCOUNT 
+								FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT, POSTREADCOUNT
+														 FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
+													 						  FROM GCOMMENT
+													 						  GROUP BY POSTKEY)
+													 	 USING (POSTKEY)) 
+								USING(POSTKEY)					 						  
+								WHERE USERKEY = #{USERKEY} AND GROUPKEY = #{GROUPKEY}
+								ORDER BY COMMENTDATE DESC) C
+					)
+		WHERE R >= #{START} AND R <= #{END}
+	]]>
+	</select>
+	
+	<!-- 좋아요 여부 -->
+	<select id = "isLiked" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM POSTLIKE
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey} AND POSTKEY = #{postkey}
+	</select>
+	
+	<!-- 좋아요 취소 -->
+	<delete id = "revokeLike" parameterType = "map">
+		DELETE 
+		FROM POSTLIKE
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey} AND POSTKEY = #{postkey}
+	</delete>
+	
+	<!-- 좋아요 -->
+	<insert id = "doLike" parameterType = "map">
+		INSERT INTO POSTLIKE
+		VALUES (#{postkey}, #{userkey}, #{groupkey})
+	</insert>
+	
+	<!-- 글 좋아요 수 -->
+	<select id = "likeCount" parameterType = "map" resultType = "int">
+		SELECT COUNT(POSTKEY)
+		FROM POSTLIKE
+		WHERE GROUPKEY = #{groupkey} AND POSTKEY = #{postkey}
+	</select>
 </mapper>

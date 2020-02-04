@@ -44,5 +44,13 @@ public class PrDAO {
 		return sqlSession.selectList("Prs.info", id);
 	}
 
+	public int boardDelete(int userKey) {
+		return sqlSession.delete("Prs.delete",userKey);
+	}
+
+	public List<PrBoard> writeUser(String id) {
+		return sqlSession.selectList("Prs.writeuser", id);
+	}
+
 	
 }

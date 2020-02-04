@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>       
+<jsp:include page = "mainpage/header.jsp"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
@@ -42,495 +42,6 @@
 		    border-bottom-right-radius: 5px;
 		}	    
 	</style>
-</head>
-<body>
-	<nav id="shoppingbag" class="mm-menu mm-offcanvas mm-right"
-		aria-hidden="true">
-		<div class="mm-panels">
-			<div class="mm-panel mm-hasnavbar mm-opened" id="mm-11">
-				<div class="mm-navbar">
-					<a class="mm-title">General Setting</a>
-				</div>
-				<div class="">
-					<form method="post">
-					</form>
-					<h4 class="panel-title">Account Setting</h4>
-					<form method="post">
-					</form>
-				</div>
-			</div>
-		</div>
-	</nav>
-	<nav id="menu" class="res-menu mm-menu mm-offcanvas" aria-hidden="true">
-		<div class="mm-panels">
-			<div class="mm-panel mm-hasnavbar mm-opened" id="mm-1">
-				<div class="mm-navbar">
-					<a class="mm-title">Menu</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a class="mm-next mm-fullsubopen" href="#mm-2"
-						aria-owns="mm-2" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (Home)</span></a><span>Home</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-3"
-						aria-owns="mm-3" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (Time Line)</span></a><span>Time Line</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-4"
-						aria-owns="mm-4" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (Account Setting)</span></a><span>Account Setting</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-5"
-						aria-owns="mm-5" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (forum)</span></a><span>forum</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-6"
-						aria-owns="mm-6" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (Our Shop)</span></a><span>Our Shop</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-7"
-						aria-owns="mm-7" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (Our Blog)</span></a><span>Our Blog</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-8"
-						aria-owns="mm-8" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (Portfolio)</span></a><span>Portfolio</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-9"
-						aria-owns="mm-9" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (Support &amp; Help)</span></a><span>Support &amp; Help</span></li>
-					<li><a class="mm-next mm-fullsubopen" href="#mm-10"
-						aria-owns="mm-10" aria-haspopup="true"><span class="mm-sronly">Open
-								submenu (More pages)</span></a><span>More pages</span></li>
-					<li><a href="about.html" title="">about</a></li>
-					<li><a href="about-company.html" title="">About Us2</a></li>
-					<li><a href="contact.html" title="">contact</a></li>
-					<li><a href="contact-branches.html" title="">Contact Us2</a></li>
-					<li><a href="widgets.html" title="">Widgts</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-2"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (Home)</span></a><a class="mm-title" href="#mm-1" aria-hidden="true">Home</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="index-2.html" title="">Home Social</a></li>
-					<li><a href="index2.html" title="">Home Social 2</a></li>
-					<li><a href="index-company.html" title="">Home Company</a></li>
-					<li><a href="landing.html" title="">Login page</a></li>
-					<li><a href="logout.html" title="">Logout Page</a></li>
-					<li><a href="newsfeed.html" title="">news feed</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-3"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (Time Line)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">Time Line</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="time-line.jsp" title="">timeline</a></li>
-					<li><a href="timeline-friends.net" title="">timeline
-							friends</a></li>
-					<li><a href="timeline-groups.jsp" title="">timeline
-							groups</a></li>
-					<li><a href="timeline-pages.html" title="">timeline pages</a></li>
-					<li><a href="timeline-photos.html" title="">timeline
-							photos</a></li>
-					<li><a href="timeline-videos.html" title="">timeline
-							videos</a></li>
-					<li><a href="fav-page.html" title="">favourit page</a></li>
-					<li><a href="groups.html" title="">groups page</a></li>
-					<li><a href="page-likers.html" title="">Likes page</a></li>
-					<li><a href="people-nearby.html" title="">people nearby</a></li>
-
-
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-4"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (Account Setting)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">Account Setting</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="create-fav-page.html" title="">create fav
-							page</a></li>
-					<li><a href="edit-account-setting.html" title="">edit
-							account setting</a></li>
-					<li><a href="edit-interest.html" title="">edit-interest</a></li>
-					<li><a href="edit-password.html" title="">edit-password</a></li>
-					<li><a href="edit-profile-basic.html" title="">edit
-							profile basics</a></li>
-					<li><a href="edit-work-eductation.html" title="">edit work
-							educations</a></li>
-					<li><a href="messages.html" title="">message box</a></li>
-					<li><a href="inbox.html" title="">Inbox</a></li>
-					<li><a href="notifications.html" title="">notifications
-							page</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-5"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (forum)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">forum</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="forum.html" title="">Forum Page</a></li>
-					<li><a href="forums-category.html" title="">Fourm Category</a></li>
-					<li><a href="forum-open-topic.html" title="">Forum Open
-							Topic</a></li>
-					<li><a href="forum-create-topic.html" title="">Forum
-							Create Topic</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-6"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (Our Shop)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">Our Shop</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="shop.html" title="">Shop Products</a></li>
-					<li><a href="shop-masonry.html" title="">Shop Masonry
-							Products</a></li>
-					<li><a href="shop-single.html" title="">Shop Detail Page</a></li>
-					<li><a href="shop-cart.html" title="">Shop Product Cart</a></li>
-					<li><a href="shop-checkout.html" title="">Product Checkout</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-7"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (Our Blog)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">Our Blog</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="blog-grid-wo-sidebar.html" title="">Our Blog</a></li>
-					<li><a href="blog-grid-right-sidebar.html" title="">Blog
-							with R-Sidebar</a></li>
-					<li><a href="blog-grid-left-sidebar.html" title="">Blog
-							with L-Sidebar</a></li>
-					<li><a href="blog-masonry.html" title="">Blog Masonry
-							Style</a></li>
-					<li><a href="blog-list-wo-sidebar.html" title="">Blog List
-							Style</a></li>
-					<li><a href="blog-list-right-sidebar.html" title="">Blog
-							List with R-Sidebar</a></li>
-					<li><a href="blog-list-left-sidebar.html" title="">Blog
-							List with L-Sidebar</a></li>
-					<li><a href="blog-detail.html" title="">Blog Post Detail</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-8"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (Portfolio)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">Portfolio</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="portfolio-2colm.html" title="">Portfolio 2col</a></li>
-					<li><a href="portfolio-3colm.html" title="">Portfolio 3col</a></li>
-					<li><a href="portfolio-4colm.html" title="">Portfolio 4col</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-9"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (Support &amp; Help)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">Support &amp; Help</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="support-and-help.html" title="">Support &amp;
-							Help</a></li>
-					<li><a href="support-and-help-detail.html" title="">Support
-							&amp; Help Detail</a></li>
-					<li><a href="support-and-help-search-result.html" title="">Support
-							&amp; Help Search Result</a></li>
-				</ul>
-			</div>
-			<div class="mm-panel mm-hidden mm-hasnavbar" id="mm-10"
-				aria-hidden="true">
-				<div class="mm-navbar">
-					<a class="mm-btn mm-prev" href="#mm-1" aria-owns="mm-1"
-						aria-haspopup="true"><span class="mm-sronly">Close
-							submenu (More pages)</span></a><a class="mm-title" href="#mm-1"
-						aria-hidden="true">More pages</a>
-				</div>
-				<ul class="mm-listview">
-					<li><a href="careers.html" title="">Careers</a></li>
-					<li><a href="career-detail.html" title="">Career Detail</a></li>
-					<li><a href="404.html" title="">404 error page</a></li>
-					<li><a href="404-2.html" title="">404 Style2</a></li>
-					<li><a href="faq.html" title="">faq's page</a></li>
-					<li><a href="insights.html" title="">insights</a></li>
-					<li><a href="knowledge-base.html" title="">knowledge base</a></li>
-				</ul>
-			</div>
-		</div>
-
-	</nav>
-	<!--<div class="se-pre-con"></div>-->
-	<div id="mm-0" class="mm-page mm-slideout">
-		<div class="theme-layout">
-
-			<div class="responsive-header">
-				<div
-					class="mh-head first mm-sticky mh-btns-left mh-btns-right mh-sticky">
-					<span class="mh-btns-left"> <a class="" href="#menu"><i
-							class="fa fa-align-justify"></i></a>
-					</span> <span class="mh-text"> <a href="newsfeed.html" title=""><img
-							src="resources/images/logo2.png" alt=""></a>
-					</span> <span class="mh-btns-right"> <a class="fa fa-sliders"
-						href="#shoppingbag"></a>
-					</span>
-				</div>
-				<div class="mh-head second">
-					<form class="mh-form">
-						<input placeholder="search"> <a href="#/"
-							class="fa fa-search"></a>
-					</form>
-				</div>
-
-
-			</div>
-			<!-- responsive header -->
-
-			<div class="topbar stick is_stuck"
-				style="position: fixed; top: 0px; width: 1412px;">
-				<div class="logo">
-					<a title="" href="newsfeed.html"><img src="resources/images/logo.png"
-						alt=""></a>
-				</div>
-
-				<div class="top-area">
-					<ul class="main-menu">
-						<li><a href="#" title="">모임</a>
-							<ul>
-								<!-- 임시 -->
-								<li><a href="signGroup" title="">모임 가입</a></li>
-								<li><a href="detailBoard" title="">모임 게시글</a></li>
-								<li><a href="recommendG" title="">모임 추천</a></li>
-								<li><a href="groupmain" title="">모임 메인</a></li>
-								<li><a href="logout.html" title="">Logout Page</a></li>
-								<li><a href="newsfeed.html" title="">news feed</a></li>
-							</ul></li>
-						<li><a href="#" title="">timeline</a>
-							<ul>
-								<li><a href="time-line.jsp" title="">timeline</a></li>
-								<li><a href="timeline-friends.net" title="">timeline
-										friends</a></li>
-								<li><a href="timeline-groups.jsp" title="">timeline
-										groups</a></li>
-								<li><a href="timeline-pages.html" title="">timeline
-										pages</a></li>
-								<li><a href="timeline-photos.html" title="">timeline
-										photos</a></li>
-								<li><a href="timeline-videos.html" title="">timeline
-										videos</a></li>
-								<li><a href="fav-page.html" title="">favourit page</a></li>
-								<li><a href="groups.html" title="">groups page</a></li>
-								<li><a href="page-likers.html" title="">Likes page</a></li>
-								<li><a href="people-nearby.html" title="">people nearby</a></li>
-							</ul></li>
-						<li><a href="#" title="">account settings</a>
-							<ul>
-								<li><a href="create-fav-page.html" title="">create fav
-										page</a></li>
-								<li><a href="edit-account-setting.html" title="">edit
-										account setting</a></li>
-								<li><a href="edit-interest.html" title="">edit-interest</a></li>
-								<li><a href="edit-password.html" title="">edit-password</a></li>
-								<li><a href="edit-profile-basic.html" title="">edit
-										profile basics</a></li>
-								<li><a href="edit-work-eductation.html" title="">edit
-										work educations</a></li>
-								<li><a href="messages.html" title="">message box</a></li>
-								<li><a href="inbox.html" title="">Inbox</a></li>
-								<li><a href="notifications.html" title="">notifications
-										page</a></li>
-							</ul></li>
-						<li><a href="#" title="">more pages</a>
-							<ul>
-								<li><a href="404.html" title="">404 error page</a></li>
-								<li><a href="about.html" title="">about</a></li>
-								<li><a href="contact.html" title="">contact</a></li>
-								<li><a href="faq.html" title="">faq's page</a></li>
-								<li><a href="insights.html" title="">insights</a></li>
-								<li><a href="knowledge-base.html" title="">knowledge
-										base</a></li>
-								<li><a href="widgets.html" title="">Widgts</a></li>
-							</ul></li>
-					</ul>
-					<ul class="setting-area">
-						<li><a href="#" title="Home" data-ripple=""><i
-								class="ti-search"></i></a>
-							<div class="searched">
-								<form method="post" class="form-search">
-									<input type="text" placeholder="Search Friend">
-									<button data-ripple="">
-										<i class="ti-search"></i>
-									</button>
-								</form>
-							</div></li>
-						<li><a href="newsfeed.html" title="Home" data-ripple=""><i
-								class="ti-home"></i></a></li>
-						<li><a href="#" title="Notification" data-ripple=""> <i
-								class="ti-bell"></i><span>20</span>
-						</a>
-							<div class="dropdowns ps-container ps-theme-default ps-active-y"
-								data-ps-id="ce9b9242-861f-4a78-a123-74e14fc5496c">
-								<span>4 New Notifications</span>
-								<ul class="drops-menu">
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-1.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>sarah Loren</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag green">New</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-2.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Jhon doe</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag red">Reply</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-3.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Andrew</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag blue">Unseen</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-4.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Tom cruse</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag">New</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-5.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Amy</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag">New</span></li>
-								</ul>
-								<a href="notifications.html" title="" class="more-mesg">view
-									more</a>
-								<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-									<div class="ps-scrollbar-x" tabindex="0"
-										style="left: 0px; width: 0px;"></div>
-								</div>
-								<div class="ps-scrollbar-y-rail"
-									style="top: 0px; height: 292px; right: 0px;">
-									<div class="ps-scrollbar-y" tabindex="0"
-										style="top: 0px; height: 175px;"></div>
-								</div>
-							</div></li>
-						<li><a href="#" title="Messages" data-ripple=""><i
-								class="ti-comment"></i><span>12</span></a>
-							<div class="dropdowns ps-container ps-theme-default ps-active-y"
-								data-ps-id="020700db-9370-0f02-9dd2-2389c22bbf04">
-								<span>5 New Messages</span>
-								<ul class="drops-menu">
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-1.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>sarah Loren</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag green">New</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-2.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Jhon doe</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag red">Reply</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-3.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Andrew</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag blue">Unseen</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-4.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Tom cruse</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag">New</span></li>
-									<li><a href="notifications.html" title=""> <img
-											src="resources/images/resources/thumb-5.jpg" alt="">
-											<div class="mesg-meta">
-												<h6>Amy</h6>
-												<span>Hi, how r u dear ...?</span> <i>2 min ago</i>
-											</div>
-									</a> <span class="tag">New</span></li>
-								</ul>
-								<a href="messages.html" title="" class="more-mesg">view more</a>
-								<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-									<div class="ps-scrollbar-x" tabindex="0"
-										style="left: 0px; width: 0px;"></div>
-								</div>
-								<div class="ps-scrollbar-y-rail"
-									style="top: 0px; height: 292px; right: 0px;">
-									<div class="ps-scrollbar-y" tabindex="0"
-										style="top: 0px; height: 175px;"></div>
-								</div>
-							</div></li>
-						<li><a href="#" title="Languages" data-ripple=""><i
-								class="fa fa-globe"></i></a>
-							<div class="dropdowns languages ps-container ps-theme-default"
-								data-ps-id="6d19094b-e379-940f-0f5c-92d7c8a30da4">
-								<a href="#" title=""><i class="ti-check"></i>English</a> <a
-									href="#" title="">Arabic</a> <a href="#" title="">Dutch</a> <a
-									href="#" title="">French</a>
-								<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-									<div class="ps-scrollbar-x" tabindex="0"
-										style="left: 0px; width: 0px;"></div>
-								</div>
-								<div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;">
-									<div class="ps-scrollbar-y" tabindex="0"
-										style="top: 0px; height: 0px;"></div>
-								</div>
-							</div></li>
-					</ul>
-					<div class="user-img">
-						<img src="resources/images/resources/admin.jpg" alt=""> <span
-							class="status f-online"></span>
-						<div class="user-setting">
-							<a href="#" title=""><span class="status f-online"></span>online</a>
-							<a href="#" title=""><span class="status f-away"></span>away</a>
-							<a href="#" title=""><span class="status f-off"></span>offline</a>
-							<a href="#" title=""><i class="ti-user"></i> view profile</a> <a
-								href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
-							<a href="#" title=""><i class="ti-target"></i>activity log</a> <a
-								href="#" title=""><i class="ti-settings"></i>account setting</a>
-							<a href="#" title=""><i class="ti-power-off"></i>log out</a>
-						</div>
-					</div>
-					<span class="ti-menu main-menu" data-ripple=""></span>
-				</div>
-			</div>
-			<div
-				style="position: relative; width: 1412px; height: 60px; display: block; vertical-align: baseline; float: none;"></div>
-			<!-- topbar -->
 
 			<section>
 				<div class="feature-photo">
@@ -584,7 +95,7 @@
 					</div>
 				</div>
 			</section>
-			<!-- top area -->
+			<!-- 그룹 페이지 상단 -->
 
 			<section>
 				<div class="gap gray-bg">
@@ -594,22 +105,6 @@
 								<div class="row" id="page-contents">
 									<div class="col-lg-3">
 										<aside class="sidebar static">
-											<!-- Shortcuts -->
-											<div class="widget">
-												<h4 class="widget-title">Profile intro</h4>
-												<ul class="short-profile">
-													<li><span>about</span>
-														<p>Hi, i am jhon kates, i am 32 years old and worked
-															as a web developer in microsoft company.</p></li>
-													<li><span>fav tv show</span>
-														<p>Hi, i am jhon kates, i am 32 years old and worked
-															as a web developer in microsoft company.</p></li>
-													<li><span>favourit music</span>
-														<p>Hi, i am jhon kates, i am 32 years old and worked
-															as a web developer in microsoft company.</p></li>
-												</ul>
-											</div>
-											<!-- profile intro widget -->
 										</aside>
 									</div>
 									<!-- sidebar -->
@@ -629,11 +124,14 @@
 												<a href = "https://daum.net" class = "last">지역별</a>
 											</p> -->
 											<ul class="nearby-contct">
+												<!-- 모임 리스트 -->
+												<c:forEach var = "g" items = "${list}">
 												<li>
 													<div class="nearly-pepls">
 														<figure>
-															<a href="timeline.net" title=""><img
-																src="resources/images/resources/group1.jpg" alt=""></a>
+															<!-- 그룹 메인 페이지로 이동 // ## 주소 변경해야 함 ## -->
+															<img src="<spring:url value='/image${c.profileFile}'/>" class = "group-img" alt = ""/>
+															<a href = "groupmain" title = ""><img src="resources/images/resources/group1.jpg" alt=""></a>
 														</figure>
 														<div class="pepl-info">
 															<h4>
@@ -644,6 +142,9 @@
 														</div>
 													</div>
 												</li>
+												</c:forEach>
+												
+												<%--
 												<li>
 													<div class="nearly-pepls">
 														<figure>
@@ -749,6 +250,7 @@
 														</div>
 													</div>
 												</li>
+												--%>
 											</ul>
 											<div class="lodmore">
 												<button class="btn-view btn-load-more"></button>
