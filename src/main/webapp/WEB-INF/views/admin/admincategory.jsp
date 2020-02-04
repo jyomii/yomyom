@@ -86,7 +86,7 @@
 									<ul class="followers">
 
 										<c:forEach items="${listCategory }" var="item">
-											<li><input type="hidden" value="${item.dname }">
+											<li style="cursor: pointer;"><input type="hidden" value="${item.dname }">
 												<input type="hidden" value="${item.sname }"> <span>
 
 
@@ -102,7 +102,7 @@
 
 											</span>
 
-												<p>${item.requestkey }번의요청이 들어왔습니다.</p>
+												<p>${item.requestkey }번의 요청이 들어왔습니다.</p>
 												<div></div></li>
 
 
@@ -151,8 +151,14 @@
 			method : "post",
 			success : function(result) {
 				if (result > 0) {
-					$('.followers li:eq(' + index + ')').remove();
+					//$('.followers li:eq(' + index + ')').remove();
 					alert('추가되었습니다.');
+					location.href="admincategory";
+					
+					
+					
+				
+					
 				}
 			}
 

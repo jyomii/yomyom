@@ -824,6 +824,9 @@ $(function() {
 	$(".forLoginBtn").click(function(){
 		location.href="login";
 	})
+	$(".forLoginBtnx").click(function(){
+		location.href="login";
+	})
 	$("#calendar").on('click', '#prevcal', function(event) {
 		var userkey = $('#UserKey').val();
 		prevCalendar();
@@ -901,7 +904,6 @@ $(function() {
             }
         }
     })
-    
     
     
     $(".forMemberCountBtnOne").click(function() {

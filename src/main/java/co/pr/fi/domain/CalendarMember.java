@@ -3,6 +3,8 @@ package co.pr.fi.domain;
 //일정참여자 
 public class CalendarMember {
 
+	
+	
  // 유저키값 
  private int userKey;
 

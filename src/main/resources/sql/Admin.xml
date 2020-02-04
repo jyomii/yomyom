@@ -99,7 +99,7 @@ delete from ggroup where groupKey = #{groupKey}
 									
 					( 
 					SELECT count(*)
-									 FROM ggroupmember WHERE groupKey = b.groupKey
+									 FROM ggroupmember WHERE groupKey = b.groupKey and usergrade > -1
 					) memberCount,
 				
 				

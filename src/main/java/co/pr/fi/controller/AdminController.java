@@ -117,7 +117,7 @@ public class AdminController {
 	@PostMapping("/SendUserMessage")
 	public int SendUserMessage(UserMessage message) {
 		
-		message.setMgSend(0);
+		message.setMgSend(0); //보내는사람
 		message.setMgSort("D"); //쪽지 D: 일반 메세지
 	
 		return messageService.sendMessage(message);
@@ -129,9 +129,19 @@ public class AdminController {
 	@PostMapping("/negativeGroup")
 	public int negativeGroup(int key) {
 		
-		
+		//모임 거부
+		//메세지 보내기
 		GGroup group = adminService.getGroup(key);
 		
+		UserMessage message = new UserMessage();
+		message.setMgContent("모임( "+group.getGroupName()+" )이 관리자에 의해 삭제되었습니다.");
+		message.setMgSend(0);
+		message.setMgSort("B");
+		message.setMgReceive(group.getUserKey());
+		
+		messageService.sendMessage(message);
+		
+
 		//모임 이미지 휴지통에 넣기
 		adminService.insertDeleteFiles(group.getGroupDFile());
 		adminService.insertDeleteFiles(group.getGroupCFile());
@@ -145,6 +155,17 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("/acceptGroup")
 	public int acceptGroup(int key) {
+		
+		//모임 승인
+		//메시지 보내기
+		GGroup group = adminService.getGroup(key);
+		UserMessage message = new UserMessage();
+		message.setMgContent("요청하신 모임( "+group.getGroupName()+" )이 관리자에 의해 승인되었습니다.");
+		message.setMgSend(0);
+		message.setMgSort("A");
+		message.setMgReceive(group.getUserKey());
+		
+		messageService.sendMessage(message);
 		
 		return adminService.acceptGroup(key);
 		
@@ -211,6 +232,22 @@ public class AdminController {
 
 		if (result > 0) {
 
+			// 요창했던 모든 유저에게 메세지 보내기
+			List<GUsers> users = categoryService.getUserRequestCategory(sname,dname);
+			
+			UserMessage message = new UserMessage();
+			
+			String content = "요청하신 카테고리  ["+(dname != null ? dname : "") +" " + (sname != null ? sname : " " ) + 
+					"이 승인되었습니다.";
+				
+			message.setMgContent(content);
+			message.setMgSend(0);
+			message.setMgSort("C");
+			
+			
+			messageService.sendMessage(message,users);
+			
+			
 			// 해당 요청 삭제
 			return categoryService.deleteRequestCategory(sname, dname);
 

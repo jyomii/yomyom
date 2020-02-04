@@ -4867,6 +4867,7 @@ canvas {
 	border-left:0;
 }
 #all-menu dl dt {
+	width:max-content;
 	padding:10px 0;
 	color:#333;
 	font-size:18px;
