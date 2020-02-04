@@ -9,6 +9,14 @@
 
 <!-- Header end -->
 <style>
+
+.text-end{
+text-overflow:ellipsis;
+white-space:nowrap;
+word-wrap:normal;
+width:100%;
+overflow:hidden;
+}
 .carousel-inner {
 	height: 50vh;
 }
@@ -286,7 +294,7 @@ animation: crescendo 6s alternate infinite ease-in;
 								style="right: 5vh; text-align: right; width: auto; opacity: 0.8; position: absolute; top:3vh;">
 								<h1 style="font-weight: bold;">BEST GROUPS :
 									${item.groupName }</h1>
-								<p>${item.groupInfo }</p>
+								<p class="text-end">${item.groupInfo }</p>
 							</div>
 							</div>
 
@@ -313,7 +321,7 @@ animation: crescendo 6s alternate infinite ease-in;
 								style="right: 5vh; text-align: right; width: auto; opacity: 0.8; position: absolute; top:3vh;">
 								<h1 style="font-weight: bold;">BEST GROUPS :
 									${item.groupName }</h1>
-								<p>${item.groupInfo }</p>
+								<p class="text-end">${item.groupInfo }</p>
 							</div>
 							</div>
 						</c:otherwise>
@@ -420,7 +428,7 @@ animation: crescendo 6s alternate infinite ease-in;
 												<h4>
 													<a title="" href="#">${item.groupName }</a>
 												</h4>
-												<p>${item.groupInfo }</p>
+												<p class="text-end">${item.groupInfo }</p>
 												<span class="p-date">${item.lastDate} 마지막 활동 </span>
 											</div>
 											<div class="g-post-ranking">
@@ -436,7 +444,7 @@ animation: crescendo 6s alternate infinite ease-in;
 
 							<div class="central-meta">
 								<div class="groups">
-									<span><i class="fa fa-users"></i>모임 목록</span>
+									<span><i class="fas fa-list"></i>모임 목록</span>
 								</div>
 								<ul class="nearby-contct">
 
@@ -460,7 +468,7 @@ animation: crescendo 6s alternate infinite ease-in;
 													<h4>
 														<a href="time-line.html" title="">${item.groupName }</a>
 													</h4>
-													<span>${item.groupInfo }</span>
+													<span class="text-end">${item.groupInfo }</span>
 												</div>
 											</div>
 										</li>
@@ -469,7 +477,40 @@ animation: crescendo 6s alternate infinite ease-in;
 								</ul>
 
 							</div>
-							<!-- photos -->
+							
+							
+							<div class="central-meta">
+							<div class="groups">
+							<span>	<i class="fa fa-comments"></i> 인기 글</span>
+							</div>
+							
+							<div class="forum-list nearby-contct">
+							<table class="table">
+							
+								<tbody>
+								<c:forEach items="${bestboard }" var="item">
+									<tr>
+										<td>
+										
+											<a href="forums-category.html" title="">${item.postTitle } [${item.replyCount}]</a>
+											<p class="text-end">${item.postContent }</p>
+											<p><span>${item.groupNickname }</span>
+											<span style="margin-left: 16px;">${item.groupName }</span>
+											<span style="margin-left: 16px;">
+											<script type="text/javascript">
+											var date1 = '${item.postDate}';
+											document.write(timeBefore(new Date(date1)));
+											</script></span></p>
+										</td>
+										
+										
+									</tr>
+								</c:forEach>	
+								</tbody>
+							</table>
+						</div>
+							</div>
+							
 						</div>
 
 

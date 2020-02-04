@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.pr.fi.dao.MainHeaderDAO;
+import co.pr.fi.domain.BestPost;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
@@ -52,10 +53,12 @@ public class MainHeaderController {
 		
 		//베스트 : 인원수 가장 많은 모임 3개
 		List<GGroup> bestgroup = mainHeaderService.getBestGroups();
+		//인기글 : 최근 7일간 조회수가 높고, 좋아요 수가 많은 순 
+		List<BestPost> post = mainHeaderService.getBestBoard(0);
 		
 		List<GGroup> reList;
 		List<GGroup> groupList;
-		
+	
 		
 		GUsers gUsers = null; 
 		//추천 : 관심 카테고리 목록중에서 인원수 제일 많은 모임 리스트 5개
@@ -79,6 +82,7 @@ public class MainHeaderController {
 		mv.setViewName("mainpage/main2");
 		mv.addObject("bestgroup",bestgroup);
 		mv.addObject("reList",reList);
+		mv.addObject("bestboard",post);
 		mv.addObject("groupList",groupList);
 		mv.addObject("dcategory", categoryService.getDCategory());
 		mv.addObject("scategory", categoryService.getSCategory());
@@ -169,11 +173,14 @@ public class MainHeaderController {
 		
 		//모임 목록 : 해당 카테고리 중 post 등록개수가 일주일간 제일 많은 수
 		List<GGroup> groupList = mainHeaderService.getCategoryActiveGroupList(categorykey);
-	
+		
+		//인기글 : 최근 7일간 조회수가 높고, 좋아요 수가 많은 순 
+		List<BestPost> post = mainHeaderService.getBestBoard(categorykey);
 		
 		
 		mv.setViewName("group/category_main");
 		mv.addObject("bestgroup",bestgroup);
+		mv.addObject("bestboard",post);
 		mv.addObject("reList",reList);
 		mv.addObject("groupList",groupList);
 		mv.addObject("dcategory", categoryService.getDCategory());

@@ -80,10 +80,9 @@
  
 		<!-- 기존 화면 header 시작 -->
 		<div class="topbar stick">
-			<!-- 로고 -->
+			<!-- 로고 --> 
 			<div class="logo">
-				<a title="" href="main2"> <img src="resources/images/logo.png"
-					alt=""></a>
+				<a title="" href="main2"><h5 style="color:#4f93ce;     line-height: 2em;"><b>GroupIN</b></h5></a>
 			</div>
 			<!-- //로고 -->
 
@@ -111,9 +110,11 @@
 			<!-- 우측메뉴 -->
 			<div class="right-menu">
 				<ul class="setting-area">
+				
 					<li>
+					
 						<div class="box-search">
-							<form class="form-search">
+							<form class="form-search" style="margin-top: 1em;">
 								<input name="text" type="text" placeholder=""
 									style="color:black;">
 								<button class="sendAll">
@@ -137,7 +138,7 @@
 
 
 							</ul>
-							<a href="notifications.html" title="" class="more-mesg">view
+							<a onclick="admin('mypage2');" href="mypage2" title="" class="more-mesg">view
 								more</a>
 						</div></li></c:if>
 
@@ -297,6 +298,8 @@
 				
 				if(text){
 				location.href="searchText?text="+text;
+				
+			
 				}
 					
 			}
@@ -354,17 +357,18 @@
 					var date1 = '';
 					date1 += result[i].mgDate.year+"-";
 					date1 += result[i].mgDate.monthValue+"-";
-					date1 += result[i].mgDate.dayOfYear+" ";	
+					date1 += result[i].mgDate.dayOfMonth+" ";	
 					date1 += result[i].mgDate.hour+":";	
 					date1 += result[i].mgDate.minute+":";	
 					date1 += result[i].mgDate.second;
 					
 					
 					text += '<li>';
-					text += '<a href="#" title="">';
+					text += '<a href="mypage2" title="">';
 					text += '<div class="mesg-meta">';
 					text += '<span>'+result[i].mgContent+'</span>';
 				
+					console.log(date1);
 					text += '<i>'+timeBefore(new Date(date1))+'</i>';
 					text += '</div>';
 					text += '</a>';
@@ -394,8 +398,7 @@
 			      
 			        //글쓴 시간 
 			        var writeDay = dd;
-			        
-			        
+			
 			        var returnValue;
 			        
 			        var minus;
@@ -434,6 +437,8 @@
 			                }
 			            }
 			        }
+			        
+			        console.log('아니 잘되다가 왜그래 너?' + returnValue);
 			        
 			        return returnValue;
 			    }

@@ -14,7 +14,20 @@ insert into usermessage values(nvl((select max(mgkey) from
 select * from usermessage where mgReceive = #{key} or (mgsend = 0 and mgsort = 'N') order by mgDate desc
  </select>
  
+ <!-- 공지사항 빼고 다 읽가 -->
  <update id="readMessage" parameterType="int">
- update usermessage set checkDate = sysdate where mgReceive = #{userkey} and mgSort != 'D'</update>
+ update usermessage set checkDate = sysdate where mgReceive = #{userkey} and mgSort != 'N'</update>
+ 
+ <insert id="sendMessageAll" parameterType="map">
+ insert all
+		<foreach item="users" index="index" collection="users">
+			into
+			usermessage values(nvl((select max(mgkey) from
+		usermessage)+(#{index}+1),0), #{message.mgSort}, #{message.mgContent}, sysdate, #{users.userKey},#{message.mgSend}, null)
+		</foreach>
+		select * from dual
+		
+
+ </insert>
 </mapper>
 

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.pr.fi.domain.BestPost;
 import co.pr.fi.domain.GGroup;
 
 //메인페이지 DB (베스트 모임, 추천 모임, 즐겨찾는 모임, 검색 등)
@@ -42,6 +43,14 @@ public class MainHeaderDAO {
 
 	public List<GGroup> getCategoryActiveGroupList(int categorykey) {
 		return sqlSession.selectList("maingroup.getCategoryActiveGroupList",categorykey);
+	}
+
+	public List<BestPost> getBestBoard(int value) {
+		
+		if(value == 0)
+			return sqlSession.selectList("maingroup.getBestBoard");
+		else
+			return sqlSession.selectList("maingroup.getBestBoard",value);	
 	}
 
 }
