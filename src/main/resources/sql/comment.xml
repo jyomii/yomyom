@@ -29,4 +29,36 @@
 		VALUES(GCOMMENTSEQ.NEXTVAL, #{postkey}, #{userkey}, #{content},
 			   #{commentnum}, #{commentReLev}, #{commentReSeq}, SYSDATE, #{groupkey}, #{commentshow})
 	</insert>
+	
+	<select id = "getDetail" resultType = "comment">
+		SELECT *
+		FROM GCOMMENT
+		WHERE COMMNETNUM = #{COMMENTNUM}
+	</select>
+	
+	<delete id = "delete" parameterType = "comment">
+	<![CDATA[
+		DELETE FROM GCOMMENT
+			   WHERE COMMEMTREREF = #{commemtReRef}
+			   AND COMMENTRELEV >= #{commentReLev}
+			   AND COMMENTRESEQ >= #{commentReSeq}
+			   AND COMMENTRESEQ < (
+			   						NVL((SELECT MIN(COMMENTRESEQ)
+			   						FROM GCOMMENT
+			   						WHERE COMMEMTREREF = #{commemtReRef}
+								    AND COMMENTRELEV = #{commentReLev}
+								    AND COMMENTRESEQ > #{commentReSeq},
+								    (SELECT MAX(COMMENTRESEQ) + 1
+								    FROM GCOMMENT
+								    WHERE COMMEMTREREF = #{commentReSeq}))
+								    ) 
+	]]>
+	</delete>
+	
+	<!-- 댓글 내용 변경 -->
+	<update id = "update" parameterType = "map">
+		UPDATE GCOMMENT
+		SET COMMENTCONTENT = #{content}
+		WHERE COMMNETNUM = #{commentnum}
+	</update>
 </mapper>

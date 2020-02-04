@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +32,7 @@ import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.RequestCategory;
 import co.pr.fi.service.CategoryService;
 import co.pr.fi.service.GroupMasterService;
+import co.pr.fi.service.GroupMemberService;
 import co.pr.fi.service.MemberService;
 
 @Controller
@@ -41,7 +45,10 @@ public class GroupMasterController {
 
 	@Autowired
 	CategoryService categoryService;
-
+	
+	@Autowired
+	GroupMemberService groupMemberService;
+	
 	// 새로운 모임 생성
 	@PostMapping("/insertGroup")
 	public void insertGroup(GGroup group, @RequestParam(value = "files") MultipartFile[] files, HttpSession session,
@@ -262,5 +269,84 @@ public class GroupMasterController {
 		mv.setViewName("group/group_create");
 		return mv;
 
+	}
+	
+	// 모임키 defaultValue 임시로 지정함
+	// 모임 내의 회원 리스트 보기 (기본적으로 일반회원 리스트 페이지 보여준다.)
+	@GetMapping("/groupMember")
+	public String groupMember(@RequestParam(required = true, defaultValue = "0") int groupKey, 
+									HttpSession session, Model m, HttpServletResponse response) throws IOException {
+		
+		int userKey = 0;
+		if (session.getAttribute("id") == null) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용해주세요.');");
+			out.println("location.href = 'login'");
+			out.println("</script>");
+			out.close();
+		} else {
+			userKey = groupMemberService.getUser((String)session.getAttribute("id"));
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userkey", userKey);
+		map.put("groupkey", groupKey);
+		
+		// 관리자 여부 확인
+		int isAdmin = groupMasterService.isAdmin(map);
+		
+		// 관리자 아님
+		if (isAdmin == 0) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('관리자만 접속할 수 있습니다.');");
+			out.println("history.back();");
+			out.println("</script>");
+			out.close();
+		}
+		
+		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupKey);	// 일반회원 리스트
+		int membercount = groupMasterService.getMemberCount(groupKey);			// 일반회원 수
+		int yetMembercount = groupMasterService.getYetMemberCount(groupKey);	// 아직 가입 승인 받지 못한 회원 수
+		
+		m.addAttribute("mem", mem);
+		m.addAttribute("membercount", membercount);
+		m.addAttribute("yetMembercount", yetMembercount);
+		
+		return "group/groupMember";
+	}
+	
+	@ResponseBody
+	@PostMapping("expelMem")
+	public Object expelMem (@RequestParam(required = true, defaultValue = "0") int userKey,
+							@RequestParam(required = true, defaultValue = "0") int groupKey) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userkey", userKey);
+		map.put("groupkey", groupKey);
+		
+		int result = groupMasterService.expelMem(map);
+		if (result == 0) {
+			result = -1;
+		}
+		
+		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupKey);
+		int membercount = groupMasterService.getMemberCount(groupKey);
+		
+		map.put("mem", mem);
+		map.put("membercount", membercount);
+		map.put("result", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("getGroupMem")
+	public Object getGroupMem (@RequestParam(required = true) int groupKey) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupkey", groupKey);
+		
+		return map;
 	}
 }

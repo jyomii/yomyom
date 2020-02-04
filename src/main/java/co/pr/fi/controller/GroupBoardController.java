@@ -76,6 +76,7 @@ public class GroupBoardController {
 		case 1 :
 			// 좋아요 취소
 			result = groupBoardService.revokeLike(keys);
+			postLike = groupBoardService.likeCount(keys);
 			if (result == 1) 	// update 된 게 있으면
 				result = 0;		// 취소 성공
 			else 
@@ -102,7 +103,7 @@ public class GroupBoardController {
 		System.out.println("## 게시글 상세 보기 ##");
 		System.out.println("groupkey = " + groupKey + " | postkey = " + postKey + " | page = " + page + " | limit = " + limit);
 		
-		int userkey = 0;
+		int loginuser = 0;
 		
 		// 로그인 안 한 상태로 페이지 접속 시도 시 
 		if (session.getAttribute("id") == null) {
@@ -114,7 +115,19 @@ public class GroupBoardController {
 			out.println("</script>");
 			out.close();
 		} else {
-			userkey = groupMemberService.getUser((String)session.getAttribute("id"));
+			loginuser = groupMemberService.getUser((String)session.getAttribute("id"));
+		}
+		
+		// 현재 모임에서 가입 승인된 일반 회원인지 판단
+		int ggroupmem = groupMemberService.isGroupMem(loginuser, groupKey);
+		if (ggroupmem == 0) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('일반회원만 조회할 수 있습니다.');");
+			out.println("history.back();");
+			out.println("</script>");
+			out.close();
 		}
 		
 		Map<String, Object> keys = new HashMap<String, Object>();
@@ -133,7 +146,7 @@ public class GroupBoardController {
 		keys.put("limit", limit);
 		commentList = groupBoardService.getBoardComment(keys);	// 현재 게시글에 해당하는 댓글리스트
 		
-		keys.put("userkey", userkey);
+		keys.put("loginuser", loginuser);
 		int isLiked = groupBoardService.isLiked(keys);
 		GGroupMember mem = groupMemberService.getPic(keys);
 		

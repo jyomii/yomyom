@@ -96,6 +96,13 @@
 		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupKey}
 	</select>
 	
+	<!-- 지금 모임에 가입승인된 회원인지 -->
+	<select id = "isGroupMem" parameterType = "map" resultType = "int">
+		SELECT COUNT(*)
+		FROM GGROUPMEMBER
+		WHERE GROUPKEY = #{groupkey} AND USERKEY = #{userkey} AND USERGRADE = #{grade}
+	</select>
+	
 	<select id = "preferGroup" parameterType = "int" resultType = "group">
 		SELECT GROUPKEY, MEMBERCOUNT, GROUPDFILE, GROUPNAME, GROUPPRIVATE
 		FROM (	SELECT GROUPKEY, COUNT(GROUPKEY) MEMBERCOUNT
@@ -283,6 +290,5 @@
 	<select id="userreggroup" resultType="userreggroup" parameterType="int">
 		select groupcfile, groupname, groupkey from ggroup left join GGROUPMEMBER a using(groupkey) where a.userkey=#{userkey}
 	</select>
-	
 	
 </mapper>

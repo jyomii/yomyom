@@ -85,4 +85,8 @@ public class GroupMemberDAO {
 	public GGroupMember getPic(Map<String, Object> keys) {
 		return sqlSession.selectOne("group.getPic", keys);
 	}
+
+	public int isGroupMem(Map<String, Object> keys) {
+		return sqlSession.selectOne("group.isGroupMem", keys);
+	}
 }

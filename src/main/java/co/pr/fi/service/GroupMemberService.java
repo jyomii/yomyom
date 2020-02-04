@@ -25,4 +25,5 @@ public interface GroupMemberService {
 	int getWroteCount(Map<String, Object> temp);
 	int getCommentedCount(Map<String, Object> temp);
 	GGroupMember getPic(Map<String, Object> keys);
+	int isGroupMem(int loginuser, int groupKey);
 }

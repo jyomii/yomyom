@@ -152,6 +152,35 @@ public class GroupCommentController {
 		return data;
 	}
 	
+	// # 댓글 삭제
+	@ResponseBody
+	@PostMapping("deleteReply")
+	public Object deleteReply (@RequestParam(required = false, defaultValue = "-1") int commentnum,
+							   HttpSession session) {
+		
+		Map<String, Object> keys = new HashMap<String, Object>();
+		
+		int result = groupCommentService.commentDelete(commentnum);
+		if (result == 0) {	// 삭제 실패
+			keys.put("result", result);
+		}
+		
+		return keys;
+	}
+	
+	// # 댓글 수정
+	@ResponseBody
+	@PostMapping("updateReply")
+	public Object updateReply (@RequestParam(required = false, defaultValue = "-1") int commentnum,
+							   @RequestParam(required = false, defaultValue = "-1") String content) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("commentnum", commentnum);
+		keys.put("content", content);
+
+		int result = groupCommentService.update(keys);
+		return keys;
+	}
+	
 	public Map<String, Object> pagination (int page, int limit, int listcount) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
