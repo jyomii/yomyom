@@ -12,7 +12,7 @@ public interface PrService {
 
 	public List<PrBoard> getBoardList(int page, int limit);
 
-	public void insertBoard(PrBoard prboard);
+	public int insertBoard(PrBoard prboard);
 
 	public PrBoard getDetail(int prkey);
 
@@ -22,7 +22,7 @@ public interface PrService {
 
 	public List<GGroup> userinfo(String id);
 
-	public int boardDelete(int userKey);
+	public int boardDelete(int prKey);
 
 	public List<PrBoard> writeUser(String id);
 

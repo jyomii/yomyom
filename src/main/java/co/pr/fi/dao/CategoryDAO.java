@@ -81,7 +81,14 @@ public class CategoryDAO {
 		return sqlSession.selectOne("category.alreadyRequestCategory", request);
 	}
 
+	
 	public List<GUsers> getUserRequestCategory(Map<String, String> list) {
 		return sqlSession.selectList("category.getUserRequestCategory", list);
+
 	}
+  
+  
+  public int interestupdate(Map<String, Object>  category) {
+		return sqlSession.update("category.interestupdate", category);
+  }
 }

@@ -34,8 +34,10 @@ public class PrServiceImpl implements PrService{
 	}
 
 	@Override
-	public void insertBoard(PrBoard prboard) {
-	    dao.insertBoard(prboard);
+	public int insertBoard(PrBoard prboard) {
+	
+	   return dao.insertBoard(prboard);
+	    
 	}
 
 
@@ -68,8 +70,8 @@ public class PrServiceImpl implements PrService{
 
 
 	@Override
-	public int boardDelete(int userKey) {
-		return dao.boardDelete(userKey);
+	public int boardDelete(int prKey) {
+		return dao.boardDelete(prKey);
 	}
 
 

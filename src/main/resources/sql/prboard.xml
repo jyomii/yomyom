@@ -17,21 +17,18 @@
 	
     <insert id="insert" parameterType="prboard">
     <selectKey resultType="int" order="BEFORE" keyProperty="prKey">
-          select nvl(max(prKey),0)+1 from PrBoard
+          select nvl((select max(prKey) from PrBoard)+1,0) from dual
        </selectKey>
-        insert into PrBoard(prKey, userKey, groupKey, content, dateWrite)    
+        insert into PrBoard (prKey, userKey, groupKey, content, dateWrite)    
         values (#{prKey}, #{userKey}, #{groupKey}, #{content}, sysdate)
     </insert>
 
     <select id="Detail" parameterType="int" resultType="prboard">
-        select * from board where userKey = #{userKey}
+       select * from (select * from prboard p join ggroup g on p.groupKey = g.groupKey) where prKey = #{prKey}
     </select>
     
     <update id="modify" parameterType="prboard">
-        update PrBoard
-        set groupKey = #{groupKey},
-            content = #{content}
-        where prKey = #{prKey}
+        update PrBoard set content = #{content} where prKey = #{prKey} 
     </update>
 
     <select id="boardWriter" parameterType="int" resultType="prboard">
@@ -40,7 +37,7 @@
     </select>
    
     <select id="info" parameterType="String" resultType="group">
-          SELECT GROUPNAME FROM GGROUP G WHERE GROUPKEY IN 
+          SELECT * FROM GGROUP G WHERE GROUPKEY IN 
           (SELECT M.GROUPKEY AS GROUPKEY FROM GGROUPMEMBER M WHERE USERKEY = (SELECT USERKEY FROM GUSERS WHERE USERID = #{id})
 		   ) OR USERKEY IN (SELECT USERKEY FROM GUSERS WHERE USERID = #{id}) 
     </select>

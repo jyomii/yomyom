@@ -1,5 +1,6 @@
 package co.pr.fi.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -7,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import co.pr.fi.domain.GCategory2;
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.Post;
 
 //마이페이지 관련 DB
 @Repository
@@ -45,20 +48,40 @@ public class MyPageDAO {
 		return sqlSession.selectList("Mypages.userInterest", id);
 	}
 
-	public GUserCategory category(String id) {
-		return sqlSession.selectOne("Mypages.category", id);
-	}
-
-	public int myupdate2(GUserCategory category) {
-		return sqlSession.update("Mypages.myupdate2", category);
+	public List<GUserCategory> category(String id) {
+		return sqlSession.selectList("Mypages.category", id);
 	}
 
 	public int userImageUpdate(GUsers user) {
 		return sqlSession.update("Mypages.imgUpdate", user);
 	}
 
-	public int insertPic(GUsers user) {
-		return sqlSession.insert("Mypages.insertPic", user);
+	public int getListCount(String id) {
+		return sqlSession.selectOne("Mypages.count", id);
+	}
+
+	public List<Post> getPostList(HashMap<String, Integer> map) {
+		return sqlSession.selectList("Mypages.postlist", map);
+	}
+
+	public int postcount(String id) {
+		return sqlSession.selectOne("Mypages.postcount", id);
+	}
+
+	public int commcount(String id) {
+		return sqlSession.selectOne("Mypages.commcount", id);
+	}
+
+	public List<Post> getList(String id) {
+		return sqlSession.selectList("Mypages.listlist", id);
+	}
+
+	public List<GComment> getListList(String id) {
+		return sqlSession.selectList("Mypages.listlistlist", id);
+	}
+
+	public int msgCount(int userKey) {
+		return sqlSession.selectOne("Mypages.msgcount",userKey);
 	}
 
 	

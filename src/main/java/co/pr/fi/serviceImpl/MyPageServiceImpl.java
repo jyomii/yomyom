@@ -1,5 +1,6 @@
 package co.pr.fi.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.MyPageDAO;
 import co.pr.fi.domain.GCategory2;
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.Post;
 import co.pr.fi.service.MyPageService;
 
 @Service
@@ -52,13 +55,8 @@ public class MyPageServiceImpl implements MyPageService{
 	}
 
 	@Override
-	public GUserCategory category(String id) {
+	public List<GUserCategory> category(String id) {
 		return dao.category(id);
-	}
-
-	@Override
-	public int myupdate2(GUserCategory category) {
-		return dao.myupdate2(category);
 	}
 
 	@Override
@@ -66,9 +64,46 @@ public class MyPageServiceImpl implements MyPageService{
  		return dao.userImageUpdate(user);
 	}
 
+
 	@Override
-	public int insertPic(GUsers user) {
-        return dao.insertPic(user);		
+	public int getListCount(String id) {
+		return dao.getListCount(id);
 	}
+
+	@Override
+	public List<Post> getPostList(int page, int limit) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		int startrow = (page-1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getPostList(map);
+	}
+
+	@Override
+	public int postcount(String id) {
+		return dao.postcount(id);
+	}
+
+	@Override
+	public int commcount(String id) {
+		return dao.commcount(id);
+	}
+
+	@Override
+	public List<Post> getList(String id) {
+		return dao.getList(id);
+	}
+
+	@Override
+	public List<GComment> getListList(String id) {
+		return dao.getListList(id);
+	}
+
+	@Override
+	public int msgCount(int userKey) {
+		return dao.msgCount(userKey);
+	}
+
 	
 }
