@@ -14,8 +14,8 @@
 												<span>GroupIn 로그인</span>
 											</button>
 										</div>
-										<span class="loginleft forLoginBtnx"><a href="login">비밀번호 찾기</a></span>
-										<span class="loginright forLoginBtnx"><a href="login">회원가입</a></span>
+										<span class="loginleft"><a href="login">비밀번호 찾기</a></span>
+										<span class="loginright"><a href="login">회원가입</a></span>
 									</div>
 								</div>
 								</c:if>
@@ -108,56 +108,5 @@
 								<!-- 나의 정보 위젯 -->
 
 								<!-- 그룹별 정모 나의 일정 위젯 -->
-								<div class="widget calendarCenter">
-									<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
-									<c:forEach var="gcl" items="${groupcalendarlist }">
-											<input type="hidden" id="cal${gcl.rownum}" value="${gcl.startdate }">
-									</c:forEach>
-									<h4 class="widget-title">나의 일정</h4>
-
-									<div class="calendarDiv">
-										<table id="calendar" class="calendarTable">
-											<tr>
-												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th id="prevcal"><label><i
-														class="fas fa-angle-left calendarBtn"></i></label></th>
-												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th id="nextcal"><label><i
-														class="fas fa-angle-right calendarBtn"></i></label></th>
-											</tr>
-											<tr>
-												<th align="center">일</th>
-												<th align="center">월</th>
-												<th align="center">화</th>
-												<th align="center">수</th>
-												<th align="center">목</th>
-												<th align="center">금</th>
-												<th align="center">토</th>
-											</tr>
-										</table>
-									</div>
-									<div class="scheduleDiv">
-										<hr>
-										<ul class="short-profile scheduleUl" id="shortschedule">
-											<c:if test="${userkey==-1}">
-												<li><span>로그인 해주세요</span></li>
-											</c:if>
-										
-											<c:if test="${userkey!=-1}">
-												<c:if test="${empty shortschedule}">
-											<li><span>일정 없음</span></li>
-											</c:if>
-											<c:if test="${not empty shortschedule}">
-											<c:forEach var="ss" items="${shortschedule }">
-												<li><span>${ss.posttitle }</span>
-												<p>
-													모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소: ${ss.location }
-												</p></li>
-											</c:forEach>
-											</c:if>
-											</c:if>
-										</ul>
-									</div>
-
-								</div>
+							
 								<!-- 그룹별 정모 나의 일정 위젯 -->

@@ -4854,17 +4854,20 @@ canvas {
 	margin:0 0 0 165px;
 	padding:0 48px;
 }
-#all-menu dl {
-	display:table-cell;
-	width:180px;
-	padding-left:20px;
-	border-left:1px solid #eee;
+#all-menu dl {   
+	display: table-cell;
+    /* width: 180px; */
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 1px solid #eee;
+    width: auto;
 }
 #all-menu dl:first-child {
 	padding-left:0;
 	border-left:0;
 }
 #all-menu dl dt {
+	width:max-content;
 	padding:10px 0;
 	color:#333;
 	font-size:18px;

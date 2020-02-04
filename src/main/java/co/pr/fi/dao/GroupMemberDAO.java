@@ -56,7 +56,7 @@ public class GroupMemberDAO {
 	}
 	
 	// 닉네임 중복체크
-	public Map<Object, String> nickCheck(Map<String, String> check) {
+	public Map<Object, Object> nickCheck(Map<String, Object> check) {
 		return sqlSession.selectOne("group.nickCheck", check);
 	}
 	
@@ -80,5 +80,13 @@ public class GroupMemberDAO {
 
 	public int getCommentedCount(Map<String, Object> temp) {
 		return sqlSession.selectOne("post.getCommentedCount", temp);
+	}
+
+	public GGroupMember getPic(Map<String, Object> keys) {
+		return sqlSession.selectOne("group.getPic", keys);
+	}
+
+	public int isGroupMem(Map<String, Object> keys) {
+		return sqlSession.selectOne("group.isGroupMem", keys);
 	}
 }

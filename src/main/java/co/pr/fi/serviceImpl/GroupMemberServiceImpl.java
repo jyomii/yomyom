@@ -63,8 +63,8 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 	}
 
 	@Override
-	public int nickCheck(Map<String, String> check) {
-		Map<Object, String> map = dao.nickCheck(check);
+	public int nickCheck(Map<String, Object> check) {
+		Map<Object, Object> map = dao.nickCheck(check);
 		if (map != null) {
 			return 1;
 		}
@@ -101,6 +101,20 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		return dao.getCommentedCount(temp);
 	}
 	
+	@Override
+	public GGroupMember getPic(Map<String, Object> keys) {
+		return dao.getPic(keys);
+	}
+	
+	@Override
+	public int isGroupMem(int loginuser, int groupKey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("userkey", loginuser);
+		keys.put("groupkey", groupKey);
+		keys.put("grade", 0);
+		return dao.isGroupMem(keys);
+	}
+	
 	public Map<String, Object> range (int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int startrow = (page - 1) * limit + 1;
@@ -109,4 +123,6 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		map.put("END", endrow);
 		return map;
 	}
+
+
 }

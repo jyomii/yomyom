@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- 제이쿼리 -->
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src = "resources/js/comment.js"></script>
+  	<script src = "resources/js/comment.js"></script> 
     <style>
     	.ySub {
     		display : inline-block; 
@@ -40,14 +40,14 @@
     	.post-comt-box i:hover {
     		cursor : pointer
     	}
-    	.ibtn {
+    	.secretbtn {
     		top : 1px !important;
     		right : 30px !important;
     	}
     	button[type=submit] {
     		color : #088dcd !important;
     	}
-    	.we-comment .ibtn {
+    	.we-comment .secretbtn {
     		color : #ed3939;
     		background : none;
     		border : none;
@@ -60,6 +60,39 @@
 		}
 		.we-video-info > ul li span ins {
 			top : -6px !important;
+		}
+		
+		.coment-head a {
+			padding-right : 10px;
+		}
+		
+		textarea:hover {
+			background : #088dcd1a;
+		}
+		
+		.we-comment>p {
+			margin-top : 3px !important;
+		}
+		
+		.fas.fa-heart {
+			color : #ff0f0fd6;
+		}
+		
+		.far.fa-heart {
+			color : #ff0f0fd6;
+		}
+		
+		.fas.fa-heart ins {
+			color : #ff0f0fd6;
+		}
+		
+		.far.fa-heart ins {
+			color : #ff0f0fd6;
+		}
+		
+		.friend-name span a {
+		    margin-left: 5px;
+		    margin-right: 3px;
 		}
     </style>
     
@@ -74,19 +107,6 @@
     	};
     	
     	$(function(){
-    		/* 비밀댓글 설정 */
-    		var lock = false;	// 기본 unlock
-    		$('.post-comt-box i').click(function() {
-    			if (!lock) {	// lock
-	    			$(this).removeClass('fa-unlock').addClass('fa-lock').css('color', '#ed3939b5');
-	    			$('textarea').css('background', '#e1c2c2b5');
-    			} else {	// unlock
-	    			$(this).removeClass('fa-lock').addClass('fa-unlock').css('color', 'black');
-	    			$('textarea').css('background', '#f3f3f3');
-    			}
-    			lock = !lock;
-    		});
-    		
     		/* 비밀댓글, 댓글 등록 버튼과 겹치지 않게 하기 위한 textarea 라인 당 글자수 제한 */
     		$('textarea').keyup(function(){
     			var len = $(this).val().length;
@@ -157,6 +177,7 @@
     		};	// likes end
     	})
     </script>
+    
     <!-- 그룹 페이지 상단 -->
 	<section>
 		<input type="hidden" id="thisGroupKey" value="${groupkey }"> 
@@ -391,12 +412,21 @@
 												<input type = "hidden" id = "detailPostKey" name = "postKey" value = "${postKey}">
 												<figure>
 													<a href = "javascript:memDetail(${groupKey},${post.userKey})">
-														<img src="<spring:url value='/image${post.profileFile}'/>" class = "group-img" alt = ""/>
+														<c:if test = "${post.profileFile == null}">
+															<img src="resources/images/default.png" class = "group-img" alt = ""/>
+														</c:if>
+														<c:if test = "${post.profileFile != null}">
+															<img src="<spring:url value='/image${post.profileFile}'/>" class = "group-img" alt = ""/>
+														</c:if>
 													</a>
 												</figure>
 												<div class="friend-name">
 													<ins>${post.postTitle}</ins>
-													<span><b>${post.groupNickname}</b> | published : ${post.postDate}</span>
+													<span>
+														<b>${post.groupNickname}</b> | published : ${post.postDate}
+														<a class = "update" href = "javascript:updateReply(${c.commnetNum})" title = "Update"><i class="fas fa-eraser"></i></a>	
+														<a class = "delete" href = "javascript:deleteReply(${c.commnetNum})" title = "Delete"><i class="far fa-trash-alt"></i></a>
+													</span>
 												</div>
 												<div class="description">
 														<p>
@@ -436,60 +466,77 @@
 																	<ins>${post.postlike}</ins>
 																</span>
 															</li>
-															<li class="social-media">
-																<div class="menu">
-																  <div class="btn trigger"><i class="fa fa-share-alt"></i></div>
-																  <div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-html5"></i></a></div>
-																  </div>
-																  <div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-facebook"></i></a></div>
-																  </div>
-																  <div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-google-plus"></i></a></div>
-																  </div>
-																  <div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-twitter"></i></a></div>
-																  </div>
-																  <div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-css3"></i></a></div>
-																  </div>
-																  <div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-instagram"></i></a>
-																	</div>
-																  </div>
-																	<div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-dribbble"></i></a>
-																	</div>
-																  </div>
-																  <div class="rotater">
-																	<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-pinterest"></i></a>
-																	</div>
-																  </div>
-																</div>
-															</li>
 														</ul>
 													</div>
 												</div>
 											</div>
 											<div class="coment-area">
 												<ul class="we-comet">
+													<%-- 비댓 쿼리
+													<!-- 댓글 -->
+													<c:forEach var = "c" items = "${comment}">
+														
+														<c:if test = "${comment.commentshow == 0}">
+															<li>
+																<div class="comet-avatar">
+																	<img src="<spring:url value='/image${c.profileFile}'/>" class = "group-img" alt = ""/>
+																</div>
+																<div class="we-comment">
+																	<div class="coment-head">
+																		<h5><a href="javascript:memDetail(${groupKey},${c.userKey})" title="">${c.groupNickname}</a></h5>
+																		<span>${c.commentDate}</span>
+																		<a class="we-reply" href="javascript:reply(${c.commnetNum})" title="Reply"><i class="fa fa-reply"></i></a>
+																	</div>
+																	<p>${c.commentContent}</p>
+																</div>
+															</li>
+														</c:if>
+														
+														<c:if test = "${comment.commentshow == 1}">
+															<c:if test = "${userKey == comment.userKey}"> <!-- 세션에 담긴 아이디가 댓글 작성자랑 일치하면 보여지는 -->
+															
+															</c:if>
+															<c:if test = "${id == post.userKey }">	<!-- 세션에 담긴 아이디가 게시글 작성자랑 일치하면 보여지는 -->
+															
+															</c:if>
+															<!-- 둘다 아닐 경우 -->
+															비밀댓글입니다.
+														</c:if>
+													</c:forEach>
+													 --%>
+													 
 													<!-- 댓글 -->
 													<c:forEach var = "c" items = "${comment}">
 														<li>
 															<div class="comet-avatar">
+																<!-- 회원 프사 없을 경우 -->
+																<c:if test = "${c.profileFile == null}">
+																<img src="resources/images/default.png" class = "group-img" alt = ""/>
+																</c:if>
+																<!-- 회원 프사 있을 경우 -->
+																<c:if test = "${c.profileFile != null}">
 																<img src="<spring:url value='/image${c.profileFile}'/>" class = "group-img" alt = ""/>
+																</c:if>
 															</div>
 															<div class="we-comment">
 																<div class="coment-head">
 																	<h5><a href="javascript:memDetail(${groupKey},${c.userKey})" title="">${c.groupNickname}</a></h5>
 																	<span>${c.commentDate}</span>
-																	<a class="we-reply" href="javascript:reply(${c.commnetNum})" title="Reply"><i class="fa fa-reply"></i></a>
+																	<a class = "we-reply" href = "javascript:commentReply(${c.commnetNum})" title = "Reply">
+																		<i class="fa fa-reply"></i>
+																	</a>
+																	<a class = "update" href = "javascript:updateReply(${c.commnetNum})" title = "Update">
+																		<i class="fas fa-eraser"></i>
+																	</a>	
+																	<a class = "delete" href = "javascript:deleteReply(${c.commnetNum})" title = "Delete">
+																		<i class="far fa-trash-alt"></i>
+																	</a>
 																</div>
 																<p>${c.commentContent}</p>
 															</div>
 														</li>
 													</c:forEach>
+													
 													<!-- 비댓 샘플 -->
 													<li>
 														<div class="comet-avatar">
@@ -501,31 +548,60 @@
 																<span>1 week ago</span>
 																<a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
 															</div>
-															<button type = "button" class = "ibtn"><i class="fas fa-lock" aria-hidden="true"></i></button>
+															<button type = "button" class = "secretbtn"><i class="fas fa-lock" aria-hidden="true"></i></button>
+															<p style = "display : inline-block">비밀 댓글 입니다.</p>
+														</div>
+													</li>
+													<!-- 대댓 샘플 -->
+													<li class = "reComment">
+														<div class="comet-avatar">
+															<img src="resources/images/resources/d.png" alt="">
+														</div>
+														<div class="we-comment">
+															<div class="coment-head">
+																<h5><a href="time-line.html" title="">허거걱</a></h5>
+																<span>1 week ago</span>
+																<a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+															</div>
+															<button type = "button" class = "secretbtn"><i class="fas fa-lock" aria-hidden="true"></i></button>
 															<p style = "display : inline-block">비밀 댓글 입니다.</p>
 														</div>
 													</li>
 													
 													<!-- 댓글 더보기 -->
-													<li>
+													<!-- <li>
 														<a href="#" title="" class="showmore underline">more comments</a>
-													</li>
+													</li> -->
+													
 													<!-- 댓글 등록 부분 -->
 													<li class="post-comment">
 														<div class="comet-avatar">
-															<img src="resources/images/resources/comet-2.jpg" alt="">
+															<c:if test = "${mem.profileFile == null}">
+															<img src="resources/images/default.png" class = "group-img" alt = ""/>
+															</c:if>
+															<c:if test = "${mem.profileFile != null}">
+															<img src="<spring:url value='/image${mem.profileFile}'/>" class = "group-img" alt = ""/>
+															</c:if>
 														</div>
 														<div class="post-comt-box">
 															<!-- 댓글 등록 -->
-															<form method = "post" id = "ReplyAction">
+															<form method = "post" id = "ReplyAction" onSubmit = "return false;">
+																<!-- 답댓일 경우 원문댓글의 댓글번호 저장 -->
 																<input type = "hidden" name = "commentNum" value = "">
+																<!-- 비밀댓글(1), 전체공개 댓글(0) -->
+																<input type = "hidden" name = "commentShow" value = "">
+																<input type = "hidden" name = "commentType" value = "0">
+																
+																<!-- 댓글 입력부분 -->
 																<textarea placeholder="Post your comment"></textarea>
-																<!-- 기본은 비밀댓글 X -->
-																<button type = "button" class = "ibtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>
+																
+																<!-- 기본적으로 전체공개 댓글 -->
+																<button type = "button" class = "secretbtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>
 																<button type = "submit" class = "glyphicon glyphicon-send"></button>
 															</form>	
 														</div>
 													</li>
+													
 												</ul>
 											</div>
 										</div>

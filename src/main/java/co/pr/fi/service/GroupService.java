@@ -63,4 +63,15 @@ public interface GroupService {
 	public GGroupMember groupmember(int userkey);
 
 	public List<UserRegGroup> userreggroup(int userkey);
+
+	public void addschedule(Post post);
+
+	public int getgroupboardkey(int groupKey);
+
+	public void addschedulecalendar(Post post);
+
+	public void updateboardmap(int postkey);
+
+	public List<GGroup> getGroupRank(int i, int limit, int page);
+
 }

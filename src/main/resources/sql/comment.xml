@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "comment">
+	<!-- 글에 댓글달기 (대댓 X) -->
+	<insert id = "postReply" parameterType = "map">
+		INSERT INTO GCOMMENT
+		VALUES (GCOMMENTSEQ.NEXTVAL, #{postkey}, #{userkey}, #{content}, 
+				GCOMMENTSEQ.CURRVAL, #{commentReLev}, #{commentReSeq}, SYSDATE, #{groupkey}, #{commentshow})
+	</insert>
+	
+	<!-- 댓글달린 댓글의 값들 가져온다. -->
+	<select id = "getCommentInfo" parameterType = "int" resultType = "comment">
+		SELECT COMMEMTREREF, COMMENTRESEQ
+		FROM GCOMMENT
+		WHERE COMMNETNUM = #{COMMENTNUM}
+	</select>
+	
+	<!-- 대댓을 위한 첫 번째 과정 -->
+	<update id = "updateComment" parameterType = "comment">
+		UPDATE GCOMMENT
+		SET COMMENTRESEQ = COMMENTRESEQ + 1
+		WHERE COMMEMTREREF = #{commemtReRef} AND COMMENTRESEQ &gt; #{commentReSeq}
+	</update>
+	
+	<!-- 대댓 달기 -->
+	<insert id = "commentReply" parameterType = "map">
+		INSERT INTO GCOMMENT
+		VALUES(GCOMMENTSEQ.NEXTVAL, #{postkey}, #{userkey}, #{content},
+			   #{commentnum}, #{commentReLev}, #{commentReSeq}, SYSDATE, #{groupkey}, #{commentshow})
+	</insert>
+	
+	<select id = "getDetail" resultType = "comment">
+		SELECT *
+		FROM GCOMMENT
+		WHERE COMMNETNUM = #{COMMENTNUM}
+	</select>
+	
+	<delete id = "delete" parameterType = "comment">
+	<![CDATA[
+		DELETE FROM GCOMMENT
+			   WHERE COMMEMTREREF = #{commemtReRef}
+			   AND COMMENTRELEV >= #{commentReLev}
+			   AND COMMENTRESEQ >= #{commentReSeq}
+			   AND COMMENTRESEQ < (
+			   						NVL((SELECT MIN(COMMENTRESEQ)
+			   						FROM GCOMMENT
+			   						WHERE COMMEMTREREF = #{commemtReRef}
+								    AND COMMENTRELEV = #{commentReLev}
+								    AND COMMENTRESEQ > #{commentReSeq},
+								    (SELECT MAX(COMMENTRESEQ) + 1
+								    FROM GCOMMENT
+								    WHERE COMMEMTREREF = #{commentReSeq}))
+								    ) 
+	]]>
+	</delete>
+	
+	<!-- 댓글 내용 변경 -->
+	<update id = "update" parameterType = "map">
+		UPDATE GCOMMENT
+		SET COMMENTCONTENT = #{content}
+		WHERE COMMNETNUM = #{commentnum}
+	</update>
+</mapper>

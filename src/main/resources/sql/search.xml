@@ -5,7 +5,7 @@
 
 <!-- 검색 결과 총 카운트 -->
 <select id="searchGroupsCount" parameterType="String" resultType="int">
-SELECT count(*) from ggroup where groupstatus = 0 and groupName like '%' ||  #{text} || '%'
+SELECT count(*) from ggroup where groupprivate= 'Y' and groupstatus = 0 and groupName like '%' ||  #{text} || '%'
 </select>
 
 
@@ -38,12 +38,12 @@ SELECT count(*) FROM POST WHERE postoptionsearch = 'Y' and posttitle LIKE '%' ||
 									
 					( 
 					SELECT count(*)
-									 FROM ggroupmember WHERE groupKey = b.groupKey
+									 FROM ggroupmember WHERE groupKey = b.groupKey and ggroupmember.usergrade > -1
 					) memberCount,
 				
 				
 				 rownum rnum
-				FROM (SELECT * from ggroup where groupstatus = 0 and groupName like '%' ||  #{text} || '%') b)
+				FROM (SELECT * from ggroup where groupprivate= 'Y'and groupstatus = 0 and groupName like '%' ||  #{text} || '%') b)
 				WHERE RNUM >= #{startrow} and rnum <= #{endrow}    
 	]]>
 </select>

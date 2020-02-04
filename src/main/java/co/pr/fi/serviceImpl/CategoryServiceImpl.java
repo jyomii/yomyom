@@ -11,29 +11,27 @@ import co.pr.fi.dao.CategoryDAO;
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GCategoryName;
+import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.RequestCategory;
 import co.pr.fi.service.CategoryService;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
-	
 	@Autowired
 	CategoryDAO dao;
-	
+
 	@Override
 	public List<String> getAdminusercategory(String id) {
 
 		return dao.getAdminusercategory(id);
 	}
-	
+
 	@Override
 	public List<GCategoryName> getAdminCategory() {
 
 		return dao.getAdminCategory();
 	}
-	
-	
 
 	@Override
 	public int isCategory(String sname, String dname) {
@@ -58,8 +56,6 @@ public class CategoryServiceImpl implements CategoryService{
 		return dao.addSCategory(map);
 	}
 
-
-
 	@Override
 	public List<RequestCategory> getRequestCategory() {
 
@@ -76,11 +72,10 @@ public class CategoryServiceImpl implements CategoryService{
 		list.put("dname", dname);
 		return dao.deleteRequestCategory(list);
 	}
-	
 
 	@Override
 	public List<GCategory> getDCategory() {
-		
+
 		return dao.getDCategory();
 	}
 
@@ -89,22 +84,22 @@ public class CategoryServiceImpl implements CategoryService{
 
 		return dao.getSCategory();
 	}
-	
+
 	@Override
 	public int insertUserCategory(Map<String, Object> usercategory) {
-		
+
 		return dao.insertUserCategory(usercategory);
 	}
 
 	@Override
 	public int UserRequestCategory(RequestCategory request) {
-		
+
 		return dao.UserRequestCategory(request);
 	}
 
 	@Override
 	public int alreadyRequestCategory(RequestCategory request) {
-		
+
 		return dao.alreadyRequestCategory(request);
 	}
 
@@ -113,11 +108,20 @@ public class CategoryServiceImpl implements CategoryService{
 		return dao.addDCategory(c);
 	}
 
+	@Override
+	public List<GUsers> getUserRequestCategory(String sname, String dname) {
+
+		Map<String, String> list = new HashMap<String, String>();
+		if (sname != null && !sname.equals(""))
+			list.put("sname", sname);
+
+		list.put("dname", dname);
+		return dao.getUserRequestCategory(list);
+	}
 
 	@Override
 	public int interestupdate(Map<String, Object> category) {
 		return dao.interestupdate(category);
 	}
 
-	
 }

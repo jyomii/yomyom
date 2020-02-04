@@ -24,16 +24,25 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.pr.fi.domain.GComment;
+import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.Maps;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupBoardService;
+
+import co.pr.fi.service.GroupService;
+
 import co.pr.fi.service.GroupMemberService;
+
 
 @Controller
 public class GroupBoardController {
 
 	@Autowired
 	GroupBoardService groupBoardService;
+
+	@Autowired
+	private GroupService groupservice;
+
 	
 	@Autowired
 	GroupMemberService groupMemberService;
@@ -45,22 +54,24 @@ public class GroupBoardController {
 							  @RequestParam(required = false, defaultValue = "0") int groupKey,
 							  @RequestParam(required = false, defaultValue = "2") int status,
 							  HttpSession session) {
-		System.out.println("## 좋아요/좋아요 취소 ## postKey = " + postKey + " groupKey = " + groupKey + " status = " + status);
-		Map<String, Integer> keys = new HashMap<String, Integer>();
+		System.out.println("## 좋아요/좋아요 취소 ##");
+		System.out.println("postKey = " + postKey + " groupKey = " + groupKey + " status = " + status);
+		
+		Map<String, Object> keys = new HashMap<String, Object>();
 		int result = -1;
-		int userKey = 0;
+		int userkey = 0;
 		int postLike = 0;
 		
 		// 로그인 안 한 상태로 페이지 접속 시도 시 
 		if (session.getAttribute("id") == null) {
 			keys.put("result", -3);
 		} else {
-			userKey = groupMemberService.getUser((String)session.getAttribute("id"));
+			userkey = groupMemberService.getUser((String)session.getAttribute("id"));
 		}
 		
-		keys.put("postKey", postKey);
-		keys.put("groupKey", groupKey);
-		keys.put("userKey", userKey);
+		keys.put("postkey", postKey);
+		keys.put("groupkey", groupKey);
+		keys.put("userkey", userkey);
 		
 		switch(status) {
 		case 0 :
@@ -73,6 +84,7 @@ public class GroupBoardController {
 		case 1 :
 			// 좋아요 취소
 			result = groupBoardService.revokeLike(keys);
+			postLike = groupBoardService.likeCount(keys);
 			if (result == 1) 	// update 된 게 있으면
 				result = 0;		// 취소 성공
 			else 
@@ -92,11 +104,14 @@ public class GroupBoardController {
 	@PostMapping("/detailBoard.net")
 	public String detailBoard ( @RequestParam(required = false, defaultValue = "0") int postKey, 
 								@RequestParam(required = false, defaultValue = "0") int groupKey, 
+								@RequestParam(required = false, defaultValue = "1") int page,
+								@RequestParam(required = false, defaultValue = "10") int limit,
 								HttpSession session, HttpServletResponse response, Model m) throws IOException {
-		// 확인용 sysout
-		System.out.println("##### groupkey = " + groupKey + " | postkey = " + postKey + " #####");
 		
-		int userKey = 0;
+		System.out.println("## 게시글 상세 보기 ##");
+		System.out.println("groupkey = " + groupKey + " | postkey = " + postKey + " | page = " + page + " | limit = " + limit);
+		
+		int loginuser = 0;
 		
 		// 로그인 안 한 상태로 페이지 접속 시도 시 
 		if (session.getAttribute("id") == null) {
@@ -108,28 +123,53 @@ public class GroupBoardController {
 			out.println("</script>");
 			out.close();
 		} else {
-			userKey = groupMemberService.getUser((String)session.getAttribute("id"));
+			loginuser = groupMemberService.getUser((String)session.getAttribute("id"));
 		}
 		
-		Map<String, Integer> keys = new HashMap<String, Integer>();
+		// 현재 모임에서 가입 승인된 일반 회원인지 판단
+		int ggroupmem = groupMemberService.isGroupMem(loginuser, groupKey);
+		if (ggroupmem == 0) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('일반회원만 조회할 수 있습니다.');");
+			out.println("history.back();");
+			out.println("</script>");
+			out.close();
+		}
+		
+		Map<String, Object> keys = new HashMap<String, Object>();
 		Post post = new Post();	// 게시글 관련
 		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
+		
+		int listcount = 0;
 		
 		keys.put("postkey", postKey);
 		keys.put("groupkey", groupKey);
 		
-		post = groupBoardService.detailBoard(keys);	
-		commentList = groupBoardService.getBoardComment(keys);
+		listcount = groupBoardService.getCommentCount(keys); 	// 현재 게시글에 해당하는 댓글수
+		post = groupBoardService.detailBoard(keys);				// 현재 게시글에 대한 데이터
 		
-		keys.put("userKey", userKey);
+		keys.put("page", page);
+		keys.put("limit", limit);
+		commentList = groupBoardService.getBoardComment(keys);	// 현재 게시글에 해당하는 댓글리스트
+		
+		keys.put("loginuser", loginuser);
 		int isLiked = groupBoardService.isLiked(keys);
+		GGroupMember mem = groupMemberService.getPic(keys);
+		
+		keys = pagination(page, limit, listcount);
 		
 		if (post != null) {
 			m.addAttribute("post", post);
-			m.addAttribute("comment", commentList);
+			m.addAttribute("comment", commentList);	// 댓글 리스트
 			m.addAttribute("isLiked", isLiked);	// 1(좋아요) or 0(좋아요 x)
-			m.addAttribute("postKey", keys.get("postkey"));
-			m.addAttribute("groupKey", keys.get("groupkey"));
+			m.addAttribute("postKey", postKey);
+			m.addAttribute("groupKey", groupKey);
+			m.addAttribute("page", keys.get("page"));
+			m.addAttribute("limit", keys.get("limit"));
+			m.addAttribute("listcount", keys.get("listcount"));
+			m.addAttribute("mem", mem);
 			return "G_detailBoard";
 		}
 		m.addAttribute("죄송합니다. 게시글을 조회할 수 없습니다.", "error");
@@ -152,12 +192,10 @@ public class GroupBoardController {
 	/*새롭게 만든 지도 저장하기*/
 	@ResponseBody
 	@PostMapping("/saveMap")
-	public int saveMap(@RequestParam String info) throws JsonParseException, JsonMappingException, IOException {
+	public int saveMap(@RequestParam(value = "info") String info,@RequestParam(value = "postkey") int postkey) throws JsonParseException, JsonMappingException, IOException {
+		groupservice.updateboardmap(postkey);
 		ObjectMapper mapper = new ObjectMapper();
-		
-	
 		List<Maps> list = Arrays.asList(mapper.readValue(info, Maps[].class));
-
 		for(int i = 0; i < list.size(); i++)
 			System.out.println(list.get(i).toString());
 		return groupBoardService.uploadMap(list);
@@ -177,5 +215,20 @@ public class GroupBoardController {
 	@GetMapping("/deleteMap")
 	public int deleteMap() {
 		return groupBoardService.deleteAllMap();
+	}
+	
+	public Map<String, Object> pagination (int page, int limit, int listcount) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int maxpage = (listcount + limit - 1) / limit;	// 총 페이지 수
+		int startpage = ((page - 1) / 10) * 10 + 1;		// 현재 페이지에 보여줄 시작 페이지 수
+		int endpage = startpage + 10 - 1;				// 현재 페이지에 보여줄 마지막 페이지 수
+		
+		if (endpage > maxpage) endpage = maxpage;
+		
+		map.put("maxpage", maxpage);
+		map.put("startpage", startpage);
+		map.put("endpage", endpage);
+		return map;
 	}
 }

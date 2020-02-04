@@ -64,8 +64,34 @@ public class Post {
 	private String location;
 	private int currentperson;
 	private String joinbtn;
+	private String cmoneytype;
+	private String time;
+	private String minute;
 	
-	
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public String getMinute() {
+		return minute;
+	}
+
+	public void setMinute(String minute) {
+		this.minute = minute;
+	}
+
+	public String getCmoneytype() {
+		return cmoneytype;
+	}
+
+	public void setCmoneytype(String cmoneytype) {
+		this.cmoneytype = cmoneytype;
+	}
+
 	public String getGroupName() {
 		return groupName;
 	}

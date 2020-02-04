@@ -626,6 +626,7 @@ jQuery(document).ready(function($) {
     }
 
     /** Post a Comment **/
+    /*
     jQuery(".post-comt-box textarea").on("keydown", function(event) {
     	// 엔터 쳤을 때
         if (event.keyCode == 13) {
@@ -637,7 +638,8 @@ jQuery(document).ready(function($) {
             jQuery(this).val('');
         }
     });
-
+     */
+    
     //inbox page 	
     //***** Message Star *****//  
     $('.message-list > li > span.star-this').on("click", function() {

@@ -80,10 +80,9 @@
  
 		<!-- 기존 화면 header 시작 -->
 		<div class="topbar stick">
-			<!-- 로고 -->
+			<!-- 로고 --> 
 			<div class="logo">
-				<a title="" href="main2"> <img src="resources/images/logo.png"
-					alt=""></a>
+				<a title="" href="main2"><h5 style="color:#4f93ce;     line-height: 2em;"><b>GroupIN</b></h5></a>
 			</div>
 			<!-- //로고 -->
 
@@ -92,7 +91,7 @@
 				<ul class="main-menu">
 					<li><a href="#" title="" onclick="allMenu(); return false;">전체카테고리</a></li>
 					<li><a href="prboard" title="">홍보게시판</a></li>
-					<li><a href="prboard" title="">모임 랭킹</a></li>
+					<li><a href="groupRank" title="">모임 랭킹</a></li>
 					<c:if test="${!empty id }">
 						<li><a href="groupCreate" title="">새로운 모임 만들기</a></li>
 					</c:if>
@@ -111,9 +110,11 @@
 			<!-- 우측메뉴 -->
 			<div class="right-menu">
 				<ul class="setting-area">
+				
 					<li>
+					
 						<div class="box-search">
-							<form class="form-search">
+							<form class="form-search" style="margin-top: 1em;">
 								<input name="text" type="text" placeholder=""
 									style="color:black;">
 								<button class="sendAll">
@@ -137,7 +138,7 @@
 
 
 							</ul>
-							<a href="notifications.html" title="" class="more-mesg">view
+							<a onclick="admin('mypage2');" href="mypage2" title="" class="more-mesg">view
 								more</a>
 						</div></li></c:if>
 
@@ -169,21 +170,21 @@
 							<div class="user-setting">
 								<c:choose>
 									<c:when test="${id == 'admin'}">
-										<div onclick="location.href='admin'">
-											<a href="#" title=""><i class="ti-pencil-alt"></i>관리자 메뉴</a>
-										</div>
+									
+											<a onclick="admin('admin');" title=""><i class="ti-pencil-alt"></i>관리자 메뉴</a>
+									
 									</c:when>
 
 									<c:otherwise>
-										<div onclick="location.href='mypage2'">
-											<a href="#" title=""><i class="ti-pencil-alt"></i>정보수정</a>
-										</div>
+									
+											<a onclick="admin('mypage2');" title=""><i class="ti-pencil-alt"></i>정보수정</a>
+									
 									</c:otherwise>
 
 								</c:choose>
-								<div onclick="location.href='logout'">
-									<a href="" title=""><i class="ti-power-off"></i>로그아웃</a>
-								</div>
+								
+									<a onclick="admin('logout');"  title=""><i class="ti-power-off"></i>로그아웃</a>
+							
 							</div>
 
 
@@ -198,6 +199,11 @@
 
 		<script>
 			init_menu();
+			
+			function admin(link){
+				location.href=link;
+				
+			}
 
 			function allMenu() {
 				if ($('#all-menu').css('display') == 'none') {
@@ -292,6 +298,8 @@
 				
 				if(text){
 				location.href="searchText?text="+text;
+				
+			
 				}
 					
 			}
@@ -349,17 +357,18 @@
 					var date1 = '';
 					date1 += result[i].mgDate.year+"-";
 					date1 += result[i].mgDate.monthValue+"-";
-					date1 += result[i].mgDate.dayOfYear+" ";	
+					date1 += result[i].mgDate.dayOfMonth+" ";	
 					date1 += result[i].mgDate.hour+":";	
 					date1 += result[i].mgDate.minute+":";	
 					date1 += result[i].mgDate.second;
 					
 					
 					text += '<li>';
-					text += '<a href="#" title="">';
+					text += '<a href="mypage2" title="">';
 					text += '<div class="mesg-meta">';
 					text += '<span>'+result[i].mgContent+'</span>';
 				
+					console.log(date1);
 					text += '<i>'+timeBefore(new Date(date1))+'</i>';
 					text += '</div>';
 					text += '</a>';
@@ -389,8 +398,7 @@
 			      
 			        //글쓴 시간 
 			        var writeDay = dd;
-			        
-			        
+			
 			        var returnValue;
 			        
 			        var minus;
@@ -429,6 +437,8 @@
 			                }
 			            }
 			        }
+			        
+			        console.log('아니 잘되다가 왜그래 너?' + returnValue);
 			        
 			        return returnValue;
 			    }

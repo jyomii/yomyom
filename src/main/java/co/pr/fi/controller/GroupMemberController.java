@@ -38,12 +38,21 @@ public class GroupMemberController {
 	
 	// 모임 메인 페이지 이동
 	@GetMapping("/groupmain")
-	public String groupmain (@RequestParam(defaultValue = "7") int groupKey, 
-							 @RequestParam(defaultValue = "2") int userKey,
-							 Model m, HttpSession session) {
+	public String groupmain (@RequestParam(defaultValue = "3") int groupKey, 
+							 Model m, HttpSession session, HttpServletResponse response) throws IOException {
+		if (session.getAttribute("id") == null) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인이 필요합니다.');");
+			out.println("location.href = 'login'");
+			out.println("</script>");
+			out.close();
+		}
+		int userKey = groupMemberService.getUser((String) session.getAttribute("id"));
 		
-		m.addAttribute("groupKey", 7);
-		m.addAttribute("userKey", 2);
+		m.addAttribute("groupKey", 3);
+		m.addAttribute("userKey", userKey);
 		return "groupin_group_main";
 	}
 	
@@ -192,7 +201,7 @@ public class GroupMemberController {
 	}
 	
 	// 모임 회원 상세 페이지 이동
-	@PostMapping("/G_mem_detail")
+	@PostMapping("/G_mem_detail.net")
 	public ModelAndView GmemDetail (@RequestParam(required = false, defaultValue = "0") int status,
 									@RequestParam(required = false, defaultValue = "0") int userKey, 
 									@RequestParam(required = false, defaultValue = "0") int groupKey,
@@ -201,13 +210,13 @@ public class GroupMemberController {
 									HttpServletResponse response, ModelAndView mv) throws IOException {
 		
 		System.out.println("### 모임 회원 상세정보 POST ###");
+		System.out.println("##### " + "userkey = " + userKey + " | groupkey = " + groupKey + " | status = " + status + " #####");
 		
 		Map<String, Object> temp = new HashMap<String, Object>();
 		List<GGroup> groupList = new ArrayList<GGroup>();
 		List<Post> postList = new ArrayList<Post>();
 		int listcount = 0;
-		status = 1;	// 임시
-		System.out.println("##### " + "userkey = " + userKey + " | groupkey = " + groupKey + " | status = " + status + " #####");
+		status = 0;	// 임시
 		
 		switch (status) {
 		case 0 :
@@ -250,8 +259,8 @@ public class GroupMemberController {
 			break;
 		case 2 : 
 			// 작성한 댓글
-			temp.put("userKey", userKey);
-			temp.put("groupKey", groupKey);
+			temp.put("userkey", userKey);
+			temp.put("groupkey", groupKey);
 			
 			listcount = groupMemberService.getCommentedCount(temp);
 			postList = groupMemberService.postByCommented(userKey, groupKey, page, limit);
@@ -285,9 +294,7 @@ public class GroupMemberController {
 							 @RequestParam(required = false, defaultValue = "1") int page,
 							 @RequestParam(required = false, defaultValue = "10") int limit) {
 		System.out.println("### 모임 회원 상세정보 Ajax ###");
-		
-		// 확인용 sysout
-		System.out.println("##### " + "userkey = " + userKey + " | groupkey = " + groupKey + " | status = " + status + " #####");
+		System.out.println("userkey = " + userKey + " | groupkey = " + groupKey + " | status = " + status);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		Map<String, Object> temp = new HashMap<String, Object>();
@@ -336,8 +343,8 @@ public class GroupMemberController {
 			break;
 		case 2 : 
 			// 작성한 댓글
-			temp.put("userKey", userKey);
-			temp.put("groupKey", groupKey);
+			temp.put("userkey", userKey);
+			temp.put("groupkey", groupKey);
 			
 			listcount = groupMemberService.getCommentedCount(temp);
 			temp = pagination(page, limit, listcount);
@@ -358,6 +365,19 @@ public class GroupMemberController {
 		return result;
 	}
 	
+	// 닉네임 중복체크 -- ajax
+	@ResponseBody
+	@PostMapping("/groupNickCheck")
+	public String nickCheck (String nickname, String groupKey) {
+		System.out.println("### 닉네임 체크 ### " + nickname);
+		
+		Map<String, Object> check = new HashMap<String, Object>();
+		check.put("nickname", nickname);
+		check.put("groupKey", groupKey);
+		int result = groupMemberService.nickCheck(check);
+		return Integer.toString(result);
+	}
+	
 	public Map<String, Object> pagination (int page, int limit, int listcount) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -373,16 +393,4 @@ public class GroupMemberController {
 		return map;
 	}
 	
-	// 닉네임 중복체크 -- ajax
-	@ResponseBody
-	@PostMapping("/groupNickCheck")
-	public String nickCheck (String nickname, String groupKey) {
-		System.out.println("### 닉네임 체크 ### " + nickname);
-		
-		Map<String, String> check = new HashMap<String, String>();
-		check.put("nickname", nickname);
-		check.put("groupKey", groupKey);
-		int result = groupMemberService.nickCheck(check);
-		return Integer.toString(result);
-	}
 }

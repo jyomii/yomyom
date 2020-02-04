@@ -1,5 +1,8 @@
 package co.pr.fi.service;
 
+import java.util.List;
+import java.util.Map;
+
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
@@ -15,4 +18,15 @@ public interface GroupMasterService {
 
 	void insertGroupBoard(GGroupBoard noticeBoard);
 
+	List<GGroupMember> getGroupMembers(int groupkey);
+	
+	List<GGroupMember> getYetGroupMember(int groupkey);
+
+	int getMemberCount(int groupkey);
+
+	int getYetMemberCount(int groupkey);
+
+	int isAdmin(Map<String, Object> map);
+
+	int expelMem(Map<String, Object> map);
 }

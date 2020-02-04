@@ -68,12 +68,11 @@
 <body>
 	<div class="map_wrap">
 		<div id="drawingMap"></div>
-
 		<div class="modes" style="width: 100%">
 			<button onclick="selectPlace()" style="float: right;">장소 검색</button>
-			<button onclick="selectOverlay('MARKER')" style="float: right;">마커</button>
-			<button onclick="selectOverlay('POLYLINE')" style="float: right;">선</button>
-			<button onclick="sendToParent()" style="float: right;">저장</button>
+			<button onclick="selectOverlay('MARKER')" style="float: right;">마커 추가</button>
+			<button onclick="selectOverlay('POLYLINE')" style="float: right;">선 추가</button>
+			<button onclick="sendToParent()" style="float: right;">저장하기</button>
 
 		</div>
 
@@ -101,7 +100,6 @@
 	<script>
 		// 마커를 담을 배열입니다
 		var markers = [];
-
 		// 검색된 마커를 담을 배열입니다
 		var search_markers = [];
 		
@@ -492,6 +490,7 @@
     	// Drawing Manager에서 그려진 데이터 정보를 가져옵니다 
     	var data = manager.getData();
     	//부모 페이지에 넘겨줍니다.
+    
        	window.opener.getReturnValue(data, level, latlng);
 
     

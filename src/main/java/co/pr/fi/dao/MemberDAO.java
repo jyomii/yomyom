@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
 
@@ -55,6 +56,11 @@ public class MemberDAO {
 	public int restoreUser(int key) {
 		
 		return sqlSession.update("Member.restoreUser", key);
+	}
+
+	public List<CalendarList> getMycalendarlist(Map<String, Object> list) {
+		
+		return sqlSession.selectList("Member.getMycalendarlist", list);
 	}
 
 

@@ -12,6 +12,7 @@
 
 	<typeAliases>
 		<typeAlias alias="member" type="co.pr.fi.domain.GUsers" />
+		<typeAlias alias="bestboard" type="co.pr.fi.domain.BestPost" />
 		<typeAlias alias="location" type="co.pr.fi.domain.GLocation" />
 		<typeAlias alias="statisticsAge"
 			type="co.pr.fi.domain.StatisticsAge" />
@@ -77,5 +78,6 @@
 		<mapper resource="sql/post.xml"></mapper>
 		<mapper resource="sql/search.xml"></mapper>
 		<mapper resource="sql/maingroup.xml"></mapper>
+		<mapper resource="sql/comment.xml"></mapper>
 	</mappers>
 </configuration>
