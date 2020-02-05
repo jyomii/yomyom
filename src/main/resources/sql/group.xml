@@ -431,6 +431,11 @@
 		update
 		calendarmember set sm='m' where postkey=#{postkey} and userkey=#{temp}
 	</update>
+	
+	<update id="calendarmtosajax" parameterType="java.util.Map">
+		update
+		calendarmember set sm='s' where postkey=#{postkey} and userkey=#{temp}
+	</update>
 
 	<select id="schedulelistcount" resultType="int"
 		parameterType="int">
