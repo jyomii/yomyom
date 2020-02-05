@@ -73,10 +73,6 @@
   cursor:pointer;
 }
 
-#recentnotice:hover {
-  cursor:pointer;
-}
-
 </style>
 
 <section>
@@ -177,83 +173,29 @@
 						<!-- sidebar -->
 						<div class="col-lg-6">
 							<div class="central-meta">
-								<div class="frnds">
-									<form>
-										<input type="hidden" id="userId" name="userId" value="${id}"> 
-									</form>
-									<ul class="nav nav-tabs">
-										<li class="nav-item"><a class="active" href="#frends"
-											data-toggle="tab">내가 쓴 글</a> <span>${postcount}</span></li>
-										<li class="nav-item"><a class="" href="#frends-req"
-											data-toggle="tab">내가 쓴 댓글</a><span>${commcount}</span></li>
-									</ul>
-
-									<!-- Tab panes -->
-									<div class="tab-content">
-										<div class="tab-pane active fade show " id="frends">
-											<div class="forum-list">
-												<table class="table table-responsive" id="tabletable">
-													<thead>
-														<tr>
-															<th scope="col">작성글</th>
-															<th scope="col">작성일</th>
-														</tr>
-													</thead>
-													
-													<tbody>
-													    <c:if test = "${postcount > 0 }">
-															<c:forEach var="b" items="${postlist}">
-															<tr>
-																<td>
-															     <a	href="groupmain?groupkey=${b.postKey}" title="${b.postTitle}">${b.postTitle}</a>
-															     <span></span>
-															     </td>
-																<td>${b.postDate}</td>
-															</tr>
-														</c:forEach>
-														</c:if>
-														<c:if test = "${postcount == 0 }">
-														  <tr>
-														  <td>작성한 글이 없습니다.</td><td></td>
-														  </tr>
-														</c:if>
-													</tbody>
-												</table>
-											</div>
-										</div>
-										<!-- 댓글 -->
-										<div class="tab-pane fade" id="frends-req">
-											<div class="forum-list">
-												<table class="table table-responsive" id="tabletable">
-													<thead>
-														<tr>
-															<th scope="col">작성댓글</th>
-															<th scope="col">작성일</th>
-														</tr>
-													</thead>
-													<tbody>
-													    <c:if test = "${commcount > 0 }">
-														<c:forEach var="b" items="${commlist}">
-															<tr>
-																<td> <a href="groupmain?groupkey=${b.commnetNum}"
-																	title="${b.commentContent}">${b.commentContent}</a>
-																	<span></span>
-																	</td>
-																<td>${b.commentDate}</td>
-															</tr>
-														</c:forEach>
-														</c:if>
-														<c:if test = "${commcount == 0 }">
-														  <tr>
-														  <td>작성한 댓글이 없습니다.</td><td></td>
-														  </tr>
-														</c:if>
-													</tbody>
-												</table>
-											</div>
-
-										</div>
-									</div>
+							<h4 class="widget-title">
+								<i class="ti-bell"></i>최근 알림
+							</h4>
+								<div>
+								<ul class="activitiez">
+							<c:if test="${msgcount > 0 }">
+											<c:forEach var="msg" items="${myMessage}">
+												<li>
+													<div class="activity-meta">
+														<i>${item.postDate}</i> 
+														<i>${msg.mgDate}</i><span><a href="#" title="">
+														${msg.msContent} </a></span>
+														<h6>
+															by <a href="time-line.html">${mg.send}</a>
+														</h6>
+													</div>
+												</li>
+											</c:forEach>
+											</c:if>
+											<c:if test="${msgcount == 0 }">
+											   받은 내역이 없습니다.
+											</c:if>
+							</ul>
 								</div>
 							</div>
 
@@ -265,7 +207,7 @@
 					<aside class="sidebar static">
 
 						<div class="widget">
-							<h4 class="widget-title" id="recentnotice">
+							<h4 class="widget-title">
 								<i class="ti-bell"></i>최근 알림
 							</h4>
 							<ul class="activitiez">
@@ -372,9 +314,9 @@ function preview(e){
 		return false;
 	});
 	
-	//알림 이동
-	$("#recentnotice").click(function() {
-		location.href = "mypage5";
+	//글쓴목록 이동
+	$("#recentwww").click(function() {
+		location.href = "mypage4";
 		return false;
 	});
 	

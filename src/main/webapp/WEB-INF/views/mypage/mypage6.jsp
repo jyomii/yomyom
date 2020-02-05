@@ -178,79 +178,102 @@
 						<div class="col-lg-6">
 							<div class="central-meta">
 								<div class="frnds">
-									<form>
-										<input type="hidden" id="userId" name="userId" value="${id}"> 
-									</form>
 									<ul class="nav nav-tabs">
 										<li class="nav-item"><a class="active" href="#frends"
-											data-toggle="tab">내가 쓴 글</a> <span>${postcount}</span></li>
+											data-toggle="tab">가입한 모임</a> <span>${joincount}</span></li>
 										<li class="nav-item"><a class="" href="#frends-req"
-											data-toggle="tab">내가 쓴 댓글</a><span>${commcount}</span></li>
+											data-toggle="tab">만든 모임</a><span>${makecount}</span></li>
+									    <li class="nav-item"><a class="" href="#frends-req2"
+											data-toggle="tab">즐겨찾는 모임</a><span>${favcount}</span></li>
 									</ul>
-
 									<!-- Tab panes -->
 									<div class="tab-content">
 										<div class="tab-pane active fade show " id="frends">
-											<div class="forum-list">
-												<table class="table table-responsive" id="tabletable">
-													<thead>
-														<tr>
-															<th scope="col">작성글</th>
-															<th scope="col">작성일</th>
-														</tr>
-													</thead>
-													
-													<tbody>
-													    <c:if test = "${postcount > 0 }">
-															<c:forEach var="b" items="${postlist}">
-															<tr>
-																<td>
-															     <a	href="groupmain?groupkey=${b.postKey}" title="${b.postTitle}">${b.postTitle}</a>
-															     <span></span>
-															     </td>
-																<td>${b.postDate}</td>
-															</tr>
-														</c:forEach>
-														</c:if>
-														<c:if test = "${postcount == 0 }">
-														  <tr>
-														  <td>작성한 글이 없습니다.</td><td></td>
-														  </tr>
-														</c:if>
-													</tbody>
-												</table>
-											</div>
+											<ul class="nearby-contct">
+											   <c:if test="${joincount >0 }">
+												<c:forEach var="list" items="${list}">
+													<li>
+														<div class="nearly-pepls">
+															<figure>
+																<img src="resources/images/resources/nearly1.jpg" alt="">
+																</a>
+															</figure>
+															<div class="pepl-info">
+																<input type="hidden" name="userId" value="${id}"
+																	id="userId"> <input type="hidden"
+																	name="groupKey" value="${list.groupKey}" id="groupKey">
+																<input type="hidden" name="groupName"
+																	value="${list.groupName}" id="groupName">
+																<h4>
+																	<a href="time-line.html">${list.groupName }</a>
+																</h4>
+																<a id="check" href="#" title="" class="add-butn"
+																	data-ripple="" data-groupname='${list.groupName }'
+																	class="modalclick" data-toggle="modal"
+																	data-target="#myModal">모임 탈퇴</a>
+															</div>
+														</div>
+													</li>
+												</c:forEach>
+												</c:if>
+												<c:if test="${joincount ==0 }">
+												  가입한 모임이 없습니다.
+												</c:if>
+											</ul>
 										</div>
-										<!-- 댓글 -->
+										<!-- 내가 만든 모임 -->
 										<div class="tab-pane fade" id="frends-req">
-											<div class="forum-list">
-												<table class="table table-responsive" id="tabletable">
-													<thead>
-														<tr>
-															<th scope="col">작성댓글</th>
-															<th scope="col">작성일</th>
-														</tr>
-													</thead>
-													<tbody>
-													    <c:if test = "${commcount > 0 }">
-														<c:forEach var="b" items="${commlist}">
-															<tr>
-																<td> <a href="groupmain?groupkey=${b.commnetNum}"
-																	title="${b.commentContent}">${b.commentContent}</a>
-																	<span></span>
-																	</td>
-																<td>${b.commentDate}</td>
-															</tr>
-														</c:forEach>
-														</c:if>
-														<c:if test = "${commcount == 0 }">
-														  <tr>
-														  <td>작성한 댓글이 없습니다.</td><td></td>
-														  </tr>
-														</c:if>
-													</tbody>
-												</table>
-											</div>
+											<ul class="nearby-contct">
+											   <c:if test="${makecount > 0 }">
+												<c:forEach var="mylist" items="${mylist}">
+													<li>
+														<div class="nearly-pepls">
+															<figure>
+																<img src="resources/images/resources/nearly1.jpg" alt="">
+																</a>
+															</figure>
+															<div class="pepl-info">
+																<h4>
+																	<a href="time-line.html">${mylist.groupName }</a>
+																</h4>
+																<a href="#" title="" class="add-butn" data-ripple="">모임
+																	설정</a>
+															</div>
+														</div>
+													</li>
+												</c:forEach>
+												</c:if>
+												<c:if test="${makecount == 0 }">
+												   만든 모임이 없습니다.
+												</c:if>
+											</ul>
+
+										</div>
+										<!-- 즐찾 모임 -->
+										<div class="tab-pane fade" id="frends-req2">
+											<ul class="nearby-contct">
+											   <c:if test="${favcount > 0 }">
+												<c:forEach var="favlist" items="${favlist}">
+													<li>
+														<div class="nearly-pepls">
+															<figure>
+																<img src="resources/images/resources/nearly1.jpg" alt="">
+																</a>
+															</figure>
+															<div class="pepl-info">
+																<h4>
+																	<a href="time-line.html">${favlist.groupName }</a>
+																</h4>
+																<a href="#" title="" class="add-butn" data-ripple="">즐겨찾기 취소</a>
+															</div>
+														</div>
+													</li>
+												</c:forEach>
+												</c:if>
+												<c:if test="${favcount == 0 }">
+												   즐겨찾는 모임이 없습니다.
+												</c:if>
+											</ul>
 
 										</div>
 									</div>
@@ -375,13 +398,6 @@ function preview(e){
 	//알림 이동
 	$("#recentnotice").click(function() {
 		location.href = "mypage5";
-		return false;
-	});
-	
-	
-	//모임 이동
-	$("#mymygroups").click(function() {
-		location.href = "mypage6";
 		return false;
 	});
 </script>

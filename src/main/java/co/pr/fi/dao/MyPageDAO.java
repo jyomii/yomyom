@@ -2,6 +2,7 @@ package co.pr.fi.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
+import co.pr.fi.domain.UserLikeGroup;
 
 //마이페이지 관련 DB
 @Repository
@@ -82,6 +84,22 @@ public class MyPageDAO {
 
 	public int msgCount(int userKey) {
 		return sqlSession.selectOne("Mypages.msgcount",userKey);
+	}
+
+	public List<UserLikeGroup> favlist(int userKey) {
+		return sqlSession.selectList("Mypages.favlist", userKey);
+	}
+
+	public int favcount(int userKey) {
+		return sqlSession.selectOne("Mypages.favcount", userKey);
+	}
+
+	public int favgroupD(int userKey) {
+		return sqlSession.delete("Mypages.favgroupD", userKey);
+	}
+
+	public int favgroup(Map<String, Object> keyy) {
+		return sqlSession.insert("Mypages.favgroup",keyy);
 	}
 
 	

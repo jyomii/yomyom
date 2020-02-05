@@ -11,8 +11,20 @@ public class UserLikeGroup {
 
  // 모임키값 
  private int groupKey;
+ 
+ private String groupName;
+ 
+ 
 
- public int getUserLikeGroupKey() {
+ public String getGroupName() {
+	return groupName;
+}
+
+public void setGroupName(String groupName) {
+	this.groupName = groupName;
+}
+
+public int getUserLikeGroupKey() {
      return userLikeGroupKey;
  }
 

@@ -2,6 +2,7 @@ package co.pr.fi.serviceImpl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
+import co.pr.fi.domain.UserLikeGroup;
 import co.pr.fi.service.MyPageService;
 
 @Service
@@ -103,6 +105,30 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public int msgCount(int userKey) {
 		return dao.msgCount(userKey);
+	}
+
+	@Override
+	public List<UserLikeGroup> favlist(int userKey) {
+		return dao.favlist(userKey);
+	}
+
+
+	@Override
+	public int favcount(int userKey) {
+		return dao.favcount(userKey);
+	}
+
+	@Override
+	public int favgroupD(int userKey) {
+		return dao.favgroupD(userKey);
+	}
+
+	@Override
+	public int favgroup(int userKey, int groupKey) {
+		Map<String, Object> keyy = new HashMap<String, Object>();
+		keyy.put("userKey", userKey);
+		keyy.put("groupKey", groupKey);
+		return dao.favgroup(keyy);
 	}
 
 	

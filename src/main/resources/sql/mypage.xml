@@ -40,7 +40,8 @@
 	</select>
 	
 	<select id="userInterest" resultType="scategory" parameterType="String">
-	      select * from GCategory2 where sCategoryKey IN (select categoryKey from GUserCategory where userKey = (select userKey from GUsers where userId = #{id}))
+	      select * from GCategory2 where sCategoryKey IN 
+	      (select categoryKey from GUserCategory where userKey = (select userKey from GUsers where userId = #{id}))
 	</select>
 	
 	<update id="imgUpdate" parameterType="member">
@@ -81,4 +82,26 @@
     <select id="msgcount" resultType="int" parameterType="int">
        select count(*) from UserMessage where mgReceive = #{userKey}
     </select>
+    
+    <select id="favlist" resultType="userlikegroup" parameterType="int">
+          select * from (select u.userLikeGroupKey, u.userKey, u.groupKey, g.groupName 
+                  from userlikegroup u join ggroup g on u.groupKey = g.groupKey) where userKey = #{userKey}
+        order by groupkey desc  
+    </select>
+    
+    <insert id="favgroup" parameterType="java.util.Map">
+    <selectKey resultType="int" order="BEFORE" keyProperty="userLikeGroupKey">
+          select nvl((select max(userLikeGroupKey) from UserLikeGroup)+1,0) from dual
+       </selectKey>
+        insert into UserLikeGroup
+        values (#{userLikeGroupKey}, #{userKey}, #{groupKey})
+    </insert>
+    
+    <select id="favcount" resultType="int" parameterType="int">
+         select count(*) from userlikegroup where userKey = #{userKey}
+    </select>
+    
+    <delete id="favgroupD" parameterType="userlikegroup">
+        delete from userlikegroup where userKey = #{userKey}
+    </delete>
 </mapper>
