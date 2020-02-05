@@ -157,6 +157,7 @@ public class GroupMasterController {
 			group.setGroupType("N");
 
 		}
+		
 
 		int result = groupMasterService.insertGroup(group);
 
