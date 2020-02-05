@@ -329,6 +329,7 @@ public class GroupServiceImpl implements GroupService {
 		return dao.modifypost(postkey);
 	}
 
+	
 	@Override
 	public CalendarList modifycalendar(int postkey) {
 		return dao.modifycalendar(postkey);

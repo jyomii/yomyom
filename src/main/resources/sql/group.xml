@@ -107,7 +107,9 @@
 		GROUPKEY = #{groupKey}
 	</select>
 
-	<select id="preferGroup" parameterType="int" resultType="group">
+	<!-- 
+	 아이디 중복되서 주석처리해둡니다
+	 <select id="preferGroup" parameterType="int" resultType="group">
 		SELECT
 		GROUPKEY, MEMBERCOUNT, GROUPDFILE, GROUPNAME, GROUPPRIVATE
 		FROM (
@@ -124,7 +126,7 @@
 		)
 		)
 		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupKey}
-	</select>
+	</select>-->
 	
 	<!-- 지금 모임에 가입승인된 회원인지 -->
 	<select id = "isGroupMem" parameterType = "map" resultType = "int">
@@ -379,7 +381,7 @@
 		boardmap='y' where
 		postkey=#{postkey}
 	</update>
-
+	
 	<select id="modifypost" resultType="post" parameterType="int">
 		select *
 		from post where postkey=#{postkey}
