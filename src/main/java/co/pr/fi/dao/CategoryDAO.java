@@ -91,4 +91,8 @@ public class CategoryDAO {
   public int interestupdate(Map<String, Object>  category) {
 		return sqlSession.update("category.interestupdate", category);
   }
+
+public int mycateD(String id) {
+	return sqlSession.delete("category.mycateD", id);
+}
 }

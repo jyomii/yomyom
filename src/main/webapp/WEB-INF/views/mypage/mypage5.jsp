@@ -87,7 +87,7 @@
 							<div class="user-avatar">
 							<c:if test = "${mypage.userImageOrigin == null}">
 							 <figure>
-							      <img src="resources/images/resources/user-avatar.jpg" alt="" id="imgpic">
+							      <img src="resources/images/resources/default.png" alt="" id="imgpic">
 							   </figure>
 						    </c:if>
 						    <c:if test = "${mypage.userImageOrigin != null}">
@@ -142,13 +142,12 @@
 											class="jungbo">기본 정보</a></li>
 										<li><i class="ti-heart"></i> <a title="" class="gss">관심사</a>
 										</li>
-
 									</ul>
 								</div>
 									<div class="widget">
 											<h4 class="widget-title" id="recentwww"><i class="ti-pencil"></i>내가 작성한 글/댓글</h4>
 											<input type="hidden" id="userId" name="userId" value="${id}"> 
-											<ul class="activitiez">
+										<ul class="activitiez">
 													<c:if test="${postcount > 0 }">
 											<c:forEach var="b" items="${postlist}">
 												<li>
@@ -173,20 +172,21 @@
 						<!-- sidebar -->
 						<div class="col-lg-6">
 							<div class="central-meta">
-							<h4 class="widget-title">
 								<i class="ti-bell"></i>최근 알림
-							</h4>
 								<div>
 								<ul class="activitiez">
 							<c:if test="${msgcount > 0 }">
-											<c:forEach var="msg" items="${myMessage}">
+											<c:forEach var="msg" items="${getMessage}">
 												<li>
 													<div class="activity-meta">
 														<i>${item.postDate}</i> 
 														<i>${msg.mgDate}</i><span><a href="#" title="">
-														${msg.msContent} </a></span>
+														${msg.mgContent} </a></span>
 														<h6>
-															by <a href="time-line.html">${mg.send}</a>
+															<script type="text/javascript">
+															var date1 = '${msg.mgDate}';
+															document.write(timeBefore(new Date(date1)));
+															</script>
 														</h6>
 													</div>
 												</li>
@@ -211,24 +211,26 @@
 								<i class="ti-bell"></i>최근 알림
 							</h4>
 							<ul class="activitiez">
-							<c:if test="${msgcount > 0 }">
-											<c:forEach var="msg" items="${myMessage}">
+										<c:if test="${msgcount > 0 }">
+											<c:forEach var="msg" items="${getMessage}">
 												<li>
 													<div class="activity-meta">
-														<i>${item.postDate}</i> 
-														<i>${msg.mgDate}</i><span><a href="#" title="">
-														${msg.msContent} </a></span>
+														<i>${item.postDate}</i> <i>${msg.mgDate}</i><span><a
+															href="#" title=""> ${msg.mgContent} </a></span>
 														<h6>
-															by <a href="time-line.html">${mg.send}</a>
+															<script type="text/javascript">
+															var date1 = '${msg.mgDate}';
+															document.write(timeBefore(new Date(date1)));
+															</script>
 														</h6>
 													</div>
 												</li>
 											</c:forEach>
-											</c:if>
-											<c:if test="${msgcount == 0 }">
+										</c:if>
+										<c:if test="${msgcount == 0 }">
 											   받은 내역이 없습니다.
 											</c:if>
-							</ul>
+									</ul>
 						</div>
 						<!-- recent activites -->
 					</aside>
@@ -250,9 +252,6 @@
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
 <script>
-
-var date1 = '${item.postDate}';
-document.write(timeBefore(new Date(date1)));
 
 //프사 등록
 $('input[type=file]').on('change', preview);

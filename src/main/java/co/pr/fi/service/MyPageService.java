@@ -49,9 +49,14 @@ public interface MyPageService {
 
 	public int favcount(int userKey);
 
-	public int favgroupD(int userKey);
+	public int favgroupD(int userKey, int groupKey);
 
 	public int favgroup(int userKey, int groupKey);
+
+	public List<UserLikeGroup> favlist(String id);
+
+	public int favcount(String id);
+
 
     
 }

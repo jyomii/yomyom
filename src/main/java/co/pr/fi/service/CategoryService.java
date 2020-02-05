@@ -43,4 +43,8 @@ public interface CategoryService {
 
 	int interestupdate(Map<String, Object> usercategory);
 
+	void interestInsert(Map<String, Object> usercategory);
+
+	int mycateD(String id);
+
 }
