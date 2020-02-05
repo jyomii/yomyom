@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/color.css">
 <link rel="stylesheet" href="resources/css/responsive.css">
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <script src="resources/js/main.min.js"></script>
 <script src="resources/js/script.js"></script>
 <style>
