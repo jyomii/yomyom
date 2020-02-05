@@ -157,7 +157,6 @@ public class GroupDAO {
 
 	}
 
-	
 	public Post modifypost(int postkey) {
 		return sqlSession.selectOne("group.modifypost", postkey);
 	}
