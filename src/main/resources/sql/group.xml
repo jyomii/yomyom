@@ -31,7 +31,8 @@
 			]]></if>
 			
 	</select>
-
+	
+	<!-- 회원의 가입한 모임 수 -->
 	<select id = "getJoinedCount" resultType = "int" parameterType = "int">
 		SELECT COUNT(*)
 		FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
@@ -64,7 +65,7 @@
 															GROUP BY GROUPKEY
 															HAVING GROUPKEY IN (SELECT GROUPKEY
 																				FROM GGROUPMEMBER
-																				WHERE USERKEY = #{USERKEY}))
+																				WHERE USERKEY = #{userkey}))
 								ORDER BY GROUPDATE DESC	) G
 						)
 		WHERE R >= #{START} AND R <= #{END}	
@@ -74,7 +75,7 @@
 	<!-- 모임의 가입 양식 가져오기 -->
 	<select id="getJoinSample" resultType="joinQuest">
 		SELECT * FROM JOINQUEST
-		WHERE GROUPKEY = #{GROUPKEY}
+		WHERE GROUPKEY = #{groupkey}
 	</select>
 
 	<!-- 가입하기 -->
@@ -93,14 +94,16 @@
 	<select id = "nickCheck" parameterType = "map" resultType = "map">
 		SELECT GROUPNICKNAME
 		FROM GGROUPMEMBER
-		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupKey}
+		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupkey}
 	</select>
 	
 	<!-- 지금 모임에 가입승인된 회원인지 -->
 	<select id = "isGroupMem" parameterType = "map" resultType = "int">
+	<![CDATA[		
 		SELECT COUNT(*)
 		FROM GGROUPMEMBER
-		WHERE GROUPKEY = #{groupkey} AND USERKEY = #{userkey} AND USERGRADE = #{grade}
+		WHERE GROUPKEY = #{groupkey} AND USERKEY = #{userkey} AND USERGRADE >= #{grade}
+	]]>
 	</select>
 	
 	<select id = "preferGroup" parameterType = "int" resultType = "group">

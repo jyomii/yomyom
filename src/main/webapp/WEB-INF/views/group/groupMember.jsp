@@ -9,9 +9,12 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 	<title>모임회원 페이지 - timeline-friends.jsp</title>
+	<script src = "resources/js/groupMember.js"></script>
 	<style>
 		.nearby-contct {margin-top : 0 !important}
 		.nearby-contct > li {margin-bottom : 5px !important; padding : 10px !important;}
+		.nav.nav-tabs {margin-bottom : 22px;}
+		/* .nearby-contct li {text-align : center;} */
 	</style>
 	
     <!-- 그룹 페이지 상단 -->
@@ -128,51 +131,62 @@
 									<div class="frnds">
 									
 										<ul class="nav nav-tabs">
-											 <li class="nav-item"><a class="active" href="/" data-toggle="tab">회원 목록</a><span>${membercount}</span></li>
-											 <li class="nav-item"><a class="" href="/" data-toggle="tab">회원 요청</a><span>${yetMembercount}</span></li>
+											 <li class="nav-item"><a id = "m1" class="active" href="/" data-toggle="tab">회원 목록</a><span>${membercount}</span></li>
+											 <li class="nav-item"><a id = "m2" class="" href="/" data-toggle="tab">회원 요청</a><span>${yetMembercount}</span></li>
 										</ul>
 										
 										<!-- 검색창 -->
-										<div class="mesages-lists">
+										<!-- <div class="mesages-lists">
 											<form method="post">
 												<input type="text" placeholder="Search member">
 											</form>
-										</div>			 
+										</div>			  -->
 										
+										<!-- 회원의 상세 정보 페이지로 이동하기 위한 폼 -->
 										<form name = "detail">
-											<input type = "hidden" name = "groupKey" value = "">
-											<input type = "hidden" name = "userKey" value = "">
+											<input type = "hidden" name = "groupkey" value = "">
+											<input type = "hidden" name = "userkey" value = "">
 										</form>
+										<!-- 회원의 상세 정보 페이지로 이동하기 위한 폼 -->
+										
+										<!-- ajax 쓸 때 이용할 데이터 -->
+										<input type = "hidden" name = "getGroupKey" value = "${groupkey}">
 										
 										<!-- 회원 리스트 -->
 										<div class="tab-content">
 										  <div class="tab-pane active fade show " id="frends">
 											<ul class="nearby-contct">
+											<c:if test = "${membercount != 0}">
 											<c:forEach var = "m" items = "${mem}">
-											<input type = "hidden" name = "getGroupKey" value = "${groupKey}">
-											<li>
-												<div class="nearly-pepls">
-													<figure>
-														<!-- 모임 회원 페이지로 이동 -->
-														<a href = 'javascript:memDetail(${m.userKey})' title="">
-														
-														<!-- 회원 프사가 없을 때 -->
-														<c:if test = "${m.profileFile == null}">
-															<img src="resources/images/default.png" class = "group-img" alt = ""/>
-														</c:if>
-														<c:if test = "${m.profileFile != null}">
-															<img src="<spring:url value='/image${m.profileFile}'/>" class = "group-img" alt = ""/>
-														</c:if></a>
-													</figure>
-													<div class="pepl-info">
-														<h4><a href="javascript:memDetail(${m.userKey},${m.groupKey})" title="${m.groupNickname}">${m.groupNickname}</a></h4>
-														<a href="javascript:expelMem(${m.userKey},${m.groupKey})" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>
-														<!-- 모임장 페이지로 이동? -->
-														<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>
+												<li>
+													<div class="nearly-pepls">
+														<figure>
+															<!-- 모임 회원 페이지로 이동 -->
+															<a href = 'javascript:memDetail(${m.userKey},${m.groupKey})' title="">
+																<!-- 회원 프사가 없을 때 -->
+																<c:if test = "${m.profileFile == null}">
+																	<img src="resources/images/default.png" class = "group-img" alt = ""/>
+																</c:if>
+																<c:if test = "${m.profileFile != null}">
+																	<img src="<spring:url value='/image${m.profileFile}'/>" class = "group-img" alt = ""/>
+																</c:if>
+															</a>
+														</figure>
+														<div class="pepl-info">
+															<h4><a href="javascript:memDetail(${m.userKey},${m.groupKey})" title="${m.groupNickname}">${m.groupNickname}</a></h4>
+															<a href="javascript:expelMem(${m.userKey},${m.groupKey})" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>
+															<!-- 모임장 페이지로 이동? -->
+															<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>
+														</div>
 													</div>
-												</div>
-											</li>
+												</li>
 											</c:forEach>
+											</c:if>
+											<c:if test = "${membercount == 0}">
+												<li>
+													회원이 존재하지 않습니다.
+												</li>
+											</c:if>
 											</ul>	
 											  <button class="btn-view btn-load-more"></button>
 										  </div>
@@ -341,158 +355,15 @@
 	<jsp:include page="../mainpage/footer.jsp" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
-$('.nav-item').click(function(){
-	switch($(this).index()) {
-	// 회원 목록
-	case 0:
-		getMember($('input[name=getGroupKey]').val());
-		break;
-	// 회원 요청	
-	case 1:
-		getYetMember($('input[name=getGroupKey]').val());
-		break;
-	}
-});
-// ## 회원 상세정보 
-function memDetail(userKey, groupKey) {
-	var f = document.detail;
-	f.groupKey.value = groupKey;
-	f.userKey.value = userKey;
-	f.action = "G_mem_detail";
-	f.method = "post";
-	f.submit();
-};
-
-// ## 회원 목록 리스트 get
-function getMember(groupKey) {
-	$.ajax({
-		type : 'POST',
-		url : 'getGroupMem',
-		data : {groupKey : groupKey},
-		success : function(data) {
-
-			$('nearly-pepls').empty();
-			
-			// 가입된 회원이 있으면
-			if (data.membercount != 0) {
-				$(data.mem).each(function(index, item){
-					doc += '<li>';
-					doc += '	<div class="nearly-pepls">';
-					doc += '		<figure>';
-					doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
-					if (item.profileFile == null) {
-						doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
-					} else {
-						doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
-					}
-					doc += '		</figure>';
-					doc += '		<div class="pepl-info">';
-					doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
-					doc += '			<a href="javascript:expelMem(' + item.userKey + ',' + item.groupKey + ')" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>';
-					doc += '			<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>';
-					doc += '		</div>';
-					doc += '	</div>';
-					doc += '</li>';
-				});
-				$('nearly-pepls').append(doc);
-				$('.nav.nav-tabs li span').eq(0).text(data.membercount);
-		}
-	},
-	error : function(request, status, error) {
-		console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-	}
-	});
-}; // getMember end
-
-// ## 회원 요청 리스트 get
-function getYetMember(groupKey) {
-	$.ajax({
-		type : 'POST',
-		url : 'getYetMember',
-		data : {groupKey : groupKey},
-		success : function(data) {
-
-			$('nearly-pepls').empty();
-			
-			// 요청 회원이 있으면
-			if (data.membercount != 0) {
-				$(data.mem).each(function(index, item){
-					doc += '<li>';
-					doc += '	<div class="nearly-pepls">';
-					doc += '		<figure>';
-					doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
-					if (item.profileFile == null) {
-						doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
-					} else {
-						doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
-					}
-					doc += '		</figure>';
-					doc += '		<div class="pepl-info">';
-					doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
-					doc += '			<a href="javascript:expelMem(' + item.userKey + ',' + item.groupKey + ')" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>';
-					doc += '			<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>';
-					doc += '		</div>';
-					doc += '	</div>';
-					doc += '</li>';
-				});
-				$('nearly-pepls').append(doc);
-				$('.nav.nav-tabs li span').eq(0).text(data.membercount);
-		}
-		},		
-		error : function(request, status, error) {
-		console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-		}
-	});
-};
-	
-// ## 회원 강퇴
-function expelMem(userKey, groupKey) {
-	doc = '';
-	data = "userKey=" + userKey + "&groupKey=" + groupKey;
-	
-	$.ajax({
-		type : 'POST',
-		url : 'expelMem',
-		data : data,
-		cache : false,
-		success : function(data) {
-			if (data.result == 1)
-				alert('강퇴 완료되었습니다.');
-			else (data.result == -1)
-				alert('강퇴하는 데 실패했습니다.');
-			
-			$('nearly-pepls').empty();
-			
-			// 가입된 회원이 있으면
-			if (data.membercount != 0) {
-				$(data.mem).each(function(index, item){
-					doc += '<li>';
-					doc += '	<div class="nearly-pepls">';
-					doc += '		<figure>';
-					doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
-					if (item.profileFile == null) {
-						doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
-					} else {
-						doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
-					}
-					doc += '		</figure>';
-					doc += '		<div class="pepl-info">';
-					doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
-					doc += '			<a href="javascript:expelMem(' + item.userKey + ',' + item.groupKey + ')" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>';
-					doc += '			<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>';
-					doc += '		</div>';
-					doc += '	</div>';
-					doc += '</li>';
-				});
-				$('nearly-pepls').append(doc);
-				$('.nav.nav-tabs li span').eq(0).text(data.membercount);
-			}
-		},
-		error : function(request, status, error) {
-			console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-		}
-	});
-}
+	//## 회원 상세정보 ##
+	function memDetail(userkey,groupkey) {
+		var f = document.detail;
+		f.userkey.value = userkey;
+		f.groupkey.value = groupkey;
+		f.action = "G_mem_detail.net";
+		f.method = "post";
+		f.submit();
+	};
 </script>
 <script type="text/javascript">
 	//달력시작==================================================================

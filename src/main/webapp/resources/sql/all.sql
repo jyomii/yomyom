@@ -65,6 +65,10 @@ DROP TABLE glocation;
 DROP TABLE JOINQUEST;
 DROP TABLE JOINANSWER;
 
+-- 이 3개 테이블이 절대 지워지지 않아서 추가했음,,
+--drop table gusers cascade constraints
+--drop table gage cascade constraints
+--drop table glocation cascade constraints
 
 CREATE TABLE glocation
 (
@@ -266,6 +270,8 @@ CREATE TABLE ggroupmember
     userkey          NUMBER          NOT NULL, 
     groupnickname    VARCHAR2(30)    NOT NULL, 
     usergrade        NUMBER          NOT NULL, 
+    profilefile		 varchar2(100)	 NOT NULL,
+    profileorigin	 varchar2(100) 	 NOT NULL,
     CONSTRAINT GGROUPMEMBERPK PRIMARY KEY (groupkey,userkey)
 );
 
@@ -584,6 +590,7 @@ CREATE TABLE gcomment
     commentrelev     NUMBER           NOT NULL, 
     commentreseq     NUMBER           NOT NULL, 
     commentdate       DATE             NOT NULL, 
+    commentshow		 NUMBER				NOT NULL,	-- 비밀댓글 여부
     groupkey          NUMBER           NOT NULL, 
     CONSTRAINT GCOMMENTPK PRIMARY KEY (commnetnum)
 );

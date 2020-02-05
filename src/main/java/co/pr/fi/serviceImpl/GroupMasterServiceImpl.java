@@ -86,4 +86,14 @@ public class GroupMasterServiceImpl implements GroupMasterService {
 		return dao.expelMem(map);
 	}
 
+	@Override
+	public int rejectJoin(Map<String, Object> keys) {
+		return dao.rejectJoin(keys);
+	}
+
+	@Override
+	public int confirmJoin(Map<String, Object> keys) {
+		return dao.confirmJoin(keys);
+	}
+
 }

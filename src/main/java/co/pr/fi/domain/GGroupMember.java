@@ -18,10 +18,10 @@ public class GGroupMember {
  private int userGrade; //일반: 0 // 모임장: 1 // 모임가입예정 : -1
  
  // 유저 프사
- private String profileFile = "resources/images/default.png";	// 이미지 선택 안 했을 시 디폴트 이미지
+ private String profileFile = "/resources/images/default.png";	// 이미지 선택 안 했을 시 디폴트 이미지
  
  // 유저 프사 원본
- private String profileOrigin = "resources/images/default.png";	// 이미지 선택 안 했을 시 디폴트 이미지
+ private String profileOrigin = "/resources/images/default.png";	// 이미지 선택 안 했을 시 디폴트 이미지
  
  private MultipartFile uploadfile;
  
