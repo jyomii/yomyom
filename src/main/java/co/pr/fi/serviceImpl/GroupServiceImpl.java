@@ -402,7 +402,6 @@ public class GroupServiceImpl implements GroupService {
 	public int getScheduleListCount(int groupkey) {
 		return dao.schedulelistcount(groupkey);
 	}
-
 	@Override
 	public List<Post> getBoardList(int page, int limit, int groupkey) {
 		Map<String, Integer> list = new HashMap<String, Integer>();

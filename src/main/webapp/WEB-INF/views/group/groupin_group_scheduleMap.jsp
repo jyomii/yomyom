@@ -710,7 +710,6 @@ function DrawLine(lines) {
 
 
 }
-
 function pointsToPath(points) {
     var len = points.length, path = [], i = 0;
 

@@ -38,7 +38,6 @@ public class GroupBoardController {
 
 	@Autowired
 	GroupBoardService groupBoardService;
-
 	
 	@Autowired
 	private GroupService groupservice;

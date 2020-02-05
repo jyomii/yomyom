@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!-- 그룹 로그인 위젯 -->
-
 								<c:if test="${modifycalendar.cmoneytype =='M'}">
 								<div class="widget friend-list">
 											<h4 class="widget-title">회비 참석자 관리</h4>

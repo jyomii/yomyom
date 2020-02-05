@@ -1132,7 +1132,6 @@ function saveMap(postkey) {
              }
             
             info.push(item);
-
         }
 
         index++;
