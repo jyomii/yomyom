@@ -542,8 +542,8 @@ CREATE TABLE maps
     mapseq    NUMBER         NOT NULL, 
     maplevel  number 		 null,
     maplat         NUMBER(20,15)     NULL, 
-    maplng         NUMBER(20,15)     NULL
- 
+    maplng         NUMBER(20,15)     NULL,
+   mapdetailseq	number
 );
 
 
