@@ -375,18 +375,22 @@ CREATE TABLE calendar
     cenddate               varchar2(50)      NOT NULL, 
     cmoney                  varchar2(50)    NOT NULL, 
     postkey                 NUMBER    NOT NULL, 
-    grouplocation           NUMBER    NOT NULL, 
-    grouplocationdetail    NUMBER    NULL, 
+ 
     cmoneytype varchar2(5),
     CONSTRAINT CALENDARPK PRIMARY KEY (postkey)
 );
+					     
 /*나상엽 추가*/
 ALTER TABLE calendar ADD (cmoneytype varchar2(5));
 ALTER TABLE calendar ADD (startdate varchar2(50));
 ALTER TABLE calendar ADD (starttime varchar2(50));
 ALTER TABLE calendar ADD (startminute varchar2(50));
 
-
+ALTER TABLE calendar ADD (maxperson varchar2(5));
+ALTER TABLE calendar ADD (location varchar2(50));
+ALTER TABLE calendar ADD (startdate varchar2(50));
+ALTER TABLE calendar ADD (starttime varchar2(50));
+ALTER TABLE calendar ADD (startminute varchar2(50));
 
 ALTER TABLE calendar
     ADD CONSTRAINT FKcalendarpostkeypostpost FOREIGN KEY (postkey)
