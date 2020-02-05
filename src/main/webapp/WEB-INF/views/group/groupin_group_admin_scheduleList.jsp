@@ -542,6 +542,7 @@ top:-9px;
 												<span>정모 추가하기</span>
 											</button>
 										</div>
+										
 										<ul class="nearby-contct">
 											<!-- ======================================================================= -->
 										<c:if test="${not empty groupmeetinglist }">

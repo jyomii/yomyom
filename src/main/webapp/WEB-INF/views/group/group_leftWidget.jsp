@@ -43,6 +43,7 @@
 								<c:if test="${not empty group.groupkatalk }">
 								<div class="widget">
 									<div class="banner medium-opacity">
+									
 										<div
 											style="background-image: url(resources/images/katalk.jpg)"
 											class="bg-image"></div>

@@ -518,6 +518,7 @@ top:-9px;
 												<c:set var="n" value="3" />
 											</c:otherwise>
 										</c:choose>
+										
 										<li>
 											<div class="card">
 												<div class="card-header card-header-bgcolor"

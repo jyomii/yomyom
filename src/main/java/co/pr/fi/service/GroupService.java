@@ -61,7 +61,7 @@ public interface GroupService {
 
 	public int groupmasterkey(int groupkey);
 
-	public GGroupMember groupmember(int userkey);
+	public GGroupMember groupmember(int userkey, int groupkey);
 
 	public List<UserRegGroup> userreggroup(int userkey);
 
@@ -98,5 +98,7 @@ public interface GroupService {
 	public List<Post> getBoardList(int page, int limit, int groupkey);
 
 	public void scheduledelete(int postkey);
+
+	public void groupbasicupdate(GGroup group, int groupkey);
 
 }

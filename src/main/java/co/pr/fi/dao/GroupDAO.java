@@ -126,8 +126,8 @@ public class GroupDAO {
 		return sqlSession.selectOne("group.groupmasterkey", groupkey);
 	}
 
-	public GGroupMember groupmember(int userkey) {
-		return sqlSession.selectOne("group.groupmember", userkey);
+	public GGroupMember groupmember(Map<String, Integer> list) {
+		return sqlSession.selectOne("group.groupmember", list);
 	}
 
 	public List<UserRegGroup> userreggroup(int userkey) {
@@ -208,6 +208,11 @@ public class GroupDAO {
 
 	public void scheduledelete(int postkey) {
 		sqlSession.delete("group.scheduledelete",postkey);
+		
+	}
+
+	public void groupbasicupdate(Map<String, Object> list) {
+		sqlSession.update("group.groupbasicupdate",list);
 		
 	}
 

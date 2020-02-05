@@ -28,16 +28,14 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	GroupDAO dao;
 
-	
-	
 	@Override
 	public GGroup groupInfo(int groupkey) {
 		GGroup groupinfo = dao.groupinfo(groupkey);
 
 		String date = groupinfo.getGroupDate();
-		String year = date.substring(0, 4) + "년 ";
-		String month = date.substring(5, 7) + "월 ";
-		String day = date.substring(8, 10) + "일";
+		String year = date.substring(0, 4) + "�뀈 ";
+		String month = date.substring(5, 7) + "�썡 ";
+		String day = date.substring(8, 10) + "�씪";
 		String tdate = year + month + day;
 		groupinfo.setGroupDate(tdate);
 		return groupinfo;
@@ -108,25 +106,25 @@ public class GroupServiceImpl implements GroupService {
 			for (int i = 0; i < MeetingList.size(); i++) {
 				String date = MeetingList.get(i).getCstartdate();
 
-				String year = date.substring(0, 4) + "년 ";
+				String year = date.substring(0, 4) + "�뀈 ";
 
-				String month = date.substring(5, 7) + "월 ";
+				String month = date.substring(5, 7) + "�썡 ";
 
-				String day = date.substring(8, 10) + "일 ";
+				String day = date.substring(8, 10) + "�씪 ";
 
-				String time = date.substring(13, 15) + "시 ";
+				String time = date.substring(13, 15) + "�떆 ";
 
-				String minute = date.substring(16, 18) + "분";
-				if (minute.equals("00분"))
+				String minute = date.substring(16, 18) + "遺�";
+				if (minute.equals("00遺�"))
 					minute = "";
 				MeetingList.get(i).setCstartdate(year + month + day + time + minute);
 				String pdate = MeetingList.get(i).getPostDate();
 
-				String pyear = pdate.substring(0, 4) + "년 ";
+				String pyear = pdate.substring(0, 4) + "�뀈 ";
 
-				String pmonth = pdate.substring(5, 7) + "월 ";
+				String pmonth = pdate.substring(5, 7) + "�썡 ";
 
-				String pday = pdate.substring(8, 10) + "일 ";
+				String pday = pdate.substring(8, 10) + "�씪 ";
 
 				MeetingList.get(i).setPostDate(pyear + pmonth + pday);
 
@@ -253,20 +251,6 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public GGroupMember groupmember(int userkey) {
-		GGroupMember groupmember = dao.groupmember(userkey);
-		if (userkey != -1) {
-			String date = groupmember.getRegdate();
-			String year = date.substring(0, 4) + "년 ";
-			String month = date.substring(5, 7) + "월 ";
-			String day = date.substring(8, 10) + "일";
-			String tdate = year + month + day;
-			groupmember.setRegdate(tdate);
-		}
-		return groupmember;
-	}
-
-	@Override
 	public List<UserRegGroup> userreggroup(int userkey) {
 		return dao.userreggroup(userkey);
 	}
@@ -287,11 +271,11 @@ public class GroupServiceImpl implements GroupService {
 		post.setStartdate(post.getCstartdate().toString());
 		String date = post.getCstartdate().toString().replace(" ", "");
 		String year = date.substring(0, 4);
-		String month = date.substring(5, date.indexOf("월"));
+		String month = date.substring(5, date.indexOf("�썡"));
 		if (month.length() == 1) {
 			month = "0" + month;
 		}
-		String day = date.substring((date.indexOf("월") + 1), date.indexOf("일"));
+		String day = date.substring((date.indexOf("�썡") + 1), date.indexOf("�씪"));
 		if (day.length() == 1) {
 			day = "0" + day;
 		}
@@ -308,14 +292,15 @@ public class GroupServiceImpl implements GroupService {
 	public void updateboardmap(int postkey) {
 		dao.updateboardmap(postkey);
 	}
+
 	@Override
 	public List<GGroup> getGroupRank(int i, int limit, int page) {
 		Map<String, Integer> list = new HashMap<String, Integer>();
-		
+
 		int startrow = (page - 1) * limit + 1;
-		// 읽기 시작할 row 번호(1 11 21 31
+		// �씫湲� �떆�옉�븷 row 踰덊샇(1 11 21 31
 		int endrow = startrow + limit - 1;
-		// 읽을 마지막 row 번호 (10 20 30
+		// �씫�쓣 留덉�留� row 踰덊샇 (10 20 30
 
 		list.put("type", i);
 		list.put("startrow", startrow);
@@ -329,7 +314,6 @@ public class GroupServiceImpl implements GroupService {
 		return dao.modifypost(postkey);
 	}
 
-	
 	@Override
 	public CalendarList modifycalendar(int postkey) {
 		return dao.modifycalendar(postkey);
@@ -346,13 +330,13 @@ public class GroupServiceImpl implements GroupService {
 		list.put("temp", temp);
 		list.put("postkey", postkey);
 		dao.calendardeleteajax(list);
-		
+
 	}
 
 	@Override
 	public void updateschedule(Post post) {
 		dao.updateSchedule(post);
-		
+
 	}
 
 	@Override
@@ -360,11 +344,11 @@ public class GroupServiceImpl implements GroupService {
 		post.setStartdate(post.getCstartdate().toString());
 		String date = post.getCstartdate().toString().replace(" ", "");
 		String year = date.substring(0, 4);
-		String month = date.substring(5, date.indexOf("월"));
+		String month = date.substring(5, date.indexOf("�썡"));
 		if (month.length() == 1) {
 			month = "0" + month;
 		}
-		String day = date.substring((date.indexOf("월") + 1), date.indexOf("일"));
+		String day = date.substring((date.indexOf("�썡") + 1), date.indexOf("�씪"));
 		if (day.length() == 1) {
 			day = "0" + day;
 		}
@@ -388,7 +372,7 @@ public class GroupServiceImpl implements GroupService {
 		list.put("postkey", postkey);
 		dao.calendarstomajax(list);
 	}
-	
+
 	@Override
 	public void calendarmtosajax(int temp, int postkey) {
 		Map<String, Integer> list = new HashMap<String, Integer>();
@@ -401,6 +385,7 @@ public class GroupServiceImpl implements GroupService {
 	public int getScheduleListCount(int groupkey) {
 		return dao.schedulelistcount(groupkey);
 	}
+
 	@Override
 	public List<Post> getBoardList(int page, int limit, int groupkey) {
 		Map<String, Integer> list = new HashMap<String, Integer>();
@@ -415,6 +400,33 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public void scheduledelete(int postkey) {
 		dao.scheduledelete(postkey);
-		
+
+	}
+
+	@Override
+	public GGroupMember groupmember(int userkey, int groupkey) {
+		Map<String, Integer> list = new HashMap<String, Integer>();
+		list.put("userkey", userkey);
+		list.put("groupkey", groupkey);
+		GGroupMember groupmember = dao.groupmember(list);
+		if (userkey != -1) {
+			String date = groupmember.getRegdate();
+			String year = date.substring(0, 4) + "년 ";
+			String month = date.substring(5, 7) + "월 ";
+			String day = date.substring(8, 10) + "일";
+			String tdate = year + month + day;
+			groupmember.setRegdate(tdate);
+		}
+		return groupmember;
+	}
+
+	@Override
+	public void groupbasicupdate(GGroup group, int groupkey) {
+		Map<String, Object> list = new HashMap<String, Object>();
+		list.put("groupprivate", group.getGroupPrivate());
+		list.put("groupkatalk", group.getGroupkatalk());
+		list.put("groupkey", groupkey);
+		dao.groupbasicupdate(list);
+
 	}
 }
