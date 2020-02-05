@@ -1254,7 +1254,7 @@ $(function() {
                 $('#day' + temp).parent().addClass('calendarCellMy');
             }
 
-            $("#slistformsubmit").click(function() {
+            $(".friend-list").on("click","#slistformsubmit",function(event) {
                 var Array = [];
 
                 $('input[name="slist"]:checked').each(function(i) {
@@ -1422,6 +1422,7 @@ $(function() {
                 mlistajaxlist()
             })
 
+            
             $(".friend-list").on("click","#mtoslistformsubmit",function(event) {
                 var Array = [];
 

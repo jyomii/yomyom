@@ -779,6 +779,7 @@ public class GroupController {
 		return map;
 	}
 	
+	
 	@ResponseBody
 	@RequestMapping(value = "/stomlistajax.net")
 	public Object ajaxStomlist( @RequestParam(value="Array[]") List<Integer> list, @RequestParam(value="postkey") int postkey)
