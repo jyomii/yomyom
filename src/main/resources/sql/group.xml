@@ -11,6 +11,7 @@
 		#{groupkey}
 	</select>
 
+
 	<!-- 가입한 모임의 수 -->
 	<select id="getGroupRank" parameterType="map" resultType="group">
 
@@ -163,14 +164,14 @@
 	</select>
 
 	<update id="groupMainImgUpdate" parameterType="group">
-		update ggroup set
-		groupidorigin=#{groupIdOrigin}, groupdfile=#{groupDFile} where
+		update ggroup set 
+		groupcorigin=#{groupCOrigin}, groupcfile=#{groupCFile} where
 		groupkey=#{groupKey}
 	</update>
 
 	<update id="groupImgUpdate" parameterType="group">
 		update ggroup set
-		groupcorigin=#{groupCOrigin}, groupcfile=#{groupCFile} where
+		groupidorigin=#{groupIdOrigin}, groupdfile=#{groupDFile} where
 		groupkey=#{groupKey}
 	</update>
 

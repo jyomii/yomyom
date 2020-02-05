@@ -22,6 +22,7 @@ import co.pr.fi.domain.MemberList;
 
 @Repository
 public class GroupDAO {
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 

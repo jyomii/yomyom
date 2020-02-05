@@ -123,7 +123,6 @@ list-style: none;}
 							<form method="post" action="loginprocess">
 
 								<div class="form-group">
-
 									<button class="mtr-btn"
 										style="background: #fef01b; color: #556677; border: 0; width: 100%;"
 										onclick="location.href='kakao'">

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!-- 그룹 로그인 위젯 -->
+
 								<c:if test="${userkey==-1}">
 								<div class="widget logincenter">
 								<div class="logindiv">
@@ -32,9 +33,9 @@
 										<div class="page-meta page-metaclass">
 											<a href="#" title="" class="underline">${userinfo.groupNickname}</a>
 											<span>가입일 : ${userinfo.regdate}</span>
-											<span><i class="far fa-bell"></i>알림 <em>55</em></span>
-												<span><i class="far fa-file-alt commentmargin"></i>내가 쓴 글 보기 <em>55</em></span>
-												<span><i class="far fa-comment"></i>내가 쓴 댓글 보기 <em>55</em></span>
+											<span><i class="far fa-bell"></i>알림 </span>
+												<a href=""><span><i class="far fa-file-alt commentmargin"></i>내가 쓴 글 보기 </span></a>
+												<a href=""><span><i class="far fa-comment"></i>내가 쓴 댓글 보기 </span></a>
 										</div>
 										<div class="page-likes">
 											<ul class="nav nav-tabs likes-btn">

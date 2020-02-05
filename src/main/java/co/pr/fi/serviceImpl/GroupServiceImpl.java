@@ -24,7 +24,6 @@ import co.pr.fi.domain.MemberList;
 
 @Service
 public class GroupServiceImpl implements GroupService {
-
 	@Autowired
 	GroupDAO dao;
 
