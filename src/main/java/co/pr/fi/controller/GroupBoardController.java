@@ -142,7 +142,6 @@ public class GroupBoardController {
 		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
 		
 		int listcount = 0;
-		
 		keys.put("postkey", postKey);
 		keys.put("groupkey", groupKey);
 		

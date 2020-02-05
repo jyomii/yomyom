@@ -3,20 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!-- 그룹 로그인 위젯 -->
+
 								<c:if test="${modifycalendar.cmoneytype =='M'}">
 								<div class="widget friend-list">
 											<h4 class="widget-title">회비 참석자 관리</h4>
 											<div class="frnds">
 												<ul class="nav nav-tabs">
 													<li class="nav-item forMoneyList forMoneyListLeft"><a
-														class="active" href="#frends" data-toggle="tab">신청자</a> <span class="foremptyscount">${modifymembercount}</span></li>
+														class="active" href="#frends" data-toggle="tab">신청자</a> <span class="foremptyscount1">${modifymembercount}</span></li>
 													<li class="nav-item forMoneyList"><a class=""
-														href="#frends-req" data-toggle="tab">참석자</a><span>${modifymembercountm}</span></li>
+														href="#frends-req" data-toggle="tab">참석자</a><span class="foremptymcount">${modifymembercountm}</span></li>
 												</ul>
 												<div class="tab-content">
 													<div class="tab-pane active fade show " id="frends">
 														<div id="searchDir1"></div>
-														<ul id="people-list1" class="checkboxList foremptys">
+														<ul id="people-list1" class="checkboxList foremptys1">
 															<c:forEach var="mm" items="${modifymember}">
 															<li>
 																<figure>
@@ -48,7 +49,7 @@
 
 													<div class="tab-pane fade" id="frends-req">
 														<div id="searchDir2"></div>
-														<ul id="people-list2" class="checkboxList">
+														<ul id="people-list2" class="checkboxList foremptym">
 															<c:forEach var="mmm" items="${modifymemberm}">
 															<li>
 																<figure>

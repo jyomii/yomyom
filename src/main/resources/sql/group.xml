@@ -427,6 +427,7 @@
 		using(userkey) where a.postkey=#{postkey} and a.sm='m'
 	</select>
 
+
 	<update id="calendarstomajax" parameterType="java.util.Map">
 		update
 		calendarmember set sm='m' where postkey=#{postkey} and userkey=#{temp}

@@ -1433,9 +1433,7 @@ $(function() {
 
                 $('input[name="mlist"]:checked').each(function(i) {
                     Array.push($(this).prev().val());
-                    console.log(Array);
                 });
-                console.log(Array);
                 var postkey = $('#postkey').val()
                 var data = {
                     "postkey": $('#postkey').val(),
@@ -1531,6 +1529,7 @@ $(function() {
                         $('input[id=cstartdate]').val(date);
                     }
                 })
+                
             $("#moneyCheck").click(function() {
                 if ($("#moneyCheck").is(":checked")) {
                     $('#moneyDiv').attr('style', "display:inline;");

@@ -791,7 +791,6 @@ public class GroupController {
 		map.put("modifymembercount", modifymember.size());
 		return map;
 	}
-	
 	@ResponseBody
 	@RequestMapping(value = "/mtoslistajax.net")
 	public Object ajaxMtoslist( @RequestParam(value="Array[]") List<Integer> list, @RequestParam(value="postkey") int postkey)
