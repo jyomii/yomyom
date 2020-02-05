@@ -22,7 +22,7 @@ import co.pr.fi.domain.GCategoryName;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.PoliceDetail;
-import co.pr.fi.domain.PoliceResult;
+
 import co.pr.fi.domain.RequestCategory;
 import co.pr.fi.domain.StatisticsAge;
 import co.pr.fi.domain.StatisticsCategory;
@@ -453,7 +453,6 @@ public class AdminController {
 			break;
 		}
 
-		List<PoliceResult> policeResult = adminService.adminPolice();
 
 		// 일반 유저 목록
 
@@ -467,7 +466,6 @@ public class AdminController {
 		mv.addObject("stoplistcount", stoplistcount);
 		mv.addObject("stopallList", stopallList);
 
-		mv.addObject("policeResult", policeResult);
 		mv.addObject("page", page);
 		mv.addObject("type", ++type);
 		mv.setViewName("admin/adminusers");
