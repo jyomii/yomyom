@@ -15,6 +15,10 @@
   cursor:pointer;
 }
 
+#recentnotice:hover {
+  cursor:pointer;
+}
+
 </style>
 	
 	<section>
@@ -50,10 +54,16 @@
 						<div class="col-lg-10 col-sm-9">
 							<div class="timeline-info">
 								<ul>
-									<li class="admin-name" id="mymy">
-										<h5>${id}님의 마이페이지</h5> 
-									</li>
-
+								<c:if test="${logintype == 0 }">
+								<li class="admin-name" id="mymy">
+									<h5>${id}님의 마이페이지</h5>
+								</li>
+							</c:if>
+							<c:if test="${logintype == 1 }">
+								<li class="admin-name" id="mymy">
+									<h5>마이페이지</h5>
+								</li>
+							</c:if>
 								</ul>
 							</div>
 						</div>
@@ -767,7 +777,7 @@
 								<aside class="sidebar static">
 						
 								<div class="widget">
-											<h4 class="widget-title"><i class="ti-bell"></i>최근 알림</h4>
+											<h4 class="widget-title" id="recentnotice"><i class="ti-bell"></i>최근 알림</h4>
 											<ul class="activitiez">
 												<c:if test="${msgcount > 0 }">
 											<c:forEach var="msg" items="${myMessage}">
@@ -941,6 +951,19 @@
 		location.href = "mypage4";
 	});
 
+	
+	//알림 이동
+	$("#recentnotice").click(function() {
+		location.href = "mypage5";
+		return false;
+	});
+	
+	
+	//모임 이동
+	$("#mymygroups").click(function() {
+		location.href = "mypage6";
+		return false;
+	});
 	</script>	
 	
 	</body>

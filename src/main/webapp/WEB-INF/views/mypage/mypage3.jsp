@@ -28,6 +28,10 @@ list-style: none;}
   cursor:pointer;
 }
 
+#recentnotice:hover {
+  cursor:pointer;
+}
+
 }
 </style>
 
@@ -64,10 +68,16 @@ list-style: none;}
 						<div class="col-lg-10 col-sm-9">
 							<div class="timeline-info">
 								<ul>
-									<li class="admin-name" id="mymy">
-										<h5>${id}님의 마이페이지</h5> 
-									</li>
-
+									<c:if test="${logintype == 0 }">
+								<li class="admin-name" id="mymy">
+									<h5>${id}님의 마이페이지</h5>
+								</li>
+							</c:if>
+							<c:if test="${logintype == 1 }">
+								<li class="admin-name" id="mymy">
+									<h5>마이페이지</h5>
+								</li>
+							</c:if>
 								</ul>
 							</div>
 						</div>
@@ -211,7 +221,7 @@ list-style: none;}
 							<aside class="sidebar static">
 
 								<div class="widget">
-									<h4 class="widget-title">
+									<h4 class="widget-title" id="recentnotice">
 										<i class="ti-bell"></i>최근 알림
 									</h4>
 									<ul class="activitiez">
@@ -350,11 +360,11 @@ $('#update').click(
 					console.log(categorykey[j]);
 				}
 				
-			}
+			
 			
 			$.ajax({
 
-				method : "post",
+				type : "post",
 				url : "updateprocess2",
 				data : object,
 				success : function(result) {
@@ -362,7 +372,7 @@ $('#update').click(
 					if (result == 1) {
 
 						alert("관심 카테고리가 수정되었습니다.");
-						location.href = "mypage3";
+						location.reload();
 
 					} else {
 						alert("관심 카테고리 수정 실패입니다.");
@@ -371,7 +381,7 @@ $('#update').click(
 
 			});
 
-		
+			}
 	});
 
 
@@ -408,6 +418,18 @@ $('#update').click(
 		$('.tab-content li').removeClass('tabcontentClick');
 		$(this).addClass('tabcontentClick');
 
+	});
+	
+	//알림 이동
+	$("#recentnotice").click(function() {
+		location.href = "mypage5";
+		return false;
+	});
+	
+	//모임 이동
+	$("#mymygroups").click(function() {
+		location.href = "mypage6";
+		return false;
 	});
 </script>
 </body>

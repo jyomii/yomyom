@@ -65,6 +65,8 @@
 			type="co.pr.fi.domain.Shortschedule" />
 			<typeAlias alias="userreggroup"
 			type="co.pr.fi.domain.UserRegGroup" />
+			<typeAlias alias="userlikegroup"
+			type="co.pr.fi.domain.UserLikeGroup" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="sql/message.xml"></mapper>
