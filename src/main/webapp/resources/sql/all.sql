@@ -275,6 +275,7 @@ CREATE TABLE ggroupmember
     usergrade        NUMBER          NOT NULL, 
     profilefile		 varchar2(100)	 NOT NULL,
     profileorigin	 varchar2(100) 	 NOT NULL,
+    regdate		date		,
     CONSTRAINT GGROUPMEMBERPK PRIMARY KEY (groupkey,userkey)
 );
 
