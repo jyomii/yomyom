@@ -74,7 +74,8 @@ public class GroupCommentController {
 			return data;
 		}
 		
-		listcount = groupBoardService.getCommentCount(data); 		// 현재 게시글에 해당하는 댓글수
+		listcount = groupCommentService.getCommentCount(data); 		// 현재 게시글에 해당하는 댓글수
+		//listcount = groupBoardService.getCommentCount(data); 		// 현재 게시글에 해당하는 댓글수
 
 		int page = 1;
 		int limit = 10;
@@ -106,7 +107,7 @@ public class GroupCommentController {
 		System.out.println("postKey = " + postKey + ", groupKey = " + groupKey);
 		
 		Map<String, Object> data = new HashMap<String, Object>();
-		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
+		List<GComment> commentList = new ArrayList<GComment>();	// 현재 글에 달린 댓글 리스트
 		
 		int listcount = 0;
 		
@@ -156,15 +157,22 @@ public class GroupCommentController {
 	// # 댓글 삭제
 	@ResponseBody
 	@PostMapping("deleteReply")
-	public Object deleteReply (@RequestParam(required = false, defaultValue = "-1") int commentnum,
+	public Object deleteReply (@RequestParam(required = true, defaultValue = "-1") int commentnum,
 							   HttpSession session) {
 		
 		Map<String, Object> keys = new HashMap<String, Object>();
+		List<GComment> commentList = new ArrayList<GComment>();	// 현재 글에 달린 댓글 리스트
+		int listcount = 0;
 		
 		int result = groupCommentService.commentDelete(commentnum);
 		if (result == 0) {	// 삭제 실패
 			keys.put("result", result);
+			return keys;
 		}
+		
+		// 여기 keys가 뭘 받는지 체크 ###
+		listcount = groupBoardService.getCommentCount(keys); 		// 현재 게시글에 해당하는 댓글수
+		
 		
 		return keys;
 	}

@@ -70,7 +70,7 @@
 						AND GROUPKEY = #{groupkey}
 						) M
 				WHERE C.USERKEY = M.USERKEY AND C.POSTKEY = #{postkey}
-				ORDER BY COMMENTDATE) B) 
+				ORDER BY COMMEMTREREF ASC, COMMENTRESEQ ASC) B) 
 		WHERE R >= #{START} AND R <= #{END}
 	]]>
 	</select>
@@ -86,13 +86,6 @@
 		USING(POSTKEY)					 						  
 		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}			
 	</select>
-	
-	<!-- 댓글수 -->
-	<!-- <select id = "getCommentedCount" resultType = "int" parameterType = "map">
-		SELECT COUNT(*)
-		FROM GCOMMENT
-		WHERE POSTKEY = #{postkey}
-	</select> -->
 	
 	<select id = "getCommentCount" resultType = "int" parameterType = "map">
 		SELECT COUNT(*)
