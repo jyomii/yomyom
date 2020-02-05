@@ -397,7 +397,6 @@ public class GroupServiceImpl implements GroupService {
 		dao.calendarmtosajax(list);
 	}
 
-	
 	@Override
 	public int getScheduleListCount(int groupkey) {
 		return dao.schedulelistcount(groupkey);

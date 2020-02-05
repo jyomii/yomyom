@@ -193,7 +193,6 @@ public class GroupDAO {
 		
 	}
 	
-	
 	public void calendarmtosajax(Map<String, Integer> list) {
 		sqlSession.update("group.calendarmtosajax",list);
 		

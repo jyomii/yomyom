@@ -141,7 +141,6 @@ public class GroupBoardController {
 		Post post = new Post();	// 게시글 관련
 		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
 		int listcount = 0;	// 댓글수 변수
-		
 		keys.put("postkey", postkey);
 		keys.put("groupkey", groupkey);
 		keys.put("userkey", loginuser);
