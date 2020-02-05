@@ -90,8 +90,8 @@ public class MemberController {
 
 	@GetMapping("/kokoalogin")
 	public String kakao(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "code", required = false) String code, HttpSession session, RedirectAttributes rttr,
-			HttpServletResponse resp) throws IOException {
+			@RequestParam(value = "code", required = false) String code, HttpSession session,
+			RedirectAttributes rttr, HttpServletResponse resp) throws IOException {
 
 		if (code != null) {
 			String access_Token = kakao.getAccessToken(code);
@@ -190,9 +190,7 @@ public class MemberController {
 
 			// 일반 가입자일 경우 패스워드encoding
 			String encPassword = passwordEncoder.encode(password);
-			System.out.println("encPassword:" + encPassword);
-			System.out.println("encPassword:" + encPassword);
-
+			
 			guser.setUserPassword(encPassword);
 			guser.setUserEmail(email);
 		} else {
@@ -323,7 +321,7 @@ public class MemberController {
 				session.setAttribute("id", id);
 				session.setAttribute("userkey", user.getUserKey());
 				session.setAttribute("image", user.getUserImageFile());
-				session.setAttribute("logintype", 0); // 0: 일반 1: kakao 2: naver 3. facebook
+				session.setAttribute("logintype", 0); // 0: 일반 1: kakao 
 
 				Cookie cookie = new Cookie("saveid", id);
 
