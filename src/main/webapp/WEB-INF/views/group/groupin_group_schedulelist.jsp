@@ -328,6 +328,7 @@ top:-9px;
 	margin-top: 3px;
 }
 
+
 .search-text-btn {
 	margin-left: 2%;
 	padding-left: 20px;
@@ -466,6 +467,7 @@ top:-9px;
 											<span><i class="fa fa-users"></i>${boardname }</span>
 										</div>
 										<ul class="nearby-contct">
+										<c:if test="${not empty groupmeetinglist }">
 									<c:forEach var="gmtl" items="${groupmeetinglist }">
 										<c:choose>
 											<c:when test="${gmtl.rownum+0 ==1}">
@@ -569,6 +571,12 @@ top:-9px;
 											</div>
 										</li>
 									</c:forEach>
+									</c:if>
+									<c:if test="${empty groupmeetinglist }">
+										<div class="text-align-center">
+										<span>예정된 모임이 없습니다</span>
+										</div>
+									</c:if>
 								</ul>
 <!-- 페이지네이션 -->
 										<div class="row row-pagination">

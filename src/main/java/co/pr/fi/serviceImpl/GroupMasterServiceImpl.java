@@ -12,6 +12,7 @@ import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.service.GroupMasterService;
+import co.pr.fi.task.CheckParameter;
 
 @Service
 public class GroupMasterServiceImpl implements GroupMasterService {
@@ -27,8 +28,8 @@ public class GroupMasterServiceImpl implements GroupMasterService {
 
 	@Override
 	public int insertGroup(GGroup group) {
-		
-		
+		group.setGroupName(CheckParameter.replaceParameter(group.getGroupName()));
+		group.setGroupInfo(CheckParameter.replaceParameter(group.getGroupInfo()));
 		return dao.insertGroup(group);
 	}
 

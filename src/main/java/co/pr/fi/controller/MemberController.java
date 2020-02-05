@@ -113,7 +113,7 @@ public class MemberController {
 					session.setAttribute("userkey", checkId.getUserKey());
 					session.setAttribute("logintype", 1); // 0: 일반 1: kakao 2: naver 3. facebook
 					session.setAttribute("access_token", access_Token);
-
+					session.setAttribute("image", checkId.getUserImageFile());
 					return "redirect:main2";
 					// 탈퇴예정
 				} else if (checkId.getUserStatus() == 1) {

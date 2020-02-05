@@ -1,4 +1,7 @@
+
 -- glocation Table Create SQL
+DROP TABLE delete_File;
+drop table requestcategory;
 DROP TABLE userlikegroup;
 DROP SEQUENCE userlikegroupSEQ;
 
@@ -361,17 +364,20 @@ INCREMENT BY 1;
 
 CREATE TABLE calendar
 (
-    cstartdate             varchar2(50)      NOT NULL, 
+    cstartdate             date     NOT NULL, 
     cenddate               varchar2(50)      NOT NULL, 
     cmoney                  varchar2(50)    NOT NULL, 
     postkey                 NUMBER    NOT NULL, 
     grouplocation           NUMBER    NOT NULL, 
     grouplocationdetail    NUMBER    NULL, 
-    cmoneytype varchar2(5)
+    cmoneytype varchar2(5),
     CONSTRAINT CALENDARPK PRIMARY KEY (postkey)
 );
 /*나상엽 추가*/
 ALTER TABLE calendar ADD (cmoneytype varchar2(5));
+ALTER TABLE calendar ADD (startdate varchar2(50));
+ALTER TABLE calendar ADD (starttime varchar2(50));
+ALTER TABLE calendar ADD (startminute varchar2(50));
 
 
 
@@ -501,8 +507,9 @@ CREATE TABLE calendarmember
     groupkey    NUMBER    NOT NULL, 
     CONSTRAINT CALENDARMEMBERPK PRIMARY KEY (userkey, postkey, groupkey)
 );
-
-
+/*회비 낸사람 안낸사람 컬럼 추가 나상엽*/
+ALTER TABLE calendarmember ADD (sm varchar2(5));
+update CALENDARMEMBER set sm = 's';
 
 ALTER TABLE calendarmember
     ADD CONSTRAINT FKcalendarmemberpostkeyca FOREIGN KEY (postkey)
@@ -546,8 +553,8 @@ CREATE TABLE maps
     mapseq    NUMBER         NOT NULL, 
     maplevel  number 		 null,
     maplat         NUMBER(20,15)     NULL, 
-    maplng         NUMBER(20,15)     NULL
- 
+    maplng         NUMBER(20,15)     NULL,
+   mapdetailseq	number
 );
 
 

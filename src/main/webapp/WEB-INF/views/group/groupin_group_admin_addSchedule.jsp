@@ -988,6 +988,7 @@ function saveMap(postkey) {
 			mapoption : 'M',
 			mapseq : index++
 
+
 		};
 
 		if (i == 0) {
@@ -1002,6 +1003,8 @@ function saveMap(postkey) {
 
 	//선 정보 DB화
 	//선 묶음 
+	 var detailseq = 0;
+
 	for (var j = 0; j < ReturnValue.polyline.length; j++) {
 
 		//j번 선정보의 선묶음
@@ -1012,8 +1015,17 @@ function saveMap(postkey) {
 				lat : ReturnValue.polyline[j].points[k].y,
 				lng : ReturnValue.polyline[j].points[k].x,
 				mapoption : 'L',
-				mapseq : index
+				mapseq : index,
+				mapdetailseq : detailseq++
+
 			};
+			
+			
+			if(info.length == 0){
+                item.maplevel = Level;
+                item.maplat = Latlng.getLat();
+                item.maplng = Latlng.getLng();
+             }
 
 			info.push(item);
 

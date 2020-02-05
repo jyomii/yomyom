@@ -41,5 +41,6 @@ public interface CategoryService {
 
 	List<GUsers> getUserRequestCategory(String sname, String dname);
 
+	int interestupdate(Map<String, Object> usercategory);
 
 }

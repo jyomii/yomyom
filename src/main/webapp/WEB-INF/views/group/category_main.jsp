@@ -2,11 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
 
 
+<link rel="stylesheet" href="resources/css/forWidget.css">
 <!-- Header end -->
 <style>
 
@@ -19,217 +20,6 @@ overflow:hidden;
 }
 .carousel-inner {
 	height: 50vh;
-}
-
-.forgroupname {
-	list-style: none;
-	padding-top: 20px;
-}
-
-.forgroupnamewidth {
-	width: 30%;
-	display: inline-block;
-}
-
-.forgroupnamewidth1 {
-	width: 60%;
-	display: inline-block;
-}
-
-.forgroupnameleft {
-	float: left;
-	list-style: none;
-	margin-right: 20px;
-}
-
-.forlogintitle {
-	margin-bottom: 10px !important;
-}
-
-.forSubmitBtnDiv {
-	margin-top: 0px !important;
-	margin-bottom: 10px;
-}
-
-.forLoginBtn {
-	padding-left: 25px !important;
-	padding-right: 25px !important;
-	margin-left: 13%;
-}
-
-.forMemberCountBtnOne {
-	margin-top: 0px !important;
-	padding: 3px !important;
-}
-
-.forMemberCountBtnTwo {
-	margin-top: 0px !important;
-	padding: 3px !important;
-}
-
-.forMemberCountBtnThree {
-	margin-top: 0px !important;
-	padding: 3px !important;
-}
-
-.forMemberCountBtnFour {
-	margin-top: 0px !important;
-	padding: 3px !important;
-}
-
-.forMemberCountBtnFive {
-	margin-top: 0px !important;
-	padding: 3px !important;
-}
-
-.forMemberCountBtnSix {
-	margin-top: 0px !important;
-	padding: 3px !important;
-}
-
-.forMemberCountBtnSeven {
-	margin-top: 0px !important;
-	padding: 3px !important;
-}
-
-.forJoinBtn {
-	margin-top: 0px !important;
-	padding: 5px !important;
-	float: right;
-	font-size: 14px !important;
-}
-
-.forRegisterBtn {
-	padding-left: 20px !important;
-	padding-right: 20px !important;
-	margin-left: 10%;
-}
-
-.forRememberIdDiv {
-	margin-bottom: 0px !important;
-	margin-top: 5px !important;
-}
-
-.forcheckbox {
-	margin-top: 3px;
-}
-
-.calendarDiv {
-	text-align: center;
-	width: 95%;
-	margin: 0 auto;
-}
-
-.calendarTable {
-	width: 80%;
-	margin: 0 auto;
-}
-
-.calendarBtn {
-	cursor: pointer;
-}
-
-.calendarCell {
-	cursor: pointer;
-}
-
-.calendarDiv td {
-	border-radius: 13px;
-}
-
-.calendarCellSelected {
-	background-color: #4F93CE;
-	color: white !important;
-}
-
-.calendarCellMy {
-	background-color: black;
-	color: white !important;
-}
-
-.scheduleDiv {
-	width: 80%;
-	margin: 0 auto;
-}
-
-.scheduleUl {
-	padding-left: 0px !important;
-}
-
-.card-header-bgcolor {
-	background: white none repeat scroll 0 0 !important;
-}
-
-.schedule-span {
-	margin-bottom: 7px;
-	width: 70% !important;
-}
-
-.schedule-span1 {
-	width: 35% !important;
-}
-
-.nearby-contct>li {
-	padding: 15 px !important;
-}
-
-.paddingZero[aria-expanded="true"] {
-	background: #088dcd;
-	color: #fff;
-	text-decoration: none;
-}
-
-.groupMember {
-	display: inline-block;
-	list-style: outside none none;
-	margin-bottom: 0;
-	padding: 0 25px 20px;
-	width: 100%;
-	max-height: 300px !important;
-}
-
-.groupMember li {
-	display: inline-block;
-	margin-bottom: 20px;
-	position: relative;
-	width: 100%;
-}
-
-.your-page-groupList li {
-	margin-bottom: 3px !important;
-}
-
-.your-page-groupListDiv {
-	min-height: 273px;
-}
-
-.min-width-h4 {
-	margin-bottom: 0px !important;
-}
-
-.height-for-white {
-	height: 70px !important;
-}
-
-.calendarBtn {
-	cursor: pointer
-}
-
-#calendar td {
-	cursor: pointer
-}
-
-.katalkbtn {
-	background-color: #423630 !important;
-	color: white !important;
-}
-
-.katalkbtn:hover {
-	background-color: #594941 !important;
-}
-
-.katalkbtnw {
-	color: #423630 !important;
 }
 
 
@@ -426,7 +216,7 @@ animation: crescendo 6s alternate infinite ease-in;
 										<div class="g-post-meta">
 											<div class="post-title">
 												<h4>
-													<a title="" href="#">${item.groupName }</a>
+													<a title="이동" href="groupmain.net?groupkey=${item.groupKey }">${item.groupName }</a>
 												</h4>
 												<p class="text-end">${item.groupInfo }</p>
 												<span class="p-date">${item.lastDate} 마지막 활동 </span>
@@ -466,7 +256,7 @@ animation: crescendo 6s alternate infinite ease-in;
 												</figure>
 												<div class="pepl-info">
 													<h4>
-														<a href="time-line.html" title="">${item.groupName }</a>
+														<a href="groupmain.net?groupkey=${item.groupKey }" title="">${item.groupName }</a>
 													</h4>
 													<span class="text-end">${item.groupInfo }</span>
 												</div>
@@ -539,10 +329,11 @@ animation: crescendo 6s alternate infinite ease-in;
 <!-- footer end -->
 
 
+<script src="resources/js/forWidget.js"></script>
 
 <!-- 각 content에서 사용하는 script -->
 <script>
-	buildCalendar();
+
 
 	$(function() {
 		$('.carousel').on('slide.bs.carousel', function () {

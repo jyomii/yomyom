@@ -2,6 +2,7 @@ package co.pr.fi.domain;
 
 import org.springframework.web.multipart.MultipartFile;
 
+
 //모임참여자 
 public class GGroupMember {
 

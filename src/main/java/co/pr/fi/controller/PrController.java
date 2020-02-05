@@ -2,7 +2,9 @@ package co.pr.fi.controller;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
+import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.PrBoard;
+import co.pr.fi.service.CategoryService;
+import co.pr.fi.service.MemberService;
 import co.pr.fi.service.PrService;
 
 @Controller
@@ -29,26 +34,43 @@ public class PrController {
 	@Autowired
 	PrService prService;
 	
+	@Autowired
+	CategoryService categoryService;
 	
+	@Autowired
+	MemberService memberService;
 	
 	//글쓰기
 	@GetMapping("/prwrite")
-	public ModelAndView PrWrite(PrBoard prboard, HttpSession session,
+	public ModelAndView PrWrite(HttpSession session,
 			HttpServletRequest request, ModelAndView mv) throws Exception{
 		String id = (String)session.getAttribute("id");
 	    List<GGroup> group = prService.userinfo(id);
 	    //System.out.println("!!!!!!!!!!!!!"+group.get(0).getGroupName());
 	    
+	    GUsers users = memberService.getUsers((String)session.getAttribute("id"));
+	    
+
 	    mv.setViewName("prboard/prwrite");
 	    mv.addObject("list", group); 
+	    mv.addObject("userInfo", users);
+	    mv.addObject("dcategory", categoryService.getDCategory());
+	    
 		
 		return mv;
 	}
 	
 	//글 쓰기처리
     @RequestMapping(value="/prAdd", method= RequestMethod.POST)
-    public String prwrite_add(PrBoard prboard,  HttpSession session, HttpServletRequest request) throws Exception{
-    	prService.insertBoard(prboard);
+    public String prwrite_add(PrBoard prboard,  
+    		        HttpSession session, HttpServletRequest request) throws Exception{
+    	
+    	
+        prService.insertBoard(prboard);
+        
+        System.out.println("$$#$#@@#@%@%!$@!#@!#!@#@!"+prboard.getGroupKey());
+        System.out.println("$$#$#@@#@%@%!$@!#@!#!@#@!"+prboard.getUserKey());
+    	
     	return "redirect:prboard";
     	
     }
@@ -82,8 +104,9 @@ public class PrController {
 		      List<PrBoard> list = prService.getBoardList(page, limit);
 		      System.out.println("page =" + page);
 		      System.out.println("limit =" + limit);
-		      System.out.println("$$$$$$$$$$"+ list.get(0).getGroupDFile());
+		      //System.out.println("$$$$$$$$$$"+ list.get(0).getGroupDFile());
 		     
+		      GUsers users = memberService.getUsers((String)session.getAttribute("id"));
 		      
 		      model.setViewName("prboard/prboard");
 		      model.addObject("page", page);
@@ -94,6 +117,8 @@ public class PrController {
 		      model.addObject("boardlist", list);
 		      model.addObject("listcount", listcount);
 		      model.addObject("writeuser", writeuser);
+		      model.addObject("userInfo", users);
+	  	      model.addObject("dcategory", categoryService.getDCategory());
 		      return model;
 		   }
 	
@@ -102,81 +127,64 @@ public class PrController {
 
     
 	//글 수정
-	@GetMapping(value= "/prModifyView")
-	public ModelAndView PrModifyView(int prKey, ModelAndView mv,
+	@GetMapping(value= "/prmodify")
+	public ModelAndView PrModifyView(int prKey, PrBoard prboard, ModelAndView mv, HttpSession session,
 			HttpServletRequest request) throws Exception {
 		
 		PrBoard boarddata = prService.getDetail(prKey);
-		//글 내용 불러오기 실패한 경우
-		if(boarddata == null) {
-			System.out.println("수정 상세보기 실패");
-			mv.addObject("message", "수정 상세보기 실패입니다.");
-		}
-			System.out.println("수정 상세보기 성공");
-			
+
+		   
+		GUsers users = memberService.getUsers((String)session.getAttribute("id"));
+		
+		String id = (String)session.getAttribute("id");
+	    List<GGroup> group = prService.userinfo(id);
+		
+	    
+		
 			mv.addObject("boarddata", boarddata);
+			mv.addObject("userInfo", users);
+			mv.addObject("list", group); 
+			mv.addObject("dcategory", categoryService.getDCategory());
 			
 			//글 수정 폼 페이지로 이동하기 위해 경로를 설정한다.
 			mv.setViewName("prboard/prmodify");
 		return mv;
 	}
 	
-	//글 수정
-		@PostMapping(value = "/prModifyAction")
-		public ModelAndView PrModifyAction(PrBoard prboard, int userkey, 
-				ModelAndView mv, HttpServletRequest request, 
+	//글 수정처리
+	 @PostMapping(value="prModifyAction")
+		public ModelAndView PrUpdateAction(PrBoard prboard, 
+				 HttpServletRequest request, ModelAndView mv,
 				HttpServletResponse response) throws Exception{
-			boolean usercheck = 
-					prService.isBoardWriter(prboard.getUserKey());
-			
-			//유저키가 다른 경우
-			if(usercheck == false) {
-				response.setContentType("text/html;charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('글쓴이가 아닙니다. 수정불가');");
-				out.println("history.back();");
-				out.println("</script>");
-				out.close();
-				return null;
-			}
-		
-			//DAO에서수정 메서드 호출하여 수정한다
+		 	
+		 System.out.println("!#@@@++++++++++______"+prboard.getContent());
+		 
 			int result = prService.boardModify(prboard);
 			
-			//수정에 실패한 경우
-			if(result == 0) {
-				System.out.println("수정 실패");
-				mv.addObject("message", "수정 실패");
-			}else { //수정 성공의 경우
-				System.out.println("수정 완료");
-			
-				mv.setViewName("prboard/prboard");
-			}
-			return mv;
+			 //수정 실패한 경우
+	    	 if(result == 0) {
+	    		 System.out.println("수정 실패");
+	    	 }
+	    	 else {
+	    	 
+	    	 //수정 성공한 경우 - 글 목록 보기 요청을 전송하는 부분
+	    	 System.out.println("수정 성공");
+	    	 
+	    	 String url = "redirect:prboard";
+	    	 
+	    	 mv.setViewName(url);
+	    	 }
+			 return mv;
+	    	 
 		
 		}
 
 	
-     @PostMapping("BoardDeleteAction")
-     public String BoardDeleteAction(int userKey,  HttpServletResponse response) throws Exception {
+     @PostMapping("prDeleteAction")
+     public String prDeleteAction(int prKey,  HttpServletResponse response) throws Exception {
      
-    	 //글쓴이 맞는지 유저키로 확인
-    	 boolean usercheck = prService.isBoardWriter(userKey);
+    	 int result = prService.boardDelete(prKey);
     	 
-    	 //유저키 일치하지 않는 경우
-    	 if(usercheck == false) {
-    		 response.setContentType("text/html;charset=utf-8");
-    		 PrintWriter out = response.getWriter();
-    		 out.println("<script>");
-    		 out.println("alert('글쓴이가 아닙니다. 삭제불가');");
-    		 out.println("history.back();");
-    		 out.println("</script>");
-    		 out.close();
-    		 return null;
-    	 }
-    	 //일치하는 경우 삭제
-    	 int result = prService.boardDelete(userKey);
     	 
     	 //삭제 실패한 경우
     	 if(result == 0) {
@@ -195,5 +203,16 @@ public class PrController {
 		 return null;
     	 
      }
+     
+    //카테고리 
+    @ResponseBody
+ 	@GetMapping("/allDCategory")
+ 	public Map<String, Object> allDCategory() {
+
+ 		Map<String, Object> map = new HashMap<String, Object>();
+ 		map.put("dcategory", categoryService.getDCategory());
+
+ 		return map;
+ 	}
      
 }

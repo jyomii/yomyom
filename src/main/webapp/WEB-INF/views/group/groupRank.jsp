@@ -8,6 +8,8 @@
 .grouprank{
 margin-right: 16px;
 }
+.heigtCustom{
+height: 50px;}
 </style>
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
@@ -37,11 +39,11 @@ margin-right: 16px;
 													<figure>
 																	<c:choose>
 																		<c:when test="${empty item.groupDFile }">
-																			<img src="resources/images/group_default.png"
+																			<img class="heigtCustom" src="resources/images/group_default.png"
 																				alt="">
 																		</c:when>
 																		<c:otherwise>
-																			<img
+																			<img  class="heigtCustom" 
 																				src="<spring:url value='/image${item.groupDFile }'/>" />
 																		</c:otherwise>
 																	</c:choose>
@@ -49,8 +51,8 @@ margin-right: 16px;
 													
 													</figure>
 													<div class="notifi-meta">
-														<p><a href="group_main.net?groupkey=${item.groupKey}">${item.groupName}</a></p>
-														<span>3${item.groupInfo }</span>
+														<p><a href="groupmain.net?groupkey=${item.groupKey}">${item.groupName}</a></p>
+														<span>${item.groupInfo }</span>
 													</div>
 												
 												<c:choose>
@@ -102,6 +104,7 @@ var page = 1;
 
 var count = $('.notification-box li').length;
 
+
 if(count < 10)
 	$('.btn-load-more').css(
 			'visibility', 'hidden');
@@ -147,13 +150,13 @@ function print(result){
 		
 		
 		if (result[i].groupDFile == null)
-			txt += '<img src= "resources/images/group_default.png" alt="">';
+			txt += '<img  class="heigtCustom"  src= "resources/images/group_default.png" alt="">';
 		else
-			txt += "<img src= \'<spring:url value='/image"+result[i].groupDFile +"'/>\'/>";
+			txt += "<img  class='heigtCustom'  src= \'<spring:url value='/image"+result[i].groupDFile +"'/>\'/>";
 			
 		txt += '</figure>';
 		txt += '<div class="notifi-meta">';
-		txt += '<p><a href="group_main.net?groupkey='+result[i].groupKey+'">'+result[i].groupName+'</a></p>';
+		txt += '<p><a href="groupmain.net?groupkey='+result[i].groupKey+'">'+result[i].groupName+'</a></p>';
 		txt += '<span>'+result[i].groupInfo+'</span>';
 		txt += '	</div>';
 		txt += '</li>';

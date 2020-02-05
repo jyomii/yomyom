@@ -12,6 +12,7 @@ import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.CalendarMember;
+import co.pr.fi.domain.GCalendar;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
@@ -283,6 +284,7 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public void addschedulecalendar(Post post) {
+		post.setStartdate(post.getCstartdate().toString());
 		String date = post.getCstartdate().toString().replace(" ", "");
 		String year = date.substring(0, 4);
 		String month = date.substring(5, date.indexOf("월"));
@@ -320,5 +322,100 @@ public class GroupServiceImpl implements GroupService {
 		list.put("endrow", endrow);
 		return dao.getGroupRank(list);
 
+	}
+
+	@Override
+	public Post modifypost(int postkey) {
+		return dao.modifypost(postkey);
+	}
+
+	
+	@Override
+	public CalendarList modifycalendar(int postkey) {
+		return dao.modifycalendar(postkey);
+	}
+
+	@Override
+	public List<MemberList> modifymember(int postkey) {
+		return dao.modifymember(postkey);
+	}
+
+	@Override
+	public void calendardeleteajax(int temp, int postkey) {
+		Map<String, Integer> list = new HashMap<String, Integer>();
+		list.put("temp", temp);
+		list.put("postkey", postkey);
+		dao.calendardeleteajax(list);
+		
+	}
+
+	@Override
+	public void updateschedule(Post post) {
+		dao.updateSchedule(post);
+		
+	}
+
+	@Override
+	public void updateschedulecalendar(Post post) {
+		post.setStartdate(post.getCstartdate().toString());
+		String date = post.getCstartdate().toString().replace(" ", "");
+		String year = date.substring(0, 4);
+		String month = date.substring(5, date.indexOf("월"));
+		if (month.length() == 1) {
+			month = "0" + month;
+		}
+		String day = date.substring((date.indexOf("월") + 1), date.indexOf("일"));
+		if (day.length() == 1) {
+			day = "0" + day;
+		}
+		String time = post.getTime();
+		String minute = post.getMinute();
+
+		String input = year + "-" + month + "-" + day + " " + time + ":" + minute;
+		post.setCstartdate(input);
+		dao.updateScheduleCalendar(post);
+	}
+
+	@Override
+	public List<MemberList> modifymemberm(int postkey) {
+		return dao.modifymemberm(postkey);
+	}
+
+	@Override
+	public void calendarstomajax(int temp, int postkey) {
+		Map<String, Integer> list = new HashMap<String, Integer>();
+		list.put("temp", temp);
+		list.put("postkey", postkey);
+		dao.calendarstomajax(list);
+	}
+	
+	@Override
+	public void calendarmtosajax(int temp, int postkey) {
+		Map<String, Integer> list = new HashMap<String, Integer>();
+		list.put("temp", temp);
+		list.put("postkey", postkey);
+		dao.calendarmtosajax(list);
+	}
+
+	
+	@Override
+	public int getScheduleListCount(int groupkey) {
+		return dao.schedulelistcount(groupkey);
+	}
+	@Override
+	public List<Post> getBoardList(int page, int limit, int groupkey) {
+		Map<String, Integer> list = new HashMap<String, Integer>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		list.put("start", startrow);
+		list.put("end", endrow);
+		list.put("groupkey", groupkey);
+		return dao.getboardlist(list);
+	}
+
+	@Override
+	public void scheduledelete(int postkey) {
+		dao.scheduledelete(postkey);
+		
 	}
 }

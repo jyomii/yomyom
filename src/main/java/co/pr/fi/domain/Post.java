@@ -1,6 +1,7 @@
 
 package co.pr.fi.domain;
 
+
 // 게시글 
 public class Post {
 	private int rownum;
@@ -58,6 +59,7 @@ public class Post {
 
 	
 	private String cstartdate;
+	private String startdate;
 	private String cenddate;
 	private String cmoney;
 	private int maxperson;
@@ -67,7 +69,14 @@ public class Post {
 	private String cmoneytype;
 	private String time;
 	private String minute;
-	
+	public String getStartdate() {
+		return startdate;
+	}
+
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
+
 	public String getTime() {
 		return time;
 	}

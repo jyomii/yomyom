@@ -3,9 +3,12 @@ package co.pr.fi.service;
 import java.util.List;
 
 import co.pr.fi.domain.GCategory2;
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUserCategory;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.Post;
+import co.pr.fi.domain.UserLikeGroup;
 
 //마이페이지 처리
 public interface MyPageService {
@@ -24,14 +27,31 @@ public interface MyPageService {
 
 	public List<GCategory2> userInterest(String id);
 
-	public GUserCategory category(String id);
-
-	public int myupdate2(GUserCategory category);
+	public List<GUserCategory> category(String id);
 
 	public int userImgUpdate(GUsers user);
 
-	public int insertPic(GUsers user);
+	public int getListCount(String id);
 
+	public List<Post> getPostList(int page, int limit);
+
+	public int postcount(String id);
+
+	public int commcount(String id);
+
+    public List<Post> getList(String id);
+
+	public List<GComment> getListList(String id);
+
+	public int msgCount(int userKey);
+
+	public List<UserLikeGroup> favlist(int userKey);
+
+	public int favcount(int userKey);
+
+	public int favgroupD(int userKey);
+
+	public int favgroup(int userKey, int groupKey);
 
     
 }

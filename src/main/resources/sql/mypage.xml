@@ -4,7 +4,7 @@
 <mapper namespace="Mypages">
 
 	<select id="info" resultType="member" parameterType="String">
-	 select g.userId, g.userAge, g.gender, g.userEmail, l.sWhere || l.dwhere as locationName, g.userJoinDate, g.userImageOrigin, g.userImageFile, userLocation
+	 select g.userKey, g.userId, g.userAge, g.gender, g.userEmail, l.sWhere || l.dwhere as locationName, g.userJoinDate, g.userImageOrigin, g.userImageFile, userLocation
      from GUsers g, GLocation l
 		where userId = #{id}
 		and locationKey=(select userLocation from GUsers where userId = #{id})
@@ -40,21 +40,68 @@
 	</select>
 	
 	<select id="userInterest" resultType="scategory" parameterType="String">
-	      select * from GCategory2 where sCategoryKey IN (select categoryKey from GUserCategory where userKey = (select userKey from GUsers where userId = #{id}))
+	      select * from GCategory2 where sCategoryKey IN 
+	      (select categoryKey from GUserCategory where userKey = (select userKey from GUsers where userId = #{id}))
 	</select>
-	
-	<insert id="insertPic" parameterType="member">
-	    insert into gusers (userImageOrigin, userImageFile)
-	    values(#{userImageOrigin}, #{userImageFile})
-	    where userKey = (select userKey from GUsers where userId = #{id})
-	</insert>
 	
 	<update id="imgUpdate" parameterType="member">
 	    update gusers set
 		userImageOrigin=#{userImageOrigin}, userImageFile=#{userImageFile} 
-		where userKey= (select userKey from GUsers where userId = #{id})
+		where userKey= #{userKey}
 	</update>
 	
+	<select id="postlist" parameterType="java.util.Map" resultType="post">
+	    select * from post where userKey = (select userKey from GUsers where userId = #{id})
+	</select>
 
+    <select id="postcount" resultType="int" parameterType="String">
+	      select count(*) from Post where userKey = (select userKey from GUsers where userId = #{id})
+	</select>
+	
+	<select id="commcount" resultType="int" parameterType="String">
+	      select count(*) from GComment where userKey = (select userKey from GUsers where userId = #{id})
+	</select>
+	
+	<select id="category" resultType="gusercategory" parameterType="String">
+	      select * from GUserCategory where userKey = (select userKey from GUsers where userId = #{id})
+	</select>
 
+    <select id="count" resultType="int" parameterType="String">
+        select count(*) from Post where userKey = (select userKey from GUsers where userId = #{id})
+    </select>
+    
+    <select id="listlist" resultType="post" parameterType="String">
+        select * from post where userKey = (select userKey from GUsers where userId = #{id})
+    </select>
+    
+    <select id="listlistlist" resultType="comment" parameterType="String">
+        SELECT * FROM GCOMMENT WHERE userKey = (select userKey from GUsers where userId = #{id})
+        ORDER BY commentDate DESC
+    </select>
+    
+    <select id="msgcount" resultType="int" parameterType="int">
+       select count(*) from UserMessage where mgReceive = #{userKey}
+    </select>
+    
+    <select id="favlist" resultType="userlikegroup" parameterType="int">
+          select * from (select u.userLikeGroupKey, u.userKey, u.groupKey, g.groupName 
+                  from userlikegroup u join ggroup g on u.groupKey = g.groupKey) where userKey = #{userKey}
+        order by groupkey desc  
+    </select>
+    
+    <insert id="favgroup" parameterType="java.util.Map">
+    <selectKey resultType="int" order="BEFORE" keyProperty="userLikeGroupKey">
+          select nvl((select max(userLikeGroupKey) from UserLikeGroup)+1,0) from dual
+       </selectKey>
+        insert into UserLikeGroup
+        values (#{userLikeGroupKey}, #{userKey}, #{groupKey})
+    </insert>
+    
+    <select id="favcount" resultType="int" parameterType="int">
+         select count(*) from userlikegroup where userKey = #{userKey}
+    </select>
+    
+    <delete id="favgroupD" parameterType="userlikegroup">
+        delete from userlikegroup where userKey = #{userKey}
+    </delete>
 </mapper>

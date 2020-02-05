@@ -5,9 +5,24 @@
 
 <jsp:include page="../mainpage/header.jsp" />
 
+<style>
+
+.admin-name h5:hover {
+  cursor:pointer;
+}
+
+#recentwww:hover {
+  cursor:pointer;
+}
+
+#recentnotice:hover {
+  cursor:pointer;
+}
+
+</style>
 	
 	<section>
-	<div class="feature-photo">
+			<div class="feature-photo">
 				<figure> <!-- 기본 배경 -->
 				<img src="resources/images/resources/backpic.jpg"/>
 				</figure>
@@ -16,32 +31,46 @@
 					<div class="row merged">
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
-								<figure>
-									<img src="<spring:url value='/image${mypage.userImageOrigin }'/>"/>
-									<form class="edit-phto" id="userImageForm" enctype="multipart/form-data" 
-									action="userImage" method="post">
+							<c:if test = "${mypage.userImageOrigin == null}">
+							 <figure>
+							      <img src="resources/images/resources/user-avatar.jpg" alt="" id="imgpic">
+							   </figure>
+						    </c:if>
+						    <c:if test = "${mypage.userImageOrigin != null}">
+							   	  <figure>
+									<img src="<spring:url value='/image/${mypage.userImageOrigin }'/>" id="imgpic"/>
+								  </figure>
+						    </c:if>
+									<form class="edit-phto" id="userImageForm">
 									<input type="hidden" name="userKey" value="${mypage.userKey }">
-										<i class="fa fa-camera-retro"></i> <label
-											class="fileContainer"> 프로필 사진 변경 <input type="file" name="userImageUpdate"/>
+										<i class="fa fa-camera-retro"></i> <label class="fileContainer"> 프로필 사진 변경 
+										<input type="file" id="uploadfile" name="userImageUpdate"
+											accept="image/gif, image/jpeg, image/png"/>
 										</label>
 									</form>
-								</figure>
+								
 							</div>
 						</div>
 						<div class="col-lg-10 col-sm-9">
 							<div class="timeline-info">
 								<ul>
-									<li class="admin-name">
-										<h5>${id}님의 마이페이지</h5> <!-- <span>일반 회원</span> -->
-									</li>
-
-							</ul>
+								<c:if test="${logintype == 0 }">
+								<li class="admin-name" id="mymy">
+									<h5>${id}님의 마이페이지</h5>
+								</li>
+							</c:if>
+							<c:if test="${logintype == 1 }">
+								<li class="admin-name" id="mymy">
+									<h5>마이페이지</h5>
+								</li>
+							</c:if>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section><!-- top area -->
+		</section><!-- top area -->
 
 	<section>
 		<div class="gap gray-bg">
@@ -65,30 +94,26 @@
 										
 									</ul>
 								</div>
-										<div class="widget">
-											<h4 class="widget-title">최근 참가한 모임</h4>
+											<div class="widget">
+											<h4 class="widget-title" id="recentwww"><i class="ti-pencil"></i>내가 작성한 글/댓글</h4>
+											<input type="hidden" id="userId" name="userId" value="${id}"> 
 											<ul class="activitiez">
+													<c:if test="${postcount > 0 }">
+											<c:forEach var="b" items="${postlist}">
 												<li>
 													<div class="activity-meta">
-														<i>2019-12-27</i>
-														<span><a href="#" title="">2019 슬픔의 케이팝 파티</a></span>
-														<h6>by 케즐모</h6>
+														<i>${b.postDate}</i> 
+														<span> <a	href="groupmain?groupkey=${b.postKey}" title="${b.postTitle}">${b.postTitle}</a></span>
+														<h6>
+															 ${b.groupName} 
+														</h6>
 													</div>
 												</li>
-												<li>
-													<div class="activity-meta">
-														<i>2019-11-19</i>
-														<span><a href="#" title="">남양주 북한강 라이딩 정모</a></span>
-														<h6>by 자연이 좋다!!!</h6>
-													</div>
-												</li>
-												<li>
-													<div class="activity-meta">
-														<i>2019-10-30</i>
-														<span><a href="#" title="">알고리즘 스터디</a></span>
-														<h6>by 나는 나는 개발자</h6>
-													</div>
-												</li>
+											</c:forEach>	
+											</c:if>
+											<c:if test="${postcount == 0 }">
+											      작성한 글이 없습니다.
+											</c:if>
 											</ul>
 										</div><!-- recent activites -->						
 								</aside>
@@ -102,12 +127,12 @@
 										<c:if test="${logintype == 0 }">
 											<div class="form-group half">	
 											  <input type="text" id="inputPassword" name="userPassword" required="required"/>
-											  <label class="control-label" for="input">비밀번호</label><i class="mtrl-select"></i>
+											  <label class="control-label" for="input" id="passla">비밀번호</label><i class="mtrl-select"></i>
 											</div>
 										    
 											<div class="form-group">	
 											  <input type="text" id="inputEmail" value="${mypage.userEmail}" name="userEmail" required="required"/>
-											  <label class="control-label" for="input">이메일</label><i class="mtrl-select"></i>
+											  <label class="control-label" for="input" id="emailla">이메일</label><i class="mtrl-select"></i>
 											</div>
 									        <div class="dob">
 												<div class="form-group">
@@ -752,29 +777,25 @@
 								<aside class="sidebar static">
 						
 								<div class="widget">
-											<h4 class="widget-title"><i class="ti-bell"></i>최근 알림</h4>
+											<h4 class="widget-title" id="recentnotice"><i class="ti-bell"></i>최근 알림</h4>
 											<ul class="activitiez">
+												<c:if test="${msgcount > 0 }">
+											<c:forEach var="msg" items="${myMessage}">
 												<li>
 													<div class="activity-meta">
-														<i>1시간 전</i>
-														<span><a href="#" title="">새로운 공지사항이 올라왔습니다. </a></span>
-														<h6>by 케즐모</h6>
+														<i>${item.postDate}</i> 
+														<i>${msg.mgDate}</i><span><a href="#" title="">
+														${msg.msContent} </a></span>
+														<h6>
+															by <a href="time-line.html">${mg.send}</a>
+														</h6>
 													</div>
 												</li>
-												<li>
-													<div class="activity-meta">
-														<i>3시간 전</i>
-														<span><a href="#" title="">새로운 일정이 등록되었습니다.</a></span>
-														<h6>by 자연이 좋다!!!</h6>
-													</div>
-												</li>
-												<li>
-													<div class="activity-meta">
-														<i>2일 전</i>
-														<span><a href="#" title="">가입이 승인되었습니다.</a></span>
-														<h6>by 365일 춤만 출래 예예예 미러미러미러</h6>
-													</div>
-												</li>
+											</c:forEach>
+											</c:if>
+											<c:if test="${msgcount == 0 }">
+											   받은 내역이 없습니다.
+											</c:if>
 											</ul>
 										</div><!-- recent activites -->
 								</aside>
@@ -799,9 +820,63 @@
 		</div><!-- side panel -->		
 	
 	
-	<script>
 
-    $(function(){
+	
+	<jsp:include page="../mainpage/footer.jsp" />
+	
+	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+	<script src="resources/js/map-init.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
+
+		<script>
+    
+		var date1 = '${item.postDate}';
+		document.write(timeBefore(new Date(date1))); 
+		
+		   //프사 등록
+	       $('input[type=file]').on('change', preview);
+		   
+		   function preview(e){
+			   var file = e.target.files[0];
+			   
+			   if(!file.type.match('image.*')) {
+				   alert("확장자는 이미지 확장자만 가능합니다.");
+				   return;
+			   }
+			   
+			   var reader = new FileReader();
+			   
+			   reader.readAsDataURL(file);
+			   
+			   reader.onload = function(e){
+				   
+				   $("#imgpic").attr('src', e.target.result);
+				   
+				   var form = $("#userImageForm")[0];
+				     
+				   console.log(form);
+			        var formData = new FormData(form);
+				    console.log(formData);
+			        formData.append("userKey", "${mypage.userKey }");
+			        formData.append("file", $("#uploadfile")[0].files[0]);
+				   
+			         
+			        $.ajax({
+			              url : "userImage"
+			            , type : "POST"
+			            , processData : false
+			            , contentType : false
+			            , data : formData
+			            , success:function() {
+			               console.log("success");
+			            }
+			        });
+			   }
+			   
+			   
+			    
+		   }
+    
     	//회원 지역
     	var loc = $("#inputLoc").val();
     	$("#nogada1").val(loc);
@@ -825,13 +900,13 @@
         console.log(password);
 		//5글자 이상, 12글자 이하 영숫자포함
 		var req = /^\w{5,12}$/;
-		var label = $('#inputPassword');
+		//var label = $('#inputPassword');
 
 		if (req.test(password)) {
 			checkPassword = true;
 		} else {
 			checkPassword = false;
-			label.text('영숫자로 5글자 이상 12글자 이하로 작성하세요.');
+			$('#passla').text('영숫자로 5글자 이상 12글자 이하로 작성하세요.');
 		}
 	});
 
@@ -839,13 +914,13 @@
 	$('#inputEmail').keyup(function() {
   		var email = $(this).val();
 		var req = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-		var label = $('#inputEmail');
+		//var label = $('#inputEmail');
 			if (req.test(email)) {
 				checkEmail = true;
-			    label.text('Email');
+			  
 			} else {
 				checkEmail = false;
-			    label.text('올바른 이메일을 입력하세요.');
+			    $('#emailla').text('올바른 이메일을 입력하세요.');
 			}
 	});
     
@@ -865,13 +940,32 @@
 		return false;
 	});
 	
-    });
+	//이름 누르면 마이페이지 메인으로 이동
+	$("#mymy").click(function(){
+		location.href="mypage";
+		return false;
+	});
+	
+	//회원 작성글 이동
+	$("#recentwww").click(function() {
+		location.href = "mypage4";
+	});
 
+	
+	//알림 이동
+	$("#recentnotice").click(function() {
+		location.href = "mypage5";
+		return false;
+	});
+	
+	
+	//모임 이동
+	$("#mymygroups").click(function() {
+		location.href = "mypage6";
+		return false;
+	});
 	</script>	
 	
+	</body>
 	
-	<jsp:include page="../mainpage/footer.jsp" />
-	
-	<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-	<script src="resources/js/map-init.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
+	</html>

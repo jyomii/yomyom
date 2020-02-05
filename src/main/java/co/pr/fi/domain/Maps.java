@@ -2,7 +2,6 @@ package co.pr.fi.domain;
 //지도 
 public class Maps {
 
-
  // 모임게시글키값 
  private int postkey;
 
@@ -22,7 +21,20 @@ public class Maps {
  
  private Double maplat;
  private Double maplng;
+ private int mapdetailseq;
  
+ 
+ 
+ 
+
+
+ public int getMapdetailseq() {
+    return mapdetailseq;
+ }
+
+ public void setMapdetailseq(int mapdetailseq) {
+    this.mapdetailseq = mapdetailseq;
+ }
  
  
  

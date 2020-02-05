@@ -65,7 +65,15 @@
 			type="co.pr.fi.domain.Shortschedule" />
 			<typeAlias alias="userreggroup"
 			type="co.pr.fi.domain.UserRegGroup" />
+
+			<typeAlias alias="userlikegroup"
+			type="co.pr.fi.domain.UserLikeGroup" />
+
+			<typeAlias alias="calendar"
+			type="co.pr.fi.domain.GCalendar" />
+
 	</typeAliases>
+	
 	<mappers>
 		<mapper resource="sql/message.xml"></mapper>
 		<mapper resource="sql/member.xml"></mapper>

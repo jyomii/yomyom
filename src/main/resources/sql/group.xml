@@ -3,25 +3,27 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="group">
 	<!-- 프사 -->
-	<select id = "getPic" resultType = "group" parameterType = "map">
-		SELECT PROFILEFILE
+	<select id="getPic" resultType="group" parameterType="map">
+		SELECT
+		PROFILEFILE
 		FROM GGROUPMEMBER
-		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+		WHERE USERKEY = #{userkey} AND GROUPKEY =
+		#{groupkey}
 	</select>
-	
+
 	<!-- 가입한 모임의 수 -->
 	<select id="getGroupRank" parameterType="map" resultType="group">
-		
-		select * from 
-		
-	
+
+		select * from
+
+
 		<if test="type == 0"> 
 			<![CDATA[
 		(select rownum r , list.* from (select b.*, (select count(*) from ggroupmember where ggroupmember.groupkey = b.groupkey) memberCount
 		from (select * from ggroup) b order by memberCount desc) list) where r >= #{startrow} and r <= #{endrow}
 			]]>
-			</if>
-	
+		</if>
+
 		<if test="type == 1">
 					<![CDATA[
 		(select rownum r, b.* from (select ggroup.*,(select count(groupkey) from post
@@ -29,34 +31,39 @@
 						  group by groupkey) counta
 						  from ggroup order by counta desc) b) where r >= #{startrow} and r <= #{endrow}
 			]]></if>
-			
+
 	</select>
-	
+  
 	<!-- 회원의 가입한 모임 수 -->
-	<select id = "getJoinedCount" resultType = "int" parameterType = "int">
+	<select id="getJoinedCount" resultType="int" parameterType="int">
 		SELECT COUNT(*)
-		FROM GGROUP NATURAL JOIN ( 	SELECT GROUPKEY, COUNT(GROUPKEY) AS MEMBERCOUNT
-									FROM GGROUPMEMBER
-									GROUP BY GROUPKEY
-									HAVING GROUPKEY IN (SELECT GROUPKEY
-														FROM GGROUPMEMBER
-														WHERE USERKEY = #{USERKEY}))
+		FROM GGROUP NATURAL JOIN ( SELECT GROUPKEY,
+		COUNT(GROUPKEY) AS MEMBERCOUNT
+		FROM GGROUPMEMBER
+		GROUP BY GROUPKEY
+		HAVING GROUPKEY IN (SELECT GROUPKEY
+		FROM GGROUPMEMBER
+		WHERE USERKEY =
+		#{USERKEY}))
 	</select>
-	
+
 	<!-- 가입 전 이미 가입한 회원인지 판단 -->
-	<select id = "isNewMem" resultType = "int" parameterType = "groupmember">
+	<select id="isNewMem" resultType="int"
+		parameterType="groupmember">
 		SELECT COUNT(*)
 		FROM GGROUPMEMBER
-		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
+		WHERE USERKEY =
+		#{userKey} AND GROUPKEY = #{groupKey}
 	</select>
-	
+
 	<!-- 현재 로그인한 유저의 유저키 가져오기 -->
-	<select id = "getId" resultType = "int" parameterType = "String">
-		SELECT USERKEY FROM GUSERS WHERE USERID = #{ID}
+	<select id="getId" resultType="int" parameterType="String">
+		SELECT USERKEY
+		FROM GUSERS WHERE USERID = #{ID}
 	</select>
-	
+
 	<!-- 가입한 모임 보기 -->
-	<select id = "userInGroup" parameterType = "map" resultType = "group">
+	<select id="userInGroup" parameterType="map" resultType="group">
 		<![CDATA[		
 		SELECT * FROM (	SELECT ROWNUM R, G.*
 						FROM (	SELECT GROUPKEY, GROUPNAME, GROUPDFILE, TO_CHAR(GROUPDATE, 'YYYY-MM-DD') AS GROUPDATE, MEMBERCOUNT
@@ -79,23 +86,47 @@
 	</select>
 
 	<!-- 가입하기 -->
-	<insert id = "joinGroup" parameterType = "groupmember">
+	<insert id="joinGroup" parameterType="groupmember">
 		INSERT INTO GGROUPMEMBER
-		VALUES(#{groupKey}, #{userKey}, #{groupNickname}, -1, #{profileFile}, #{profileOrigin})
+		VALUES(#{groupKey}, #{userKey}, #{groupNickname}, -1, #{profileFile},
+		#{profileOrigin})
 	</insert>
-	
+
 	<!-- 가입양식 작성 -->
-	<insert id = "setJoinSample" parameterType = "joinAnswer">
+	<insert id="setJoinSample" parameterType="joinAnswer">
 		INSERT INTO JOINANSWER
-		VALUES(#{groupKey}, #{userKey}, #{answer1}, #{answer2}, #{answer3}, #{answer4}, #{answer5}, #{introduce})
+		VALUES(#{groupKey}, #{userKey}, #{answer1}, #{answer2}, #{answer3},
+		#{answer4}, #{answer5}, #{introduce})
 	</insert>
-	
+
 	<!-- 닉네임 중복체크 -->
-	<select id = "nickCheck" parameterType = "map" resultType = "map">
-		SELECT GROUPNICKNAME
+	<select id="nickCheck" parameterType="map" resultType="map">
+		SELECT
+		GROUPNICKNAME
 		FROM GGROUPMEMBER
 		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupkey}
 	</select>
+
+	<!-- 
+	 아이디 중복되서 주석처리해둡니다
+	 <select id="preferGroup" parameterType="int" resultType="group">
+		SELECT
+		GROUPKEY, MEMBERCOUNT, GROUPDFILE, GROUPNAME, GROUPPRIVATE
+		FROM (
+		SELECT GROUPKEY, COUNT(GROUPKEY) MEMBERCOUNT
+		FROM GGROUPMEMBER
+		GROUP BY
+		GROUPKEY)
+		JOIN
+		( SELECT GROUPKEY, GROUPDFILE, GROUPNAME, GROUPPRIVATE
+		FROM GGROUP
+		WHERE CATEGORYKEY IN ( SELECT CATEGORYKEY
+		FROM GUSERCATEGORY
+		WHERE USERKEY = #{USERKEY}
+		)
+		)
+		WHERE GROUPNICKNAME = #{nickname} AND GROUPKEY = #{groupKey}
+	</select>-->
 	
 	<!-- 지금 모임에 가입승인된 회원인지 -->
 	<select id = "isGroupMem" parameterType = "map" resultType = "int">
@@ -123,7 +154,11 @@
 	</select>
 
 	<select id="groupinfo" resultType="group" parameterType="int">
-		select groupkey, groupname, userkey, agekey, wherekey, categorykey, groupinfo, groupdfile,groupidorigin,groupcfile, groupcorigin, groupprivate, grouptype, to_char(groupdate, 'YYYY-MM-DD') groupdate, groupstatus, groupkatalk
+		select
+		groupkey, groupname, userkey, agekey, wherekey, categorykey,
+		groupinfo, groupdfile,groupidorigin,groupcfile, groupcorigin,
+		groupprivate, grouptype, to_char(groupdate, 'YYYY-MM-DD') groupdate,
+		groupstatus, groupkatalk
 		from ggroup where groupkey =#{groupkey}
 	</select>
 
@@ -151,13 +186,18 @@
 
 	<select id="groupdcategory" resultType="String"
 		parameterType="int">
-		select dcategoryname from gcategory where dcategorykey=(select dcategorykey from gcategory2 where scategorykey=(select categorykey from ggroup where groupkey=#{groupkey}))
-		
+		select dcategoryname from gcategory where
+		dcategorykey=(select dcategorykey from gcategory2 where
+		scategorykey=(select categorykey from ggroup where
+		groupkey=#{groupkey}))
+
 	</select>
 
 	<select id="groupscategory" resultType="String"
 		parameterType="int">
-		select scategoryname from gcategory2 where scategorykey=(select categorykey from ggroup where groupkey=#{groupkey})
+		select scategoryname from gcategory2 where
+		scategorykey=(select categorykey from ggroup where
+		groupkey=#{groupkey})
 	</select>
 
 	<select id="groupmembers" resultType="int" parameterType="int">
@@ -185,11 +225,12 @@
 		using(userkey) where groupkey=#{groupkey} and
 		usergrade in(0,1)
 	</select>
-	
+
 	<select id="groupmeetinglist" resultType="post"
 		parameterType="int">
 		select rownum, A.* from(select
-		postkey,posttitle,to_char(postdate,'YYYY-MM-DD') postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
+		postkey,posttitle,to_char(postdate,'YYYY-MM-DD')
+		postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
 		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson
 		from post left join calendar
 		using(postkey) left join (select count(*)
@@ -214,7 +255,7 @@
 	<insert id="groupcalendarmemberinsert"
 		parameterType="java.util.Map">
 		insert into calendarmember
-		values(#{userkey},#{postkey},#{groupkey})
+		values(#{userkey},#{postkey},#{groupkey},'s')
 	</insert>
 
 	<select id="calendarmemberjoinbtn" parameterType="java.util.Map"
@@ -228,7 +269,7 @@
 		delete from calendarmember where groupkey=#{groupkey}
 		and postkey=#{postkey} and userkey=#{userkey}
 	</delete>
-	
+
 	<select id="groupcalendarlist" resultType="calendarlist"
 		parameterType="java.util.Map">
 		select rownum, startdate from
@@ -241,79 +282,182 @@
 
 	<select id="shortschedule" resultType="shortschedule"
 		parameterType="java.util.Map">
-		select * from (select posttitle, to_char(cstartdate, 'YYYY-MM-DD
-		HH24:MI') startdate, location, groupname from (select * from
-		calendarmember left join calendar using(postkey) where userkey=#{userkey}) left
-		join (select * from post left join GGROUP using(groupkey))
+		select * from (select posttitle, to_char(cstartdate,
+		'YYYY-MM-DD
+		HH24:MI') startdate, location, groupname from (select *
+		from
+		calendarmember left join calendar using(postkey) where
+		userkey=#{userkey}) left
+		join (select * from post left join GGROUP
+		using(groupkey))
 		using(postkey))
 		where startdate like #{date}
 	</select>
-	
+
 	<select id="shortscheduleselected" resultType="shortschedule"
 		parameterType="java.util.Map">
-		select * from (select posttitle, to_char(cstartdate, 'YYYY-MM-DD
-		HH24:MI') startdate, location, groupname from (select * from
-		calendarmember left join calendar using(postkey) where userkey=#{userkey}) left
-		join (select * from post left join GGROUP using(groupkey))
+		select * from (select posttitle, to_char(cstartdate,
+		'YYYY-MM-DD
+		HH24:MI') startdate, location, groupname from (select *
+		from
+		calendarmember left join calendar using(postkey) where
+		userkey=#{userkey}) left
+		join (select * from post left join GGROUP
+		using(groupkey))
 		using(postkey))
 		where startdate like #{fulldate}
 	</select>
 
 
 	<update id="groupboardupdate" parameterType="java.util.Map">
-		update ggroupboard set
-		boardname=#{boardname}, boardseq=#{seq}, boardtype=#{boardtype} where
+		update ggroupboard
+		set
+		boardname=#{boardname}, boardseq=#{seq}, boardtype=#{boardtype}
+		where
 		boardkey=#{boardkey}
 	</update>
-	<insert id="groupboardinsert"
-		parameterType="java.util.Map">
-		insert into ggroupboard
-		values((select nvl(max(boardkey),0)+1 from ggroupboard),#{groupkey},#{boardname},'Y',#{seq})
+	<insert id="groupboardinsert" parameterType="java.util.Map">
+		insert into
+		ggroupboard
+		values((select nvl(max(boardkey),0)+1 from
+		ggroupboard),#{groupkey},#{boardname},'Y',#{seq})
 	</insert>
-	
+
 	<delete id="groupboarddelete" parameterType="int">
-		delete from ggroupboard where boardkey=#{boardkey}
+		delete from
+		ggroupboard where boardkey=#{boardkey}
 	</delete>
-	
+
 	<select id="userkey" resultType="member" parameterType="String">
-		select userKey from gusers where userId=#{id}
+		select
+		userKey from gusers where userId=#{id}
 	</select>
-	
+
 	<select id="groupmasterkey" resultType="int" parameterType="int">
-		select userKey from ggroupmember where usergrade=1 and groupkey=#{groupkey}
+		select userKey from ggroupmember where usergrade=1 and
+		groupkey=#{groupkey}
 	</select>
-	
+
 	<select id="groupmember" resultType="groupmember"
 		parameterType="int">
-		select groupnickname, usergrade, userimagefile profilefile, to_char(regdate, 'YYYY-MM-DD') regdate from ggroupmember
+		select groupnickname, usergrade, userimagefile
+		profilefile, to_char(regdate, 'YYYY-MM-DD') regdate from ggroupmember
 		left join gusers using(userkey) where userkey=#{userkey}
 	</select>
-	
-	<select id="userreggroup" resultType="userreggroup" parameterType="int">
-		select groupcfile, groupname, groupkey from ggroup left join GGROUPMEMBER a using(groupkey) where a.userkey=#{userkey}
+
+	<select id="userreggroup" resultType="userreggroup"
+		parameterType="int">
+		select groupcfile, groupname, groupkey from ggroup left
+		join GGROUPMEMBER a using(groupkey) where a.userkey=#{userkey}
 	</select>
-	
+
 	<insert id="addschedule" parameterType="post">
-	<selectKey keyProperty="postKey" resultType="int" order="BEFORE">
-		select nvl((select max(postKey) from post)+1,0) from dual
-	</selectKey>	
+		<selectKey keyProperty="postKey" resultType="int"
+			order="BEFORE">
+			select nvl((select max(postKey) from post)+1,0) from dual
+		</selectKey>
 		insert into post
 		values(#{postKey},#{postTitle},#{postContent},sysdate,#{userKey},'n','n','n','n',#{groupKey},'n','y',#{boardKey},0)
 	</insert>
-	
-	<select id="getgroupboardkey" resultType="int" parameterType="int">
-		select boardkey from ggroupboard where boardtype='N' and groupkey=#{groupkey}
+
+	<select id="getgroupboardkey" resultType="int"
+		parameterType="int">
+		select boardkey from ggroupboard where boardtype='N' and
+		groupkey=#{groupkey}
 	</select>
+  
+	<insert id="addschedulecalendar" parameterType="post">
+		insert into
+		calendar
+		values(to_date(#{cstartdate},'yyyy-mm-dd
+		hh24:mi'),'',#{cmoney},#{postKey},#{maxperson},#{location},#{cmoneytype},#{startdate},#{time},#{minute})
+  </insert>
 	
-	<insert id="
-              schedulecalendar" parameterType="post">
+	<insert id="schedulecalendar" parameterType="post">
 		insert into calendar
 		values(to_date(#{cstartdate},'yyyy-mm-dd hh24:mi'),'',#{cmoney},#{postKey},#{maxperson},#{location},#{cmoneytype})
 	</insert>
-	
+
 	<update id="updateboardmap" parameterType="int">
 		update post set
 		boardmap='y' where
 		postkey=#{postkey}
 	</update>
+	
+	<select id="modifypost" resultType="post" parameterType="int">
+		select *
+		from post where postkey=#{postkey}
+	</select>
+
+	<select id="modifycalendar" resultType="calendarlist"
+		parameterType="int">
+		select * from calendar where postkey=#{postkey}
+	</select>
+
+	<select id="modifymember" resultType="memberlist"
+		parameterType="int">
+		select userimagefile, groupnickname, userkey from gusers
+		left
+		join GGROUPMEMBER using(userkey) left join calendarmember a
+		using(userkey) where a.postkey=#{postkey} and a.sm='s'
+	</select>
+
+	<delete id="calendardeleteajax" parameterType="java.util.Map">
+		delete from
+		calendarmember where postkey=#{postkey} and userkey=#{temp}
+	</delete>
+
+	<update id="updateschedule" parameterType="post">
+		update post set
+		posttitle=#{postTitle}, postcontent=#{postContent} where
+		postkey=#{postKey}
+	</update>
+
+	<update id="updateschedulecalendar" parameterType="post">
+		update
+		calendar set cstartdate=to_date(#{cstartdate},'yyyy-mm-dd hh24:mi'),
+		cmoney=#{cmoney}, maxperson = #{maxperson}, location=#{location},
+		cmoneytype=#{cmoneytype}, startdate=#{startdate}, starttime=#{time},
+		startminute=#{minute} where postkey=#{postKey}
+	</update>
+
+	<select id="modifymemberm" resultType="memberlist"
+		parameterType="int">
+		select userimagefile, groupnickname, userkey from gusers
+		left
+		join GGROUPMEMBER using(userkey) left join calendarmember a
+		using(userkey) where a.postkey=#{postkey} and a.sm='m'
+	</select>
+
+	<update id="calendarstomajax" parameterType="java.util.Map">
+		update
+		calendarmember set sm='m' where postkey=#{postkey} and userkey=#{temp}
+	</update>
+
+	<select id="schedulelistcount" resultType="int"
+		parameterType="int">
+		select count(*) from post left join ggroupboard
+		using(groupkey) where groupkey=#{groupkey} and boardtype='N'
+	</select>
+
+	<select id="getboardlist" resultType="post"
+		parameterType="java.util.Map">
+		select * from (select rownum rnum, A.* from(select
+		postkey,posttitle,to_char(postdate,'YYYY-MM-DD')
+		postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
+		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson
+		from post left join calendar using(postkey) left join (select count(*)
+		currentperson,postkey from calendarmember left join (select * from
+		post left join ggroupboard using(boardkey) where boardtype='N') using
+		(postkey) left join calendar using (postkey) group by postkey) using
+		(postkey) where groupkey=1 order by cstartdate) A) where
+		rnum&gt;=#{start} AND rnum&lt;=#{end}
+
+	</select>
+
+	<delete id="scheduledelete" parameterType="int">
+		delete from
+		post where
+		postkey=#{postkey}
+	</delete>
 </mapper>
