@@ -5714,6 +5714,7 @@ px
 
 .g-post-classic>figure img {
 	width: 100%;
+ height: 16vh;
 }
 
 .g-post-classic>figure>i {
