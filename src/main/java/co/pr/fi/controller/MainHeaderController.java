@@ -61,7 +61,7 @@ public class MainHeaderController {
 	// 메인페이지로 이동하는 mapping
 	@RequestMapping(value = "/main2")
 	public ModelAndView main(HttpSession session, ModelAndView mv) {
-		if(session.getAttribute("id") == null)
+		/**if(session.getAttribute("id") == null)
 			session.setAttribute("userkey", -1);
 		//베스트 : 인원수 가장 많은 모임 3개
 		List<GGroup> bestgroup = mainHeaderService.getBestGroups();
@@ -91,7 +91,9 @@ public class MainHeaderController {
 		mv.addObject("dcategory", categoryService.getDCategory());
 		mv.addObject("scategory", categoryService.getSCategory());
 		//mv.addObject("userInfo",gUsers);
-		return mv;
+		return mv;**/
+		
+		return group_main(mv,session);
 	}
 
 	@GetMapping("/main3")
