@@ -216,7 +216,7 @@ animation: crescendo 6s alternate infinite ease-in;
 										<div class="g-post-meta">
 											<div class="post-title">
 												<h4>
-													<a title="이동" href="groupmain.net?groupkey=${item.groupKey }">${item.groupName }</a>
+													<a title="이동" href="group_main.net?groupkey=${item.groupKey }">${item.groupName }</a>
 												</h4>
 												<p class="text-end">${item.groupInfo }</p>
 												<span class="p-date">${item.lastDate} 마지막 활동 </span>
@@ -256,7 +256,7 @@ animation: crescendo 6s alternate infinite ease-in;
 												</figure>
 												<div class="pepl-info">
 													<h4>
-														<a href="groupmain.net?groupkey=${item.groupKey }" title="">${item.groupName }</a>
+														<a href="group_main.net?groupkey=${item.groupKey }" title="">${item.groupName }</a>
 													</h4>
 													<span class="text-end">${item.groupInfo }</span>
 												</div>

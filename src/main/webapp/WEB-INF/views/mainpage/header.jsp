@@ -19,7 +19,12 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <script src="resources/js/main.min.js"></script>
 <script src="resources/js/script.js"></script>
+<style>
+#categoryList{
+list-style: none;
 
+}
+</style>
 </head>
 <body>
 	<!--<div class="se-pre-con"></div>-->
@@ -29,12 +34,11 @@
 
 
 		<!-- 작아졌을때 나오는 헤더 (반응형) -->
-		<!-- <div class="responsive-header">
+		<div class="responsive-header">
 			<div class="mh-head first Sticky">
 				<span class="mh-btns-left"> <a class="" href="#menu"><i
 						class="fa fa-align-justify"></i></a>
-				</span> <span class="mh-text"> <a href="main2" title=""> <img
-						src="resources/images/logo2.png" alt="">
+				</span> <span class="mh-text"> <a href="main2" title=""> Group IN
 				</a>
 				</span> <span class="mh-btns-right"> <a class="fa fa-sliders"
 					href="#shoppingbag"></a>
@@ -68,7 +72,7 @@
 						<li><span><a href="login" title="">로그인</a></span></li>
 						</c:when>
 						<c:otherwise>
-						<li><span><a href="mypage" title="">마이페이지</a></span></li>
+						<li><span><a href="mypage2" title="">마이페이지</a></span></li>
 						<li><span><a href="logout" title="">로그아웃</a></span></li>
 						</c:otherwise>
 					</c:choose>
@@ -127,11 +131,11 @@
 					<!-- 검색창 bar -->
 
 
-					<li><a href="main2" title="Home" data-ripple=""><i
+					<li><a onclick="admin('main2');" href="main2" title="Home" data-ripple=""><i
 							class="ti-home"></i></a></li>
 					<c:if test="${!empty id }">
 					<li><a href="#" id="noti" title="Notification" data-ripple="">
-							<i class="ti-bell"><span>new</span></i>
+							<i class="ti-bell"><span></span></i>
 					</a>
 						<div class="dropdowns">
 							<span>알림 내역</span>
@@ -163,7 +167,7 @@
 									<img src="resources/images/default.png" style="width:40px;" alt="">
 								</c:when>
 								<c:otherwise>
-									<img src="<spring:url value='/image${image}'/>" />
+									<img style="width:40px;" alt="" src="<spring:url value='/image${image}'/>" />
 								</c:otherwise>
 							</c:choose>
 
@@ -223,7 +227,7 @@
 					url : "allCategory",
 					
 					success : function(result){
-						console.log(result);
+					
 						
 						//대분류 카테고리 for문
 						var tag;
@@ -349,7 +353,7 @@
 				var text = '';
 				
 
-				console.log(result);
+			
 				
 				for(var i = 0; i < result.length; i++){
 					
@@ -375,10 +379,11 @@
 					text += '</a>';
 					switch(result[i].mgSort){
 					case 'N':
+					
 						text += '<span class="tag green">NOTICE</span>';
 						break;
 						
-					case 'D':
+					default:
 						text += '<span class="tag green">NEW</span>';
 						break;
 					}
@@ -439,7 +444,7 @@
 			            }
 			        }
 			        
-			        console.log('아니 잘되다가 왜그래 너?' + returnValue);
+			        
 			        
 			        return returnValue;
 			    }

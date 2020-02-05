@@ -196,6 +196,7 @@
 cursor:pointer}
 
 #calendar td{
+	text-align:center;
 cursor:pointer
 }
 .katalkbtn{

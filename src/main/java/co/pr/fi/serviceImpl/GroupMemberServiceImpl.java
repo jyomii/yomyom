@@ -25,7 +25,7 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 	public List<GGroup> userInGroup(int userKey, int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map = range(page, limit);
-		map.put("USERKEY", userKey);
+		map.put("userkey", userKey);
 		return dao.userInGroup(map);
 	}
 
@@ -33,17 +33,18 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 	public List<Post> wroteInGroup(int userKey, int groupKey, int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map = range(page, limit);
-		map.put("USERKEY", userKey);
-		map.put("GROUPKEY", groupKey);
+		map.put("userkey", userKey);
+		map.put("groupkey", groupKey);
 		return dao.wroteInGroup(map);
 	}
 	
 	@Override
-	public List<Post> postByCommented(int userKey, int groupKey, int page, int limit) {
+	public List<Post> postByCommented(int userKey, int groupKey, int loginuser, int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map = range(page, limit);
-		map.put("USERKEY", userKey);
-		map.put("GROUPKEY", groupKey);
+		map.put("userkey", userKey);
+		map.put("groupkey", groupKey);
+		map.put("loginuser", loginuser);
 		return dao.postByCommented(map);
 	}
 

@@ -42,7 +42,6 @@
 		    border-bottom-right-radius: 5px;
 		}	    
 	</style>
-
 			<section>
 				<div class="feature-photo">
 					<figure>

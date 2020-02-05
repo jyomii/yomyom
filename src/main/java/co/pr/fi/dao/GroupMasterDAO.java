@@ -59,4 +59,12 @@ public class GroupMasterDAO {
 	public int expelMem(Map<String, Object> map) {
 		return sqlSession.delete("GroupMaster.expelMem", map);
 	}
+
+	public int rejectJoin(Map<String, Object> keys) {
+		return sqlSession.delete("GroupMaster.rejectJoin", keys);
+	}
+
+	public int confirmJoin(Map<String, Object> keys) {
+		return sqlSession.update("GroupMaster.confirmJoin", keys);
+	}
 }

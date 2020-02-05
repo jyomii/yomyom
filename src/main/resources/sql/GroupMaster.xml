@@ -22,8 +22,11 @@
 	 <selectKey keyProperty="groupKey" resultType="Integer" order="BEFORE">
 			select nvl((select max(groupkey) from ggroup)+1,0) from dual
 		</selectKey>
-	
-	insert into ggroup values(
+	<!-- 그룹단톡방 주소 컬럼 추가로 not enough values 오류 발생해서 칼럼명 지정했읍니다 -->
+	insert into ggroup 
+	(GROUPKEY, GROUPNAME, USERKEY, AGEKEY, WHEREKEY, CATEGORYKEY, GROUPINFO, GROUPDFILE, GROUPIDORIGIN,
+	GROUPCFILE, GROUPCORIGIN, GROUPPRIVATE, GROUPTYPE, GROUPDATE, GROUPSTATUS)
+	values(
 	#{groupKey},
 	 #{groupName},
 	 #{userKey},
@@ -100,4 +103,18 @@
 		GGROUPMEMBER
 		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
 	</delete>
+	
+	<!-- 회원의 가입 요청 거절 -->
+	<delete id = "rejectJoin" parameterType = "map">
+		DELETE FROM
+		GGROUPMEMBER
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+	</delete>
+	
+	<!-- 회원의 가입 요청 승인 -->
+	<update id = "confirmJoin" parameterType = "map">
+		UPDATE GGROUPMEMBER
+		SET USERGRADE = USERGRADE + 1
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+	</update>
 </mapper>

@@ -17,7 +17,169 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- 제이쿼리 -->
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src = "resources/js/comment.js"></script> 
+  	<!-- <script src = "resources/js/comment.js"></script>  -->
+  	<script>
+
+  	var commentType = 0;
+  	var data = '';
+  	var type = '';
+  	var url = '';
+
+  	//답댓 클릭 시
+  	function commentReply(commentNo) {
+  		$('input[name=commentType]').val(1);
+  		$('input[name=commentNum]').val(commentNo);
+  		$('.post-comt-box textarea').css('background', '#088dcd1a').focus();
+  		console.log('답댓 달 댓글의 번호 = ' + commentNo);
+  	};	// reply end
+
+  	// 댓글 삭제 클릭 시
+  	function deleteReply(num) {
+  		var answer = confirm('댓글을 삭제하시겠습니까?');
+  		if (answer) {
+  			$.ajax({
+  				url : 'deleteReply',
+  				type : 'post',
+  				data : {commentnum : num},
+  				dataType : 'json',
+  				cache : false,
+  				success : function(data) {
+  					
+  				},
+  				error : function(request, status, error) {
+  					console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+  				}
+  			});
+  		}
+  		return false;	
+  	}
+
+  	$(function(){
+  		console.log('groupkey = ' + $('#detailGroupKey').val());
+  		console.log('postkey = ' + $('#detailPostKey').val());
+  		
+  		$(document).on('keyup', '.post-comt-box textarea', function() {
+  			$('.post-comt-box textarea').css('background', '#088dcd1a');
+  		});
+  		
+  		/* 비밀댓글 설정 */
+  		var lock = false;	// 기본 unlock
+  		$(document).on('click', '.post-comt-box i', function() {
+  			if (!lock) {	// 비댓
+  				console.log('비댓');
+  				$('input[name=commentshow]').val('1');
+  				$(this).removeClass('fa-unlock').addClass('fa-lock').css('color', '#ed3939b5');
+  				$('textarea').css('background', '#e1c2c2b5');
+  			} else {	// 공댓
+  				console.log('공댓');
+  				$('input[name=commentshow]').val('0');
+  				$(this).removeClass('fa-lock').addClass('fa-unlock').css('color', 'black');
+  				$('textarea').css('background', '#f3f3f3');
+  			}
+  			lock = !lock;
+  		});
+  		
+  		// ## 댓글 전송 시 먼저 실행될 함수 ##
+  		$(document).on('submit', $('#ReplyAction'), function() {
+  			val = $('input[name=commentType]').val();
+  			console.log('비댓여부 = ' + $('input[name=commentshow]').val())
+  			console.log('댓글인지 대댓인지 = ' + val);
+  			switch (val) {
+  			case "0":
+  				console.log('여긴 와?')
+  				/* 글에 댓글 */
+  				data = 'postKey=' + $('#detailPostKey').val() + '&groupKey=' + $('#detailGroupKey').val() + '&content=' + $('.post-comt-box textarea').val() 
+  					+ '&commentshow=' + $('input[name=commentshow]').val();
+  				console.log('submit data = ' + data);
+  				url = 'postReply';
+  				replyAction(data, url);
+  				break;
+  			case "1":
+  				/* 댓글에 댓글 */
+  				data = 'postKey=' + $('#detailPostKey').val() + '&groupKey=' + $('#detailGroupKey').val() + '&content=' + $('.post-comt-box textarea').val() 
+  					+ '&commentshow=' + $('input[name=commentshow]').val() + '&commentnum=' + $('input[name=commentNum]').val();
+  				console.log('submit data = ' + data);
+  				url = 'commentReply';
+  				replyAction(data, url);
+  				break;
+  			}
+  		}); // submit end
+  		
+  		// ## 댓글 타입에 따른 ajax ##
+  		function replyAction(data, url) {
+  			doc = '';
+  			console.log('url = ' + url);
+  			console.log('data = ' + data);
+  			$.ajax({
+  				type : "POST",
+  				url : url,
+  				data : data,
+  				dataType : 'json',
+  				cache : false,
+  				success : function(data) {
+  					console.log(data);
+  					
+  					$('.coment-area').empty();
+  					$('.comment ins').text('');
+  					$('.comment ins').text(data.listcount);
+  					
+  					// 댓글 존재
+  					if (data.listcount != 0) {
+  						doc += '<ul class = we-comet>';
+  						$(data.comment).each(function(index, item) {
+  							doc += '<li>';
+  							doc += '	<div class="comet-avatar">';
+  							if (item.profileFile == null) {
+  								doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
+  							} else {
+  								doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+  							}
+  							doc += '	</div>';
+  							doc += '	<div class="we-comment">';
+  							doc += '		<div class="coment-head">';
+  							doc += '			<h5><a href="javascript:memDetail(' + item.groupKey + ',' + item.userKey + ')" title="">' + item.groupNickname + '</a></h5>';
+  							doc += '			<span>' + item.commentDate + '</span>';
+  							doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
+  							doc += '			<a class="update" href="javascript:commentUpdate(' + item.commnetNum + ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
+  							doc += '			<a class="delete" href="javascript:commentDelete(' + item.commnetNum + ')" title="Update"><i class="far fa-trash-alt"></i></a>';
+  							doc += '		</div>';
+  							doc += '		<p>' + item.commentContent + '</p>';
+  							doc += '	</div>';
+  							doc += '</li>';
+  						}); // each end
+  					} else { // 댓글 없음
+  						doc += '<li>';
+  						doc += '	<div style = "text-align : center">등록된 댓글이 없습니다.</div>';
+  						doc += '</li>';
+  					}
+  					
+  					doc += '<li>';
+  					doc += '	<a href = "#" title = "" class = "showmore underline">more comments</a>';
+  					doc += '</li>';
+  					doc += '<li class = "post-comment">';
+  					doc += '	<div class="comet-avatar">';
+  					doc += "		<img src= \"<spring:url value='/image" + data.profileFile + "'/>\" class = 'group-img' alt = ''/>";// 여기 이미지 가져오는 객체 이름 바꿔야 함
+  					doc += '	</div>';
+  					doc += '	<div class="post-comt-box">';
+  					doc += '		<form method = "post" id = "ReplyAction" onSubmit = "return false;">';
+  					doc += '			<textarea placeholder="Post your comment"></textarea>';
+  					doc += '			<button type = "button" class = "secretbtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>';
+  					doc += '			<button type = "submit" class = "glyphicon glyphicon-send"></button>';
+  					doc += '		</form>';
+  					doc += '	</div>';
+  					doc += '</li>';
+  					doc += '</ul>';
+  					$('.coment-area').append(doc);
+  				},
+  				error : function(request, status, error) {
+  					console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+  				}
+  			}); // ajax end
+  		} // function postReply end
+  	}); // ready end
+
+
+  	</script>
     <style>
     	.ySub {
     		display : inline-block; 
@@ -99,9 +261,9 @@
     <script>
     	function memDetail(groupKey, userKey) {
     		var f = document.memDetail;		// 폼 name
-    		f.groupKey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
-    		f.userKey.value = userKey;		// input 태그 중 name이 userKey인 값에 대해서 userkey를 넘긴다.
-    		f.action = "groupmain.net";		// 이동할 페이지
+    		f.groupkey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
+    		f.userkey.value = userKey;		// input 태그 중 name이 userKey인 값에 대해서 userkey를 넘긴다.
+    		f.action = "G_mem_detail.net";	// 이동할 페이지
     		f.method = "post";				// POST 방식으로 데이터 전송
     		f.submit();						// 폼 전송
     	};
@@ -404,14 +566,23 @@
 									<div class="central-meta item">
 										<div class="user-post">
 											<div class="friend-info">
+												<!-- ---------------------------------------- -->
+												<!-- 유저 클릭하면 모임 회원 상세 정보 페이지로 넘어가게 하기 위한 폼 -->
 												<form name = "memDetail">
-													<input type = "hidden" name = "userKey" value = "">
-													<input type = "hidden" name = "groupKey" value = "">
+													<input type = "hidden" name = "userkey" value = "">
+													<input type = "hidden" name = "groupkey" value = "">
 												</form>
-												<input type = "hidden" id = "detailGroupKey" name = "groupKey" value = "${groupKey}">
-												<input type = "hidden" id = "detailPostKey" name = "postKey" value = "${postKey}">
+												<!-- ---------------------------------------- -->
+												
+												<!-- ---------------------------------------- -->
+												<!-- 댓글을 달았을 때 사용할 key -->
+												<input type = "hidden" id = "detailGroupKey" name = "groupkey" value = "${groupkey}">
+												<input type = "hidden" id = "detailPostKey" name = "postkey" value = "${postkey}">
+												<!-- ---------------------------------------- -->
+												
 												<figure>
-													<a href = "javascript:memDetail(${groupKey},${post.userKey})">
+													<!-- 작성자 -->
+													<a href = "javascript:memDetail(${groupkey},${post.userKey})">
 														<c:if test = "${post.profileFile == null}">
 															<img src="resources/images/default.png" class = "group-img" alt = ""/>
 														</c:if>
@@ -424,8 +595,10 @@
 													<ins>${post.postTitle}</ins>
 													<span>
 														<b>${post.groupNickname}</b> | published : ${post.postDate}
+														<c:if test = "${loginuser == post.userKey}">
 														<a class = "update" href = "javascript:updateReply(${c.commnetNum})" title = "Update"><i class="fas fa-eraser"></i></a>	
 														<a class = "delete" href = "javascript:deleteReply(${c.commnetNum})" title = "Delete"><i class="far fa-trash-alt"></i></a>
+														</c:if>
 													</span>
 												</div>
 												<div class="description">
@@ -507,6 +680,9 @@
 													 
 													<!-- 댓글 -->
 													<c:forEach var = "c" items = "${comment}">
+														<!-- ************************************************ -->
+														<!-- 전체공개 댓글 - 그냥 조건 없이 쫙 뽑는다. -->
+														<c:if test = "${c.commentshow == 0}">
 														<li>
 															<div class="comet-avatar">
 																<!-- 회원 프사 없을 경우 -->
@@ -520,22 +696,89 @@
 															</div>
 															<div class="we-comment">
 																<div class="coment-head">
-																	<h5><a href="javascript:memDetail(${groupKey},${c.userKey})" title="">${c.groupNickname}</a></h5>
+																	<h5><a href="javascript:memDetail(${groupkey},${c.userKey})" title="">${c.groupNickname}</a></h5>
 																	<span>${c.commentDate}</span>
 																	<a class = "we-reply" href = "javascript:commentReply(${c.commnetNum})" title = "Reply">
 																		<i class="fa fa-reply"></i>
 																	</a>
+																	<!-- 댓쓴 본인이어야만 수정/삭제 보이게 -->
+																	<c:if test = "${loginuser == c.userKey}">
 																	<a class = "update" href = "javascript:updateReply(${c.commnetNum})" title = "Update">
 																		<i class="fas fa-eraser"></i>
 																	</a>	
 																	<a class = "delete" href = "javascript:deleteReply(${c.commnetNum})" title = "Delete">
 																		<i class="far fa-trash-alt"></i>
 																	</a>
+																	</c:if>
 																</div>
 																<p>${c.commentContent}</p>
 															</div>
 														</li>
+														</c:if>
+														<!-- ************************************************ -->
+														<!-- 비밀공개 댓글 - 로그인한 사람이 글쓴이거나 댓쓴이여야 보인다. -->
+														<c:if test = "${c.commentshow == 1}">
+															<!-- ## 로그인한 유저가 글쓴이거나 댓쓴이일 때 ## -->
+															<c:if test = "${loguser == c.userKey || loginuser == post.userKey}">
+															<li>
+																<div class="comet-avatar">
+																	<!-- 회원 프사 없을 경우 -->
+																	<c:if test = "${c.profileFile == null}">
+																	<img src="resources/images/default.png" class = "group-img" alt = ""/>
+																	</c:if>
+																	<!-- 회원 프사 있을 경우 -->
+																	<c:if test = "${c.profileFile != null}">
+																	<img src="<spring:url value='/image${c.profileFile}'/>" class = "group-img" alt = ""/>
+																	</c:if>
+																</div>
+																<div class="we-comment">
+																	<div class="coment-head">
+																		<h5><a href="javascript:memDetail(${groupkey},${c.userKey})" title="">${c.groupNickname}</a></h5>
+																		<span>${c.commentDate}</span>
+																		<a class = "we-reply" href = "javascript:commentReply(${c.commnetNum})" title = "Reply">
+																			<i class="fa fa-reply"></i>
+																		</a>
+																		<!-- 댓쓴 본인이어야만 수정/삭제 보이게 -->
+																		<c:if test = "${loginuser == c.userKey}">
+																		<a class = "update" href = "javascript:updateReply(${c.commnetNum})" title = "Update">
+																			<i class="fas fa-eraser"></i>
+																		</a>	
+																		<a class = "delete" href = "javascript:deleteReply(${c.commnetNum})" title = "Delete">
+																			<i class="far fa-trash-alt"></i>
+																		</a>
+																		</c:if>
+																	</div>
+																	<p>${c.commentContent}</p>
+																</div>
+															</li>
+															</c:if>
+															
+															<!-- ## 로그인한 유저가 글쓴이거나 댓쓴이가 아닐 때 ## -->
+															<li>
+																<div class="comet-avatar">
+																	<!-- 회원 프사 없을 경우 -->
+																	<c:if test = "${c.profileFile == null}">
+																	<img src="resources/images/default.png" class = "group-img" alt = ""/>
+																	</c:if>
+																	<!-- 회원 프사 있을 경우 -->
+																	<c:if test = "${c.profileFile != null}">
+																	<img src="<spring:url value='/image${c.profileFile}'/>" class = "group-img" alt = ""/>
+																	</c:if>
+																</div>
+																<div class="we-comment">
+																	<div class="coment-head">
+																		<h5><a href="javascript:memDetail(${groupkey},${c.userKey})" title="">${c.groupNickname}</a></h5>
+																		<span>${c.commentDate}</span>
+																	</div>
+																	<button type = "button" class = "secretbtn"><i class="fas fa-lock" aria-hidden="true"></i></button>
+																	<p style = "display : inline-block">비밀 댓글 입니다.</p>
+																</div>
+															</li>
+														</c:if>
+														<!-- ************************************************ -->
+														
 													</c:forEach>
+													<!-- 댓글 -->
 													
 													<!-- 비댓 샘플 -->
 													<li>
@@ -552,21 +795,8 @@
 															<p style = "display : inline-block">비밀 댓글 입니다.</p>
 														</div>
 													</li>
-													<!-- 대댓 샘플 -->
-													<li class = "reComment">
-														<div class="comet-avatar">
-															<img src="resources/images/resources/d.png" alt="">
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5><a href="time-line.html" title="">허거걱</a></h5>
-																<span>1 week ago</span>
-																<a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-															</div>
-															<button type = "button" class = "secretbtn"><i class="fas fa-lock" aria-hidden="true"></i></button>
-															<p style = "display : inline-block">비밀 댓글 입니다.</p>
-														</div>
-													</li>
+			
+													
 													
 													<!-- 댓글 더보기 -->
 													<!-- <li>
@@ -576,6 +806,7 @@
 													<!-- 댓글 등록 부분 -->
 													<li class="post-comment">
 														<div class="comet-avatar">
+															<!-- 현재 로그인한 회원의 프사가 있는지에 따라 사진 지정하는 부분 -->
 															<c:if test = "${mem.profileFile == null}">
 															<img src="resources/images/default.png" class = "group-img" alt = ""/>
 															</c:if>
@@ -589,7 +820,7 @@
 																<!-- 답댓일 경우 원문댓글의 댓글번호 저장 -->
 																<input type = "hidden" name = "commentNum" value = "">
 																<!-- 비밀댓글(1), 전체공개 댓글(0) -->
-																<input type = "hidden" name = "commentShow" value = "">
+																<input type = "hidden" name = "commentshow" value = "">
 																<input type = "hidden" name = "commentType" value = "0">
 																
 																<!-- 댓글 입력부분 -->
@@ -766,6 +997,16 @@
 	</section>
 <jsp:include page="mainpage/footer.jsp" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+function memDetail (userkey, groupkey) {
+	var f = document.memDetail;		// 폼 name
+	f.userkey.value = userkey;		// input 태그 중 name이 groupkey인 값에 대해서 userkey를 넘긴다.
+	f.groupkey.value = groupkey;	// input 태그 중 name이 groupkey인 값에 대해서 groupkey를 넘긴다.
+	f.action = "G_mem_detail.net";	// 이동할 페이지
+	f.method = "post";				// POST 방식으로 데이터 전송
+	f.submit();		
+}
+</script>
 <script type="text/javascript">
 	//달력시작==================================================================
 	
