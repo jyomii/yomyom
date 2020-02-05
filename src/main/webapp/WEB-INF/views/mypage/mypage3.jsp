@@ -47,7 +47,7 @@ list-style: none;}
 							<div class="user-avatar">
 							<c:if test = "${mypage.userImageOrigin == null}">
 							 <figure>
-							      <img src="resources/images/resources/user-avatar.jpg" alt="" id="imgpic">
+							      <img src="resources/images/resources/default.png" alt="" id="imgpic">
 							   </figure>
 						    </c:if>
 						    <c:if test = "${mypage.userImageOrigin != null}">
@@ -226,20 +226,22 @@ list-style: none;}
 									</h4>
 									<ul class="activitiez">
 										<c:if test="${msgcount > 0 }">
-											<c:forEach var="msg" items="${myMessage}">
+											<c:forEach var="msg" items="${getMessage}">
 												<li>
 													<div class="activity-meta">
-														<i>${item.postDate}</i> 
-														<i>${msg.mgDate}</i><span><a href="#" title="">
-														${msg.msContent} </a></span>
+														<i>${item.postDate}</i> <i>${msg.mgDate}</i><span><a
+															href="#" title=""> ${msg.mgContent} </a></span>
 														<h6>
-															by <a href="time-line.html">${mg.send}</a>
+															<script type="text/javascript">
+															var date1 = '${msg.mgDate}';
+															document.write(timeBefore(new Date(date1)));
+															</script>
 														</h6>
 													</div>
 												</li>
 											</c:forEach>
-											</c:if>
-											<c:if test="${msgcount == 0 }">
+										</c:if>
+										<c:if test="${msgcount == 0 }">
 											   받은 내역이 없습니다.
 											</c:if>
 									</ul>
@@ -341,15 +343,12 @@ $('.tab-content li').click(function() {
 
 });
 
-$('#update').click(
-		function() {
+$('#update').click(function() {
 
 			//관심 목록 선택 수 확인
 			if (user_check.length < 2) {
-
 				alert("관심 카테고리를 2개 이상 선택해주세요.");
 				return false;
-
 			} else {
 
 				var categorykey = new Array();
@@ -359,17 +358,14 @@ $('#update').click(
 					categorykey.push(user_check[j].skey);
 					console.log(categorykey[j]);
 				}
-				
-			
-			
-			$.ajax({
 
+				$.ajax({
 				type : "post",
 				url : "updateprocess2",
-				data : object,
+				data : {"categorykey" : categorykey},
 				success : function(result) {
 
-					if (result == 1) {
+					if (result > 0) {
 
 						alert("관심 카테고리가 수정되었습니다.");
 						location.reload();
