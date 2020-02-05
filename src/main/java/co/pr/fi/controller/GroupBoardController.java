@@ -33,7 +33,6 @@ import co.pr.fi.service.GroupService;
 
 import co.pr.fi.service.GroupMemberService;
 
-
 @Controller
 public class GroupBoardController {
 
@@ -183,8 +182,9 @@ public class GroupBoardController {
 		groupservice.updateboardmap(postkey);
 		ObjectMapper mapper = new ObjectMapper();
 		List<Maps> list = Arrays.asList(mapper.readValue(info, Maps[].class));
-		for(int i = 0; i < list.size(); i++)
+		for(int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i).toString());
+		}
 		return groupBoardService.uploadMap(list);
 
 	}

@@ -2,6 +2,8 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
 <!-- Header end -->
@@ -409,6 +411,7 @@ top:-9px;
 							</c:if>
 							<!-- **********모임 사진 수정*********** -->
 						</figure>
+						
 						<!-- 그룹 사진 -->
 					</div>
 				</div>
@@ -498,6 +501,7 @@ top:-9px;
 									<span><i class="fa fa-users"></i>예정 모임</span>
 								</div>
 								<ul class="nearby-contct">
+									<c:if test="${not empty groupmeetinglist }">
 									<c:forEach var="gmtl" items="${groupmeetinglist }" begin="0"
 										end="2">
 										<c:choose>
@@ -527,8 +531,8 @@ top:-9px;
 															<h4 class="min-width-h4">
 																<a href="time-line.html" title="">${gmtl.postTitle}</a>
 															</h4>
-															<br> <br> <span class="schedule-span">장소:
-																${gmtl.location}</span>
+															<br> <br> <a href="schedulemaps.net?postkey=${gmtl.postKey}"><span class="schedule-span">장소:
+																${gmtl.location}</span></a>
 															<c:if test="${gmtl.joinbtn eq 'yes'}">
 																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
 																	<span>참여하기</span>
@@ -585,6 +589,12 @@ top:-9px;
 											</div>
 										</li>
 									</c:forEach>
+									</c:if>
+									<c:if test="${empty groupmeetinglist }">
+										<div class="text-align-center">
+										<span>예정된 모임이 없습니다</span>
+										</div>
+									</c:if>
 								</ul>
 								<!-- photos -->
 							</div>
@@ -803,7 +813,6 @@ top:-9px;
 		</div>
 	</div>
 </section>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	//달력시작==================================================================
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌

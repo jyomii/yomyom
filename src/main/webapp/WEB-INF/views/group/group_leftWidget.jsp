@@ -9,6 +9,7 @@
 										<c:forEach var="gbl" items="${groupboardlist }">
 											<li><i class="ti-clipboard"></i> <input type="hidden"
 												value="${gbl.boardType }">
+												
 												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}&boardname=${gbl.boardName}"
 												title="">${gbl.boardName}</a>
 												<input type="hidden" id="bn${gbl.boardSeq }" value="${gbl.boardName }">
@@ -25,7 +26,7 @@
 								<div class="widget">
 									<h4 class="widget-title">모임 관리</h4>
 									<ul class="naves">
-										<li><i class="ti-info-alt"></i> <a href="group_admin.net"
+										<li><i class="ti-info-alt"></i> <a href="groupin_group_admin.net?groupkey=${group.groupKey }"
 											title="">모임 기본 설정</a></li>
 										<li><i class="ti-mouse-alt"></i> <a
 											href="groupin_group_admin_scheduleList.net?groupkey=${group.groupKey }" title="">모임 일정 관리</a></li>
