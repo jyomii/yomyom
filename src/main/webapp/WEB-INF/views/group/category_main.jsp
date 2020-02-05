@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
 
@@ -216,7 +216,7 @@ animation: crescendo 6s alternate infinite ease-in;
 										<div class="g-post-meta">
 											<div class="post-title">
 												<h4>
-													<a title="" href="#">${item.groupName }</a>
+													<a title="이동" href="groupmain.net?groupkey=${item.groupKey }">${item.groupName }</a>
 												</h4>
 												<p class="text-end">${item.groupInfo }</p>
 												<span class="p-date">${item.lastDate} 마지막 활동 </span>
@@ -256,7 +256,7 @@ animation: crescendo 6s alternate infinite ease-in;
 												</figure>
 												<div class="pepl-info">
 													<h4>
-														<a href="time-line.html" title="">${item.groupName }</a>
+														<a href="groupmain.net?groupkey=${item.groupKey }" title="">${item.groupName }</a>
 													</h4>
 													<span class="text-end">${item.groupInfo }</span>
 												</div>

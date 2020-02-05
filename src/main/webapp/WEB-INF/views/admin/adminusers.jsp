@@ -147,9 +147,18 @@ a.add-butn.more-action {
 																			data-location='${item.locationName}'
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
-																			data-joindate='${item.userJoinDate}'><img
+																			data-joindate='${item.userJoinDate}'>
+																			<c:if test="${empty item.userImageFile }">
+																			<img
 																			src="resources/images/default.png"
-																			alt=""></a>
+																			alt="">
+																			</c:if>
+																			
+																			<c:if test="${!empty item.userImageFile }">
+																			<img alt="" src="<spring:url value='/image${item.userImageFile}'/>" />
+																			</c:if>
+																			
+																			</a>
 																	</figure>
 																	<div class="pepl-info">
 																		<h4>
@@ -223,9 +232,18 @@ a.add-butn.more-action {
 																			data-location='${item.locationName}'
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
-																			data-joindate='${item.userJoinDate}'><img
+																			data-joindate='${item.userJoinDate}'>
+																			<c:if test="${empty item.userImageFile }">
+																			<img
 																			src="resources/images/default.png"
-																			alt=""></a>
+																			alt="">
+																			</c:if>
+																			
+																			<c:if test="${!empty item.userImageFile }">
+																			<img alt="" src="<spring:url value='/image${item.userImageFile}'/>" />
+																			</c:if>
+																			
+																			</a>
 																	</figure>
 																	<div class="pepl-info">
 																		<h4>
@@ -297,9 +315,17 @@ a.add-butn.more-action {
 																			data-location='${item.locationName}'
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
-																			data-joindate='${item.userJoinDate}'><img
+																			data-joindate='${item.userJoinDate}'>
+																			<c:if test="${empty item.userImageFile }">
+																			<img
 																			src="resources/images/default.png"
-																			alt=""></a>
+																			alt="">
+																			</c:if>
+																			
+																			<c:if test="${!empty item.userImageFile }">
+																			<img alt="" src="<spring:url value='/image${item.userImageFile}'/>" />
+																			</c:if>
+																			</a>
 																	</figure>
 																	<div class="pepl-info">
 																		<h4>
@@ -372,9 +398,18 @@ a.add-butn.more-action {
 																			data-location='${item.locationName}'
 																			data-age='${item.userAge}'
 																			data-gender='${item.gender}'
-																			data-joindate='${item.userJoinDate}'><img
+																			data-joindate='${item.userJoinDate}'>
+																			<c:if test="${empty item.userImageFile }">
+																			<img
 																			src="resources/images/default.png"
-																			alt=""></a>
+																			alt="">
+																			</c:if>
+																			
+																			<c:if test="${!empty item.userImageFile }">
+																			<img alt="" src="<spring:url value='/image${item.userImageFile}'/>" />
+																			</c:if>
+																			
+																			</a>
 																	</figure>
 																	<div class="pepl-info">
 																		<h4>
@@ -856,9 +891,21 @@ class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="but
 				html += ' data-age="'+result[i].userAge+'"';
 				html += ' data-gender="'+result[i].gender+'"';
 				html += ' data-joindate="'+result[i].userJoinDate+'"';
-				html += '><img';
-				html += ' src="resources/images/default.png"';
-				html += 'alt=""></a>';
+				html += '>';
+				
+				if(result[i].userImageFile == null){
+					html += '<img';
+					html += ' src="resources/images/default.png"';
+					html += ' alt="">';
+				}else{
+					html += "<img src= \'<spring:url value='/image"+list[i].userImageFile +"'/>\'/>";
+				}
+				
+			
+				
+			
+				
+				html += '</a>';
 				html += '</figure>';
 				html += '<div class="pepl-info">';
 				html += '<h4>';

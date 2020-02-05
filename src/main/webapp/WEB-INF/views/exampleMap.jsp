@@ -484,7 +484,6 @@
 
 		});
 		
-
       function sendToParent(){
     	  
     	// Drawing Manager에서 그려진 데이터 정보를 가져옵니다 

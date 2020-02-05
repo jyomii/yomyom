@@ -309,6 +309,8 @@ top:-9px;
 	float: right;
 	padding-left: 13px !important;
 	padding-right: 13px !important;
+	margin-top:0px !important;
+	margin-bottom:10px !important;
 }
 
 .search-text-field {
@@ -360,6 +362,10 @@ top:-9px;
 
 .boardListRight {
 	float: right;
+}
+
+.paddingtopzero{
+	padding-top:0px !important;
 }
 </style>
 
@@ -469,7 +475,17 @@ top:-9px;
 										<div class="groups">
 											<span><i class="fa fa-users"></i>${boardname}</span>
 										</div>
-											<div class="mesages-lists">
+										<c:if test="${boardtype=='G'&&userinfo.userGrade==1 }">
+										<button type="button" class="mtr-btn addScheduleBtn">
+												<span>글쓰기</span>
+											</button>
+											</c:if>
+											<c:if test="${boardtype=='Y'&&userinfo.userGrade==1||userinfo.userGrade==0}">
+										<button type="button" class="mtr-btn addScheduleBtn">
+												<span>글쓰기</span>
+											</button>
+											</c:if>
+											<div class="mesages-lists paddingtopzero">
 												<ul id="message-list" class="message-list">
 													<li class="unread"><span class="sender-name">안녕하세요
 															자유게시판입니다.</span> <a title="" data-toggle="tooltip"

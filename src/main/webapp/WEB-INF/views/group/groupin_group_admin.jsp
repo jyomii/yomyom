@@ -2,6 +2,8 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
 <!-- Header end -->
@@ -193,63 +195,6 @@
 	min-height: 273px;
 }
 
-.forDeleteMargin {
-	margin-right: 2%
-}
-
-.addScheduleBtn {
-	float: right;
-	padding-left: 13px !important;
-	padding-right: 13px !important;
-}
-
-.search-text-field {
-	margin-left: 3%;
-}
-
-.search-text-free {
-	background: #f5f5f5 none repeat scroll 0 0;
-	border: 1px solid #dadede;
-	border-radius: 30px;
-	color: #7b7b7b;
-	font-size: 15px;
-	padding: 7px 20px;
-	width: 70%;
-	margin-left: 2%;
-	margin-bottom: 10px;
-	margin-top: 3px;
-}
-
-.search-text-btn {
-	margin-left: 2%;
-	padding-left: 20px;
-	padding-right: 20px;
-}
-
-.row-pagination {
-	padding-top: 30px;
-}
-
-.center-pagination {
-	justify-content: center;
-}
-
-.inline-flex {
-	display: inline-flex;
-}
-
-.text-align-center {
-	text-align: center;
-}
-
-.search-condition {
-	margin-right: 10px;
-}
-
-.margin-Bottom{
-	margin-bottom: 0px !important;
-}
-
 .min-width-h4 {
 	margin-bottom: 0px !important;
 }
@@ -414,22 +359,6 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
-
-.halfmargin {
-	margin-left: 2.2%;
-}
-
-.moneyDiv {
-	display: none;
-}
-
-.btn-center{
-	margin-left:40%;
-}
-
-.margintopZero{
-	margin-top:0px !important;
-}
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -480,6 +409,7 @@ top:-9px;
 								<!-- 그룹 사진 수정 버튼 -->
 							</form>
 							</c:if>
+							
 							<!-- **********모임 사진 수정*********** -->
 						</figure>
 						<!-- 그룹 사진 -->
@@ -536,196 +466,42 @@ top:-9px;
 
 							<!-- 그룹장 간단 그룹 소개 -->
 							<div class="central-meta item">
-								<div class="groups">
-											<span><i class="fa fa-users"></i>모임 일정 관리</span>
-											<button type="button" class="mtr-btn addScheduleBtn">
-												<span>정모 추가하기</span>
-											</button>
-										</div>
-										<ul class="nearby-contct">
-											<!-- ======================================================================= -->
-										<c:if test="${not empty groupmeetinglist }">
-										<c:forEach var="gmtl" items="${groupmeetinglist }">
-										<c:choose>
-											<c:when test="${gmtl.rownum+0 ==1}">
-												<c:set var="l" value="One" />
-												<c:set var="n" value="1" />
-											</c:when>
-											<c:when test="${gmtl.rownum+0 ==2}">
-												<c:set var="l" value="Two" />
-												<c:set var="n" value="2" />
-											</c:when>
-											<c:when test="${gmtl.rownum+0 ==3}">
-												<c:set var="l" value="Three" />
-												<c:set var="n" value="3" />
-											</c:when>
-											<c:when test="${gmtl.rownum+0 ==4}">
-												<c:set var="l" value="Four" />
-												<c:set var="n" value="4" />
-											</c:when>
-											<c:when test="${gmtl.rownum+0 ==5}">
-												<c:set var="l" value="Five" />
-												<c:set var="n" value="5" />
-											</c:when>
-											<c:when test="${gmtl.rownum+0 ==6}">
-												<c:set var="l" value="Six" />
-												<c:set var="n" value="6" />
-											</c:when>
-											<c:otherwise>
-												<c:set var="l" value="Seven" />
-												<c:set var="n" value="7" />
-											</c:otherwise>
-										</c:choose>
-											<li>
-												<div class="card">
-													<div class="card-header card-header-bgcolor"
-														id="heading${l}">
-														<div class="nearly-pepls">
-															<figure>
-																<a href="time-line.html" title=""><img
-																	src="resources/images/resources/group1.jpg" alt=""></a>
-															</figure>
-															<div class="pepl-info">
-																<h4>
-																	<a href="time-line.html" title="">${gmtl.postTitle}</a>
-																</h4>
-																<br> <br> <span class="schedule-span">장소:
-																${gmtl.location}</span>
-																<button type="button" class="mtr-btn forJoinBtn delschedulebtn">
-																	<span>삭제하기</span>
-																</button>
-																<input type="hidden" id="postkey${n}"
-																value="${gmtl.postKey }">
-																<button type="button"
-																	class="mtr-btn forJoinBtn forDeleteMargin modschedulebtn">
-																	<span>수정하기</span>
-																</button>
-																<input type="hidden" id="postkey${n}"
-																value="${gmtl.postKey }"> <input type="hidden"
-																value="${n}"> <br> <span
-																class="schedule-span1">일시: ${gmtl.cstartdate}</span><br>
-															<span class="schedule-span1">회비: ${gmtl.cmoney}</span>
-															<button type="button"
-																class="mtr-btn forMemberCountBtn${l}"
-																data-toggle="collapse" data-target="#collapse${l}"
-																aria-expanded="true" aria-controls="collapse${l}">
-																<span>참여한 사람들 <span class="currentperson${n}">${gmtl.currentperson }</span>
-																	/ ${gmtl.maxperson}&nbsp;&nbsp;&nbsp;<i
-																	class="fas fa-arrow-down i-change${l}"></i>
-																</span>
-															</button>
-															<input type="hidden" value="${gmtl.postKey }"> <input
-																type="hidden" value="${n}">
-																<em class="float-right">${gmtl.postDate }</em>
-
-															</div>
-														</div>
-													</div>
-													<div id="collapse${l}" class="collapse"
-													aria-labelledby="heading${l}" data-parent="#accordion">
-													<div class="card-body">
-														<div class="widget friend-list">
-															<div id="searchDir${n}"></div>
-															<ul id="people-list${n}"
-																class="friendz-list people-list groupMember">
-																<c:forEach var="gml" items="${groupmemberlist}">
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar.jpg"
-																				alt="">
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html"></a>${gml.groupnickname } <i
-																				class="__cf_email__">모임장</i>
-																		</div>
-																	</li>
-																</c:forEach>
-															</ul>
-														</div>
-													</div>
+								
+								<div class="onoff-options">
+											<h5 class="f-title">
+												<i class="ti-settings"></i>모임 기본 설정
+											</h5>
+											<p>모임의 기본 설정입니다</p>
+											<form method="post">
+												<div class="setting-row">
+													<span>모임 공개 여부</span>
+													<p>공개 / 비공개 설정</p>
+													<input type="checkbox" id="switch00" /> <label
+														for="switch00" data-on-label="ON" data-off-label="OFF"></label>
 												</div>
-											</div>
-										</li>
-									</c:forEach>
-									</c:if>
-									<c:if test="${empty groupmeetinglist }">
-										<div class="text-align-center">
-										<span>일정을 추가해 주세요</span>
-										</div>
-									</c:if>
-								</ul>
-											<!-- ======================================================================= -->
-										<div class="row row-pagination">
-											<div class="col">
-												<ul class="pagination pagination-sm center-pagination"
-													id="pempty">
-
-													<c:if test="${page <= 1 }">
-								<li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
-								</li>
-							</c:if>
-							<c:if test="${page > 1 }">
-								<li class="page-item"><a
-									href="groupin_group_admin_scheduleList.net?page=${page-1 }" class="page-link">이전</a>&nbsp;
-								</li>
-							</c:if>
-							<c:forEach var="a" begin="${startpage }" end="${endpage }">
-								<c:if test="${a == page }">
-									<li class="page-item"><a class="page-link" href="#">${a }</a>
-									</li>
-								</c:if>
-								<c:if test="${a != page }">
-									<li class="page-item"><a href="groupin_group_admin_scheduleList.net?page=${a }"
-										class="page-link">${a }</a></li>
-								</c:if>
-							</c:forEach>
-
-							<c:if test="${page >= maxpage }">
-								<li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
-								</li>
-							</c:if>
-							<c:if test="${page < maxpage }">
-								<li class="page-item"><a
-									href="groupin_group_admin_scheduleList.net?page=${page+1 }" class="page-link">&nbsp;다음</a>
-								</li>
-							</c:if>
-
-												</ul>
-											</div>
-										</div>
-										<!-- 페이지네이션 -->
-
-										<div class="center-block" id="ajaxdiv">
-				
-										
-
-										<div class="text-align-center">
-											<form>
-												<div class="checkbox inline-flex margin-Bottom">
-													<label class="search-condition"> <input
-														type="checkbox" id="moneyCheck"><i
-														class="check-box forcheckbox"></i>제목
-													</label> <label class="search-condition"> <input
-														type="checkbox" id="moneyCheck"><i
-														class="check-box forcheckbox"></i>내용
-													</label> <label class="search-condition"> <input
-														type="checkbox" id="moneyCheck"><i
-														class="check-box forcheckbox"></i>제목+내용
-													</label> <label class="search-condition"> <input
-														type="checkbox" id="moneyCheck"><i
-														class="check-box forcheckbox"></i>작성자
-													</label>
+												<div class="setting-row">
+													<span>검색 허용 여부</span>
+													<p>검색 허용 / 비허용 설정</p>
+													<input type="checkbox" id="switch01" /> <label
+														for="switch01" data-on-label="ON" data-off-label="OFF"></label>
 												</div>
-												<br> <input type="text" class="search-text-free"
-													placeholder="검색어를 입력하세요.">
-												<button class="btn btn-primary search-text-btn"
-													type="submit" id="search">검색</button>
+												<div class="form-group">
+													<input type="text" id="input" required="required" /> <label
+														class="control-label" for="input">모임 카톡방 주소</label><i
+														class="mtrl-select"></i>
+												</div>
+												<div class="submit-btns">
+													<button type="button" class="mtr-btn">
+														<span>수정하기</span>
+													</button>
+													<button type="button" class="mtr-btn">
+														<span>원래대로</span>
+													</button>
+												</div>
 											</form>
 										</div>
-							
 							</div>
-</div>
+							<!-- 그룹 정모 후기 목록 -->
 
 						</div>
 						<!-- 그룹 페이지 위젯 중간 -->
@@ -744,7 +520,6 @@ top:-9px;
 		</div>
 	</div>
 </section>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
 	//달력시작==================================================================
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
@@ -838,7 +613,6 @@ top:-9px;
 			}
 		}
 	}
-	
 	//달력끝==================================================================
 </script>
 <script>
@@ -849,32 +623,9 @@ $(function() {
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
-	
-	$(".delschedulebtn").click(function(){
-		var groupkey = $('#thisGroupKey').val();
-		var postkey = $(this).next().val();
-		var result = confirm("정말 삭제하시겠습니까?");
-		if(result){
-			location.href="groupin_group_admin_deleteSchedule.net?groupkey="+groupkey+"&postkey="+postkey;			
-		}
-	})
-	$(".modschedulebtn").click(function(){
-		var groupkey = $('#thisGroupKey').val();
-		var postkey = $(this).next().val();
-		location.href="groupin_group_admin_modifySchedule.net?groupkey="+groupkey+"&postkey="+postkey;
-	})
-	
-	
-	
-	$(".addScheduleBtn").click(function(){
-		var groupkey = $('#thisGroupKey').val();
-		location.href="groupin_group_admin_addSchedule.net?groupkey="+groupkey;
-	})
-	
 	$(".forLoginBtn").click(function(){
 		location.href="login";
 	})
-	
 	$(".forLoginBtnx").click(function(){
 		location.href="login";
 	})

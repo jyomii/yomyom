@@ -11,6 +11,7 @@ import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.CalendarMember;
+import co.pr.fi.domain.GCalendar;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
@@ -155,4 +156,61 @@ public class GroupDAO {
 		return sqlSession.selectList("group.getGroupRank", list);
 
 	}
+
+	
+	public Post modifypost(int postkey) {
+		return sqlSession.selectOne("group.modifypost", postkey);
+	}
+
+	public CalendarList modifycalendar(int postkey) {
+		return sqlSession.selectOne("group.modifycalendar", postkey);
+	}
+
+	public List<MemberList> modifymember(int postkey) {
+		return sqlSession.selectList("group.modifymember", postkey);
+	}
+
+	public void calendardeleteajax(Map<String, Integer> list) {
+		sqlSession.delete("group.calendardeleteajax",list);
+		
+	}
+
+	public void updateSchedule(Post post) {
+		sqlSession.update("group.updateschedule", post);
+		
+	}
+
+	public void updateScheduleCalendar(Post post) {
+		sqlSession.update("group.updateschedulecalendar", post);
+		
+	}
+
+	public List<MemberList> modifymemberm(int postkey) {
+		return sqlSession.selectList("group.modifymemberm", postkey);
+	}
+
+	public void calendarstomajax(Map<String, Integer> list) {
+		sqlSession.update("group.calendarstomajax",list);
+		
+	}
+	
+	
+	public void calendarmtosajax(Map<String, Integer> list) {
+		sqlSession.update("group.calendarmtosajax",list);
+		
+	}
+
+	public int schedulelistcount(int groupkey) {
+		return sqlSession.selectOne("group.schedulelistcount", groupkey);
+	}
+
+	public List<Post> getboardlist(Map<String, Integer> list) {
+		return sqlSession.selectList("group.getboardlist", list);
+	}
+
+	public void scheduledelete(int postkey) {
+		sqlSession.delete("group.scheduledelete",postkey);
+		
+	}
+
 }
