@@ -75,10 +75,9 @@ public class GroupController {
 		return groups;
 	}
   
-  @GetMapping("/group_main.net")
-	public ModelAndView group_main(ModelAndView mv, HttpSession session) {
+	@GetMapping("/group_main.net")
+	public ModelAndView group_main(@RequestParam(value = "groupkey") int groupkey, ModelAndView mv, HttpSession session) {
 		String id = "";
-		int groupkey=1;
 		int userkey=-1;
 		if(session.getAttribute("id")!=null) {
 			id = session.getAttribute("id").toString();
