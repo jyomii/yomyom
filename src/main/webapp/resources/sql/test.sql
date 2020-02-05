@@ -344,6 +344,12 @@ CREATE TABLE post
 
 
 
+						 
+ALTER TABLE post ADD(boardvote char(1));
+ALTER TABLE post ADD(boardcalendar char(1));
+ALTER TABLE post ADD(boardladder char(1));
+ALTER TABLE post ADD(boardmap char(1));
+				   
 
 CREATE SEQUENCE postSEQ
 START WITH 1
