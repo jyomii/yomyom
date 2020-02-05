@@ -2,6 +2,7 @@ package co.pr.fi.domain;
 
 import java.sql.Date;
 
+
 //일정 
 public class CalendarList {
 
@@ -10,6 +11,34 @@ public class CalendarList {
 	private Date cStartDate;
 
 	private String startdate;
+	private String starttime;
+	private String startminute;
+	private String location;
+	
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public String getStartminute() {
+		return startminute;
+	}
+
+	public void setStartminute(String startminute) {
+		this.startminute = startminute;
+	}
 
 	// 종료날짜
 	private Date cEndDate;

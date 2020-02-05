@@ -446,6 +446,7 @@ display: inline-block;
 								src="<spring:url value='/image${group.groupCFile }'/>" />
 							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 							<!-- **********모임 사진 수정*********** -->
+							
 							<c:if test="${userinfo.userGrade==1}">
 							<form class="edit-phto" id="groupImgForm"
 								enctype="multipart/form-data" action="group_ImgUpdate.net"

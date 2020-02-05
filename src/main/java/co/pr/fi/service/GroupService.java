@@ -5,6 +5,7 @@ import java.util.List;
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.CalendarList;
+import co.pr.fi.domain.GCalendar;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
@@ -73,5 +74,29 @@ public interface GroupService {
 	public void updateboardmap(int postkey);
 
 	public List<GGroup> getGroupRank(int i, int limit, int page);
+
+	public Post modifypost(int postkey);
+
+	public CalendarList modifycalendar(int postkey);
+
+	public List<MemberList> modifymember(int postkey);
+
+	public void calendardeleteajax(int temp, int postkey);
+
+	public void updateschedule(Post post);
+
+	public void updateschedulecalendar(Post post);
+
+	public List<MemberList> modifymemberm(int postkey);
+
+	public void calendarstomajax(int temp, int postkey);
+	
+	public void calendarmtosajax(int temp, int postkey);
+
+	public int getScheduleListCount(int boardkey);
+
+	public List<Post> getBoardList(int page, int limit, int groupkey);
+
+	public void scheduledelete(int postkey);
 
 }
