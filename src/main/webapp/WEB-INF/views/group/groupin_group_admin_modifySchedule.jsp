@@ -1125,6 +1125,12 @@ function saveMap(postkey) {
                 mapseq: index
             };
 
+            if(info.length == 0){
+                item.maplevel = Level;
+                item.maplat = Latlng.getLat();
+                item.maplng = Latlng.getLng();
+             }
+            
             info.push(item);
 
         }
