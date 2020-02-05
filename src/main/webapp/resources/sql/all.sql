@@ -273,8 +273,8 @@ CREATE TABLE ggroupmember
     userkey          NUMBER          NOT NULL, 
     groupnickname    VARCHAR2(30)    NOT NULL, 
     usergrade        NUMBER          NOT NULL, 
-    profilefile		 varchar2(100)	 NOT NULL,
-    profileorigin	 varchar2(100) 	 NOT NULL,
+    profilefile		 varchar2(100)	 NULL,
+    profileorigin	 varchar2(100) 	 NULL,
     regdate		date		,
     CONSTRAINT GGROUPMEMBERPK PRIMARY KEY (groupkey,userkey)
 );
