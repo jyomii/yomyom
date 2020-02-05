@@ -25,7 +25,7 @@
 	<!-- 그룹단톡방 주소 컬럼 추가로 not enough values 오류 발생해서 칼럼명 지정했읍니다 -->
 	insert into ggroup 
 	(GROUPKEY, GROUPNAME, USERKEY, AGEKEY, WHEREKEY, CATEGORYKEY, GROUPINFO, GROUPDFILE, GROUPIDORIGIN,
-	GROUPCFILE, GROUPCORIGIN, GROUPPRIVATE, GROUPTYPE, GROUPDATE, GROUPSTATUS)
+	GROUPCFILE, GROUPCORIGIN, GROUPPRIVATE, GROUPTYPE, GROUPDATE, GROUPSTATUS,groupkatalk)
 	values(
 	#{groupKey},
 	 #{groupName},
@@ -52,10 +52,12 @@
 	
 	</insert>
 
+
+
 	
 	<insert id="insertGroupMember" parameterType="groupmember">
 	insert into ggroupmember values(#{groupKey}, #{userKey}, #{groupNickname}, 
-	#{userGrade})
+	#{userGrade},null,null, sysdate)
 	</insert>
 	
 	<select id="checkGroupName" parameterType="String" resultType="int">
