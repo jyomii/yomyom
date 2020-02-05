@@ -278,6 +278,12 @@ CREATE TABLE ggroupmember
     regdate		date		,
     CONSTRAINT GGROUPMEMBERPK PRIMARY KEY (groupkey,userkey)
 );
+					     
+					     /*
+					     
+					     ALTER TABLE ggroupmember ADD( regdate date);
+
+					     */
 
 /*
     유저 등급 :
