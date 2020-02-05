@@ -208,7 +208,7 @@
 
 	<select id="groupmaster" resultType="String" parameterType="int">
 		select groupnickname from ggroupmember where userkey = (select userkey
-		from ggroup where groupkey =#{groupkey})
+		from ggroup where groupkey =#{groupkey}) and groupkey=#{groupkey}
 	</select>
 
 	<select id="groupboardlist" resultType="groupBoard"

@@ -470,33 +470,6 @@ a.add-butn.more-action {
 
 								</div>
 
-
-								<div class="col-lg-3">
-									<aside class="sidebar static">
-										<div class="widget">
-											<h4 class="widget-title">신고 목록</h4>
-											<ul class="followers" style="max-height: 400px;">
-												<c:forEach items="${policeResult }" var="item" varStatus="status">
-													<li><span>${item.userid }</span>
-														<p>총 ${item.count }번 신고</p>
-														<p>
-														<a onClick="policeDetail('${item.userkey}','${status.index}');"
-class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    내용 확인</a>
-    <a class="btn btn-secondary" onClick="stopUser1('${item.userid}');" style="color:white;">정지</a></p>
-  <div class="collapse" id="collapseExample">
-  <div class="card card-body">
-   
-  </div>
-</div>
-														<div></div></li>
-												</c:forEach>
-											</ul>
-										</div>
-										<!-- who's following -->
-
-									</aside>
-								</div>
 							</div>
 						</div>
 					</div>

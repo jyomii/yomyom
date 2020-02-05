@@ -41,7 +41,7 @@ delete from userpolice where reciveuserKey  = #{userkey}
 <select id="policeMDetail" parameterType="int" resultType="policeDetail">
   select distinct policeboardsort,policenumber,commentcontent postcontent
    from userpolice, gcomment 
-   where reciveuserKey = 0 and policeboardsort = 'M' 
+   where reciveuserKey = #{userkey} and policeboardsort = 'M' 
    and reciveuserKey = gcomment.userkey 
    and commnetnum in (policenumber)
     
