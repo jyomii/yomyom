@@ -9,7 +9,7 @@
 				GCOMMENTSEQ.CURRVAL, #{commentReLev}, #{commentReSeq}, SYSDATE, #{commentshow}, #{groupkey})
 	</insert>
 	
-	<!-- 댓글달린 댓글의 값들 가져온다. -->
+	<!-- 댓글달린 댓글의 값을 가져온다. -->
 	<select id = "getCommentInfo" parameterType = "int" resultType = "comment">
 		SELECT COMMEMTREREF, COMMENTRESEQ
 		FROM GCOMMENT
@@ -23,19 +23,21 @@
 		WHERE COMMEMTREREF = #{commemtReRef} AND COMMENTRESEQ &gt; #{commentReSeq}
 	</update>
 	
-	<!-- 대댓 달기 -->
+	<!-- 대댓을 위한 두 번째 과정 -->
 	<insert id = "commentReply" parameterType = "map">
 		INSERT INTO GCOMMENT
 		VALUES(GCOMMENTSEQ.NEXTVAL, #{postkey}, #{userkey}, #{content},
 			   #{commentnum}, #{commentReLev}, #{commentReSeq}, SYSDATE, #{groupkey}, #{commentshow})
 	</insert>
 	
+	<!-- 댓글이 달리는 원댓의 정보를 가져온다. -->
 	<select id = "getDetail" resultType = "comment">
 		SELECT *
 		FROM GCOMMENT
 		WHERE COMMNETNUM = #{COMMENTNUM}
 	</select>
 	
+	<!-- 댓글 삭제 -->
 	<delete id = "delete" parameterType = "comment">
 	<![CDATA[
 		DELETE FROM GCOMMENT
@@ -44,10 +46,10 @@
 			   AND COMMENTRESEQ >= #{commentReSeq}
 			   AND COMMENTRESEQ < (
 			   						NVL((SELECT MIN(COMMENTRESEQ)
-			   						FROM GCOMMENT
-			   						WHERE COMMEMTREREF = #{commemtReRef}
-								    AND COMMENTRELEV = #{commentReLev}
-								    AND COMMENTRESEQ > #{commentReSeq},
+				   						FROM GCOMMENT
+				   						WHERE COMMEMTREREF = #{commemtReRef}
+									    AND COMMENTRELEV = #{commentReLev}
+									    AND COMMENTRESEQ > #{commentReSeq},
 								    (SELECT MAX(COMMENTRESEQ) + 1
 								    FROM GCOMMENT
 								    WHERE COMMEMTREREF = #{commentReSeq}))
@@ -61,4 +63,11 @@
 		SET COMMENTCONTENT = #{content}
 		WHERE COMMNETNUM = #{commentnum}
 	</update>
+	
+	<!-- 현재 모임에서 조회하는 게시글에 달린 댓글수 구한다. -->
+	<select id = "getCommentCount" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM GCOMMENT
+		WHERE POSTKEY = #{postkey} AND GROUPKEY = #{groupkey}
+	</select>
 </mapper>

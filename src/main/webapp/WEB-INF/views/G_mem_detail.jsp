@@ -1,266 +1,560 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>      
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>   
-<jsp:include page = "mainpage/header.jsp"/>
-	<title>모임 회원 상세 정보 페이지 forum.jsp</title>
-	<!-- 제이쿼리 -->
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src = "resources/js/g_mem_detail.js"></script>
-    <!-- 아이콘 -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-	<!-- 스타일 추가 -->
-	<style>
-		.user-active {
-			list-style-type : none;
-		}
-		
-		.user-active li {
-			display : inline-block;
-			margin : 0 10px;
-		}
-		
-		.user-active {
-			margin : 0;
-			padding-inline-start : 0px !important;
-		}
-		
-		.user-active i {
-			padding-right : 8px;
-		}
-		
-		.group-img {
-			width : 45px !important;
-			height : 45px !important;
-			border-radius : 100%;
-			box-sizing: border-box;
-   			margin-right: 12px;
-		}
-		
-		.forum-list th:last-child {
-			text-align : center;
-		}
-		
-		.table td {
-			vertical-align : middle !important;
-		}
-		
-		.comment-subject a, .comment-num {
-			color : #8c8c8c !important;
-			font-size : 9pt;
-		}
-		
-		.comment-subject a::before {
-			content : "원문 제목 : ";
-		}
-		
-		.comment-num {
-			color : #ed3939b5 !important;
-		}
-		
-		.selected-menu {
-			color : #088dcd !important; 
-		}
-		
-		.user-active li {
-			color : #545454;
-		}
-		
-		/* style.css에서 테이블에 대한 스타일 원본임 */
-		/*
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<jsp:include page="mainpage/header.jsp" />
+<title>모임 회원 상세 정보 페이지</title>
+<!-- 제이쿼리 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- 아이콘 -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous">
+<!-- 스타일 추가 -->
+<style>
+.user-active {
+	list-style-type: none;
+}
+
+.user-active li {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+.user-active {
+	margin: 0;
+	padding-inline-start: 0px !important;
+}
+
+.user-active i {
+	padding-right: 8px;
+}
+
+.group-img {
+	width: 45px !important;
+	height: 45px !important;
+	border-radius: 100%;
+	box-sizing: border-box;
+	margin-right: 12px;
+}
+
+.forum-list th:last-child {
+	text-align: center;
+}
+
+.table td {
+	vertical-align: middle !important;
+}
+
+.comment-subject a, .comment-num {
+	color: #8c8c8c !important;
+	font-size: 9pt;
+}
+
+.comment-subject a::before {
+	content: "원문 제목 : ";
+}
+
+.comment-num {
+	color: #ed3939b5 !important;
+}
+
+.selected-menu {
+	color: #088dcd !important;
+}
+
+.user-active li {
+	color: #545454;
+}
+
+/* style.css에서 테이블에 대한 스타일 원본임 */
+/*
 		.forum-list table tbody tr td {
 			padding : 20px;
 			text-align : center;
 			width : 100%;
 		}
 		*/
-		
-		.forum-list table tbody tr td {
-			padding : 20px;
-		}
-		
-		.forum-list table tbody tr td:first-child {
-			width : 67%;
-		}
-		
-		.forum-list table tbody tr td:nth-child(2) {
-			text-align : center;
-		}
-		
-		.forum-list table tbody tr td:last-child {
-			text-align : center;
-			width : 23%;
-		}
-		
-		.center-block {
-			display : flex;
-			justify-content : center;	/* 가운데 정렬 */
-		}
-			
-		li .current {
-			background : #faf7f7;
-		}
-		
-		.page-link {
-			color : #088dcd;
-		}
-	</style>
+.forum-list table tbody tr td {
+	padding: 20px;
+}
+
+.forum-list table tbody tr td:first-child {
+	width: 67%;
+}
+
+.forum-list table tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+.forum-list table tbody tr td:last-child {
+	text-align: center;
+	width: 23%;
+}
+
+.center-block {
+	display: flex;
+	justify-content: center; /* 가운데 정렬 */
+}
+
+li .current {
+	background: #faf7f7;
+}
+
+.page-link {
+	color: #088dcd;
+}
+
+.forgroupname {
+	list-style: none;
+	padding-top: 20px;
+}
+
+.forgroupnamewidth {
+	width: 30%;
+	display: inline-block;
+}
+
+.forgroupnamewidth1 {
+	width: 60%;
+	display: inline-block;
+}
+
+.forgroupnameleft {
+	float: left;
+	list-style: none;
+	margin-right: 20px;
+}
+
+.forlogintitle {
+	margin-bottom: 10px !important;
+}
+
+.forSubmitBtnDiv {
+	margin-top: 0px !important;
+	margin-bottom: 10px;
+}
+
+.forLoginBtn {
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+	margin-left: 13%;
+}
+
+.forMemberCountBtnOne {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnTwo {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnThree {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnFour {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnFive {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSix {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSeven {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forJoinBtn {
+	margin-top: 0px !important;
+	padding: 5px !important;
+	float: right;
+	font-size: 14px !important;
+}
+
+.forRegisterBtn {
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+	margin-left: 10%;
+}
+
+.forRememberIdDiv {
+	margin-bottom: 0px !important;
+	margin-top: 5px !important;
+}
+
+.forcheckbox {
+	margin-top: 3px;
+}
+
+.calendarDiv {
+	text-align: center;
+	width: 95%;
+	margin: 0 auto;
+}
+
+.calendarTable {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.calendarBtn {
+	cursor: pointer;
+}
+
+.calendarCell {
+	cursor: pointer;
+}
+
+.calendarDiv td {
+	border-radius: 13px;
+}
+
+.calendarCellSelected {
+	background-color: #4F93CE;
+	color: white !important;
+}
+
+.calendarCellMy {
+	background-color: black;
+	color: white !important;
+}
+
+.scheduleDiv {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.scheduleUl {
+	padding-left: 0px !important;
+}
+
+.card-header-bgcolor {
+	background: white none repeat scroll 0 0 !important;
+}
+
+.schedule-span {
+	margin-bottom: 7px;
+	width: 70% !important;
+}
+
+.schedule-span1 {
+	width: 35% !important;
+}
+
+.nearby-contct>li {
+	padding: 15 px !important;
+}
+
+.paddingZero[aria-expanded="true"] {
+	background: #088dcd;
+	color: #fff;
+	text-decoration: none;
+}
+
+.groupMember {
+	display: inline-block;
+	list-style: outside none none;
+	margin-bottom: 0;
+	padding: 0 25px 20px;
+	width: 100%;
+	max-height: 300px !important;
+}
+
+.groupMember li {
+	display: inline-block;
+	margin-bottom: 20px;
+	position: relative;
+	width: 100%;
+}
+
+.your-page-groupList li {
+	margin-bottom: 3px !important;
+}
+
+.your-page-groupListDiv {
+	min-height: 273px;
+}
+
+.min-width-h4 {
+	margin-bottom: 0px !important;
+}
+
+.height-for-white {
+	height: 70px !important;
+}
+
+.calendarBtn {
+	cursor: pointer
+}
+
+#calendar td {
+	cursor: pointer
+}
+</style>
 <div class="theme-layout">
 	<section>
 		<div class="gap100">
-			<div class="container">
+			<div>
 				<div class="row">
+				
+						<!-- 그룹 페이지 위젯 왼쪽 -->
+						<div class="col-lg-3">
+							<aside class="sidebar static">
+								<!-- 그룹 게시판 위젯 -->
+								<div class="widget">
+									<h4 class="widget-title">게시판</h4>
+									<ul class="naves">
+										<c:forEach var="gbl" items="${groupboardlist }">
+											<li><i class="ti-clipboard"></i> 
+											<a href="newsfeed.html"title="">${gbl.boardName}</a> 
+											<input type="hidden"value="${gbl.boardType }"></li>
+										</c:forEach>
+										
+										<!-- ## 모임 회원 관리 페이지 임시 ## -->
+										<li>
+											<i class="ti-clipboard"></i> 
+											<a href="groupMember?groupKey=3" title="">모임 회원 게시판</a> 
+										</li>
+									</ul>
+								</div>
+								<!-- 그룹 게시판 위젯 -->
+
+								<!-- 모임 관리 게시판 위젯 -->
+								<div class="widget">
+									<h4 class="widget-title">모임 관리</h4>
+
+									<ul class="naves">
+										<li><i class="ti-info-alt"></i> <a href="group_admin.net"
+											title="">모임 기본 설정</a></li>
+										<li><i class="ti-mouse-alt"></i> <a
+											href="group_admin.net" title="">모임 일정 관리</a></li>
+										<li><i class="ti-heart"></i> <a href="edit-interest.html"
+											title="">모임 회원 관리</a></li>
+										<li><i class="ti-settings"></i> <a
+											href="edit-account-setting.html" title="">모임 게시판 관리</a></li>
+									</ul>
+								</div>
+								<!-- 모임 관리 게시판 위젯 -->
+
+								<!-- 그룹 카톡방 위젯 -->
+								<div class="widget">
+									<div class="banner medium-opacity bluesh">
+										<div
+											style="background-image: url(resources/images/resources/baner-widgetbg.jpg)"
+											class="bg-image"></div>
+										<!--  <div class="baner-top">
+													<span><img src="resources/images/book-icon.png"
+														alt=""></span> <i class="fa fa-ellipsis-h"></i>
+												</div>-->
+										<div class="banermeta">
+											<p>
+												그룹 카카오톡<br>채팅방에<br>참여하세요!
+											</p>
+											<!--<span>like them all</span>-->
+											<a href="#" title="" data-ripple="">카톡방 참여하기</a>
+										</div>
+									</div>
+								</div>
+								<!-- 그룹 카톡방 위젯 -->
+
+								<!-- 그룹 가입 회원 목록 -->
+								<div class="widget friend-list">
+									<h4 class="widget-title">모임의 회원들</h4>
+									<div id="searchDir"></div>
+									<ul id="people-list" class="friendz-list">
+										<c:forEach var="gml" items="${groupmemberlist }">
+											<li>
+												<figure>
+													<img src="resources/images/resources/friend-avatar.jpg"
+														alt="">
+												</figure>
+												<div class="friendz-meta">
+													<a href="time-line.html"></a>${gml.groupnickname } <i
+														class="__cf_email__">모임장</i>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+								<!-- 그룹 가입 회원 목록 -->
+
+							</aside>
+						</div>
+						<!-- 그룹 페이지 위젯 왼쪽  -->
+				
+				
 					<!-- 가운데 위젯 -->
-					<div class="col-lg-9">
+					<div class="col-lg-6">
 						<div class="forum-warper">
 							<div class="post-filter-sec">
-								<ul class = "user-active">
-									<li><a href = "/"><i class="fas fa-users"></i>가입한 모임</a></li>
-									<li><a href = "/"><i class="fas fa-user-edit"></i>작성한 글</a></li>
-									<li><a href = "/"><i class="fas fa-comments"></i>작성한 댓글</a></li>
+								<ul class="user-active">
+									<li><a href="/"><i class="fas fa-users"></i>가입한 모임</a></li>
+									<li><a href="/"><i class="fas fa-user-edit"></i>작성한 글</a></li>
+									<li><a href="/"><i class="fas fa-comments"></i>작성한 댓글</a></li>
 								</ul>
 							</div>
 						</div>
-						<form name = "myForm">
-							<input type = "hidden" id = "userkey" name = "userkey" value = "${userkey}">
-							<input type = "hidden" id = "groupkey" name = "groupkey" value = "${groupkey}">
-							<input type = "hidden" id = "postkey" name = "postkey" value = "${postkey}"> 
-							<input type = "hidden" id = "status" name = "status" value = "${status}">
-							<input type = "hidden" id = "page" name = "page" value = "${page}">
+						<form name="myForm">
+							<input type="hidden" id="userkey" name="userkey"
+								value="${userkey}"> <input type="hidden" id="groupkey"
+								name="groupkey" value="${groupkey}"> <input
+								type="hidden" id="postkey" name="postkey" value="${postkey}">
+							<input type="hidden" id="status" name="status" value="${status}">
+							<input type="hidden" id="page" name="page" value="${page}">
 						</form>
 						<div class="forum-list">
 							<table class="table table-responsive">
-							<!-- ## 가입한 모임 리스트 ## -->
-							<c:if test = "${status == 0}">
-								<thead>
-									<tr>
-										<th scope="col">Name</th>
-										<th scope="col">Member</th>
-										<th scope="col">Date</th>
-									</tr>
-								</thead>
-								<tbody>
-								<!-- 가입한 모임이 있는 경우 -->
-								<c:if test = "${listcount > 0}">
-									<c:forEach var = "b" items = "${list}">
+								<!-- ## 가입한 모임 리스트 ## -->
+								<c:if test="${status == 0}">
+									<thead>
 										<tr>
-											<td>
-												<img src="<spring:url value='/image${b.groupDFile}'/>" class = "group-img" alt = ""/>
-												<!-- 주소 상엽씨버전으로 바꾸면 js에서도 수정해줘 -->
-												<%-- <a href = "group_main.net?groupkey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a> --%>
-												<a href = "groupmain?groupkey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a>
-											</td>	
-											<td>${b.memberCount}명</td>
-											<td>${b.groupDate}</td>
+											<th scope="col">Name</th>
+											<th scope="col">Member</th>
+											<th scope="col">Date</th>
 										</tr>
-									</c:forEach>
+									</thead>
+									<tbody>
+										<!-- 가입한 모임이 있는 경우 -->
+										<c:if test="${listcount > 0}">
+											<c:forEach var="b" items="${list}">
+												<tr>
+													<td><img
+														src="<spring:url value='/image${b.groupDFile}'/>"
+														class="group-img" alt="" /> <!-- 주소 상엽씨버전으로 바꾸면 js에서도 수정해줘 -->
+														<%-- <a href = "group_main.net?groupkey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a> --%>
+														<a href="groupmain?groupkey=${b.groupKey}"
+														title="${b.groupName}">${b.groupName}</a></td>
+													<td>${b.memberCount}명</td>
+													<td>${b.groupDate}</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+										<!-- 가입한 모임이 없는 경우 -->
+										<c:if test="${listcount == 0}">
+											<tr>
+												<td colspan="3">가입한 모임이 없습니다.</td>
+											</tr>
+										</c:if>
+									</tbody>
 								</c:if>
-								<!-- 가입한 모임이 없는 경우 -->
-								<c:if test = "${listcount == 0}">
-									<tr><td colspan = "3">가입한 모임이 없습니다.</td></tr>
-								</c:if>
-								</tbody>
-							</c:if>
-						
-						<!-- ## 작성한 글 리스트 ## -->
-						<c:if test = "${status == 1}">
-							<thead>
-								<tr>
-									<th scope="col">Subject</th>
-									<th scope="col">ViewCount</th>
-									<th scope="col">Date</th>
-								</tr>
-							</thead>
-							<tbody>
-							<!-- 작성글이 있는 경우 -->
-							<c:if test = "${listcount > 0}">
-								<c:forEach var = "b" items = "${list}">
-									<tr>
-										<td><a href = "javascript:board(${b.postKey},${b.groupKey})" title = "${b.postTitle}">${b.postTitle}</a></td>	
-										<td>${b.postReadcount}</td>
-										<td>${b.postDate}</td>
-									</tr>
-								</c:forEach>
-							</c:if>
-							<!-- 작성글이 없는 경우 -->
-							<c:if test = "${listcount == 0}">
-								<tr><td colspan = "3">작성한 글이 없습니다.</td></tr>
-							</c:if>
-							</tbody>
-						</c:if>
-						
-						<!-- ## 작성한 댓글 리스트 ## -->						
-						<c:if test = "${status == 2}">
-							<thead>
-								<tr>
-									<th scope="col">Comment</th>
-									<th scope="col">ViewCount</th>
-									<th scope="col">Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:if test = "${listcount > 0}">
-									<c:forEach var = "b" items = "${list}">
+
+								<!-- ## 작성한 글 리스트 ## -->
+								<c:if test="${status == 1}">
+									<thead>
 										<tr>
-											<td>
-												<div class = "comment-info">
-													<span><a href = "javascript:board(${b.postKey},${b.groupKey})" title = "${b.commentContent}">${b.commentContent}</a></span>
-												</div>
-												<div class = "comment-subject">
-													<span><a href = "javascript:board(${b.postKey},${b.groupKey})" title = "${b.postTitle}">${b.postTitle}</a></span>
-													<span class = "comment-num">[${b.replyCount}]</span>
-												</div>
-											</td>	
-											<td>${b.postReadcount}</td>
-											<td>${b.commentDate}</td>
+											<th scope="col">Subject</th>
+											<th scope="col">ViewCount</th>
+											<th scope="col">Date</th>
 										</tr>
-									</c:forEach>
+									</thead>
+									<tbody>
+										<!-- 작성글이 있는 경우 -->
+										<c:if test="${listcount > 0}">
+											<c:forEach var="b" items="${list}">
+												<tr>
+													<td><a
+														href="javascript:board(${b.postKey},${b.groupKey})"
+														title="${b.postTitle}">${b.postTitle}</a></td>
+													<td>${b.postReadcount}</td>
+													<td>${b.postDate}</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+										<!-- 작성글이 없는 경우 -->
+										<c:if test="${listcount == 0}">
+											<tr>
+												<td colspan="3">작성한 글이 없습니다.</td>
+											</tr>
+										</c:if>
+									</tbody>
 								</c:if>
-								<c:if test = "${listcount == 0}">
-									<tr><td colspan = "3">작성한 댓글이 없습니다.</td></tr>
+
+								<!-- ## 작성한 댓글 리스트 ## -->
+								<c:if test="${status == 2}">
+									<thead>
+										<tr>
+											<th scope="col">Comment</th>
+											<th scope="col">ViewCount</th>
+											<th scope="col">Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${listcount > 0}">
+											<c:forEach var="b" items="${list}">
+												<tr>
+													<td>
+														<div class="comment-info">
+															<span><a
+																href="javascript:board(${b.postKey},${b.groupKey})"
+																title="${b.commentContent}">${b.commentContent}</a></span>
+														</div>
+														<div class="comment-subject">
+															<span><a
+																href="javascript:board(${b.postKey},${b.groupKey})"
+																title="${b.postTitle}">${b.postTitle}</a></span> <span
+																class="comment-num">[${b.replyCount}]</span>
+														</div>
+													</td>
+													<td>${b.postReadcount}</td>
+													<td>${b.commentDate}</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+										<c:if test="${listcount == 0}">
+											<tr>
+												<td colspan="3">작성한 댓글이 없습니다.</td>
+											</tr>
+										</c:if>
+									</tbody>
 								</c:if>
-							</tbody>
-						</c:if>
 							</table>
 						</div>
-						<c:if test = "${listcount > 0}">
-							<div class = "center-block">
-								<div class = "row">
-									<div class = "col">
-										<ul class = "pagination">
+						<c:if test="${listcount > 0}">
+							<div class="center-block">
+								<div class="row">
+									<div class="col">
+										<ul class="pagination">
 											<!-- 1페이지 -->
-											<c:if test = "${page <= 1}">
-												<li class = "page-item">
-													<a class = "page-link current" href = "#">«&nbsp;</a>
-												</li>
+											<c:if test="${page <= 1}">
+												<li class="page-item"><a class="page-link current"
+													href="#">«&nbsp;</a></li>
 											</c:if>
 											<!-- 2페이지부터 -->
-											<c:if test = "${page > 1}">
-												<li class = "page-item">
-													<a class = "page-link" href = "javascript:go(${page-1})">«&nbsp;</a>
-												</li>
+											<c:if test="${page > 1}">
+												<li class="page-item"><a class="page-link"
+													href="javascript:go(${page-1})">«&nbsp;</a></li>
 											</c:if>
-											<c:forEach var = "p" begin = "${startpage}" end = "${endpage}">
-												<c:if test = "${p == page}">
-													<li class = "page-item">
-														<a href = "#" class = "page-link current">${p}</a>
-													</li>
+											<c:forEach var="p" begin="${startpage}" end="${endpage}">
+												<c:if test="${p == page}">
+													<li class="page-item"><a href="#"
+														class="page-link current">${p}</a></li>
 												</c:if>
-												<c:if test = "${p != page}">
-													<li class = "page-item">
-														<a href = "javascript:go(${p})" class = "page-link">${p}</a>
-													</li>
+												<c:if test="${p != page}">
+													<li class="page-item"><a href="javascript:go(${p})"
+														class="page-link">${p}</a></li>
 												</c:if>
 											</c:forEach>
-											<c:if test = "${page >= maxpage}">
-												<li class = "page-item">
-													<a class = "page-link current" href = "#">&nbsp;»</a>
-												</li>
+											<c:if test="${page >= maxpage}">
+												<li class="page-item"><a class="page-link current"
+													href="#">&nbsp;»</a></li>
 											</c:if>
-											<c:if test = "${page < maxpage}">
-												<li class = "page-item">
-													<a class = "page-link" href = "javascript:go(${page+1})">&nbsp;»</a>
-												</li>
+											<c:if test="${page < maxpage}">
+												<li class="page-item"><a class="page-link"
+													href="javascript:go(${page+1})">&nbsp;»</a></li>
 											</c:if>
 										</ul>
 									</div>
@@ -270,164 +564,467 @@
 					</div>
 					<!-- 가운데 위젯 끝 -->
 
-						<!-- 그룹 페이지 위젯 오른쪽 -->
-						<div class="col-lg-3">
-							<aside class="sidebar static">
+					<!-- 그룹 페이지 위젯 오른쪽 -->
+					<div class="col-lg-3">
+						<aside class="sidebar static">
 
-								<!-- 그룹 로그인 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title forlogintitle">로그인</h4>
-									<div class="your-page">
-										<div class="form-group">
-											<input type="text" id="input" required="required" /> <label
-												class="control-label" for="input">아이디</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="form-group">
-											<input type="password" required="required" /> <label
-												class="control-label" for="input">비밀번호</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="checkbox forRememberIdDiv">
-											<label> <input type="checkbox" checked="checked"><i
-												class="check-box forcheckbox"></i>아이디 저장
-											</label>
-										</div>
-
-										<div class="submit-btns forSubmitBtnDiv">
-											<button type="button" class="mtr-btn forLoginBtn">
-												<span>로그인</span>
-											</button>
-											<button type="button" class="mtr-btn forRegisterBtn">
-												<span>회원가입</span>
-											</button>
-										</div>
-
+							<!-- 그룹 로그인 위젯 -->
+							<div class="widget">
+								<h4 class="widget-title forlogintitle">로그인</h4>
+								<div class="your-page">
+									<div class="form-group">
+										<input type="text" id="input" required="required" /> <label
+											class="control-label" for="input">아이디</label><i
+											class="mtrl-select"></i>
 									</div>
-								</div>
-								<!-- 그룹 로그인 위젯 -->
+									<div class="form-group">
+										<input type="password" required="required" /> <label
+											class="control-label" for="input">비밀번호</label><i
+											class="mtrl-select"></i>
+									</div>
+									<div class="checkbox forRememberIdDiv">
+										<label> <input type="checkbox" checked="checked"><i
+											class="check-box forcheckbox"></i>아이디 저장
+										</label>
+									</div>
 
-								<!-- 그룹 나의 정보 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">나의 정보</h4>
-									<div class="your-page your-page-groupListDiv">
-										<figure>
-											<a href="#" title=""><img
-												src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-										</figure>
-										<div class="page-meta">
-											<a href="#" title="" class="underline">동선동탁구대장</a> <span><i
-												class="ti-comment"></i>메세지 <em>9</em></span> <span><i
-												class="ti-bell"></i>알림 <em>2</em></span>
-										</div>
-										<div class="page-likes">
-											<ul class="nav nav-tabs likes-btn">
-												<li class="nav-item"><a class="active" href="#link1"
-													data-toggle="tab">나의모임정보</a></li>
-												<li class="nav-item"><a class="" href="#link2"
-													data-toggle="tab">가입모임목록</a></li>
-											</ul>
-											<!-- Tab panes -->
-											<div class="tab-content">
-												<div class="tab-pane active fade show" id="link1">
-													<span><i class="ti-heart"></i>884</span> <a href="#"
-														title="weekly-likes">35 new likes this week</a>
-													<div class="users-thumb-list">
-														<a href="#" title="Anderw" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-1.jpg" alt="">
-														</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-2.jpg" alt="">
-														</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-3.jpg" alt="">
-														</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-4.jpg" alt="">
-														</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-5.jpg" alt="">
-														</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-6.jpg" alt="">
-														</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-7.jpg" alt="">
-														</a>
-													</div>
+									<div class="submit-btns forSubmitBtnDiv">
+										<button type="button" class="mtr-btn forLoginBtn">
+											<span>로그인</span>
+										</button>
+										<button type="button" class="mtr-btn forRegisterBtn">
+											<span>회원가입</span>
+										</button>
+									</div>
+
+								</div>
+							</div>
+							<!-- 그룹 로그인 위젯 -->
+
+							<!-- 그룹 나의 정보 위젯 -->
+							<div class="widget">
+								<h4 class="widget-title">나의 정보</h4>
+								<div class="your-page your-page-groupListDiv">
+									<figure>
+										<a href="#" title=""><img
+											src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
+									</figure>
+									<div class="page-meta">
+										<a href="#" title="" class="underline">동선동탁구대장</a> <span><i
+											class="ti-comment"></i>메세지 <em>9</em></span> <span><i
+											class="ti-bell"></i>알림 <em>2</em></span>
+									</div>
+									<div class="page-likes">
+										<ul class="nav nav-tabs likes-btn">
+											<li class="nav-item"><a class="active" href="#link1"
+												data-toggle="tab">나의모임정보</a></li>
+											<li class="nav-item"><a class="" href="#link2"
+												data-toggle="tab">가입모임목록</a></li>
+										</ul>
+										<!-- Tab panes -->
+										<div class="tab-content">
+											<div class="tab-pane active fade show" id="link1">
+												<span><i class="ti-heart"></i>884</span> <a href="#"
+													title="weekly-likes">35 new likes this week</a>
+												<div class="users-thumb-list">
+													<a href="#" title="Anderw" data-toggle="tooltip"> <img
+														src="resources/images/resources/userlist-1.jpg" alt="">
+													</a> <a href="#" title="frank" data-toggle="tooltip"> <img
+														src="resources/images/resources/userlist-2.jpg" alt="">
+													</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
+														src="resources/images/resources/userlist-3.jpg" alt="">
+													</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
+														src="resources/images/resources/userlist-4.jpg" alt="">
+													</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
+														src="resources/images/resources/userlist-5.jpg" alt="">
+													</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
+														src="resources/images/resources/userlist-6.jpg" alt="">
+													</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
+														src="resources/images/resources/userlist-7.jpg" alt="">
+													</a>
 												</div>
-												<div class="tab-pane fade" id="link2">
-													<div>
-														<ul class="your-page-groupList">
-															<li>동.탁</li>
-															<li>동.탁</li>
-															<li>동.탁</li>
-														</ul>
-													</div>
+											</div>
+											<div class="tab-pane fade" id="link2">
+												<div>
+													<ul class="your-page-groupList">
+														<li>동.탁</li>
+														<li>동.탁</li>
+														<li>동.탁</li>
+													</ul>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<!-- 나의 정보 위젯 -->
+							</div>
+							<!-- 나의 정보 위젯 -->
 
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-								<div class="widget calendarCenter">
-									<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
-									<c:forEach var="gcl" items="${groupcalendarlist }">
-											<input type="hidden" id="cal${gcl.rownum}" value="${gcl.startdate }">
-									</c:forEach>
-									<h4 class="widget-title">나의 일정</h4>
+							<!-- 그룹별 정모 나의 일정 위젯 -->
+							<div class="widget calendarCenter">
+								<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
+								<c:forEach var="gcl" items="${groupcalendarlist }">
+									<input type="hidden" id="cal${gcl.rownum}"
+										value="${gcl.startdate }">
+								</c:forEach>
+								<h4 class="widget-title">나의 일정</h4>
 
-									<div class="calendarDiv">
-										<table id="calendar" class="calendarTable">
-											<tr>
-												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th id="prevcal"><label><i
-														class="fas fa-angle-left calendarBtn"></i></label></th>
-												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th id="nextcal"><label><i
-														class="fas fa-angle-right calendarBtn"></i></label></th>
-											</tr>
-											<tr>
-												<th align="center">일</th>
-												<th align="center">월</th>
-												<th align="center">화</th>
-												<th align="center">수</th>
-												<th align="center">목</th>
-												<th align="center">금</th>
-												<th align="center">토</th>
-											</tr>
-										</table>
-									</div>
-									<div class="scheduleDiv">
-										<hr>
-										<ul class="short-profile scheduleUl" id="shortschedule">
-											<c:if test="${empty shortschedule}">
+								<div class="calendarDiv">
+									<table id="calendar" class="calendarTable">
+										<tr>
+											<!-- label은 마우스로 클릭을 편하게 해줌 -->
+											<th id="prevcal"><label><i
+													class="fas fa-angle-left calendarBtn"></i></label></th>
+											<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
+											<th id="nextcal"><label><i
+													class="fas fa-angle-right calendarBtn"></i></label></th>
+										</tr>
+										<tr>
+											<th align="center">일</th>
+											<th align="center">월</th>
+											<th align="center">화</th>
+											<th align="center">수</th>
+											<th align="center">목</th>
+											<th align="center">금</th>
+											<th align="center">토</th>
+										</tr>
+									</table>
+								</div>
+								<div class="scheduleDiv">
+									<hr>
+									<ul class="short-profile scheduleUl" id="shortschedule">
+										<c:if test="${empty shortschedule}">
 											<li><span>일정 없음</span></li>
-											</c:if>
-											<c:if test="${not empty shortschedule}">
+										</c:if>
+										<c:if test="${not empty shortschedule}">
 											<c:forEach var="ss" items="${shortschedule }">
 												<li><span>${ss.posttitle }</span>
-												<p>
-													모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소: ${ss.location }
-												</p></li>
+													<p>
+														모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소:
+														${ss.location }
+													</p></li>
 											</c:forEach>
-											</c:if>
-										</ul>
-									</div>
-
+										</c:if>
+									</ul>
 								</div>
-								<!-- 그룹별 정모 나의 일정 위젯 -->
 
-							</aside>
-						</div>
-						<!-- 그룹 페이지 위젯 오른쪽 -->
+							</div>
+							<!-- 그룹별 정모 나의 일정 위젯 -->
+
+						</aside>
+					</div>
+					<!-- 그룹 페이지 위젯 오른쪽 -->
 				</div>
 			</div>
 		</div>
 	</section>
-	
+
 </div>
 <jsp:include page="mainpage/footer.jsp" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+//가입한 모임 페이지로 이동
+function goGroup(groupkey) {
+	var f = document.myForm;		// 폼 name
+	f.groupkey.value = groupkey;	// input 태그 중 name이 groupkey인 값에 대해서 groupkey를 넘긴다.
+	f.action = "groupmain.net";		// 이동할 페이지
+	f.method = "post";				// POST 방식으로 데이터 전송
+	f.submit();						// 폼 전송
+};
+
+// 게시글 페이지로 이동
+function board(postkey, groupkey) {
+	var f = document.myForm;		// 폼 name
+	f.groupkey.value = groupkey;	// input 태그 중 name이 groupkey인 값에 대해서 groupkey를 넘긴다.
+	f.postkey.value = postkey;		// input 태그 중 name이 postkey인 값에 대해서 postkey를 넘긴다.
+	f.action = "detailBoard.net";	// 이동할 페이지
+	f.method = "post";				// POST 방식으로 데이터 전송
+	f.submit();						// 폼 전송
+}
+
+function go(page) {
+	var data = "status=" + $('#status').val() + "&page=" + page + "&userkey=" + $('#userkey').val() + "&groupkey=" + $('#groupkey').val();
+	viewList(data);
+}
+
+function setPaging(href, digit) {
+	doc += '<li class = page-item>';
+	gray = '';
+	if (href == '') {
+		gray = "gray";
+	}
+	anchor = "<a class = 'page-link " + gray + "'" + href + ">" + digit + "</a></li>";
+	doc += anchor;
+}
+
+// 메뉴 클릭할 때마다 ajax로 메뉴에 해당하는 데이터 불러오기 
+function viewList(call) {
+	doc = "";
+	$.ajax({
+		type : "POST",
+		url : "G_mem_detail_Ajax",
+		data : call,
+		dataType : 'json',
+		cache : false,
+		success : function(data) {
+			$('table').html('');
+			switch (data.status) {
+				case 0:
+					signedGroup(data);
+					break;
+				case 1:
+					wroteTitle(data);
+					break;
+				case 2:
+					wroteComment(data);
+					break;
+			}
+		},
+		error : function(request, status, error) {
+			console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+		}
+	}); // ajax end
+}; // function go end
+
+/* ##### 가입한 모임 ##### */
+function signedGroup (data) {
+	console.log(data.list);
+	doc += '<thead>';
+	doc += '	<tr>';
+	doc += '		<th scope = "col">Name</th>';
+	doc += '		<th scope = "col">Member</th>';
+	doc += '		<th scope = "col">Date</th>';
+	doc += '	</tr>';
+	doc += '</thead>';
+	doc += '<tbody>';
+	if (data.listcount > 0) {
+		$(data.list).each(function(index, item) {
+			doc += '	<tr>';
+			doc += '		<td>';
+			doc += "			<img src= \"<spring:url value='/image" + item.groupDFile + "'/>\" class = 'group-img' alt = ''/>";
+			// 주소 상엽씨버전으로 바꾸면 jsp에서도 수정해줘
+			//doc += '			<a href = "group_main.net?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
+			doc += '			<a href = "groupmain?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.memberCount + '명';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.groupDate;
+			doc += '		</td>';
+			doc += '	</tr>';
+		}); 
+		
+		doc += '</tbody>';
+		
+		$('table').append(doc);
+		$('.pagination').html('');
+		
+		doc = "";
+		digit = '«&nbsp;';
+		href = "";
+		if (data.page > 1) {
+			href = 'href=javascript:go(' + (data.page - 1) + ')';
+		}
+		setPaging(href, digit);
+		
+		for (var i = data.startpage; i <= data.endpage; i++) {
+			digit = i;
+			href = "";
+			if (i != data.page) {
+				href = 'href=javascript:go(' + i + ')';
+			}
+			setPaging(href, digit);
+		}
+		
+		digit = '»&nbsp;';
+		href = "";
+		if (data.page < data.maxpage) {
+			href = 'href=javascript:go(' + (data.page + 1) + ')';
+		}
+		
+		setPaging(href, digit);
+		
+		$('.pagination').append(doc);
+		} else {
+			doc += '<tr><td colspan = 3>작성글이 존재하지 않습니다.</td></tr>'
+			doc += '</tbody>';
+			$('table').append(doc);
+		}
+} // signedGroup end
+
+/* ##### 작성한 글 ##### */
+function wroteTitle(data) {
+	console.log(data.list);
+	doc += '<thead>';
+	doc += '	<tr>';
+	doc += '		<th scope = "col">Subject</th>';
+	doc += '		<th scope = "col">ViewCount</th>';
+	doc += '		<th scope = "col">Date</th>';
+	doc += '	</tr>';
+	doc += '</thead>';
+	doc += '<tbody>';
+	if (data.listcount > 0) {
+		var num = data.listcount - (data.page - 1) * data.limit;
+		$(data.list).each(function(index, item){
+			doc += '	<tr>';
+			doc += '		<td>';			
+			doc += '			<a href = "javascript:board(' + item.postKey + ',' + item.groupKey + ')" title = "">' + item.postTitle + '</a>';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.postReadcount;
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.postDate;
+			doc += '		</td>';
+			doc += '	</tr>';
+		});	// each end
+		doc += '</tbody>';
+		
+		$('table').append(doc);
+		$('.pagination').html('');
+		
+		doc = "";
+		digit = '«&nbsp;';
+		href = "";
+		if (data.page > 1) {
+			href = 'href=javascript:go(' + (data.page - 1) + ')';
+		}
+		setPaging(href, digit);
+
+		for (var i = data.startpage; i <= data.endpage; i++) {
+			digit = i;
+			href = "";
+			if (i != data.page) {
+				href = 'href=javascript:go(' + i + ')';
+			}
+			setPaging(href, digit);
+		}
+
+		digit = '»&nbsp;';
+		href = "";
+		if (data.page < data.maxpage) {
+			href = 'href=javascript:go(' + (data.page + 1) + ')';
+		}
+
+		setPaging(href, digit);
+
+		$('.pagination').append(doc);
+	} else {
+		doc += '<tr><td colspan = 3>작성글이 존재하지 않습니다.</td></tr>'
+		doc += '</tbody>';
+		$('table').append(doc);
+	}
+} // wroteTitle end
+
+/* ##### 작성한 댓글 ##### */
+function wroteComment(data) {
+	console.log(data.list);
+	doc += '<thead>';
+	doc += '	<tr>';
+	doc += '		<th scope = "col">Comment</th>';
+	doc += '		<th scope = "col">ViewCount</th>';
+	doc += '		<th scope = "col">Date</th>';
+	doc += '	</tr>';
+	doc += '</thead>';
+	doc += '<tbody>';
+	if (data.listcount > 0) {
+		$(data.list).each(function(index, item){
+			doc += '	<tr>';
+			doc += '		<td>';
+			doc += '			<div class = "comment-info">';
+			doc += '				<div class = "comment-content">';
+			doc += '					<span>';
+			doc += '						<a href = "javascript:board(' + item.postKey + ',' + item.groupKey + ')" title = "">' + item.commentContent + '</a>';
+			doc += '					</span>';
+			doc += '				</div>';
+			doc += '				<div class = "comment-subject">';
+			doc += '					<span>';
+			doc += '						<a href = "javascript:board(' + item.postKey + ',' + item.groupKey + ')" title = "">' + item.postTitle + '</a>';
+			doc += '					</span>';
+			doc += '					<span class = "comment-num">';
+			doc += 						'[' + item.replyCount + ']';
+			doc += '					</span>';
+			doc += '				</div>';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc +=				item.postReadcount;
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.commentDate;
+			doc += '		</td>';
+			doc += '	</tr>';
+		});
+		doc += '</tbody>';
+		
+		$('table').append(doc);
+		$('.pagination').html('');
+		
+		doc = "";
+		digit = '«&nbsp;';
+		href = "";
+		if (data.page > 1) {
+			href = 'href=javascript:go(' + (data.page - 1) + ')';
+		}
+		setPaging(href, digit);
+
+		for (var i = data.startpage; i <= data.endpage; i++) {
+			digit = i;
+			href = "";
+			if (i != data.page) {
+				href = 'href=javascript:go(' + i + ')';
+			}
+			setPaging(href, digit);
+		}
+
+		digit = '»&nbsp;';
+		href = "";
+		if (data.page < data.maxpage) {
+			href = 'href=javascript:go(' + (data.page + 1) + ')';
+		}
+
+		setPaging(href, digit);
+
+		$('.pagination').append(doc);
+	} else {
+		doc += '<tr><td colspan = 3>댓글이 존재하지 않습니다.</td></tr>'
+		doc += '</tbody>';
+
+		$('table').append(doc);
+	}
+} // wroteComment end
+
+$(function() {
+	var status = 0;	// 어떤 메뉴를 눌렀는지 확인
+	var tbl = '';	// append시킬 변수 
+
+	// 일반적으로 회원 누르고 왔을 때 / 모임 내 프로필 상에서 내가 쓴 글, 내가 쓴 댓글 보려고 왔을 때 구분
+	var getStatus = $('#status').val();
+
+	if (getStatus == 0)
+		$('.user-active li').eq(0).addClass('selected-menu');
+	else if (getStatus == 1)
+		$('.user-active li').eq(1).addClass('selected-menu');
+	else
+		$('.user-active li').eq(2).addClass('selected-menu');
+
+
+	/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴에 대한 색 변경 */ 
+	$('.user-active li').click(function(){
+		$('.user-active li').removeClass('selected-menu');
+		$(this).addClass('selected-menu');
+		var call = "userkey=" + $('#userkey').val() + "&groupkey=" + $('#groupkey').val() + "&status=" + $(this).index();
+		viewList(call);
+	});
+
+	/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴 클릭 시 이동 X */
+	$('.user-active a').click(function() {
+		event.preventDefault();
+	});
+});
+</script>
 <script type="text/javascript">
 	//달력시작==================================================================
-	
+
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
 	function prevCalendar() {//이전 달
@@ -489,7 +1086,8 @@
 		for (i = 1; i <= lastDate.getDate(); i++) {
 			//1일부터 마지막 일까지 돌림
 			cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-			cell.innerHTML = "<span class='caldendarCell' id='day"+i+"'>" + i + "</span>";//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+			cell.innerHTML = "<span class='caldendarCell' id='day"+i+"'>" + i
+					+ "</span>";//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
 			cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
 			if (cnt % 7 == 1) {/*일요일 계산*/
 				//1주일이 7일 이므로 일요일 구하기
@@ -518,652 +1116,665 @@
 	//달력끝==================================================================
 </script>
 <script>
-$(function() {
-	buildCalendar();
-	var mycalendarlistcount = $('#gclc').val();
-	for(var i = 1; i<=mycalendarlistcount;i++){
-		var temp = $('#cal'+i).val();
-		$('#day'+temp).parent().addClass('calendarCellMy');
-	}
-	
-	$("#calendar").on('click', '#prevcal', function(event) {
-		var userkey = $('#UserKey').val();
-		prevCalendar();
-		var date = $('#tbCalendarYM').text();
-		ajaxcallist(userkey,date);
-		$('#shortschedule').empty();
-		$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
-		
-    })
-    
-    $("#calendar").on('click', '#nextcal', function(event) {
-    	var userkey = $('#UserKey').val();
-    	nextCalendar();
-    	var date = $('#tbCalendarYM').text();
-    	ajaxcallist(userkey,date);
-    	$('#shortschedule').empty();
-    	$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
-    })
-    
-    
-	$(".nearby-contct").on('click', '.gmtljoinbtn', function(event) {
-		var userkey = $('#UserKey').val();
-        var postkey = $(this).next().val();
-        var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
-        ajaxJoinBtn(postkey, groupkey, userkey, n);
-        $(this).removeClass('gmtljoinbtn');
-        $(this).addClass('gmtlcancelbtn');
-        $(this).children().html('취소하기');
-    })
+	$(function() {
+		buildCalendar();
+		var mycalendarlistcount = $('#gclc').val();
+		for (var i = 1; i <= mycalendarlistcount; i++) {
+			var temp = $('#cal' + i).val();
+			$('#day' + temp).parent().addClass('calendarCellMy');
+		}
 
-    $(".nearby-contct").on('click', '.gmtlcancelbtn', function(event) {
-        var userkey = $('#UserKey').val();
-        var postkey = $(this).next().val();
-        var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
-        ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
-        $(this).removeClass('gmtlcancelbtn');
-        $(this).addClass('gmtljoinbtn');
-        $(this).children().html('참여하기');
-    })
-	$(".calendarDiv").on('click', 'td', function(event) {
-        if ($(this).text() != "" || $(this).text().length() > 2) {
-            $('td').removeClass('calendarCellSelected');
-            $(this).addClass('calendarCellSelected');
-            var userkey = $('#UserKey').val(); 
-            var date = $('#tbCalendarYM').text();
-            var day = $(this).text();
-            if($(this).hasClass('calendarCellMy')){
-            	ajaxcal(userkey,date,day);
-            }else{
-            	$('#shortschedule').empty();
-            	$('#shortschedule').append('<li><span>일정이 없습니다</span></li>');
-            }
-        }
-    })
-    
-    
-    
-    $(".forMemberCountBtnOne").click(function() {
-    	var postkey = $(this).next().val();
-        var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
-        ajax(postkey, groupkey, n);
-        if ($("#collapseOne").hasClass("show")) {
-            $('.i-changeOne').removeClass('fa-arrow-up');
-            $('.i-changeOne').addClass('fa-arrow-down');
-        } else {
-            $('.i-changeOne').removeClass('fa-arrow-down');
-            $('.i-changeOne').addClass('fa-arrow-up');
-        }
-    })
-    $(".forMemberCountBtnTwo").click(function() {
-    	var postkey = $(this).next().val();
-        var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
-        ajax(postkey, groupkey, n);
-        if ($("#collapseTwo").hasClass("show")) {
-            $('.i-changeTwo').removeClass('fa-arrow-up');
-            $('.i-changeTwo').addClass('fa-arrow-down');
-        } else {
-            $('.i-changeTwo').removeClass('fa-arrow-down');
-            $('.i-changeTwo').addClass('fa-arrow-up');
-        }
-    })
-    $(".forMemberCountBtnThree").click(function() {
-        var postkey = $(this).next().val();
-        var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
-        ajax(postkey, groupkey, n);
-        if ($("#collapseThree").hasClass("show")) {
-            $('.i-changeThree').removeClass('fa-arrow-up');
-            $('.i-changeThree').addClass('fa-arrow-down');
-        } else {
-            $('.i-changeThree').removeClass('fa-arrow-down');
-            $('.i-changeThree').addClass('fa-arrow-up');
-        }
-    })
+		$("#calendar").on('click', '#prevcal', function(event) {
+			var userkey = $('#UserKey').val();
+			prevCalendar();
+			var date = $('#tbCalendarYM').text();
+			ajaxcallist(userkey, date);
+			$('#shortschedule').empty();
+			$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
 
-    //=======================================================
-    $('input[type=file]:eq(0)').on('change', function() {
-        $('#groupMainImgForm').submit();
-    });
-    $('input[type=file]:eq(1)').on('change', function() {
-        $('#groupImgForm').submit();
-    });
+		})
 
+		$("#calendar").on('click', '#nextcal', function(event) {
+			var userkey = $('#UserKey').val();
+			nextCalendar();
+			var date = $('#tbCalendarYM').text();
+			ajaxcallist(userkey, date);
+			$('#shortschedule').empty();
+			$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		})
 
-    //===== Search Filter =====//
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+		$(".nearby-contct").on('click', '.gmtljoinbtn', function(event) {
+			var userkey = $('#UserKey').val();
+			var postkey = $(this).next().val();
+			var n = $(this).next().next().val();
+			var groupkey = $('#hiddenGroupKey').val();
+			ajaxJoinBtn(postkey, groupkey, userkey, n);
+			$(this).removeClass('gmtljoinbtn');
+			$(this).addClass('gmtlcancelbtn');
+			$(this).children().html('취소하기');
+		})
 
-        function listFilter(searchDir, list) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir);
+		$(".nearby-contct").on('click', '.gmtlcancelbtn', function(event) {
+			var userkey = $('#UserKey').val();
+			var postkey = $(this).next().val();
+			var n = $(this).next().next().val();
+			var groupkey = $('#hiddenGroupKey').val();
+			ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
+			$(this).removeClass('gmtlcancelbtn');
+			$(this).addClass('gmtljoinbtn');
+			$(this).children().html('참여하기');
+		})
+		$(".calendarDiv").on(
+				'click',
+				'td',
+				function(event) {
+					if ($(this).text() != "" || $(this).text().length() > 2) {
+						$('td').removeClass('calendarCellSelected');
+						$(this).addClass('calendarCellSelected');
+						var userkey = $('#UserKey').val();
+						var date = $('#tbCalendarYM').text();
+						var day = $(this).text();
+						if ($(this).hasClass('calendarCellMy')) {
+							ajaxcal(userkey, date, day);
+						} else {
+							$('#shortschedule').empty();
+							$('#shortschedule').append(
+									'<li><span>일정이 없습니다</span></li>');
+						}
+					}
+				})
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+		$(".forMemberCountBtnOne").click(function() {
+			var postkey = $(this).next().val();
+			var n = $(this).next().next().val();
+			var groupkey = $('#hiddenGroupKey').val();
+			ajax(postkey, groupkey, n);
+			if ($("#collapseOne").hasClass("show")) {
+				$('.i-changeOne').removeClass('fa-arrow-up');
+				$('.i-changeOne').addClass('fa-arrow-down');
+			} else {
+				$('.i-changeOne').removeClass('fa-arrow-down');
+				$('.i-changeOne').addClass('fa-arrow-up');
+			}
+		})
+		$(".forMemberCountBtnTwo").click(function() {
+			var postkey = $(this).next().val();
+			var n = $(this).next().next().val();
+			var groupkey = $('#hiddenGroupKey').val();
+			ajax(postkey, groupkey, n);
+			if ($("#collapseTwo").hasClass("show")) {
+				$('.i-changeTwo').removeClass('fa-arrow-up');
+				$('.i-changeTwo').addClass('fa-arrow-down');
+			} else {
+				$('.i-changeTwo').removeClass('fa-arrow-down');
+				$('.i-changeTwo').addClass('fa-arrow-up');
+			}
+		})
+		$(".forMemberCountBtnThree").click(function() {
+			var postkey = $(this).next().val();
+			var n = $(this).next().next().val();
+			var groupkey = $('#hiddenGroupKey').val();
+			ajax(postkey, groupkey, n);
+			if ($("#collapseThree").hasClass("show")) {
+				$('.i-changeThree').removeClass('fa-arrow-up');
+				$('.i-changeThree').addClass('fa-arrow-down');
+			} else {
+				$('.i-changeThree').removeClass('fa-arrow-down');
+				$('.i-changeThree').addClass('fa-arrow-up');
+			}
+		})
 
-        //search friends widget
-        $(function() {
-            listFilter($("#searchDir"), $("#people-list"));
-        });
-    }(jQuery));
+		//=======================================================
+		$('input[type=file]:eq(0)').on('change', function() {
+			$('#groupMainImgForm').submit();
+		});
+		$('input[type=file]:eq(1)').on('change', function() {
+			$('#groupImgForm').submit();
+		});
 
-    //===== Search Filter =====//나상엽추가===============================================
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+		//===== Search Filter =====//
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-        function listFilter1(searchDir1, list1) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir1);
+			function listFilter(searchDir, list) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir);
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list1).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list1).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list1).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-        //search friends widget
-        $(function() {
-            listFilter1($("#searchDir1"), $("#people-list1"));
-        });
-    }(jQuery));
+			//search friends widget
+			$(function() {
+				listFilter($("#searchDir"), $("#people-list"));
+			});
+		}(jQuery));
 
-    //===========================================================================
+		//===== Search Filter =====//나상엽추가===============================================
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-    //===== Search Filter =====//나상엽추가===============================================
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+			function listFilter1(searchDir1, list1) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir1);
 
-        function listFilter2(searchDir2, list2) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir2);
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list1).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list1).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list1).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list2).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list2).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list2).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+			//search friends widget
+			$(function() {
+				listFilter1($("#searchDir1"), $("#people-list1"));
+			});
+		}(jQuery));
 
-        //search friends widget
-        $(function() {
-            listFilter2($("#searchDir2"), $("#people-list2"));
-        });
-    }(jQuery));
+		//===========================================================================
 
-    //===========================================================================
+		//===== Search Filter =====//나상엽추가===============================================
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-    //===== Search Filter =====//나상엽추가===============================================
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+			function listFilter2(searchDir2, list2) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir2);
 
-        function listFilter3(searchDir3, list3) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir3);
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list2).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list2).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list2).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list3).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list3).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list3).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+			//search friends widget
+			$(function() {
+				listFilter2($("#searchDir2"), $("#people-list2"));
+			});
+		}(jQuery));
 
-        //search friends widget
-        $(function() {
-            listFilter3($("#searchDir3"), $("#people-list3"));
-        });
-    }(jQuery));
+		//===========================================================================
 
-    //===========================================================================
-    //===== Search Filter =====//나상엽추가===============================================
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+		//===== Search Filter =====//나상엽추가===============================================
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-        function listFilter4(searchDir4, list4) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir4);
+			function listFilter3(searchDir3, list3) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir3);
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list4).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list4).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list4).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list3).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list3).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list3).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-        //search friends widget
-        $(function() {
-            listFilter4($("#searchDir4"), $("#people-list4"));
-        });
-    }(jQuery));
+			//search friends widget
+			$(function() {
+				listFilter3($("#searchDir3"), $("#people-list3"));
+			});
+		}(jQuery));
 
-    //===========================================================================
-    //===== Search Filter =====//나상엽추가===============================================
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+		//===========================================================================
+		//===== Search Filter =====//나상엽추가===============================================
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-        function listFilter5(searchDir5, list5) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir5);
+			function listFilter4(searchDir4, list4) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir4);
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list5).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list5).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list5).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list4).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list4).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list4).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-        //search friends widget
-        $(function() {
-            listFilter5($("#searchDir5"), $("#people-list5"));
-        });
-    }(jQuery));
+			//search friends widget
+			$(function() {
+				listFilter4($("#searchDir4"), $("#people-list4"));
+			});
+		}(jQuery));
 
-    //===========================================================================
-    //===== Search Filter =====//나상엽추가===============================================
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+		//===========================================================================
+		//===== Search Filter =====//나상엽추가===============================================
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-        function listFilter6(searchDir6, list6) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir6);
+			function listFilter5(searchDir5, list5) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir5);
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list6).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list6).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list6).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list5).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list5).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list5).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-        //search friends widget
-        $(function() {
-            listFilter6($("#searchDir6"), $("#people-list6"));
-        });
-    }(jQuery));
+			//search friends widget
+			$(function() {
+				listFilter5($("#searchDir5"), $("#people-list5"));
+			});
+		}(jQuery));
 
-    //===========================================================================
-    //===== Search Filter =====//나상엽추가===============================================
-    (function($) {
-        // custom css expression for a case-insensitive contains()
-        jQuery.expr[':'].Contains = function(a, i, m) {
-            return (a.textContent || a.innerText || "").toUpperCase()
-                .indexOf(m[3].toUpperCase()) >= 0;
-        };
+		//===========================================================================
+		//===== Search Filter =====//나상엽추가===============================================
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-        function listFilter7(searchDir7, list7) {
-            var form = $("<form>").attr({
-                    "class": "filterform",
-                    "action": "#"
-                }),
-                input = $("<input>").attr({
-                    "class": "filterinput",
-                    "type": "text",
-                    "placeholder": "회원 찾기"
-                });
-            $(form).append(input).appendTo(searchDir7);
+			function listFilter6(searchDir6, list6) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir6);
 
-            $(input).change(
-                function() {
-                    var filter = $(this).val();
-                    if (filter) {
-                        $(list7).find(
-                                "li:not(:Contains(" + filter + "))")
-                            .slideUp();
-                        $(list7).find("li:Contains(" + filter + ")")
-                            .slideDown();
-                    } else {
-                        $(list7).find("li").slideDown();
-                    }
-                    return false;
-                }).keyup(function() {
-                $(this).change();
-            });
-        }
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list6).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list6).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list6).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-        //search friends widget
-        $(function() {
-            listFilter7($("#searchDir7"), $("#people-list7"));
-        });
-    }(jQuery));
+			//search friends widget
+			$(function() {
+				listFilter6($("#searchDir6"), $("#people-list6"));
+			});
+		}(jQuery));
 
-    //===========================================================================
+		//===========================================================================
+		//===== Search Filter =====//나상엽추가===============================================
+		(function($) {
+			// custom css expression for a case-insensitive contains()
+			jQuery.expr[':'].Contains = function(a, i, m) {
+				return (a.textContent || a.innerText || "").toUpperCase()
+						.indexOf(m[3].toUpperCase()) >= 0;
+			};
 
-    function ajax(postkey, groupkey, n) {
-        output = "";
-        var data = "postkey=" + postkey + "&groupkey=" + groupkey;
-        var empty = "people-list" + n;
-        $.ajax({
-            type: "post",
-            url: "group_main_ajax.net",
-            data: data,
-            dataType: "json",
-            cache: false,
-            success: function(data) {
-                $("#" + empty).empty();
-                output = "";
-                $(data.groupcalendarmemberlist).each(
-                    function(index, item) {
-                        output += "<li><figure>";
-                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
-                        output += "</figure><div class='friendz-meta'>";
-                        output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
-                    })
-                $("#" + empty).append(output);
-            },
-            error: function() {
-                console.log('에러')
-            }
-        }) // ajax
-    } // function ajax end
-    function ajaxJoinBtn(postkey, groupkey, userkey, n) {
-        output = "";
-        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
-        var empty = "people-list" + n;
-        $.ajax({
-            type: "post",
-            url: "group_main_ajaxJoin.net",
-            data: data,
-            dataType: "json",
-            cache: false,
-            success: function(data) {
-                $("#" + empty).empty();
-                $(".currentperson"+n).empty();
-                $(".currentperson"+n).html(data.currentperson);
-                output = "";
-                $(data.groupcalendarmemberlist).each(
-                    function(index, item) {
-                        output += "<li><figure>";
-                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
-                        output += "</figure><div class='friendz-meta'>";
-                        output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
-                    })
-                $("#" + empty).append(output);
-            },
-            error: function() {
-                console.log('에러')
-            }
-        }) // ajax
-    } // function ajax end
+			function listFilter7(searchDir7, list7) {
+				var form = $("<form>").attr({
+					"class" : "filterform",
+					"action" : "#"
+				}), input = $("<input>").attr({
+					"class" : "filterinput",
+					"type" : "text",
+					"placeholder" : "회원 찾기"
+				});
+				$(form).append(input).appendTo(searchDir7);
 
-    function ajaxJoinCancelBtn(postkey, groupkey, userkey, n) {
-        output = "";
-        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
-        var empty = "people-list" + n;
-        $.ajax({
-            type: "post",
-            url: "group_main_ajaxJoinCancel.net",
-            data: data,
-            dataType: "json",
-            cache: false,
-            success: function(data) {
-                $("#" + empty).empty();
-                output = "";
-                $(".currentperson"+n).empty();
-                $(".currentperson"+n).html(data.currentperson);
-                $(data.groupcalendarmemberlist).each(
-                    function(index, item) {
-                        output += "<li><figure>";
-                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
-                        output += "</figure><div class='friendz-meta'>";
-                        output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
-                    })
-                $("#" + empty).append(output);
-            },
-            error: function() {
-                console.log('에러')
-            }
-        }) // ajax
-    } // function ajax end
-    function ajaxCalendarList(userkey) {
-        output = "";
-        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
-        var empty = "people-list" + n;
-        $.ajax({
-            type: "post",
-            url: "group_main_ajaxJoinCancel.net",
-            data: data,
-            dataType: "json",
-            cache: false,
-            success: function(data) {
-                $("#" + empty).empty();
-                output = "";
-                $(".currentperson"+n).empty();
-                $(".currentperson"+n).html(data.currentperson);
-                $(data.groupcalendarmemberlist).each(
-                    function(index, item) {
-                        output += "<li><figure>";
-                        output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
-                        output += "</figure><div class='friendz-meta'>";
-                        output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
-                    })
-                $("#" + empty).append(output);
-            },
-            error: function() {
-                console.log('에러')
-            }
-        }) // ajax
-    } // function ajax end
-    function ajaxcallist(userkey,date) {
-        output = "";
-        var data = "userkey=" + userkey + "&date=" + date;
-        $.ajax({
-            type: "post",
-            url: "group_main_ajaxCalList.net",
-            data: data,
-            dataType: "json",
-            cache: false,
-            success: function(data) {
-                $(data.groupcalendarlist).each(
-                    function(index, item) {
-                       if(!$('#day'+item.startdate).parent().hasClass('calendarCellMy')){
-                    		$('#day'+item.startdate).parent().addClass('calendarCellMy');
-                       }
-                    })
+				$(input).change(
+						function() {
+							var filter = $(this).val();
+							if (filter) {
+								$(list7).find(
+										"li:not(:Contains(" + filter + "))")
+										.slideUp();
+								$(list7).find("li:Contains(" + filter + ")")
+										.slideDown();
+							} else {
+								$(list7).find("li").slideDown();
+							}
+							return false;
+						}).keyup(function() {
+					$(this).change();
+				});
+			}
 
-            },
-            error: function() {
-                console.log('에러')
-            }
-        }) // ajax
-    } // function ajax end
-    function ajaxcal(userkey,date,day) {
-        output = "";
-        var data = "userkey=" + userkey + "&date=" + date + "&day=" + day;
-        $.ajax({
-            type: "post",
-            url: "group_main_shortschedule.net",
-            data: data,
-            dataType: "json",
-            cache: false,
-            success: function(data) {
-            	$('#shortschedule').empty();
-                output = "";
-            	$(data.shortscheduleSelected).each(
-                        function(index, item) {
-                        	output += "<li><span>"+item.posttitle+"</span>";
-                        	output += "<p>모임명: "+item.groupname +"<br>시간: "+item.startdate+"<br>장소:"+item.location+"</p></li>";
-                        })
-                        $('#shortschedule').append(output);
-            },
-            error: function() {
-                console.log('에러')
-            }
-        }) // ajax
-    } // function ajax end
-    
-})
+			//search friends widget
+			$(function() {
+				listFilter7($("#searchDir7"), $("#people-list7"));
+			});
+		}(jQuery));
+
+		//===========================================================================
+
+		function ajax(postkey, groupkey, n) {
+			output = "";
+			var data = "postkey=" + postkey + "&groupkey=" + groupkey;
+			var empty = "people-list" + n;
+			$
+					.ajax({
+						type : "post",
+						url : "group_main_ajax.net",
+						data : data,
+						dataType : "json",
+						cache : false,
+						success : function(data) {
+							$("#" + empty).empty();
+							output = "";
+							$(data.groupcalendarmemberlist)
+									.each(
+											function(index, item) {
+												output += "<li><figure>";
+												output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+												output += "</figure><div class='friendz-meta'>";
+												output += "<a href='time-line.html'></a>"
+														+ item.groupnickname;
+												output += "<i class='__cf_email__'>모임장</i></div></li>";
+											})
+							$("#" + empty).append(output);
+						},
+						error : function() {
+							console.log('에러')
+						}
+					}) // ajax
+		} // function ajax end
+		function ajaxJoinBtn(postkey, groupkey, userkey, n) {
+			output = "";
+			var data = "postkey=" + postkey + "&groupkey=" + groupkey
+					+ "&userkey=" + userkey;
+			var empty = "people-list" + n;
+			$
+					.ajax({
+						type : "post",
+						url : "group_main_ajaxJoin.net",
+						data : data,
+						dataType : "json",
+						cache : false,
+						success : function(data) {
+							$("#" + empty).empty();
+							$(".currentperson" + n).empty();
+							$(".currentperson" + n).html(data.currentperson);
+							output = "";
+							$(data.groupcalendarmemberlist)
+									.each(
+											function(index, item) {
+												output += "<li><figure>";
+												output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+												output += "</figure><div class='friendz-meta'>";
+												output += "<a href='time-line.html'></a>"
+														+ item.groupnickname;
+												output += "<i class='__cf_email__'>모임장</i></div></li>";
+											})
+							$("#" + empty).append(output);
+						},
+						error : function() {
+							console.log('에러')
+						}
+					}) // ajax
+		} // function ajax end
+
+		function ajaxJoinCancelBtn(postkey, groupkey, userkey, n) {
+			output = "";
+			var data = "postkey=" + postkey + "&groupkey=" + groupkey
+					+ "&userkey=" + userkey;
+			var empty = "people-list" + n;
+			$
+					.ajax({
+						type : "post",
+						url : "group_main_ajaxJoinCancel.net",
+						data : data,
+						dataType : "json",
+						cache : false,
+						success : function(data) {
+							$("#" + empty).empty();
+							output = "";
+							$(".currentperson" + n).empty();
+							$(".currentperson" + n).html(data.currentperson);
+							$(data.groupcalendarmemberlist)
+									.each(
+											function(index, item) {
+												output += "<li><figure>";
+												output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+												output += "</figure><div class='friendz-meta'>";
+												output += "<a href='time-line.html'></a>"
+														+ item.groupnickname;
+												output += "<i class='__cf_email__'>모임장</i></div></li>";
+											})
+							$("#" + empty).append(output);
+						},
+						error : function() {
+							console.log('에러')
+						}
+					}) // ajax
+		} // function ajax end
+		function ajaxCalendarList(userkey) {
+			output = "";
+			var data = "postkey=" + postkey + "&groupkey=" + groupkey
+					+ "&userkey=" + userkey;
+			var empty = "people-list" + n;
+			$
+					.ajax({
+						type : "post",
+						url : "group_main_ajaxJoinCancel.net",
+						data : data,
+						dataType : "json",
+						cache : false,
+						success : function(data) {
+							$("#" + empty).empty();
+							output = "";
+							$(".currentperson" + n).empty();
+							$(".currentperson" + n).html(data.currentperson);
+							$(data.groupcalendarmemberlist)
+									.each(
+											function(index, item) {
+												output += "<li><figure>";
+												output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
+												output += "</figure><div class='friendz-meta'>";
+												output += "<a href='time-line.html'></a>"
+														+ item.groupnickname;
+												output += "<i class='__cf_email__'>모임장</i></div></li>";
+											})
+							$("#" + empty).append(output);
+						},
+						error : function() {
+							console.log('에러')
+						}
+					}) // ajax
+		} // function ajax end
+		function ajaxcallist(userkey, date) {
+			output = "";
+			var data = "userkey=" + userkey + "&date=" + date;
+			$.ajax({
+				type : "post",
+				url : "group_main_ajaxCalList.net",
+				data : data,
+				dataType : "json",
+				cache : false,
+				success : function(data) {
+					$(data.groupcalendarlist).each(
+							function(index, item) {
+								if (!$('#day' + item.startdate).parent()
+										.hasClass('calendarCellMy')) {
+									$('#day' + item.startdate).parent()
+											.addClass('calendarCellMy');
+								}
+							})
+
+				},
+				error : function() {
+					console.log('에러')
+				}
+			}) // ajax
+		} // function ajax end
+		function ajaxcal(userkey, date, day) {
+			output = "";
+			var data = "userkey=" + userkey + "&date=" + date + "&day=" + day;
+			$.ajax({
+				type : "post",
+				url : "group_main_shortschedule.net",
+				data : data,
+				dataType : "json",
+				cache : false,
+				success : function(data) {
+					$('#shortschedule').empty();
+					output = "";
+					$(data.shortscheduleSelected).each(
+							function(index, item) {
+								output += "<li><span>" + item.posttitle
+										+ "</span>";
+								output += "<p>모임명: " + item.groupname
+										+ "<br>시간: " + item.startdate
+										+ "<br>장소:" + item.location
+										+ "</p></li>";
+							})
+					$('#shortschedule').append(output);
+				},
+				error : function() {
+					console.log('에러')
+				}
+			}) // ajax
+		} // function ajax end
+
+	})
 </script>
 
 <script src="resources/js/script.js"></script>

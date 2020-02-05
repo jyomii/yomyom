@@ -28,10 +28,9 @@ import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.Maps;
 import co.pr.fi.domain.Post;
 import co.pr.fi.service.GroupBoardService;
-
-import co.pr.fi.service.GroupService;
-
+import co.pr.fi.service.GroupCommentService;
 import co.pr.fi.service.GroupMemberService;
+import co.pr.fi.service.GroupService;
 
 @Controller
 public class GroupBoardController {
@@ -41,10 +40,12 @@ public class GroupBoardController {
 	
 	@Autowired
 	private GroupService groupservice;
-
 	
 	@Autowired
 	GroupMemberService groupMemberService;
+	
+	@Autowired
+	GroupCommentService groupCommentService;
 	
 	// 좋아요/좋아요 취소
 	@ResponseBody
