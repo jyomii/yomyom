@@ -339,10 +339,10 @@
 	</select>
 
 	<select id="groupmember" resultType="groupmember"
-		parameterType="int">
+		parameterType="java.util.Map">
 		select groupnickname, usergrade, userimagefile
 		profilefile, to_char(regdate, 'YYYY-MM-DD') regdate from ggroupmember
-		left join gusers using(userkey) where userkey=#{userkey}
+		left join gusers using(userkey) where userkey=#{userkey} and groupkey = #{groupkey}
 	</select>
 
 	<select id="userreggroup" resultType="userreggroup"
@@ -445,7 +445,6 @@
 		select count(*) from post left join ggroupboard
 		using(groupkey) where groupkey=#{groupkey} and boardtype='N'
 	</select>
-
 	<select id="getboardlist" resultType="post"
 		parameterType="java.util.Map">
 		select * from (select rownum rnum, A.* from(select
@@ -466,4 +465,9 @@
 		post where
 		postkey=#{postkey}
 	</delete>
+	
+	<update id="groupbasicupdate" parameterType="group">
+		update
+		ggroup set groupprivate=#{groupprivate}, groupkatalk=#{groupkatalk} where groupkey=#{groupkey}
+	</update>
 </mapper>

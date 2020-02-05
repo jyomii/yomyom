@@ -60,7 +60,7 @@ public class GroupController {
 		int limit = 10;
 		int page = 1;
 		
-		List<GGroup> groups = groupservice.getGroupRank(0,limit,page); /*0 : 그룹 멤버수  추후 시간되면 추가작업*/
+		List<GGroup> groups = groupservice.getGroupRank(0,limit,page); /*0 : 洹몃９ 硫ㅻ쾭�닔  異뷀썑 �떆媛꾨릺硫� 異붽��옉�뾽*/
 		mv.addObject("groups",groups);
 		mv.setViewName("group/groupRank");
 		return mv;
@@ -92,7 +92,7 @@ public class GroupController {
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
 		mv.setViewName("group/groupin_group_main");
-		GGroupMember groupmember = groupservice.groupmember(userkey);
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.addObject("group", group);
@@ -173,8 +173,8 @@ public class GroupController {
 	@RequestMapping(value = "/group_main_ajaxCalList.net")
 	public Object ajaxCalList(@RequestParam(value = "userkey") int userkey, @RequestParam(value = "date") String date)
 			throws Exception {
-		String ym = date.replace("년", "");
-		String ym1 = ym.replace("월", "");
+		String ym = date.replace("�뀈", "");
+		String ym1 = ym.replace("�썡", "");
 		String ym2 = ym1.replace(" ", "");
 		int year = Integer.parseInt(ym2.substring(0, 4));
 		int month = 0;
@@ -193,8 +193,8 @@ public class GroupController {
 	@RequestMapping(value = "/group_main_shortschedule.net")
 	public Object shortSchedule(@RequestParam(value = "userkey") int userkey, @RequestParam(value = "date") String date,
 			@RequestParam(value = "day") String day) throws Exception {
-		String ym = date.replace("년", "");
-		String ym1 = ym.replace("월", "");
+		String ym = date.replace("�뀈", "");
+		String ym1 = ym.replace("�썡", "");
 		String ym2 = ym1.replace(" ", "");
 		String year = ym2.substring(0, 4) + "-";
 		String month = "";
@@ -219,14 +219,14 @@ public class GroupController {
 		MultipartFile uploadfile = group.getGroupMainImgUpload();
 
 		if (!uploadfile.isEmpty()) {
-			String fileName = uploadfile.getOriginalFilename();// ���� ���ϸ�
-			group.setGroupIdOrigin(fileName);// ���� ���ϸ� ����
+			String fileName = uploadfile.getOriginalFilename();// 占쏙옙占쏙옙 占쏙옙占싹몌옙
+			group.setGroupIdOrigin(fileName);// 占쏙옙占쏙옙 占쏙옙占싹몌옙 占쏙옙占쏙옙
 			group.setGroupKey(groupKey);
-			// ���ο� ���� �̸� : ���� ��+��+��
+			// 占쏙옙占싸울옙 占쏙옙占쏙옙 占싱몌옙 : 占쏙옙占쏙옙 占쏙옙+占쏙옙+占쏙옙
 			Calendar c = Calendar.getInstance();
-			int year = c.get(Calendar.YEAR);// ���� �⵵ ���մϴ�.
-			int month = c.get(Calendar.MONTH) + 1;// ���� �� ���մϴ�.
-			int date = c.get(Calendar.DATE);// ���� �� ���մϴ�.
+			int year = c.get(Calendar.YEAR);// 占쏙옙占쏙옙 占썩도 占쏙옙占쌌니댐옙.
+			int month = c.get(Calendar.MONTH) + 1;// 占쏙옙占쏙옙 占쏙옙 占쏙옙占쌌니댐옙.
+			int date = c.get(Calendar.DATE);// 占쏙옙占쏙옙 占쏙옙 占쏙옙占쌌니댐옙.
 			// String saveFolder =
 			// request.getSession().getServletContext().getRealPath("resources") +
 			// "/upload/";
@@ -235,38 +235,38 @@ public class GroupController {
 			System.out.println("homedir = " + homedir);
 			File path1 = new File(homedir);
 			if (!(path1.exists())) {
-				path1.mkdir();// ���ο� ���� ����
+				path1.mkdir();// 占쏙옙占싸울옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 			}
-			// ������ ���մϴ�.
+			// 占쏙옙占쏙옙占쏙옙 占쏙옙占쌌니댐옙.
 			Random r = new Random();
 			int random = r.nextInt(100000000);
 
-			/*** Ȯ���� ���ϱ� ���� ****/
+			/*** 확占쏙옙占쏙옙 占쏙옙占싹깍옙 占쏙옙占쏙옙 ****/
 			int index = fileName.lastIndexOf(".");
-			// ���ڿ����� Ư�� ���ڿ��� ��ġ ��(index)�� ��ȯ�Ѵ�.
-			// indexOf�� ó�� �߰ߵǴ� ���ڿ��� ���� index�� ��ȯ�ϴ� �ݸ�,
-			// lastIndexOf�� ���������� �߰ߵǴ� ���ڿ��� index�� ��ȯ�մϴ�.
-			// (���ϸ� ���� ������ ���� ��� �� �������� �߰ߵǴ� ���ڿ��� ��ġ�� �����մϴ�.)
+			// 占쏙옙占쌘울옙占쏙옙占쏙옙 특占쏙옙 占쏙옙占쌘울옙占쏙옙 占쏙옙치 占쏙옙(index)占쏙옙 占쏙옙환占싼댐옙.
+			// indexOf占쏙옙 처占쏙옙 占쌩견되댐옙 占쏙옙占쌘울옙占쏙옙 占쏙옙占쏙옙 index占쏙옙 占쏙옙환占싹댐옙 占쌥몌옙,
+			// lastIndexOf占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쌩견되댐옙 占쏙옙占쌘울옙占쏙옙 index占쏙옙 占쏙옙환占쌌니댐옙.
+			// (占쏙옙占싹몌옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌩견되댐옙 占쏙옙占쌘울옙占쏙옙 占쏙옙치占쏙옙 占쏙옙占쏙옙占쌌니댐옙.)
 			System.out.println("index = " + index);
 			String fileExtension = fileName.substring(index + 1);
 			System.out.println("fileExtension = " + fileExtension);
-			/*** Ȯ���� ���ϱ� �� ***/
+			/*** 확占쏙옙占쏙옙 占쏙옙占싹깍옙 占쏙옙 ***/
 
-			// ���ο� ���ϸ�
+			// 占쏙옙占싸울옙 占쏙옙占싹몌옙
 			String refileName = "groupMainImg" + year + month + date + random + "." + fileExtension;
 			System.out.println("refileName = " + refileName);
 
-			// ����Ŭ ��� ����� ���� ��
+			// 占쏙옙占쏙옙클 占쏙옙占� 占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙
 			String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;
 			System.out.println("fileDBName = " + fileDBName);
 
-			// transferTo(File Path) : ���ε��� ������ �Ű������� ��ο� �����մϴ�.
+			// transferTo(File Path) : 占쏙옙占싸듸옙占쏙옙 占쏙옙占쏙옙占쏙옙 占신곤옙占쏙옙占쏙옙占쏙옙 占쏙옙恝占� 占쏙옙占쏙옙占쌌니댐옙.
 			uploadfile.transferTo(new File(saveFolder + fileDBName));
 
-			// �ٲ� ���ϸ����� ����
+			// 占쌕뀐옙 占쏙옙占싹몌옙占쏙옙占쏙옙 占쏙옙占쏙옙
 			group.setGroupDFile(fileDBName);
 		}
-		groupservice.groupMainImgUpdate(group);// ����޼��� ȣ��
+		groupservice.groupMainImgUpdate(group);// 占쏙옙占쏙옙氷占쏙옙占� 호占쏙옙
 		return "redirect:group_main.net";
 	}
 
@@ -276,14 +276,14 @@ public class GroupController {
 		MultipartFile uploadfile = group.getGroupImgUpload();
 
 		if (!uploadfile.isEmpty()) {
-			String fileName = uploadfile.getOriginalFilename();// ���� ���ϸ�
-			group.setGroupCOrigin(fileName);// ���� ���ϸ� ����
+			String fileName = uploadfile.getOriginalFilename();// 占쏙옙占쏙옙 占쏙옙占싹몌옙
+			group.setGroupCOrigin(fileName);// 占쏙옙占쏙옙 占쏙옙占싹몌옙 占쏙옙占쏙옙
 			group.setGroupKey(groupKey);
-			// ���ο� ���� �̸� : ���� ��+��+��
+			// 占쏙옙占싸울옙 占쏙옙占쏙옙 占싱몌옙 : 占쏙옙占쏙옙 占쏙옙+占쏙옙+占쏙옙
 			Calendar c = Calendar.getInstance();
-			int year = c.get(Calendar.YEAR);// ���� �⵵ ���մϴ�.
-			int month = c.get(Calendar.MONTH) + 1;// ���� �� ���մϴ�.
-			int date = c.get(Calendar.DATE);// ���� �� ���մϴ�.
+			int year = c.get(Calendar.YEAR);// 占쏙옙占쏙옙 占썩도 占쏙옙占쌌니댐옙.
+			int month = c.get(Calendar.MONTH) + 1;// 占쏙옙占쏙옙 占쏙옙 占쏙옙占쌌니댐옙.
+			int date = c.get(Calendar.DATE);// 占쏙옙占쏙옙 占쏙옙 占쏙옙占쌌니댐옙.
 			// String saveFolder =
 			// request.getSession().getServletContext().getRealPath("resources") +
 			// "/upload/";
@@ -292,39 +292,39 @@ public class GroupController {
 			System.out.println("homedir = " + homedir);
 			File path1 = new File(homedir);
 			if (!(path1.exists())) {
-				path1.mkdir();// ���ο� ���� ����
+				path1.mkdir();// 占쏙옙占싸울옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 			}
-			// ������ ���մϴ�.
+			// 占쏙옙占쏙옙占쏙옙 占쏙옙占쌌니댐옙.
 			Random r = new Random();
 			int random = r.nextInt(100000000);
 
-			/*** Ȯ���� ���ϱ� ���� ****/
+			/*** 확占쏙옙占쏙옙 占쏙옙占싹깍옙 占쏙옙占쏙옙 ****/
 			int index = fileName.lastIndexOf(".");
-			// ���ڿ����� Ư�� ���ڿ��� ��ġ ��(index)�� ��ȯ�Ѵ�.
-			// indexOf�� ó�� �߰ߵǴ� ���ڿ��� ���� index�� ��ȯ�ϴ� �ݸ�,
-			// lastIndexOf�� ���������� �߰ߵǴ� ���ڿ��� index�� ��ȯ�մϴ�.
-			// (���ϸ� ���� ������ ���� ��� �� �������� �߰ߵǴ� ���ڿ��� ��ġ�� �����մϴ�.)
+			// 占쏙옙占쌘울옙占쏙옙占쏙옙 특占쏙옙 占쏙옙占쌘울옙占쏙옙 占쏙옙치 占쏙옙(index)占쏙옙 占쏙옙환占싼댐옙.
+			// indexOf占쏙옙 처占쏙옙 占쌩견되댐옙 占쏙옙占쌘울옙占쏙옙 占쏙옙占쏙옙 index占쏙옙 占쏙옙환占싹댐옙 占쌥몌옙,
+			// lastIndexOf占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쌩견되댐옙 占쏙옙占쌘울옙占쏙옙 index占쏙옙 占쏙옙환占쌌니댐옙.
+			// (占쏙옙占싹몌옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌩견되댐옙 占쏙옙占쌘울옙占쏙옙 占쏙옙치占쏙옙 占쏙옙占쏙옙占쌌니댐옙.)
 			System.out.println("index = " + index);
 			String fileExtension = fileName.substring(index + 1);
 			System.out.println("fileExtension = " + fileExtension);
-			/*** Ȯ���� ���ϱ� �� ***/
+			/*** 확占쏙옙占쏙옙 占쏙옙占싹깍옙 占쏙옙 ***/
 
-			// ���ο� ���ϸ�
+			// 占쏙옙占싸울옙 占쏙옙占싹몌옙
 			String refileName = "groupImg" + year + month + date + random + "." + fileExtension;
 			System.out.println("refileName = " + refileName);
 
-			// ����Ŭ ��� ����� ���� ��
+			// 占쏙옙占쏙옙클 占쏙옙占� 占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙
 			String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;
 			System.out.println("fileDBName = " + fileDBName);
 
-			// transferTo(File Path) : ���ε��� ������ �Ű������� ��ο� �����մϴ�.
+			// transferTo(File Path) : 占쏙옙占싸듸옙占쏙옙 占쏙옙占쏙옙占쏙옙 占신곤옙占쏙옙占쏙옙占쏙옙 占쏙옙恝占� 占쏙옙占쏙옙占쌌니댐옙.
 			uploadfile.transferTo(new File(saveFolder + fileDBName));
 
-			// �ٲ� ���ϸ����� ����
+			// 占쌕뀐옙 占쏙옙占싹몌옙占쏙옙占쏙옙 占쏙옙占쏙옙
 			group.setGroupCFile(fileDBName);
 			System.out.println("!!!!!" + group.getGroupCFile());
 		}
-		groupservice.groupImgUpdate(group);// ����޼��� ȣ��
+		groupservice.groupImgUpdate(group);// 占쏙옙占쏙옙氷占쏙옙占� 호占쏙옙
 		return "redirect:group_main.net";
 	}
 
@@ -345,7 +345,7 @@ public class GroupController {
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
 		mv.setViewName("group/groupin_group_admin_board");
-		GGroupMember groupmember = groupservice.groupmember(userkey);
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.addObject("group", group);
@@ -454,7 +454,7 @@ public class GroupController {
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
-		GGroupMember groupmember = groupservice.groupmember(userkey);
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.addObject("group", group);
@@ -528,7 +528,7 @@ public class GroupController {
 		mv.addObject("listcount", listcount);
 		mv.addObject("groupmeetinglist", postlist);
 		mv.addObject("limit", limit);
-		GGroupMember groupmember = groupservice.groupmember(userkey);
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.addObject("group", group);
@@ -587,7 +587,7 @@ public class GroupController {
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
 		mv.setViewName("group/groupin_group_admin_addSchedule");
-		GGroupMember groupmember = groupservice.groupmember(userkey);
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.addObject("group", group);
@@ -677,7 +677,7 @@ public class GroupController {
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
 		mv.setViewName("group/groupin_group_admin_modifySchedule");
-		GGroupMember groupmember = groupservice.groupmember(userkey);
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.addObject("group", group);
@@ -823,7 +823,7 @@ public class GroupController {
 			int year = c.get(Calendar.YEAR);
 			int date = c.get(Calendar.DATE);
 			mv.setViewName("group/groupin_group_scheduleMap");
-			GGroupMember groupmember = groupservice.groupmember(userkey);
+			GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 			mv.addObject("userinfo",groupmember);
 			GGroup group = groupservice.groupInfo(groupkey);
 			mv.addObject("group", group);
@@ -876,9 +876,8 @@ public class GroupController {
 	}
 
 	@GetMapping("/groupin_group_admin.net")
-	public ModelAndView group_admin(ModelAndView mv, HttpSession session) {
+	public ModelAndView group_admin(@RequestParam(value="groupkey") int groupkey, ModelAndView mv, HttpSession session) {
 		String id = "";
-		int groupkey=1;
 		int userkey=-1;
 		if(session.getAttribute("id")!=null) {
 			id = session.getAttribute("id").toString();
@@ -893,7 +892,7 @@ public class GroupController {
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
 		mv.setViewName("group/groupin_group_admin");
-		GGroupMember groupmember = groupservice.groupmember(userkey);
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
 		mv.addObject("group", group);
@@ -941,6 +940,15 @@ public class GroupController {
 		return "redirect:groupin_group_admin_scheduleList.net?groupkey=" + groupkey;
 	}
 
+	@PostMapping("/basicsetting.net")
+	public String basicsetting(@RequestParam(value = "groupkey") int groupkey, GGroup group, HttpServletRequest request)
+			throws Exception {
+		groupservice.groupbasicupdate(group, groupkey);
+		System.out.println(group.getGroupkatalk());
+		System.out.println(group.getGroupPrivate());
+		return "redirect:groupin_group_admin.net?groupkey="+groupkey;
+	}
+	
 	@RequestMapping(value = "/group_admin_modifySchedule.net", method = RequestMethod.GET)
 	public String group_admin_modifySchedule() {
 		return "member/groupin_group_admin_modifySchedule";

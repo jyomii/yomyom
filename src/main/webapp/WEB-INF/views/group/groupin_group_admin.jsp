@@ -472,30 +472,39 @@ top:-9px;
 												<i class="ti-settings"></i>모임 기본 설정
 											</h5>
 											<p>모임의 기본 설정입니다</p>
-											<form method="post">
+											<form id="basicsettingform" action="basicsetting.net?groupkey=${group.groupKey }" method="post">
 												<div class="setting-row">
 													<span>모임 공개 여부</span>
 													<p>공개 / 비공개 설정</p>
-													<input type="checkbox" id="switch00" /> <label
-														for="switch00" data-on-label="ON" data-off-label="OFF"></label>
+													<input type="hidden" name="groupkey" value="${group.groupKey }">
+													<c:if test="${group.groupPrivate=='y'}">
+													<input type="checkbox" id="switch00" name="groupPrivate" value="n"/>
+													</c:if> 
+													<c:if test="${group.groupPrivate=='n'}">
+													<input type="checkbox" id="switch00" name="groupPrivate" value="n" checked/>
+													</c:if>
+													<label for="switch00" data-on-label="ON" data-off-label="OFF"></label>
 												</div>
-												<div class="setting-row">
+												<!--  <div class="setting-row">
 													<span>검색 허용 여부</span>
 													<p>검색 허용 / 비허용 설정</p>
 													<input type="checkbox" id="switch01" /> <label
 														for="switch01" data-on-label="ON" data-off-label="OFF"></label>
-												</div>
+												</div>-->
 												<div class="form-group">
-													<input type="text" id="input" required="required" /> <label
+													<c:if test="${empty group.groupkatalk}">
+													<input type="text" id="input" required="required" name="groupkatalk" />
+													</c:if>
+													<c:if test="${not empty group.groupkatalk}">
+													<input type="text" id="input" required="required" name="groupkatalk" value="${group.groupkatalk }"/>
+													</c:if>
+													<label
 														class="control-label" for="input">모임 카톡방 주소</label><i
 														class="mtrl-select"></i>
 												</div>
-												<div class="submit-btns">
-													<button type="button" class="mtr-btn">
+												<div class="submit-btns logincenter">
+													<button type="button" id="basicsettingsubmit" class="mtr-btn">
 														<span>수정하기</span>
-													</button>
-													<button type="button" class="mtr-btn">
-														<span>원래대로</span>
 													</button>
 												</div>
 											</form>
@@ -623,6 +632,9 @@ $(function() {
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
+	$("#basicsettingsubmit").click(function(){
+		$("#basicsettingform").submit();
+	})
 	$(".forLoginBtn").click(function(){
 		location.href="login";
 	})

@@ -505,6 +505,7 @@ top:-9px;
 													id="heading${l}">
 													<div class="nearly-pepls">
 														<figure>
+														
 															<a href="time-line.html" title=""><img
 																src="resources/images/resources/group1.jpg" alt=""></a>
 														</figure>
