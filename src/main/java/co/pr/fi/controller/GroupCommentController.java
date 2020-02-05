@@ -32,7 +32,7 @@ public class GroupCommentController {
 	
 	/* status : -1(login 페이지로 이동), 0(댓글 등록 실패), 1(댓글 등록) */
 	
-	// # 답댓 달기
+	// # 댓글에 답댓 달기
 	@ResponseBody
 	@PostMapping("commentReply")
 	public Object commentReply(@RequestParam(required = false, defaultValue = "-1") int postKey,
@@ -41,9 +41,10 @@ public class GroupCommentController {
 							   @RequestParam(required = false, defaultValue = "-1") int commentnum,
 							   @RequestParam(required = false, defaultValue = "0") int commentshow,
 							   HttpSession session) {
+		System.out.println("***************************************************");
 		System.out.println("### 댓글에 답댓 달기 ###");
 		System.out.println("postKey = " + postKey + ", groupKey = " + groupKey);
-		
+		System.out.println("***************************************************");
 		Map<String, Object> data = new HashMap<String, Object>();
 		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
 		

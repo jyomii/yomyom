@@ -1,3 +1,4 @@
+
 var commentType = 0;
 var data = '';
 var type = '';
@@ -36,38 +37,38 @@ $(function(){
 	console.log('groupkey = ' + $('#detailGroupKey').val());
 	console.log('postkey = ' + $('#detailPostKey').val());
 	
-	$(document).on('keyup', '.post-comt-box textarea', function() {
+	$('.post-comt-box').on('keyup', '.post-comt-box textarea', function() {
 		$('.post-comt-box textarea').css('background', '#088dcd1a');
 	});
 	
 	/* 비밀댓글 설정 */
 	var lock = false;	// 기본 unlock
-	$(document).on('click', '.post-comt-box i', function() {
+	$('#replyAction').on('click', '.post-comt-box i', function() {
 		if (!lock) {	// 비댓
 			console.log('비댓');
-			$('input[name=commentShow]').val('1');
+			$('input[name=commentshow]').val('1');
 			$(this).removeClass('fa-unlock').addClass('fa-lock').css('color', '#ed3939b5');
 			$('textarea').css('background', '#e1c2c2b5');
 		} else {	// 공댓
 			console.log('공댓');
-			$('input[name=commentShow]').val('0');
+			$('input[name=commentshow]').val('0');
 			$(this).removeClass('fa-lock').addClass('fa-unlock').css('color', 'black');
 			$('textarea').css('background', '#f3f3f3');
 		}
 		lock = !lock;
 	});
 	
-	// ## 댓글 전송 시 ##
+	// ## 댓글 전송 시 먼저 실행될 함수 ##
 	$(document).on('submit', $('#ReplyAction'), function() {
 		val = $('input[name=commentType]').val();
-		console.log('오긴 와?')
-		console.log(val);
+		console.log('비댓여부 = ' + $('input[name=commentshow]').val())
+		console.log('댓글인지 대댓인지 = ' + val);
 		switch (val) {
 		case "0":
 			console.log('여긴 와?')
 			/* 글에 댓글 */
 			data = 'postKey=' + $('#detailPostKey').val() + '&groupKey=' + $('#detailGroupKey').val() + '&content=' + $('.post-comt-box textarea').val() 
-				+ '&commentshow=' + $('input[name=commentShow]').val();
+				+ '&commentshow=' + $('input[name=commentshow]').val();
 			console.log('submit data = ' + data);
 			url = 'postReply';
 			replyAction(data, url);
@@ -75,7 +76,7 @@ $(function(){
 		case "1":
 			/* 댓글에 댓글 */
 			data = 'postKey=' + $('#detailPostKey').val() + '&groupKey=' + $('#detailGroupKey').val() + '&content=' + $('.post-comt-box textarea').val() 
-				+ '&commentshow=' + $('input[name=commentShow]').val() + '&commentnum=' + $('input[name=commentNum]').val();
+				+ '&commentshow=' + $('input[name=commentshow]').val() + '&commentnum=' + $('input[name=commentNum]').val();
 			console.log('submit data = ' + data);
 			url = 'commentReply';
 			replyAction(data, url);
@@ -83,6 +84,7 @@ $(function(){
 		}
 	}); // submit end
 	
+	// ## 댓글 타입에 따른 ajax ##
 	function replyAction(data, url) {
 		doc = '';
 		console.log('url = ' + url);
@@ -138,7 +140,7 @@ $(function(){
 				doc += "		<img src= \"<spring:url value='/image" + data.profileFile + "'/>\" class = 'group-img' alt = ''/>";// 여기 이미지 가져오는 객체 이름 바꿔야 함
 				doc += '	</div>';
 				doc += '	<div class="post-comt-box">';
-				doc += '		<form method = "post" id = "ReplyAction">';
+				doc += '		<form method = "post" id = "ReplyAction" onSubmit = "return false;">';
 				doc += '			<textarea placeholder="Post your comment"></textarea>';
 				doc += '			<button type = "button" class = "secretbtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>';
 				doc += '			<button type = "submit" class = "glyphicon glyphicon-send"></button>';

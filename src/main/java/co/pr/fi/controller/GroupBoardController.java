@@ -101,14 +101,14 @@ public class GroupBoardController {
 	
 	// 게시글 보기
 	@PostMapping("/detailBoard.net")
-	public String detailBoard ( @RequestParam(required = false, defaultValue = "0") int postKey, 
-								@RequestParam(required = false, defaultValue = "0") int groupKey, 
+	public String detailBoard ( @RequestParam(required = false, defaultValue = "0") int postkey, 
+								@RequestParam(required = false, defaultValue = "0") int groupkey, 
 								@RequestParam(required = false, defaultValue = "1") int page,
 								@RequestParam(required = false, defaultValue = "10") int limit,
 								HttpSession session, HttpServletResponse response, Model m) throws IOException {
 		
 		System.out.println("## 게시글 상세 보기 ##");
-		System.out.println("groupkey = " + groupKey + " | postkey = " + postKey + " | page = " + page + " | limit = " + limit);
+		System.out.println("groupkey = " + groupkey + " | postkey = " + postkey + " | page = " + page + " | limit = " + limit);
 		
 		int loginuser = 0;
 		
@@ -122,11 +122,11 @@ public class GroupBoardController {
 			out.println("</script>");
 			out.close();
 		} else {
-			loginuser = groupMemberService.getUser((String)session.getAttribute("id"));
+			loginuser = groupMemberService.getUser((String)session.getAttribute("id"));	
 		}
 		
-		// 현재 모임에서 가입 승인된 일반 회원인지 판단
-		int ggroupmem = groupMemberService.isGroupMem(loginuser, groupKey);
+		// 현재 모임에서 가입 승인된 일반 회원인지 판단 (-1만 아니면 됨)
+		int ggroupmem = groupMemberService.isGroupMem(loginuser, groupkey);
 		if (ggroupmem == 0) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -140,11 +140,11 @@ public class GroupBoardController {
 		Map<String, Object> keys = new HashMap<String, Object>();
 		Post post = new Post();	// 게시글 관련
 		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
+		int listcount = 0;	// 댓글수 변수
 		
-		int listcount = 0;
-		
-		keys.put("postkey", postKey);
-		keys.put("groupkey", groupKey);
+		keys.put("postkey", postkey);
+		keys.put("groupkey", groupkey);
+		keys.put("userkey", loginuser);
 		
 		listcount = groupBoardService.getCommentCount(keys); 	// 현재 게시글에 해당하는 댓글수
 		post = groupBoardService.detailBoard(keys);				// 현재 게시글에 대한 데이터
@@ -153,22 +153,22 @@ public class GroupBoardController {
 		keys.put("limit", limit);
 		commentList = groupBoardService.getBoardComment(keys);	// 현재 게시글에 해당하는 댓글리스트
 		
-		keys.put("loginuser", loginuser);
 		int isLiked = groupBoardService.isLiked(keys);
 		GGroupMember mem = groupMemberService.getPic(keys);
 		
 		keys = pagination(page, limit, listcount);
 		
 		if (post != null) {
-			m.addAttribute("post", post);
-			m.addAttribute("comment", commentList);	// 댓글 리스트
-			m.addAttribute("isLiked", isLiked);	// 1(좋아요) or 0(좋아요 x)
-			m.addAttribute("postKey", postKey);
-			m.addAttribute("groupKey", groupKey);
+			m.addAttribute("post", post);			// 글쓴이 관련
+			m.addAttribute("comment", commentList);	// 댓글 리스트 -- 댓글 작성자 관련
+			m.addAttribute("isLiked", isLiked);		// 1(좋아요) or 0(좋아요 x)
+			m.addAttribute("postkey", postkey);
+			m.addAttribute("groupkey", groupkey);
 			m.addAttribute("page", keys.get("page"));
 			m.addAttribute("limit", keys.get("limit"));
 			m.addAttribute("listcount", keys.get("listcount"));
 			m.addAttribute("mem", mem);
+			m.addAttribute("loginuser", loginuser);	// 현재 로그인한 유저키값
 			return "G_detailBoard";
 		}
 		m.addAttribute("죄송합니다. 게시글을 조회할 수 없습니다.", "error");

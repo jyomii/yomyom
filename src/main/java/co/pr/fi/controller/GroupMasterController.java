@@ -3,6 +3,7 @@ package co.pr.fi.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -271,13 +272,12 @@ public class GroupMasterController {
 
 	}
 	
-	// 모임키 defaultValue 임시로 지정함
-	// 모임 내의 회원 리스트 보기 (기본적으로 일반회원 리스트 페이지 보여준다.)
+	// 모임 내의 회원 리스트 페이지로 이동 (기본적으로 일반회원 리스트 페이지 보여준다.)
 	@GetMapping("/groupMember")
 	public String groupMember(@RequestParam(required = true, defaultValue = "0") int groupKey, 
 									HttpSession session, Model m, HttpServletResponse response) throws IOException {
-		
-		int userKey = 0;
+		System.out.println("회원 리스트 보기 위한 컨트롤러 왔습니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		int userKey = -1;
 		if (session.getAttribute("id") == null) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -310,15 +310,18 @@ public class GroupMasterController {
 		
 		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupKey);	// 일반회원 리스트
 		int membercount = groupMasterService.getMemberCount(groupKey);			// 일반회원 수
+		
 		int yetMembercount = groupMasterService.getYetMemberCount(groupKey);	// 아직 가입 승인 받지 못한 회원 수
 		
 		m.addAttribute("mem", mem);
 		m.addAttribute("membercount", membercount);
 		m.addAttribute("yetMembercount", yetMembercount);
+		m.addAttribute("groupkey", groupKey);
 		
 		return "group/groupMember";
 	}
 	
+	// 회원 강퇴
 	@ResponseBody
 	@PostMapping("expelMem")
 	public Object expelMem (@RequestParam(required = true, defaultValue = "0") int userKey,
@@ -335,18 +338,91 @@ public class GroupMasterController {
 		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupKey);
 		int membercount = groupMasterService.getMemberCount(groupKey);
 		
-		map.put("mem", mem);
+		map.put("list", mem);
 		map.put("membercount", membercount);
 		map.put("result", result);
 		return map;
 	}
 	
+	// '요청목록' 메뉴 클릭했을 때 ajax로 불러온다.
 	@ResponseBody
-	@PostMapping("getGroupMem")
-	public Object getGroupMem (@RequestParam(required = true) int groupKey) {
+	@PostMapping("getWaitMem")
+	public Object getWaitMem (@RequestParam(required = true) int groupKey,
+							  @RequestParam(required = true) int menu) {
+		System.out.println("회원 요청 ajax");
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("groupkey", groupKey);
 		
+		List<GGroupMember> mem = groupMasterService.getYetGroupMember(groupKey);	// 가입 대기 회원 리스트
+		int yetMembercount = groupMasterService.getYetMemberCount(groupKey);		// 아직 가입 승인 받지 못한 회원 수
+		
+		map.put("menu", menu);
+		map.put("list", mem);
+		map.put("yetMembercount", yetMembercount);
+		map.put("groupkey", groupKey);
 		return map;
+	}
+	
+	// '회원목록' 메뉴 클릭했을 때 ajax로 불러온다.
+	@ResponseBody
+	@PostMapping("getGroupMem")
+	public Object getGroupMem (@RequestParam(required = true) int groupKey,
+							   @RequestParam(required = true) int menu) {
+		System.out.println("회원목록 ajax");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("groupkey", groupKey);
+		
+		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupKey);	// 일반회원 리스트
+		int membercount = groupMasterService.getMemberCount(groupKey);			// 일반회원 수
+		
+		map.put("menu", menu);
+		map.put("list", mem);
+		map.put("membercount", membercount);
+		map.put("groupkey", groupKey);
+		return map;
+	}
+	
+	// 가입 요청 목록에서 '요청 삭제' 클릭할 경우 - ggroupmember에서 delete
+	@ResponseBody
+	@GetMapping("rejectJoin")
+	public Object rejectJoin (@RequestParam(required = true) int userkey, @RequestParam(required = true) int groupkey) {
+		
+		Map<String, Object> keys = new HashMap<String, Object>();
+		List<GGroupMember> mem = new ArrayList<GGroupMember>();
+		
+		keys.put("userkey", userkey);
+		keys.put("groupkey", groupkey);
+		
+		int result = groupMasterService.rejectJoin(keys);
+		
+		if (result == 1)
+			mem = groupMasterService.getYetGroupMember(groupkey);
+		
+		int yetMembercount = groupMasterService.getYetMemberCount(groupkey);		// 아직 가입 승인 받지 못한 회원 수
+		
+		keys.put("mem", mem);
+		keys.put("yetMembercount", yetMembercount);
+		return keys;
+	}
+	
+	// 가입 요청 목록에서 '승인' 클릭할 경우 - ggroupmember에서 update
+	@ResponseBody
+	@GetMapping("cofirmJoin")
+	public Object cofirmJoin (@RequestParam(required = true) int userkey, @RequestParam(required = true) int groupkey) {
+		
+		Map<String, Object> keys = new HashMap<String, Object>();
+		List<GGroupMember> mem = new ArrayList<GGroupMember>();
+		
+		keys.put("userkey", userkey);
+		keys.put("groupkey", groupkey);
+		
+		int result = groupMasterService.confirmJoin(keys);
+		
+		if (result == 1)
+			mem = groupMasterService.getYetGroupMember(groupkey);
+		
+		keys.put("list", mem);
+		return keys;
 	}
 }

@@ -122,9 +122,9 @@
 							</div>
 						</div>
 						<form name = "myForm">
-							<input type = "hidden" id = "userKey" name = "userKey" value = "${userKey}">
-							<input type = "hidden" id = "groupKey" name = "groupKey" value = "${groupKey}">
-							<input type = "hidden" id = "postKey" name = "postKey" value = "${postKey}"> 
+							<input type = "hidden" id = "userkey" name = "userkey" value = "${userkey}">
+							<input type = "hidden" id = "groupkey" name = "groupkey" value = "${groupkey}">
+							<input type = "hidden" id = "postkey" name = "postkey" value = "${postkey}"> 
 							<input type = "hidden" id = "status" name = "status" value = "${status}">
 							<input type = "hidden" id = "page" name = "page" value = "${page}">
 						</form>
@@ -146,7 +146,9 @@
 										<tr>
 											<td>
 												<img src="<spring:url value='/image${b.groupDFile}'/>" class = "group-img" alt = ""/>
-												<a href = "javascript:goGroup(${b.groupKey})" title = "${b.groupName}">${b.groupName}</a>
+												<!-- 주소 상엽씨버전으로 바꾸면 js에서도 수정해줘 -->
+												<%-- <a href = "group_main.net?groupkey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a> --%>
+												<a href = "groupmain?groupkey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a>
 											</td>	
 											<td>${b.memberCount}명</td>
 											<td>${b.groupDate}</td>
@@ -174,7 +176,7 @@
 							<c:if test = "${listcount > 0}">
 								<c:forEach var = "b" items = "${list}">
 									<tr>
-										<td><a href = "javascript:board(${b.groupKey},${b.postKey})" title = "${b.postTitle}">${b.postTitle}</a></td>	
+										<td><a href = "javascript:board(${b.postKey},${b.groupKey})" title = "${b.postTitle}">${b.postTitle}</a></td>	
 										<td>${b.postReadcount}</td>
 										<td>${b.postDate}</td>
 									</tr>

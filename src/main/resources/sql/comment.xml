@@ -6,7 +6,7 @@
 	<insert id = "postReply" parameterType = "map">
 		INSERT INTO GCOMMENT
 		VALUES (GCOMMENTSEQ.NEXTVAL, #{postkey}, #{userkey}, #{content}, 
-				GCOMMENTSEQ.CURRVAL, #{commentReLev}, #{commentReSeq}, SYSDATE, #{groupkey}, #{commentshow})
+				GCOMMENTSEQ.CURRVAL, #{commentReLev}, #{commentReSeq}, SYSDATE, #{commentshow}, #{groupkey})
 	</insert>
 	
 	<!-- 댓글달린 댓글의 값들 가져온다. -->

@@ -29,4 +29,8 @@ public interface GroupMasterService {
 	int isAdmin(Map<String, Object> map);
 
 	int expelMem(Map<String, Object> map);
+
+	int rejectJoin(Map<String, Object> keys);
+
+	int confirmJoin(Map<String, Object> keys);
 }

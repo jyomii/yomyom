@@ -1,24 +1,24 @@
 // 가입한 모임 페이지로 이동
-function goGroup(groupKey) {
+function goGroup(groupkey) {
 	var f = document.myForm;		// 폼 name
-	f.groupKey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
+	f.groupkey.value = groupkey;	// input 태그 중 name이 groupkey인 값에 대해서 groupkey를 넘긴다.
 	f.action = "groupmain.net";		// 이동할 페이지
 	f.method = "post";				// POST 방식으로 데이터 전송
 	f.submit();						// 폼 전송
 };
 
 // 게시글 페이지로 이동
-function board(groupKey, postKey) {
+function board(postkey, groupkey) {
 	var f = document.myForm;		// 폼 name
-	f.groupKey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
-	f.postKey.value = postKey;		// input 태그 중 name이 postKey인 값에 대해서 postkey를 넘긴다.
+	f.groupkey.value = groupkey;	// input 태그 중 name이 groupkey인 값에 대해서 groupkey를 넘긴다.
+	f.postkey.value = postkey;		// input 태그 중 name이 postkey인 값에 대해서 postkey를 넘긴다.
 	f.action = "detailBoard.net";	// 이동할 페이지
 	f.method = "post";				// POST 방식으로 데이터 전송
 	f.submit();						// 폼 전송
 }
 
 function go(page) {
-	var data = "status=" + $('#status').val() + "&page=" + page + "&userKey=" + $('#userKey').val() + "&groupKey=" + $('#groupKey').val();
+	var data = "status=" + $('#status').val() + "&page=" + page + "&userkey=" + $('#userkey').val() + "&groupkey=" + $('#groupkey').val();
 	viewList(data);
 }
 
@@ -32,7 +32,7 @@ function setPaging(href, digit) {
 	doc += anchor;
 }
 
-//메뉴 클릭할 때마다 ajax로 불러오기 
+// 메뉴 클릭할 때마다 ajax로 메뉴에 해당하는 데이터 불러오기 
 function viewList(call) {
 	doc = "";
 	$.ajax({
@@ -72,51 +72,60 @@ function signedGroup (data) {
 	doc += '	</tr>';
 	doc += '</thead>';
 	doc += '<tbody>';
-	$(data.list).each(function(index, item) {
-		doc += '	<tr>';
-		doc += '		<td>';
-		doc += "			<img src= \"<spring:url value='/image" + item.groupDFile + "'/>\" class = 'group-img' alt = ''/>";
-		doc += '			<a href = "javascript:goGroup(' + "'" + item.groupKey + "'" + ');" title = "">' + item.groupName + '</a>';
-		doc += '		</td>';
-		doc += '		<td>';
-		doc += 				item.memberCount + '명';
-		doc += '		</td>';
-		doc += '		<td>';
-		doc += 				item.groupDate;
-		doc += '		</td>';
-		doc += '	</tr>';
-	}); 
-	doc += '</tbody>';
-	
-	$('table').append(doc);
-	$('.pagination').html('');
-	
-	doc = "";
-	digit = '«&nbsp;';
-	href = "";
-	if (data.page > 1) {
-		href = 'href=javascript:go(' + (data.page - 1) + ')';
-	}
-	setPaging(href, digit);
-	
-	for (var i = data.startpage; i <= data.endpage; i++) {
-		digit = i;
+	if (data.listcount > 0) {
+		$(data.list).each(function(index, item) {
+			doc += '	<tr>';
+			doc += '		<td>';
+			doc += "			<img src= \"<spring:url value='/image" + item.groupDFile + "'/>\" class = 'group-img' alt = ''/>";
+			// 주소 상엽씨버전으로 바꾸면 jsp에서도 수정해줘
+			//doc += '			<a href = "group_main.net?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
+			doc += '			<a href = "groupmain?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.memberCount + '명';
+			doc += '		</td>';
+			doc += '		<td>';
+			doc += 				item.groupDate;
+			doc += '		</td>';
+			doc += '	</tr>';
+		}); 
+		
+		doc += '</tbody>';
+		
+		$('table').append(doc);
+		$('.pagination').html('');
+		
+		doc = "";
+		digit = '«&nbsp;';
 		href = "";
-		if (i != data.page) {
-			href = 'href=javascript:go(' + i + ')';
+		if (data.page > 1) {
+			href = 'href=javascript:go(' + (data.page - 1) + ')';
 		}
 		setPaging(href, digit);
-	}
-	
-	digit = '»&nbsp;';
-	href = "";
-	if (data.page < data.maxpage) {
-		href = 'href=javascript:go(' + (data.page + 1) + ')';
-	}
-	
-	setPaging(href, digit);
-	
-	$('.pagination').append(doc);
+		
+		for (var i = data.startpage; i <= data.endpage; i++) {
+			digit = i;
+			href = "";
+			if (i != data.page) {
+				href = 'href=javascript:go(' + i + ')';
+			}
+			setPaging(href, digit);
+		}
+		
+		digit = '»&nbsp;';
+		href = "";
+		if (data.page < data.maxpage) {
+			href = 'href=javascript:go(' + (data.page + 1) + ')';
+		}
+		
+		setPaging(href, digit);
+		
+		$('.pagination').append(doc);
+		} else {
+			doc += '<tr><td colspan = 3>작성글이 존재하지 않습니다.</td></tr>'
+			doc += '</tbody>';
+			$('table').append(doc);
+		}
 } // signedGroup end
 
 /* ##### 작성한 글 ##### */
@@ -135,7 +144,7 @@ function wroteTitle(data) {
 		$(data.list).each(function(index, item){
 			doc += '	<tr>';
 			doc += '		<td>';			
-			doc += '			<a href = "javascript:board(' + item.groupKey + ',' + item.postKey + ')" title = "">' + item.postTitle + '</a>';
+			doc += '			<a href = "javascript:board(' + item.postKey + ',' + item.groupKey + ')" title = "">' + item.postTitle + '</a>';
 			doc += '		</td>';
 			doc += '		<td>';
 			doc += 				item.postReadcount;
@@ -201,12 +210,12 @@ function wroteComment(data) {
 			doc += '			<div class = "comment-info">';
 			doc += '				<div class = "comment-content">';
 			doc += '					<span>';
-			doc += '						<a href = "javascript:board(' + item.groupKey + ',' + item.postKey + ')" title = "">' + item.commentContent + '</a>';
+			doc += '						<a href = "javascript:board(' + item.postKey + ',' + item.groupKey + ')" title = "">' + item.commentContent + '</a>';
 			doc += '					</span>';
 			doc += '				</div>';
 			doc += '				<div class = "comment-subject">';
 			doc += '					<span>';
-			doc += '						<a href = "javascript:board(' + item.groupKey + ',' + item.postKey + ')" title = "">' + item.postTitle + '</a>';
+			doc += '						<a href = "javascript:board(' + item.postKey + ',' + item.groupKey + ')" title = "">' + item.postTitle + '</a>';
 			doc += '					</span>';
 			doc += '					<span class = "comment-num">';
 			doc += 						'[' + item.replyCount + ']';
@@ -279,7 +288,7 @@ $(function() {
 	$('.user-active li').click(function(){
 		$('.user-active li').removeClass('selected-menu');
 		$(this).addClass('selected-menu');
-		var call = "userKey=" + $('#userKey').val() + "&groupKey=" + $('#groupKey').val() + "&status=" + $(this).index();
+		var call = "userkey=" + $('#userkey').val() + "&groupkey=" + $('#groupkey').val() + "&status=" + $(this).index();
 		viewList(call);
 	});
 
