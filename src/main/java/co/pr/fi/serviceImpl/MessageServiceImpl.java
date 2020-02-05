@@ -11,6 +11,7 @@ import co.pr.fi.dao.MessageDAO;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.UserMessage;
 import co.pr.fi.service.MessageService;
+import co.pr.fi.task.CheckParameter;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -20,6 +21,7 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public int sendMessage(UserMessage message) {
+		message.setMgContent(CheckParameter.replaceParameter(message.getMgContent()));
 		return dao.sendMessage(message);
 	}
 
@@ -41,6 +43,7 @@ public class MessageServiceImpl implements MessageService {
 	public int sendMessage(UserMessage message, List<GUsers> users) {
 		Map<String, Object> list = new HashMap<String,Object>();
 		System.out.println("check : " + message.getMgContent());
+		message.setMgContent(CheckParameter.replaceParameter(message.getMgContent()));
 		list.put("message", message);
 		list.put("users", users);
 		return dao.sendMessage(list);
