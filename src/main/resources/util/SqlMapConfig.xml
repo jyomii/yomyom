@@ -12,6 +12,7 @@
 
 	<typeAliases>
 		<typeAlias alias="member" type="co.pr.fi.domain.GUsers" />
+		<typeAlias alias="bestboard" type="co.pr.fi.domain.BestPost" />
 		<typeAlias alias="location" type="co.pr.fi.domain.GLocation" />
 		<typeAlias alias="statisticsAge"
 			type="co.pr.fi.domain.StatisticsAge" />

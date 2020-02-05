@@ -39,11 +39,20 @@ public class GroupMemberController {
 	// 모임 메인 페이지 이동
 	@GetMapping("/groupmain")
 	public String groupmain (@RequestParam(defaultValue = "3") int groupKey, 
-							 @RequestParam(defaultValue = "2") int userKey,
-							 Model m, HttpSession session) {
+							 Model m, HttpSession session, HttpServletResponse response) throws IOException {
+		if (session.getAttribute("id") == null) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인이 필요합니다.');");
+			out.println("location.href = 'login'");
+			out.println("</script>");
+			out.close();
+		}
+		int userKey = groupMemberService.getUser((String) session.getAttribute("id"));
 		
 		m.addAttribute("groupKey", 3);
-		m.addAttribute("userKey", 2);
+		m.addAttribute("userKey", userKey);
 		return "groupin_group_main";
 	}
 	
@@ -192,7 +201,7 @@ public class GroupMemberController {
 	}
 	
 	// 모임 회원 상세 페이지 이동
-	@PostMapping("/G_mem_detail")
+	@PostMapping("/G_mem_detail.net")
 	public ModelAndView GmemDetail (@RequestParam(required = false, defaultValue = "0") int status,
 									@RequestParam(required = false, defaultValue = "0") int userKey, 
 									@RequestParam(required = false, defaultValue = "0") int groupKey,
@@ -207,7 +216,7 @@ public class GroupMemberController {
 		List<GGroup> groupList = new ArrayList<GGroup>();
 		List<Post> postList = new ArrayList<Post>();
 		int listcount = 0;
-		status = 1;	// 임시
+		status = 0;	// 임시
 		
 		switch (status) {
 		case 0 :

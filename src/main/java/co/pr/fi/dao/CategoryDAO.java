@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GCategoryName;
+import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.RequestCategory;
 
 @Repository
@@ -79,4 +80,15 @@ public class CategoryDAO {
 	
 		return sqlSession.selectOne("category.alreadyRequestCategory", request);
 	}
+
+	
+	public List<GUsers> getUserRequestCategory(Map<String, String> list) {
+		return sqlSession.selectList("category.getUserRequestCategory", list);
+
+	}
+  
+  
+  public int interestupdate(Map<String, Object>  category) {
+		return sqlSession.update("category.interestupdate", category);
+  }
 }

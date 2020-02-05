@@ -11,6 +11,27 @@ function commentReply(commentNo) {
 	console.log('답댓 달 댓글의 번호 = ' + commentNo);
 };	// reply end
 
+// 댓글 삭제 클릭 시
+function deleteReply(num) {
+	var answer = confirm('댓글을 삭제하시겠습니까?');
+	if (answer) {
+		$.ajax({
+			url : 'deleteReply',
+			type : 'post',
+			data : {commentnum : num},
+			dataType : 'json',
+			cache : false,
+			success : function(data) {
+				
+			},
+			error : function(request, status, error) {
+				console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			}
+		});
+	}
+	return false;	
+}
+
 $(function(){
 	console.log('groupkey = ' + $('#detailGroupKey').val());
 	console.log('postkey = ' + $('#detailPostKey').val());
@@ -127,9 +148,9 @@ $(function(){
 				doc += '</ul>';
 				$('.coment-area').append(doc);
 			},
-			error : function(data) {
-				alert('error : ' + data);
-			} // error end
+			error : function(request, status, error) {
+				console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			}
 		}); // ajax end
 	} // function postReply end
 }); // ready end

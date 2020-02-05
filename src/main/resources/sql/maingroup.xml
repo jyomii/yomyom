@@ -21,7 +21,7 @@
   <![CDATA[ 
 		
 select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
-(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey group by groupkey) memberCount
+(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey and ggroupmember.usergrade > -1 group by groupkey) memberCount
 from ggroup
 
 		where groupkey in (
@@ -41,7 +41,7 @@ from ggroup
   <![CDATA[ 
 	
 select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
-(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey group by groupkey) memberCount
+(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey and ggroupmember.usergrade > -1 group by groupkey) memberCount
  from ggroup
 
 		where groupkey in (
@@ -108,7 +108,7 @@ select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.gr
 <!-- 해당 카테고리에서 인원 수 제일 많은 3모임 선택 -->
 <select id="categorybestMainGroup" parameterType="map" resultType="group">
 	   <![CDATA[ 
-select * from (select b.*, (select count(*) from ggroupmember where ggroupmember.groupkey = b.groupkey) memberCount
+select * from (select b.*, (select count(*) from ggroupmember where ggroupmember.groupkey = b.groupkey and ggroupmember.usergrade > -1) memberCount
 from (select * from ggroup where ggroup.categorykey = #{cateogrykey}) b order by memberCount desc) where rownum <= #{getCount}
 			]]>
 </select>
@@ -129,4 +129,22 @@ from (select * from ggroup where ggroup.categorykey = #{cateogrykey}) b order by
 						  		]]>
 </select>
 
+
+<!-- 인기글, 최근 7일간 조회수가 제일 높고, 좋아요 수가 많은 순  -->
+<select id="getBestBoard" parameterType="java.lang.Integer" resultType="bestboard">
+
+   select * from (select post.postkey, post.posttitle, post.postcontent, post.postdate, post.groupkey, post.postreadcount,
+(select groupnickname from GGROUPMEMBER where GGROUPMEMBER.USERKEY = post.userkey and GGROUPMEMBER.GROUPKEY = post.groupkey ) groupnickname,
+(select count(*) from postlike where postlike.postkey = post.postkey ) postlike,
+(select count(*) from gcomment where gcomment.postkey = post.postkey ) replyCount,
+ggroup.groupname
+from post,ggroup where post.groupkey = ggroup.groupkey 
+<if test="value gt 0">
+and ggroup.categorykey = #{categorykey}
+</if>
+and postoptionsearch != 'N' and postdate between sysdate-6 and sysdate order by postreadcount,postlike desc) 
+   <![CDATA[ 
+where rownum <= 10
+]]>
+</select>
 </mapper>

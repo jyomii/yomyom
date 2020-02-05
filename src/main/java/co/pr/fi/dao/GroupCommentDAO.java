@@ -29,4 +29,16 @@ public class GroupCommentDAO {
 	public int commentReply(Map<String, Object> data) {
 		return sqlSession.insert("comment.commentReply", data);
 	}
+
+	public int commentDelete(GComment co) {
+		return sqlSession.delete("comment.commentDelete", co);
+	}
+
+	public GComment getDetail(int commentnum) {
+		return sqlSession.selectOne("comment.getDetail", commentnum);
+	}
+
+	public int update(Map<String, Object> keys) {
+		return sqlSession.update("comment.update", keys);
+	}
 }

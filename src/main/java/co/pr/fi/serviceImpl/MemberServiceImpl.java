@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.pr.fi.dao.MemberDAO;
+import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.service.MemberService;

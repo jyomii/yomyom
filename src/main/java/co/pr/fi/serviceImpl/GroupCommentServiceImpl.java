@@ -38,4 +38,19 @@ public class GroupCommentServiceImpl implements GroupCommentService {
 	public int updateComment(GComment co) {
 		return dao.updateComment(co);
 	}
+	
+	@Override
+	public int update(Map<String, Object> keys) {
+		return dao.update(keys);
+	}
+	
+	@Override
+	public int commentDelete(int commentnum) {
+		int result = 0;
+		GComment co = dao.getDetail(commentnum);
+		if (co != null) {
+			result = dao.commentDelete(co);
+		}
+		return result;
+	}
 }

@@ -1,5 +1,6 @@
 package co.pr.fi.controller;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.pr.fi.dao.MainHeaderDAO;
+import co.pr.fi.domain.BestPost;
+import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.Post;
+import co.pr.fi.domain.Shortschedule;
 import co.pr.fi.service.CategoryService;
+import co.pr.fi.service.GroupService;
 import co.pr.fi.service.MainHeaderService;
 import co.pr.fi.service.MemberService;
 import co.pr.fi.service.MessageService;
@@ -30,6 +35,9 @@ public class MainHeaderController {
 	@Autowired
 	MainHeaderService mainHeaderService;
 
+	
+	@Autowired
+	GroupService groupService;
 	@Autowired
 	CategoryService categoryService;
 
@@ -52,10 +60,14 @@ public class MainHeaderController {
 		
 		//베스트 : 인원수 가장 많은 모임 3개
 		List<GGroup> bestgroup = mainHeaderService.getBestGroups();
+		//인기글 : 최근 7일간 조회수가 높고, 좋아요 수가 많은 순 
+		List<BestPost> post = mainHeaderService.getBestBoard(0);
 		
 		List<GGroup> reList;
 		List<GGroup> groupList;
-		
+	
+		List<CalendarList> groupcalendarlist;
+
 		
 		GUsers gUsers = null; 
 		//추천 : 관심 카테고리 목록중에서 인원수 제일 많은 모임 리스트 5개
@@ -66,9 +78,31 @@ public class MainHeaderController {
 				
 		
 		if(session.getAttribute("id") != null) {
+			
 			gUsers = memberService.getUsers((String)session.getAttribute("id"));
 			reList = mainHeaderService.getUserCategoryGroup(gUsers.getUserKey());
 			groupList = mainHeaderService.getUserCategoryActiveGroupList(gUsers.getUserKey());
+			
+			
+			Calendar c = Calendar.getInstance();
+			int month = c.get(Calendar.MONTH) + 1;
+			int year = c.get(Calendar.YEAR);
+			int date = c.get(Calendar.DATE);
+			
+			groupcalendarlist = groupService.groupcalendarlist(gUsers.getUserKey(),month,year);
+			
+			mv.addObject("groupcalendarlist",groupcalendarlist);
+			mv.addObject("groupcalendarlistCount",groupcalendarlist.size());
+			
+			
+			for(int i = 0; i < groupcalendarlist.size();i++) {
+				if(Integer.parseInt(groupcalendarlist.get(i).getStartdate())==date) {
+					int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
+					List<Shortschedule> shortschedule = groupService.shortschedule(gUsers.getUserKey(), d, year, month);
+					mv.addObject("shortschedule", shortschedule);
+				}
+			}
+			
 		}else {
 			reList = mainHeaderService.getNotUserCategoryGroup();
 			groupList = mainHeaderService.getNotUserActiveGroupList();
@@ -76,9 +110,12 @@ public class MainHeaderController {
 		
 		
 		
+		
+		
 		mv.setViewName("mainpage/main2");
 		mv.addObject("bestgroup",bestgroup);
 		mv.addObject("reList",reList);
+		mv.addObject("bestboard",post);
 		mv.addObject("groupList",groupList);
 		mv.addObject("dcategory", categoryService.getDCategory());
 		mv.addObject("scategory", categoryService.getSCategory());
@@ -169,11 +206,14 @@ public class MainHeaderController {
 		
 		//모임 목록 : 해당 카테고리 중 post 등록개수가 일주일간 제일 많은 수
 		List<GGroup> groupList = mainHeaderService.getCategoryActiveGroupList(categorykey);
-	
+		
+		//인기글 : 최근 7일간 조회수가 높고, 좋아요 수가 많은 순 
+		List<BestPost> post = mainHeaderService.getBestBoard(categorykey);
 		
 		
 		mv.setViewName("group/category_main");
 		mv.addObject("bestgroup",bestgroup);
+		mv.addObject("bestboard",post);
 		mv.addObject("reList",reList);
 		mv.addObject("groupList",groupList);
 		mv.addObject("dcategory", categoryService.getDCategory());
