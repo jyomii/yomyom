@@ -91,6 +91,7 @@ public class GroupController {
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
+		mv.addObject("groupkey",groupkey);
 		mv.setViewName("group/groupin_group_main");
 		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
@@ -173,16 +174,18 @@ public class GroupController {
 	@RequestMapping(value = "/group_main_ajaxCalList.net")
 	public Object ajaxCalList(@RequestParam(value = "userkey") int userkey, @RequestParam(value = "date") String date)
 			throws Exception {
-		String ym = date.replace("�뀈", "");
-		String ym1 = ym.replace("�썡", "");
+		String ym = date.replace("년", "");
+		String ym1 = ym.replace("월", "");
 		String ym2 = ym1.replace(" ", "");
 		int year = Integer.parseInt(ym2.substring(0, 4));
+		System.out.println("!!!!!!!!!!!"+year);
 		int month = 0;
 		if (ym2.length() == 6) {
 			month = Integer.parseInt(ym2.substring(ym2.length() - 2, ym2.length()));
 		} else {
 			month = Integer.parseInt(ym2.substring(ym2.length() - 1, ym2.length()));
 		}
+		System.out.println("!!!!!!!!!!!"+month);
 		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("groupcalendarlist", groupcalendarlist);
@@ -193,8 +196,8 @@ public class GroupController {
 	@RequestMapping(value = "/group_main_shortschedule.net")
 	public Object shortSchedule(@RequestParam(value = "userkey") int userkey, @RequestParam(value = "date") String date,
 			@RequestParam(value = "day") String day) throws Exception {
-		String ym = date.replace("�뀈", "");
-		String ym1 = ym.replace("�썡", "");
+		String ym = date.replace("년", "");
+		String ym1 = ym.replace("월", "");
 		String ym2 = ym1.replace(" ", "");
 		String year = ym2.substring(0, 4) + "-";
 		String month = "";
@@ -241,6 +244,7 @@ public class GroupController {
 			Random r = new Random();
 			int random = r.nextInt(100000000);
 
+			
 			/*** 확占쏙옙占쏙옙 占쏙옙占싹깍옙 占쏙옙占쏙옙 ****/
 			int index = fileName.lastIndexOf(".");
 			// 占쏙옙占쌘울옙占쏙옙占쏙옙 특占쏙옙 占쏙옙占쌘울옙占쏙옙 占쏙옙치 占쏙옙(index)占쏙옙 占쏙옙환占싼댐옙.
@@ -264,10 +268,10 @@ public class GroupController {
 			uploadfile.transferTo(new File(saveFolder + fileDBName));
 
 			// 占쌕뀐옙 占쏙옙占싹몌옙占쏙옙占쏙옙 占쏙옙占쏙옙
-			group.setGroupDFile(fileDBName);
+			group.setGroupCFile(fileDBName);
 		}
 		groupservice.groupMainImgUpdate(group);// 占쏙옙占쏙옙氷占쏙옙占� 호占쏙옙
-		return "redirect:group_main.net";
+		return "redirect:group_main.net?groupkey="+groupKey;
 	}
 
 	@PostMapping("/group_ImgUpdate.net")
@@ -321,11 +325,12 @@ public class GroupController {
 			uploadfile.transferTo(new File(saveFolder + fileDBName));
 
 			// 占쌕뀐옙 占쏙옙占싹몌옙占쏙옙占쏙옙 占쏙옙占쏙옙
-			group.setGroupCFile(fileDBName);
+			
+			group.setGroupDFile(fileDBName);
 			System.out.println("!!!!!" + group.getGroupCFile());
 		}
 		groupservice.groupImgUpdate(group);// 占쏙옙占쏙옙氷占쏙옙占� 호占쏙옙
-		return "redirect:group_main.net";
+		return "redirect:group_main.net?groupkey="+groupKey;
 	}
 
 	@GetMapping("groupin_group_admin_board.net")

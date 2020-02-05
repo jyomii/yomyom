@@ -151,7 +151,6 @@ public class AdminController {
 		
 	}
 	
-	
 	@ResponseBody
 	@PostMapping("/acceptGroup")
 	public int acceptGroup(int key) {
