@@ -287,7 +287,7 @@ animation: crescendo 6s alternate infinite ease-in;
 									<tr>
 										<td>
 										
-											<a href="forums-category.html" title="">${item.postTitle } [${item.replyCount}]</a>
+											<a href="javascript:goPage(${item.postKey }, ${item.groupKey });" title="">${item.postTitle } [${item.replyCount}]</a>
 											<p class="text-end">${item.postContent }</p>
 											<p><span>${item.groupNickname }</span>
 											<span style="margin-left: 16px;">${item.groupName }</span>
@@ -332,6 +332,11 @@ animation: crescendo 6s alternate infinite ease-in;
 <!-- content end -->
 
 
+ <form name="paging">
+    	<input type="hidden" name="postKey"/>
+    	<input type="hidden" name="groupKey"/>
+    </form>
+
 <!-- footer -->
 <jsp:include page="footer.jsp" />
 <!-- footer end -->
@@ -347,4 +352,21 @@ animation: crescendo 6s alternate infinite ease-in;
 			interval : 10000
 		})
 	});
+	
+	function goPage(postKey, groupKey){
+		
+		 // name이 paging인 태그
+	      var f = document.paging;
+
+	      // form 태그의 하위 태그 값 매개 변수로 대입
+	      f.postKey.value = postKey;
+	      f.groupKey.value = groupKey;
+	    
+	      // input태그의 값들을 전송하는 주소
+	      f.action = "./detailBoard.net"
+
+	      // 전송 방식 : post
+	      f.method = "post"
+	      f.submit();
+	}
 </script>

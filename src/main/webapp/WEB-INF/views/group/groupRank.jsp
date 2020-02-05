@@ -51,7 +51,7 @@ height: 50px;}
 													
 													</figure>
 													<div class="notifi-meta">
-														<p><a href="groupmain.net?groupkey=${item.groupKey}">${item.groupName}</a></p>
+														<p><a href="group_main.net?groupkey=${item.groupKey}">${item.groupName}</a></p>
 														<span>${item.groupInfo }</span>
 													</div>
 												
@@ -156,7 +156,7 @@ function print(result){
 			
 		txt += '</figure>';
 		txt += '<div class="notifi-meta">';
-		txt += '<p><a href="groupmain.net?groupkey='+result[i].groupKey+'">'+result[i].groupName+'</a></p>';
+		txt += '<p><a href="group_main.net?groupkey='+result[i].groupKey+'">'+result[i].groupName+'</a></p>';
 		txt += '<span>'+result[i].groupInfo+'</span>';
 		txt += '	</div>';
 		txt += '</li>';

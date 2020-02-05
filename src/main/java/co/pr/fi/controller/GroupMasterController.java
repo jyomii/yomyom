@@ -185,7 +185,7 @@ public class GroupMasterController {
 			GGroupBoard noticeBoard = new GGroupBoard();
 			noticeBoard.setGroupKey(group.getGroupKey());
 			noticeBoard.setBoardName("공지사항 게시판");
-			noticeBoard.setBoardType("N");
+			noticeBoard.setBoardType("G");
 
 			groupMasterService.insertGroupBoard(noticeBoard);
 
@@ -193,7 +193,7 @@ public class GroupMasterController {
 			GGroupBoard groupBoard = new GGroupBoard();
 			groupBoard.setGroupKey(group.getGroupKey());
 			groupBoard.setBoardName("모임 일정 게시판");
-			groupBoard.setBoardType("Y");
+			groupBoard.setBoardType("N");
 
 			groupMasterService.insertGroupBoard(groupBoard);
 
