@@ -13,10 +13,19 @@ public class UserLikeGroup {
  private int groupKey;
  
  private String groupName;
+ private String groupDFile;
  
  
 
- public String getGroupName() {
+ public String getGroupDFile() {
+	return groupDFile;
+}
+
+public void setGroupDFile(String groupDFile) {
+	this.groupDFile = groupDFile;
+}
+
+public String getGroupName() {
 	return groupName;
 }
 

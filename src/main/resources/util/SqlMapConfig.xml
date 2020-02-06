@@ -72,6 +72,7 @@
 			<typeAlias alias="calendar"
 			type="co.pr.fi.domain.GCalendar" />
 
+
 	</typeAliases>
 	
 	<mappers>

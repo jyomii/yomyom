@@ -1057,21 +1057,18 @@ insert into gcategory values(gcategorySEQ.nextval,'취미/생활');
                                                  
 
 
+
 insert into gcategory2 values(gcategory2SEQ.nextval,1,'리그오브레전드');
 insert into gcategory2 values(gcategory2SEQ.nextval,1,'오버워치');
-insert into gcategory2 values(gcategory2SEQ.nextval,1,'바람의나라');
-insert into gcategory2 values(gcategory2SEQ.nextval,1,'카트라이더');
-insert into gcategory2 values(gcategory2SEQ.nextval,1,'테라');
-insert into gcategory2 values(gcategory2SEQ.nextval,1,'리니지');
+insert into gcategory2 values(gcategory2SEQ.nextval,1,'메이플스토리');
+insert into gcategory2 values(gcategory2SEQ.nextval,1,'심즈');
 
 
 
 insert into gcategory2 values(gcategory2SEQ.nextval,2,'트와이스');
 insert into gcategory2 values(gcategory2SEQ.nextval,2,'태연');
-insert into gcategory2 values(gcategory2SEQ.nextval,2,'소녀시대');
-insert into gcategory2 values(gcategory2SEQ.nextval,2,'아이돌학교');
 insert into gcategory2 values(gcategory2SEQ.nextval,2,'스토브리그');
-insert into gcategory2 values(gcategory2SEQ.nextval,2,'도꺠비');
+insert into gcategory2 values(gcategory2SEQ.nextval,2,'프로듀스 시리즈');
 
 
 
@@ -1079,8 +1076,6 @@ insert into gcategory2 values(gcategory2SEQ.nextval,3,'야구');
 insert into gcategory2 values(gcategory2SEQ.nextval,3,'축구');
 insert into gcategory2 values(gcategory2SEQ.nextval,3,'자전거');
 insert into gcategory2 values(gcategory2SEQ.nextval,3,'수영');
-insert into gcategory2 values(gcategory2SEQ.nextval,3,'스키');
-insert into gcategory2 values(gcategory2SEQ.nextval,3,'볼링');
 
 
 
@@ -1088,37 +1083,60 @@ insert into gcategory2 values(gcategory2SEQ.nextval,4,'공무원');
 insert into gcategory2 values(gcategory2SEQ.nextval,4,'편입');
 insert into gcategory2 values(gcategory2SEQ.nextval,4,'자격증');
 insert into gcategory2 values(gcategory2SEQ.nextval,4,'토익');
-insert into gcategory2 values(gcategory2SEQ.nextval,4,'증권');
-insert into gcategory2 values(gcategory2SEQ.nextval,4,'노트북');
 
 
 
-insert into gcategory2 values(gcategory2SEQ.nextval,5,'제주도');
+insert into gcategory2 values(gcategory2SEQ.nextval,5,'등산');
 insert into gcategory2 values(gcategory2SEQ.nextval,5,'일본');
 insert into gcategory2 values(gcategory2SEQ.nextval,5,'중국');
 insert into gcategory2 values(gcategory2SEQ.nextval,5,'미국');
-insert into gcategory2 values(gcategory2SEQ.nextval,5,'치킨');
-insert into gcategory2 values(gcategory2SEQ.nextval,5,'피자');
 
 
 
 
 insert into gcategory2 values(gcategory2SEQ.nextval,6,'유투브');
 insert into gcategory2 values(gcategory2SEQ.nextval,6,'웹툰');
-insert into gcategory2 values(gcategory2SEQ.nextval,6,'만화');
-insert into gcategory2 values(gcategory2SEQ.nextval,6,'관상');
-insert into gcategory2 values(gcategory2SEQ.nextval,6,'사주');
+insert into gcategory2 values(gcategory2SEQ.nextval,6,'애니메이션');
 
 
-/*관리자 계정*/ 
+
 insert into gusers values(0, 'admin','$2a$10$DGdkEZGSwAL1tOEmaEEqB.qfcKQrREhIo4wwgIfD5LWi/eICNg5Ha',
 NULL,NULL,2,1,'F','plain64@naver.com',sysdate,'Y','N',0,null,0);
 
 
+CREATE TABLE gusercategory
+(
+    userkey        NUMBER    NOT NULL, 
+    categorykey    NUMBER    NOT NULL
+);
+
+
+insert into gusercategory values(0,1);
+insert into gusercategory values(0,2);
+insert into gusercategory values(0,3);
+insert into gusercategory values(0,4);
+insert into gusercategory values(0,5);
+insert into gusercategory values(0,6);
+insert into gusercategory values(0,7);
+insert into gusercategory values(0,8);
+insert into gusercategory values(0,9);
+insert into gusercategory values(0,10);
+insert into gusercategory values(0,11);
+insert into gusercategory values(0,12);
+insert into gusercategory values(0,13);
+insert into gusercategory values(0,14);
+insert into gusercategory values(0,15);
+insert into gusercategory values(0,16);
+
+insert into gusercategory values(0,17);
+insert into gusercategory values(0,18);
+insert into gusercategory values(0,19);
+insert into gusercategory values(0,20);
+insert into gusercategory values(0,21);
+insert into gusercategory values(0,22);
+insert into gusercategory values(0,23);
+
 create table delete_File (filename varchar2(100));
                                                  
     
-/*그룹 생성 시 같이 추가되어야함
-insert into ggroupboard values(1,1,'공지사항','Y','Y','Y','Y','Y','Y');
-insert into ggroupboard values(2,2,'공지사항','Y','Y','Y','Y','Y','Y');
-*/
+

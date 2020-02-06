@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -101,6 +102,8 @@ public class MyPageController {
 		List<UserLikeGroup> favlist = myPageService.favlist(users.getUserKey());
 		int favcount = myPageService.favcount(users.getUserKey());
 
+		
+		
 		mv.setViewName("mypage/mypage");
 		mv.addObject("mypage", user);
 		mv.addObject("list", groupList);
@@ -221,7 +224,7 @@ public class MyPageController {
 
 		GUsers users = memberService.getUsers((String) session.getAttribute("id"));
 		List<UserMessage> getMessage = messageService.getMyMessage(users.getUserKey());
-
+		mv.addObject("getMessage", getMessage);
 		int msgcount = myPageService.msgCount(users.getUserKey());
 
 		mv.setViewName("mypage/mypage2");
@@ -286,7 +289,7 @@ public class MyPageController {
 
 		GUsers users = memberService.getUsers((String) session.getAttribute("id"));
 		List<UserMessage> getMessage = messageService.getMyMessage(users.getUserKey());
-
+		mv.addObject("getMessage", getMessage);
 		int msgcount = myPageService.msgCount(users.getUserKey());
 
 		mv.setViewName("mypage/mypage3");
@@ -302,22 +305,28 @@ public class MyPageController {
 	}
 
 	// 수정처리2
-	@RequestMapping(value = "/updateprocess2", method = RequestMethod.POST)
-	public ModelAndView updateProcess2(HttpSession session,
-			@RequestParam(value = "categorykey[]") List<Integer> categorykey, HttpServletResponse response)
+	@ResponseBody
+	@RequestMapping(value = "updateprocess2", method = RequestMethod.POST)
+	public int updateProcess2(HttpSession session,
+			@RequestParam(value = "categorykey[]") List<Integer> categorykey)
 			throws Exception {
-		response.setContentType("text/html;charset=utf-8");
+	
+		
+		System.out.println("############"+categorykey);
 		String id = (String) session.getAttribute("id");
-		List<GUserCategory> category = myPageService.category(id);
 
+		int deleteC = categoryService.mycateD(id);
+		
 		Map<String, Object> usercategory = new HashMap<String, Object>();
 		usercategory.put("id", id);
 		usercategory.put("list", categorykey);
-		 categoryService.interestupdate(usercategory);
+		int result = categoryService.insertUserCategory(usercategory);
 
+		 
 		 System.out.println("##############"+categorykey);
 		
-		return null;
+		 return result;
+		
 	}
 
 	//
@@ -365,10 +374,11 @@ public class MyPageController {
 		int commcount = myPageService.commcount(id);
 
 		GUsers users1 = memberService.getUsers((String) session.getAttribute("id"));
-		List<UserMessage> getMessage = messageService.getMyMessage(users1.getUserKey());
 
 		int msgcount = myPageService.msgCount(users1.getUserKey());
-
+		List<UserMessage> getMessage = messageService.getMyMessage(users1.getUserKey());
+		mv.addObject("getMessage", getMessage);
+		
 		mv.setViewName("mypage/mypage4");
 		mv.addObject("mypage", users);
 		mv.addObject("list", list);
@@ -433,7 +443,7 @@ public class MyPageController {
 
 		GUsers users1 = memberService.getUsers((String) session.getAttribute("id"));
 		List<UserMessage> getMessage = messageService.getMyMessage(users1.getUserKey());
-
+		mv.addObject("getMessage", getMessage);
 		int msgcount = myPageService.msgCount(users1.getUserKey());
 
 		mv.setViewName("mypage/mypage5");
@@ -450,40 +460,54 @@ public class MyPageController {
 		mv.addObject("postcount", postcount);
 		mv.addObject("commcount", commcount);
 		mv.addObject("msgcount", msgcount);
-
 		return mv;
 	}
 
 	// 즐찾 추가
 	@RequestMapping(value = "/favgroup", method = RequestMethod.POST)
-	public String favgroupProcess(GUsers user,  int groupKey, HttpSession session, HttpServletResponse response)
+	public void favgroupProcess(String userKey,  int groupKey, HttpSession session, HttpServletResponse response)
 			throws Exception {
 		response.setContentType("text/html;charset=utf-8");
-		String id = (String) session.getAttribute("id");
-		user.setUserId(id);
-
+		PrintWriter out = response.getWriter();
 		GUsers users = memberService.getUsers((String) session.getAttribute("id"));
 		
 		System.out.println("userkey = "+ users.getUserKey());
 		System.out.println("groupKey = "+ groupKey);
-		myPageService.favgroup(users.getUserKey(), groupKey);
-
+		
+		int result = myPageService.favgroup(users.getUserKey(), groupKey);
+		out.println("<script>");		
+		if (result == 1) {
+			out.println("alert('추가완료');");
+			out.println("location.href='mypage';");
+		} else {
+			out.println("alert('수정 실패');");
+			out.println("history.back()");
+		}
+		out.println("</script>");
+		out.close();
 		// myPageService.favgroup(users.getUserKey());
 
-		 return null;
 	}
 	
 	// 즐찾 해제
 		@RequestMapping(value = "/favgroupD", method = RequestMethod.POST)
-		public String favgroupDProcess(GUsers user, HttpSession session, HttpServletResponse response)
+		public String favgroupDProcess(String userKey,  String groupKey, HttpSession session, HttpServletResponse response)
 				throws Exception {
 			response.setContentType("text/html;charset=utf-8");
-			String id = (String) session.getAttribute("id");
-			user.setUserId(id);
-
+			PrintWriter out = response.getWriter();
 			GUsers users = memberService.getUsers((String) session.getAttribute("id"));
-		
-			myPageService.favgroupD(users.getUserKey());
+			
+			int result = myPageService.favgroupD(users.getUserKey(), Integer.parseInt(groupKey));
+			out.println("<script>");		
+			if (result == 1) {
+				out.println("alert('즐겨찾기 해제되었습니다');");
+				out.println("location.href='mypage';");
+			} else {
+				out.println("alert('실패하였습니다');");
+				out.println("history.back()");
+			}
+			out.println("</script>");
+			out.close();
 
 			return null;
 		}
@@ -498,49 +522,14 @@ public class MyPageController {
 		String id = (String) session.getAttribute("id");
 		GUsers user = myPageService.userinfo(id);
 
-		List<GGroup> groupList = new ArrayList<GGroup>();
+		System.out.println("@#@#%@%@%#@" + user.getUserKey());
+
 		List<Post> postList = new ArrayList<Post>();
 
 		postList = myPageService.getList(id);
 
-		List<GComment> commList = new ArrayList<GComment>();
-		commList = myPageService.getListList(id);
-
-		System.out.println("#$@#@%^#^" + postList.toString());
-		// 총 리스트 수를 받아옵니다.
-		int listcount = myPageService.getListCount(id); // 총 리스트 수
-
-		int maxpage = (listcount + limit - 1) / limit;
-		System.out.println("총 페이지수 : " + maxpage);
-
-		int startpage = ((page - 1) / 10) * 10 + 1;
-		System.out.println("현재 페이지에 보여줄 시작 페이지 수 = " + startpage);
-
-		int endpage = startpage + 10 - 1;
-		System.out.println("현재 페이지에 보여줄 마지막 페이지 수 =" + endpage);
-
-		if (endpage > maxpage)
-			endpage = maxpage;
-
-		List<Post> list = myPageService.getPostList(page, limit);
-		System.out.println("page =" + page);
-		System.out.println("limit =" + limit);
-
-		GUsers users = memberService.getUsers((String) session.getAttribute("id"));
-
-		int postcount = myPageService.postcount(id);
-
-		int commcount = myPageService.commcount(id);
-
-		GUsers users1 = memberService.getUsers((String) session.getAttribute("id"));
-		List<UserMessage> getMessage = messageService.getMyMessage(users1.getUserKey());
-
-		int msgcount = myPageService.msgCount(users1.getUserKey());
-
-		List<UserLikeGroup> favlist = myPageService.favlist(users.getUserKey());
-		int favcount = myPageService.favcount(users.getUserKey());
-
-		//가입 모임
+		// 가입한 모임
+		List<GGroup> groupList = new ArrayList<GGroup>();
 		groupList = myPageService.userJoinGroup(id);
 
 		// 만든 모임
@@ -553,26 +542,32 @@ public class MyPageController {
 		// 만든 모임 수
 		int makecount = myPageService.makecount(id);
 
+		
+		int postcount = myPageService.postcount(id);
+
+		GUsers users = memberService.getUsers((String) session.getAttribute("id"));
+		List<UserMessage> getMessage = messageService.getMyMessage(users.getUserKey());
+
+		int msgcount = myPageService.msgCount(users.getUserKey());
+
+		List<UserLikeGroup> favlist = myPageService.favlist(users.getUserKey());
+		int favcount = myPageService.favcount(users.getUserKey());
+
+		
+		
 		mv.setViewName("mypage/mypage6");
-		mv.addObject("mypage", users);
-		mv.addObject("list", list);
-		mv.addObject("postlist", postList);
-		mv.addObject("commlist", commList);
-		mv.addObject("page", page);
-		mv.addObject("maxpage", maxpage);
-		mv.addObject("startpage", startpage);
-		mv.addObject("endpage", endpage);
-		mv.addObject("limit", limit);
-		mv.addObject("postcount", postcount);
-		mv.addObject("commcount", commcount);
-		mv.addObject("msgcount", msgcount);
-		mv.addObject("favlist", favlist);
-		mv.addObject("favcount", favcount);
-		mv.addObject("grouplist", groupList);
+		mv.addObject("mypage", user);
+		mv.addObject("list", groupList);
 		mv.addObject("mylist", mygroupList);
 		mv.addObject("joincount", joincount);
 		mv.addObject("makecount", makecount);
-
+		mv.addObject("postlist", postList);
+		mv.addObject("postcount", postcount);
+		mv.addObject("msgcount", msgcount);
+		mv.addObject("getMessage", getMessage);
+		mv.addObject("favlist", favlist);
+		mv.addObject("favcount", favcount);
+		
 		return mv;
 	}
 

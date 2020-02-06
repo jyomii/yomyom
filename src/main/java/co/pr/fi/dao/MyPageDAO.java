@@ -94,13 +94,22 @@ public class MyPageDAO {
 		return sqlSession.selectOne("Mypages.favcount", userKey);
 	}
 
-	public int favgroupD(int userKey) {
-		return sqlSession.delete("Mypages.favgroupD", userKey);
+	public int favgroupD(Map<String, Object> dd) {
+		return sqlSession.delete("Mypages.favgroupD", dd);
 	}
 
 	public int favgroup(Map<String, Object> keyy) {
 		return sqlSession.insert("Mypages.favgroup",keyy);
 	}
 
+	public List<UserLikeGroup> favlist(String id) {
+		return sqlSession.selectList("Mypages.favlist2", id);
+	}
+
+	public int favcount(String id) {
+		return sqlSession.selectOne("Mypages.favcount2", id);
+	}
+
+	
 	
 }

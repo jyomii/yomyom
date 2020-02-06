@@ -25,8 +25,10 @@ import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.domain.GUsers;
 import co.pr.fi.domain.PrBoard;
+import co.pr.fi.domain.UserLikeGroup;
 import co.pr.fi.service.CategoryService;
 import co.pr.fi.service.MemberService;
+import co.pr.fi.service.MyPageService;
 import co.pr.fi.service.PrService;
 
 @Controller
@@ -39,6 +41,9 @@ public class PrController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	MyPageService myPageService;
 	
 	//글쓰기
 	@GetMapping("/prwrite")
@@ -100,13 +105,22 @@ public class PrController {
 
 		      if (endpage > maxpage)
 		         endpage = maxpage;
+		      
+		   // 가입한 모임
+				List<GGroup> groupList = new ArrayList<GGroup>();
+				groupList = myPageService.userJoinGroup(id);
+				// 가입 모임 수
+				int joincount = myPageService.joincount(id);
+				List<UserLikeGroup> favlist2 = myPageService.favlist(id);
+				int favcount2 = myPageService.favcount(id);
 
+				GUsers user = myPageService.userinfo(id);
+				model.addObject("mypage", user);
 		      List<PrBoard> list = prService.getBoardList(page, limit);
 		      System.out.println("page =" + page);
 		      System.out.println("limit =" + limit);
 		      //System.out.println("$$$$$$$$$$"+ list.get(0).getGroupDFile());
 		     
-		      GUsers users = memberService.getUsers((String)session.getAttribute("id"));
 		      
 		      model.setViewName("prboard/prboard");
 		      model.addObject("page", page);
@@ -117,7 +131,11 @@ public class PrController {
 		      model.addObject("boardlist", list);
 		      model.addObject("listcount", listcount);
 		      model.addObject("writeuser", writeuser);
-		      model.addObject("userInfo", users);
+		      model.addObject("userInfo", user);
+		      model.addObject("favlist", favlist2);
+			  model.addObject("favcount", favcount2);
+			  model.addObject("list", groupList);
+			  model.addObject("joincount", joincount);
 	  	      model.addObject("dcategory", categoryService.getDCategory());
 		      return model;
 		   }
@@ -181,27 +199,30 @@ public class PrController {
 
 	
      @PostMapping("prDeleteAction")
-     public String prDeleteAction(int prKey,  HttpServletResponse response) throws Exception {
-     
-    	 int result = prService.boardDelete(prKey);
+     public void prDeleteAction(String prKey,  HttpServletResponse response) throws Exception {
     	 
+    	 int prKey2 = Integer.parseInt(prKey);
+         
+    	 int result = prService.boardDelete(prKey2);
     	 
-    	 //삭제 실패한 경우
-    	 if(result == 0) {
-    		 System.out.println("삭제 실패");
-    	 }
-    	 
-    	 //삭제 성공한 경우 - 글 목록 보기 요청을 전송하는 부분
-    	 System.out.println("삭제 성공");
     	 response.setContentType("text/html;charset=utf-8");
     	 PrintWriter out = response.getWriter();
-    	 out.println("<script>");
-		 out.println("alert('삭제 되었습니다.');");
-		 out.println("location.href='prboard';");
-		 out.println("</script>");
-		 out.close();
-		 return null;
-    	 
+    	 //삭제 실패한 경우
+    	 if(result == 0) {
+    		 System.out.println("삭제 실패");    		 
+        	 out.println("<script>");
+    		 out.println("alert('삭제가 실패되었습니다');");
+    		 out.println("location.href='prboard';");
+    		 out.println("</script>");
+    		 
+    	 }else {//삭제 성공한 경우 - 글 목록 보기 요청을 전송하는 부분
+    		 System.out.println("삭제 성공");
+    		 out.println("<script>");
+    		 out.println("alert('삭제 되었습니다.');");
+    		 out.println("location.href='prboard';");
+    		 out.println("</script>");
+    	 }
+		 out.close(); 
      }
      
     //카테고리 

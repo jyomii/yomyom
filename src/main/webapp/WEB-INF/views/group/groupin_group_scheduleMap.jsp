@@ -362,87 +362,7 @@ top:-9px;
 </style>
 
 <!-- 그룹 페이지 상단 -->
-<section>
-	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
-		type="hidden" id="UserKey" value="${userkey }">
-	<input type="hidden" id="postkey" value="${postkey }">
-	<div class="feature-photo">
-		<figure>
-			<img id="groupPageImg"
-				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
-			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
-		</figure>
-		<c:if test="${userinfo.userGrade==1}">
-		<!-- **********모임 대문 사진 수정*********** -->
-		<form class="edit-phto" id="groupMainImgForm"
-			enctype="multipart/form-data" action="group_mainImgUpdate.net"
-			method="post">
-			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
-				class="fa fa-camera-retro"></i>
-			<!-- 대문 사진 수정 버튼 -->
-			<label class="fileContainer"> 대문 사진 수정 <input type="file"
-				name="groupMainImgUpload" />
-			</label>
-		</form>
-		</c:if>
-		<!-- **********모임 대문 사진 수정*********** -->
-
-		<div class="container-fluid height-for-white">
-			<div class="row merged">
-				<div class="col-lg-2 col-sm-3">
-					<div class="user-avatar">
-						<!-- 그룹 사진 -->
-						<figure>
-							<img id="groupImg"
-								src="<spring:url value='/image${group.groupCFile }'/>" />
-							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
-							<!-- **********모임 사진 수정*********** -->
-							<c:if test="${userinfo.userGrade==1}">
-							<form class="edit-phto" id="groupImgForm"
-								enctype="multipart/form-data" action="group_ImgUpdate.net"
-								method="post">
-								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
-								<!-- 그룹 사진 수정 버튼 -->
-								<label class="fileContainer"> 그룹 사진 수정하기 <input
-									type="file" name="groupImgUpload" />
-								</label>
-								<!-- 그룹 사진 수정 버튼 -->
-							</form>
-							</c:if>
-							<!-- **********모임 사진 수정*********** -->
-						</figure>
-						<!-- 그룹 사진 -->
-					</div>
-				</div>
-				<div class="col-lg-10 col-sm-9">
-					<div class="timeline-info">
-						<div class="forgroupnamewidth">
-							<!-- 그룹 이름 -->
-							<ul>
-								<li class="admin-name forgroupname">
-									<h5 class="groupname">${group.groupName}</h5>
-								</li>
-							</ul>
-							<!-- 그룹 이름 -->
-						</div>
-						<div class="forgroupnamewidth1">
-							<!-- 그룹 간단 정보 -->
-							<ul>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
-							</ul>
-							<!-- 그룹 간단 정보 -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<jsp:include page="group_header.jsp" />
 <!-- 그룹 페이지 상단 -->
 <!-- 그룹 페이지 메인 -->
 <section>
@@ -467,13 +387,14 @@ top:-9px;
 							<!-- 그룹장 간단 그룹 소개 -->
 							<div class="central-meta item">
 							<div class="central-meta item">
-							<h5 class="f-title ext-margin margintopZero"><i class="ti-share"></i>길 찾기 및 경로 추가하기</h5><br>
+							<h5 class="f-title ext-margin margintopZero"><i class="ti-share"></i>지도 보기</h5><br>
 	
-	<button type="button" id="receiveFromChild" class="mtr-btn mbformap" onclick="javascript:openWin();"><span>지도 만들기</span></button>
-	<!--  <button type="button" class="mtr-btn" onclick="javascript:saveMap();"><span>지도 저장하기</span></button>
+	<!--<button type="button" id="receiveFromChild" class="mtr-btn mbformap" onclick="javascript:openWin();"><span>지도 만들기</span></button>
+	  <button type="button" class="mtr-btn" onclick="javascript:saveMap();"><span>지도 저장하기</span></button>
 	<button type="button" class="mtr-btn" onclick="javascript:loadMap();"><span>지도 불러오기</span></button>
 	<button type="button" class="mtr-btn" onclick="javascript:deleteMap();"><span>지도 삭제하기</span></button>-->
 	<div id="map" style="width: 350px; height: 350px;"></div>
+
 
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
