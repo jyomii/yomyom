@@ -57,7 +57,7 @@
 												</figure>
 												<div class="pepl-info">
 													<h4>
-														<a title="group_main.net?groupkey=${item.groupKey }">${item.groupName}</a>
+														<a href="group_main.net?groupkey=${item.groupKey }">${item.groupName}</a>
 													</h4>
 													<span> ${item.categoryName }/ <c:choose>
 															<c:when test="${item.ageKey == 0}">
@@ -261,7 +261,7 @@ $(document).on("click", ".btn-load-more", function(event) {
 			text += '<div class="nearly-pepls">';
 			text += '<div class="pepl-info">';
 			text += '<h4>';
-			text += '<a>'+result[i].postTitle+'</a>';
+			text += '<a href="javascript:goPage(${item.postKey }, ${item.groupKey });">'+result[i].postTitle+'</a>';
 			text += '</h4>';
 			text += '<p>'+result[i].postContent+'</p>';
 			text += '<span>'+result[i].groupName+'</span>';
@@ -270,6 +270,24 @@ $(document).on("click", ".btn-load-more", function(event) {
 			text += '</li>';
 			
 			}
+		}
+		
+		
+		function goPage(postKey, groupKey){
+			
+			 // name이 paging인 태그
+		      var f = document.paging;
+
+		      // form 태그의 하위 태그 값 매개 변수로 대입
+		      f.postKey.value = postKey;
+		      f.groupKey.value = groupKey;
+		    
+		      // input태그의 값들을 전송하는 주소
+		      f.action = "./detailBoard.net"
+
+		      // 전송 방식 : post
+		      f.method = "post"
+		      f.submit();
 		}
 		
 		console.log('check : ' +text);

@@ -153,7 +153,7 @@ list-style: none;
 					<c:choose>
 
 						<c:when test="${empty id }">
-							<img src="resources/images/default.png" style="width:40px;" alt="">
+							<img src="resources/images/default.png" style="width:40px;"  alt="">
 
 							<div class="user-setting" onclick="location.href='login'">
 								<a title=""><i class="ti-pencil-alt"></i>로그인</a>
@@ -165,10 +165,10 @@ list-style: none;
 
 							<c:choose>
 								<c:when test="${empty image}">
-									<img src="resources/images/default.png" style="width:40px;" alt="">
+									<img src="resources/images/default.png" style="width:40px; " alt="">
 								</c:when>
 								<c:otherwise>
-									<img style="width:40px;" alt="" src="<spring:url value='/image${image}'/>" />
+									<img style="width:40px; height:40px;" alt="" src="<spring:url value='/image${image}'/>" />
 								</c:otherwise>
 							</c:choose>
 
@@ -340,6 +340,9 @@ list-style: none;
 					success : function(result){
 						//메세지 필터
 						
+						
+						if(result != null || result.length != 0){
+							
 						var msg = result.filter(function (item) {
 							return item.checkDate == null 
 							});
@@ -353,7 +356,7 @@ list-style: none;
 						
 						count = msg.length;
 					}
-					
+					}
 				});
 				
 			
