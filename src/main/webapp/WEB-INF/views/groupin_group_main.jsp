@@ -209,7 +209,7 @@ cursor:pointer
 <section>
 	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
 		type="hidden" id="UserKey" value="1">
-	<div class="feature-photo">
+	<div class="feature-photo test1">
 		<figure>
 			<img id="groupPageImg"
 				src="<spring:url value='/image${groupdfile }'/>" alt="" />

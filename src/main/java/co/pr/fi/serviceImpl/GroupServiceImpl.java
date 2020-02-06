@@ -401,23 +401,31 @@ public class GroupServiceImpl implements GroupService {
 		dao.scheduledelete(postkey);
 
 	}
+	
 
+	
 	@Override
-	public GGroupMember groupmember(int userkey, int groupkey) {
-		Map<String, Integer> list = new HashMap<String, Integer>();
-		list.put("userkey", userkey);
-		list.put("groupkey", groupkey);
-		GGroupMember groupmember = dao.groupmember(list);
-		if (userkey != -1) {
-			String date = groupmember.getRegdate();
-			String year = date.substring(0, 4) + "년 ";
-			String month = date.substring(5, 7) + "월 ";
-			String day = date.substring(8, 10) + "일";
-			String tdate = year + month + day;
-			groupmember.setRegdate(tdate);
-		}
-		return groupmember;
-	}
+	   public GGroupMember groupmember(int userkey, int groupkey) {
+	      Map<String, Integer> list = new HashMap<String, Integer>();
+	      list.put("userkey", userkey);
+	      list.put("groupkey", groupkey);
+	      int result = dao.regornot(list);
+	      if (result > 0) {
+	         GGroupMember groupmember = dao.groupmember(list);
+	         if (userkey != -1) {
+	            String date = groupmember.getRegdate();
+	            String year = date.substring(0, 4) + "년 ";
+	            String month = date.substring(5, 7) + "월 ";
+	            String day = date.substring(8, 10) + "일";
+	            String tdate = year + month + day;
+	            groupmember.setRegdate(tdate);
+	         }
+	         return groupmember;
+	      }else {
+	         GGroupMember groupmember = dao.groupmember(list);
+	         return groupmember;
+	      }
+	   }
 
 	@Override
 	public void groupbasicupdate(GGroup group, int groupkey) {

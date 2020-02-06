@@ -10187,6 +10187,18 @@ aside.sidebar.full-style {
 	text-transform: uppercase;
 }
 
-#groupPageImg{
-	height:384px;
+#groupPageImg {
+    /* height: 384px; */
+    overflow: hidden;
+}
+
+.test1>figure:first-child{
+	height: 384px;
+}
+
+.container-fluid.height-for-white{
+
+    position: relative;
+    background: white;
+
 }

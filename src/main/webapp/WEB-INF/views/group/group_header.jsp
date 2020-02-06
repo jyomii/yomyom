@@ -9,7 +9,7 @@
 		<input type="hidden" id="sboardname" value="${boardname }">
 		<input type="hidden" id="sgroupkey" value="${groupkey }">
 		<input type="hidden" id="sboardtype" value="${boardtype }">
-	<div class="feature-photo">
+	<div class="feature-photo test1">
 		<figure>
 			<img id="groupPageImg"
 				src="<spring:url value='/image${group.groupCFile }'/>" alt="" />

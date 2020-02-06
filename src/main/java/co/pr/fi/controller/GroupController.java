@@ -635,7 +635,7 @@ public class GroupController {
 		} else {
 			mv.addObject("userkey", userkey);
 		}
-		groupkey = 1;
+	
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
@@ -862,10 +862,10 @@ public class GroupController {
 	}
 
 	@GetMapping("/schedulemaps.net")
-	public ModelAndView schedulemaps(@RequestParam(value = "postkey") int postkey, ModelAndView mv,
+	public ModelAndView schedulemaps(@RequestParam(value = "postkey") int postkey, int groupkey, ModelAndView mv,
 			HttpSession session) {
 		String id = "";
-		int groupkey = 1;
+		
 		int userkey = -1;
 		if (session.getAttribute("id") != null) {
 			id = session.getAttribute("id").toString();
