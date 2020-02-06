@@ -93,7 +93,6 @@
 											<li>
 												<div class="nearly-pepls">
 													<figure>
-														<span>${boardlist.prKey }</span>
 														<img
 															src="<spring:url value='/image/${boardlist.groupDFile }'/>" />
 														<input type="hidden" name="userkey"
@@ -241,9 +240,7 @@
 															<ul class="your-page-groupList leftpadding">
 																<c:if test="${joincount >0 }">
 																	<c:forEach var="list" items="${list}">
-																		<li><img
-																			src="<spring:url value='/image/${list.groupDFile}'/>"
-																			alt=""> <input type="hidden" name="groupKey"
+																		<li> <input type="hidden" name="groupKey"
 																			value="${list.groupKey}"> <input
 																			type="hidden" name="groupName"
 																			value="${list.groupName}" id="groupName"> <a
@@ -277,9 +274,7 @@
 															<ul class="your-page-groupList leftpadding">
 																<c:if test="${favcount > 0 }">
 																	<c:forEach var="favlist" items="${favlist}">
-																		<li><img
-																			src="<spring:url value='/image/${favlist.groupDFile }'/>"
-																			alt=""> <input type="hidden" name="groupKey"
+																		<li> <input type="hidden" name="groupKey"
 																			value="${favlist.groupKey}"> <input
 																			type="hidden" name="groupName"
 																			value="${favlist.groupName}" id="groupName">

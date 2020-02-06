@@ -6,30 +6,17 @@
 <jsp:include page="../mainpage/header.jsp" />
 
 	
-			<section>
+		
+<section>
 			<div class="gap gray-bg">
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="row" id="page-contents">
-								<div class="col-lg-3">
-									<aside class="sidebar static">
-								<div class="widget">
-									<h4 class="widget-title">카테고리</h4>
-									<ul class="naves">
-										<c:forEach items="${dcategory }" var="item" varStatus="status">
-											<li><a data-toggle="collapse" href="#collapseExample${status.index }" role="button"
-												aria-expanded="false" aria-controls="collapseExample${status.index }">
-												${item.DCategoryName }</a>
-												
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
-								<!-- Shortcuts -->
-							</aside>
+								<div class="col-lg-2">
+								
 								</div><!-- sidebar -->
-							<div class="col-lg-6">
+							<div class="col-lg-7">
 								<div class="central-meta">
 									<div class="editing-info">
 										<h5 class="f-title"><i class="ti-info-alt"></i> 홍보 글 작성 </h5>
@@ -61,69 +48,126 @@
 							</div><!-- centerl meta -->
 							
 							<div class="col-lg-3">
-									<aside class="sidebar static">
-										<!-- 그룹 로그인 위젯 -->
-								<c:if test="${empty id}">
-									
+							<aside class="sidebar static">
+								<!-- 그룹 로그인 위젯 -->
+								<c:if test="${userkey==-1}">
+									<div class="widget logincenter">
+										<div class="logindiv">
+											<span class="logintitle">GroupIn의 서비스를 이용하시려면 로그인 해주세요</span>
+										</div>
+										<!--<hr class="logintitlehr">  -->
+										<div class="your-page leftrightwidth">
+											<div class="submit-btns forSubmitBtnDiv">
+												<button type="submit" class="mtr-btn forLoginBtn">
+													<span>GroupIn 로그인</span>
+												</button>
+											</div>
+											<span class="loginleft forLoginBtnx"><a href="login">비밀번호
+													찾기</a></span> <span class="loginright forLoginBtnx"><a
+												href="login">회원가입</a></span>
+										</div>
+									</div>
 								</c:if>
 								<!-- 그룹 로그인 위젯 -->
-
-								<!-- 그룹 나의 정보 위젯 -->
-								<c:if test="${!empty id}">
+								<c:if test="${userkey!=-1}">
+									<!-- 그룹 나의 정보 위젯 -->
 									<div class="widget">
 										<h4 class="widget-title">나의 정보</h4>
-										<div class="your-page your-page-groupListDiv">
-
-											<div class="page-meta">
-												<a title="" class="underline">
-											 <c:choose>
-												<c:when test="${userInfo.logintype == 0}">
-													${userInfo.userId }
-												</c:when>
-												<c:otherwise>
-												카카오톡 유저
-												</c:otherwise>
-											</c:choose>
-
-												</a> <em><i class="ti-bell"></i>정보수정</em>
+										<div class="your-page your-page-groupListDiv"
+											style="height: 378px">
+											<figure class="figure-myimg">
+												<c:if test="${mypage.userImageOrigin == null}">
+													<figure>
+														<img src="resources/images/resources/default.png" alt=""
+															id="imgpic">
+													</figure>
+												</c:if>
+												<c:if test="${mypage.userImageOrigin != null}">
+													<figure>
+														<img
+															src="<spring:url value='/image/${mypage.userImageOrigin }'/>"
+															id="imgpic" />
+													</figure>
+												</c:if>
+											</figure>
+											<div class="page-meta page-metaclass">
+												<!-- <span><a href="mypage5"><i class="far fa-bell"></i>알림</a></span>  -->
+												<span><a href="mypage"><i
+														class="far fa-file-alt commentmargin"></i>마이페이지</a></span>
 											</div>
 											<div class="page-likes">
 												<ul class="nav nav-tabs likes-btn">
 													<li class="nav-item"><a class="active" href="#link1"
-														data-toggle="tab">나의모임정보</a></li>
-													<li class="nav-item"><a class="" href="#link2"
 														data-toggle="tab">가입모임목록</a></li>
+													<li class="nav-item"><a class="" href="#link2"
+														data-toggle="tab">모임즐겨찾기</a></li>
 												</ul>
 												<!-- Tab panes -->
 												<div class="tab-content">
 													<div class="tab-pane active fade show" id="link1">
-														<span><i class="ti-heart"></i>884</span> <a href="#"
-															title="weekly-likes">35 new likes this week</a>
-														<div class="users-thumb-list">
-															<a href="#" title="Anderw" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-1.jpg" alt="">
-															</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-2.jpg" alt="">
-															</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-3.jpg" alt="">
-															</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-4.jpg" alt="">
-															</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-5.jpg" alt="">
-															</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-6.jpg" alt="">
-															</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-																src="resources/images/resources/userlist-7.jpg" alt="">
-															</a>
+														<div>
+															<ul class="your-page-groupList leftpadding">
+																<c:if test="${joincount >0 }">
+																	<c:forEach var="list" items="${list}">
+																		<li> <input type="hidden" name="groupKey"
+																			value="${list.groupKey}"> <input
+																			type="hidden" name="groupName"
+																			value="${list.groupName}" id="groupName"> <a
+																			href="group_main?groupkey=${list.groupKey}">${list.groupName }</a>
+																		</li>
+																	</c:forEach>
+																</c:if>
+																<c:if test="${joincount ==0 }">
+												  가입한 모임이 없습니다.
+												</c:if>
+															</ul>
+															<c:if test="${userreggroupcount>3 }">
+																<div class="row row-pagination"
+																	style="padding-top: 0px !important;">
+																	<div class="col">
+																		<ul class="pagination pagination-sm center-pagination"
+																			id="pempty">
+																			<li class="page-item widthpagination"><a
+																				class="page-link" href="#">이전&nbsp;</a></li>
+
+																			<li class="page-item widthpagination"><a
+																				class="page-link" href="#">&nbsp;다음</a></li>
+																		</ul>
+																	</div>
+																</div>
+															</c:if>
 														</div>
 													</div>
 													<div class="tab-pane fade" id="link2">
 														<div>
-															<ul class="your-page-groupList">
-																<li>동.탁</li>
-																<li>동.탁</li>
-																<li>동.탁</li>
+															<ul class="your-page-groupList leftpadding">
+																<c:if test="${favcount > 0 }">
+																	<c:forEach var="favlist" items="${favlist}">
+																		<li> <input type="hidden" name="groupKey"
+																			value="${favlist.groupKey}"> <input
+																			type="hidden" name="groupName"
+																			value="${favlist.groupName}" id="groupName">
+																			<a href="group_main?groupkey=${favlist.groupKey}">${favlist.groupName }</a><br>
+																		<hr class="hrmargin"></li>
+																	</c:forEach>
+																</c:if>
+																<c:if test="${favcount == 0 }">
+												   즐겨찾는 모임이 없습니다.
+												</c:if>
 															</ul>
+															<div class="row row-pagination"
+																style="padding-top: 0px !important;">
+																<div class="col">
+																	<ul class="pagination pagination-sm center-pagination"
+																		id="pempty">
+																		<li class="page-item widthpagination"><a
+																			class="page-link" href="#">이전&nbsp;</a></li>
+
+																		<li class="page-item widthpagination"><a
+																			class="page-link" href="#">&nbsp;다음</a></li>
+																	</ul>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -131,9 +175,11 @@
 										</div>
 									</div>
 								</c:if>
-										<!-- who's following -->
-										
-								</div>
+								<!-- 나의 정보 위젯 -->
+							
+								<!-- who's following -->
+								
+						</div>
 								<!-- creat page-->
 								</aside>
 							</div>
