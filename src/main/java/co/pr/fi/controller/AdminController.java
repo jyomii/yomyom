@@ -349,26 +349,24 @@ public class AdminController {
 	@GetMapping("/admin")
 	public ModelAndView admin1(ModelAndView mv) {
 
-		List<StatisticsAge> age = adminService.statisticsAge(); //회원 연령대 통계
-		List<StatisticsLocation> location = adminService.statisticsLocation(); //회원 지역 통계
-		List<StatisticsJoinDate> joindate = adminService.StatisticsJoinDate(); //회원 가입 수 통계
+		List<StatisticsAge> userAgeList = adminService.statisticsAge(); //회원 연령대 통계
+		List<StatisticsLocation> userLocationList = adminService.statisticsLocation(); //회원 지역 통계
+		List<StatisticsJoinDate> userJoinDateList = adminService.StatisticsJoinDate(); //회원 가입 수 통계
 		
-		List<StatisticsCategory> ucategory = adminService.statisticsUCategory(); //회원 카테고리 통계
+		List<StatisticsCategory> userCateogryList = adminService.statisticsUCategory(); //회원 카테고리 통계
+		List<StatisticsCategory> groupCategoryList = adminService.statisticsCategory(); //모임 카테고리 통계
+		List<StatisticsAge> groupAgeList = adminService.statisticsGAge(); //모임 연령대 통계 
+		
+		List<StatisticsLocation> groupLocationList = adminService.statisticsgLocation(); //모임 지역 통계 
 		
 		
-		List<StatisticsCategory> gcategory = adminService.statisticsCategory(); //모임 카테고리 통계
-		List<StatisticsAge> gage = adminService.statisticsGAge(); //모임 연령대 통계 
-		List<StatisticsLocation> glocation = adminService.statisticsgLocation(); //모임 지역 통계 
-		
-		
-		mv.addObject("age", age);
-
-		mv.addObject("location", location);
-		mv.addObject("joindate", joindate);
-		mv.addObject("category", gcategory);
-		mv.addObject("ucategory", ucategory);
-		mv.addObject("gage", gage);
-		mv.addObject("glocation", glocation);
+		mv.addObject("age", userAgeList);
+		mv.addObject("location", userLocationList);
+		mv.addObject("joindate", userJoinDateList);
+		mv.addObject("category", groupCategoryList);
+		mv.addObject("ucategory", userCateogryList);
+		mv.addObject("gage", groupAgeList);
+		mv.addObject("glocation", groupLocationList);
 		mv.setViewName("admin/adminmain");
 
 		return mv;

@@ -13,4 +13,5 @@ public interface GroupCommentService {
 	int updateComment(GComment co);				// 댓글에 대댓 달 경우 원문 댓글에 대한 답변 레벨, 답변 순서 변경
 	int commentDelete(int commentnum);
 	int update(Map<String, Object> keys);		// 댓글 내용 수정
+	int getCommentCount(Map<String, Object> data);	// 현재 글에 대한 댓글수
 }

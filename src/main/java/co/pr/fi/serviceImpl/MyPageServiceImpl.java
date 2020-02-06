@@ -119,8 +119,11 @@ public class MyPageServiceImpl implements MyPageService{
 	}
 
 	@Override
-	public int favgroupD(int userKey) {
-		return dao.favgroupD(userKey);
+	public int favgroupD(int userKey, int groupKey) {
+		Map<String, Object> dd = new HashMap<String, Object>();
+		dd.put("userKey", userKey);
+		dd.put("groupKey", groupKey);
+		return dao.favgroupD(dd);
 	}
 
 	@Override
@@ -129,6 +132,16 @@ public class MyPageServiceImpl implements MyPageService{
 		keyy.put("userKey", userKey);
 		keyy.put("groupKey", groupKey);
 		return dao.favgroup(keyy);
+	}
+
+	@Override
+	public List<UserLikeGroup> favlist(String id) {
+		return dao.favlist(id);
+	}
+
+	@Override
+	public int favcount(String id) {
+		return dao.favcount(id);
 	}
 
 	

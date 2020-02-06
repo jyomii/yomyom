@@ -124,4 +124,15 @@ public class CategoryServiceImpl implements CategoryService {
 		return dao.interestupdate(category);
 	}
 
+	@Override
+	public void interestInsert(Map<String, Object> usercategory) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int mycateD(String id) {
+		return dao.mycateD(id);
+	}
+
 }

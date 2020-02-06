@@ -119,7 +119,8 @@ list-style: none;
 					<li>
 					
 						<div class="box-search">
-							<form class="form-search" style="margin-top: 1em;">
+						<!-- style="margin-top: 1em;"-->
+							<form class="form-search">
 								<input name="text" type="text" placeholder=""
 									style="color:black;">
 								<button class="sendAll">
