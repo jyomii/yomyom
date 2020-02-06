@@ -2,9 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<!-- 헤더 -->
 <jsp:include page="mainpage/header.jsp" />
-<title>모임 회원 상세 정보 페이지</title>
-<!-- 제이쿼리 -->
+<!-- 헤더 끝 -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- 아이콘 -->
@@ -107,19 +107,24 @@ li .current {
 	color: #088dcd;
 }
 
-.forgroupname {
+.nearby-contct {margin-top : 0 !important}
+		.nearby-contct > li {margin-bottom : 5px !important; padding : 10px !important;}
+		.nav.nav-tabs {margin-bottom : 22px;}
+		.forgroupname {
 	list-style: none;
 	padding-top: 20px;
 }
 
 .forgroupnamewidth {
-	width: 30%;
+	width: 29%;
 	display: inline-block;
 }
 
 .forgroupnamewidth1 {
-	width: 60%;
+	width: 69%;
 	display: inline-block;
+	position: relative;
+	top: 7px;
 }
 
 .forgroupnameleft {
@@ -134,13 +139,15 @@ li .current {
 
 .forSubmitBtnDiv {
 	margin-top: 0px !important;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
+	width:100%;
 }
 
 .forLoginBtn {
 	padding-left: 25px !important;
 	padding-right: 25px !important;
-	margin-left: 13%;
+	margin-bottom:10px;
+	width: 90%;
 }
 
 .forMemberCountBtnOne {
@@ -297,105 +304,259 @@ li .current {
 	height: 70px !important;
 }
 
-.calendarBtn {
-	cursor: pointer
+.calendarBtn{
+cursor:pointer}
+
+#calendar td{
+cursor:pointer
+}
+.katalkbtn{
+background-color: #423630 !important;
+color: white !important;
 }
 
-#calendar td {
-	cursor: pointer
+.katalkbtn:hover{
+background-color: #594941 !important;
+}
+
+.katalkbtnw{
+color: #423630 !important;
+}
+
+.logintitle{
+font-size:14px;
+margin-top:10px;
+}
+
+.logintitlehr{
+margin-top:5px;
+margin-bottom:2px;
+width:100%;
+}
+
+.logincenter{
+text-align:center;
+}
+
+.logindiv{
+margin-top:10px;
+}
+
+.loginleft{
+float:left;
+font-size:14px;
+margin-left:14px;
+}
+
+.loginright{
+float:right;
+font-size:14px;
+margin-right:14px;
+}
+.leftrightwidth{
+padding-left: 0px !important;
+padding-right: 0px !important;
+width:90%;
+}
+
+.center-pagination {
+	justify-content: center;
+	margin-bottom: 0px;
+}
+.widthpagination{
+width:18% !important;
+}
+.imground{
+border-radius:16px;
+margin-right:10px;
+}
+.hrmargin{
+margin-top:5px !important;
+margin-bottom:5px !important;
+}
+
+.leftpadding{
+padding-left:20px !important;
+padding-right:20px !important;
+}
+
+.commentmargin {
+    margin-right: 7px !important;
+}
+.groupname{
+position:relative;
+top:-9px;
+}
+
+.figure-myimg{
+	width:80px !important;
+	max-width: 100px !important;
+	margin-left: 20px;
+}
+
+.figure-myimg1{
+	width:100%;
+	
+}
+
+.page-metaclass{
+	margin-left: 20px;
+    width: 55% !important;
+}
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom{
+	margin-bottom: 0px !important;
 }
 </style>
+<section>
+	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
+		type="hidden" id="UserKey" value="${userkey }">
+	<div class="feature-photo">
+		<figure>
+			<img id="groupPageImg"
+				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
+			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
+		</figure>
+		<c:if test="${userinfo.userGrade==1}">
+		<!-- **********모임 대문 사진 수정*********** -->
+		<form class="edit-phto" id="groupMainImgForm"
+			enctype="multipart/form-data" action="group_mainImgUpdate.net"
+			method="post">
+			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
+				class="fa fa-camera-retro"></i>
+			<!-- 대문 사진 수정 버튼 -->
+			<label class="fileContainer"> 대문 사진 수정 <input type="file"
+				name="groupMainImgUpload" />
+			</label>
+		</form>
+		</c:if>
+		<!-- **********모임 대문 사진 수정*********** -->
+
+		<div class="container-fluid height-for-white">
+			<div class="row merged">
+				<div class="col-lg-2 col-sm-3">
+					<div class="user-avatar">
+						<!-- 그룹 사진 -->
+						<figure>
+							<img id="groupImg"
+								src="<spring:url value='/image${group.groupCFile }'/>" />
+							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
+							<!-- **********모임 사진 수정*********** -->
+							<c:if test="${userinfo.userGrade==1}">
+							<form class="edit-phto" id="groupImgForm"
+								enctype="multipart/form-data" action="group_ImgUpdate.net"
+								method="post">
+								<input type="hidden" name="groupkey" id="hiddenGroupKey"
+									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
+								<!-- 그룹 사진 수정 버튼 -->
+								<label class="fileContainer"> 그룹 사진 수정하기 <input
+									type="file" name="groupImgUpload" />
+								</label>
+								<!-- 그룹 사진 수정 버튼 -->
+							</form>
+							</c:if>
+							
+							<!-- **********모임 사진 수정*********** -->
+						</figure>
+						<!-- 그룹 사진 -->
+					</div>
+				</div>
+				<div class="col-lg-10 col-sm-9">
+					<div class="timeline-info">
+						<div class="forgroupnamewidth">
+							<!-- 그룹 이름 -->
+							<ul>
+								<li class="admin-name forgroupname">
+									<h5 class="groupname">${group.groupName}</h5>
+								</li>
+							</ul>
+							<!-- 그룹 이름 -->
+						</div>
+						<div class="forgroupnamewidth1">
+							<!-- 그룹 간단 정보 -->
+							<ul>
+								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
+								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
+								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
+								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
+								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
+							</ul>
+							<!-- 그룹 간단 정보 -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- 그룹 페이지 상단 -->
+
 <div class="theme-layout">
 	<section>
 		<div class="gap100">
 			<div>
 				<div class="row">
-				
 						<!-- 그룹 페이지 위젯 왼쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
 								<!-- 그룹 게시판 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">게시판</h4>
-									<ul class="naves">
-										<c:forEach var="gbl" items="${groupboardlist }">
-											<li><i class="ti-clipboard"></i> 
-											<a href="newsfeed.html"title="">${gbl.boardName}</a> 
-											<input type="hidden"value="${gbl.boardType }"></li>
-										</c:forEach>
-										
-										<!-- ## 모임 회원 관리 페이지 임시 ## -->
-										<li>
-											<i class="ti-clipboard"></i> 
-											<a href="groupMember?groupKey=3" title="">모임 회원 게시판</a> 
-										</li>
-									</ul>
-								</div>
-								<!-- 그룹 게시판 위젯 -->
-
-								<!-- 모임 관리 게시판 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">모임 관리</h4>
-
-									<ul class="naves">
-										<li><i class="ti-info-alt"></i> <a href="group_admin.net"
-											title="">모임 기본 설정</a></li>
-										<li><i class="ti-mouse-alt"></i> <a
-											href="group_admin.net" title="">모임 일정 관리</a></li>
-										<li><i class="ti-heart"></i> <a href="edit-interest.html"
-											title="">모임 회원 관리</a></li>
-										<li><i class="ti-settings"></i> <a
-											href="edit-account-setting.html" title="">모임 게시판 관리</a></li>
-									</ul>
-								</div>
-								<!-- 모임 관리 게시판 위젯 -->
-
-								<!-- 그룹 카톡방 위젯 -->
-								<div class="widget">
-									<div class="banner medium-opacity bluesh">
-										<div
-											style="background-image: url(resources/images/resources/baner-widgetbg.jpg)"
-											class="bg-image"></div>
-										<!--  <div class="baner-top">
-													<span><img src="resources/images/book-icon.png"
-														alt=""></span> <i class="fa fa-ellipsis-h"></i>
-												</div>-->
-										<div class="banermeta">
-											<p>
-												그룹 카카오톡<br>채팅방에<br>참여하세요!
-											</p>
-											<!--<span>like them all</span>-->
-											<a href="#" title="" data-ripple="">카톡방 참여하기</a>
-										</div>
-									</div>
-								</div>
-								<!-- 그룹 카톡방 위젯 -->
-
-								<!-- 그룹 가입 회원 목록 -->
-								<div class="widget friend-list">
-									<h4 class="widget-title">모임의 회원들</h4>
-									<div id="searchDir"></div>
-									<ul id="people-list" class="friendz-list">
-										<c:forEach var="gml" items="${groupmemberlist }">
-											<li>
-												<figure>
-													<img src="resources/images/resources/friend-avatar.jpg"
-														alt="">
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html"></a>${gml.groupnickname } <i
-														class="__cf_email__">모임장</i>
-												</div>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
-								<!-- 그룹 가입 회원 목록 -->
-
+								<jsp:include page="group/group_leftWidget.jsp" />
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 왼쪽  -->
-				
 				
 					<!-- 가운데 위젯 -->
 					<div class="col-lg-6">
@@ -564,155 +725,13 @@ li .current {
 					</div>
 					<!-- 가운데 위젯 끝 -->
 
-					<!-- 그룹 페이지 위젯 오른쪽 -->
-					<div class="col-lg-3">
-						<aside class="sidebar static">
-
-							<!-- 그룹 로그인 위젯 -->
-							<div class="widget">
-								<h4 class="widget-title forlogintitle">로그인</h4>
-								<div class="your-page">
-									<div class="form-group">
-										<input type="text" id="input" required="required" /> <label
-											class="control-label" for="input">아이디</label><i
-											class="mtrl-select"></i>
-									</div>
-									<div class="form-group">
-										<input type="password" required="required" /> <label
-											class="control-label" for="input">비밀번호</label><i
-											class="mtrl-select"></i>
-									</div>
-									<div class="checkbox forRememberIdDiv">
-										<label> <input type="checkbox" checked="checked"><i
-											class="check-box forcheckbox"></i>아이디 저장
-										</label>
-									</div>
-
-									<div class="submit-btns forSubmitBtnDiv">
-										<button type="button" class="mtr-btn forLoginBtn">
-											<span>로그인</span>
-										</button>
-										<button type="button" class="mtr-btn forRegisterBtn">
-											<span>회원가입</span>
-										</button>
-									</div>
-
-								</div>
-							</div>
-							<!-- 그룹 로그인 위젯 -->
-
-							<!-- 그룹 나의 정보 위젯 -->
-							<div class="widget">
-								<h4 class="widget-title">나의 정보</h4>
-								<div class="your-page your-page-groupListDiv">
-									<figure>
-										<a href="#" title=""><img
-											src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-									</figure>
-									<div class="page-meta">
-										<a href="#" title="" class="underline">동선동탁구대장</a> <span><i
-											class="ti-comment"></i>메세지 <em>9</em></span> <span><i
-											class="ti-bell"></i>알림 <em>2</em></span>
-									</div>
-									<div class="page-likes">
-										<ul class="nav nav-tabs likes-btn">
-											<li class="nav-item"><a class="active" href="#link1"
-												data-toggle="tab">나의모임정보</a></li>
-											<li class="nav-item"><a class="" href="#link2"
-												data-toggle="tab">가입모임목록</a></li>
-										</ul>
-										<!-- Tab panes -->
-										<div class="tab-content">
-											<div class="tab-pane active fade show" id="link1">
-												<span><i class="ti-heart"></i>884</span> <a href="#"
-													title="weekly-likes">35 new likes this week</a>
-												<div class="users-thumb-list">
-													<a href="#" title="Anderw" data-toggle="tooltip"> <img
-														src="resources/images/resources/userlist-1.jpg" alt="">
-													</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-														src="resources/images/resources/userlist-2.jpg" alt="">
-													</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-														src="resources/images/resources/userlist-3.jpg" alt="">
-													</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-														src="resources/images/resources/userlist-4.jpg" alt="">
-													</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-														src="resources/images/resources/userlist-5.jpg" alt="">
-													</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-														src="resources/images/resources/userlist-6.jpg" alt="">
-													</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-														src="resources/images/resources/userlist-7.jpg" alt="">
-													</a>
-												</div>
-											</div>
-											<div class="tab-pane fade" id="link2">
-												<div>
-													<ul class="your-page-groupList">
-														<li>동.탁</li>
-														<li>동.탁</li>
-														<li>동.탁</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 나의 정보 위젯 -->
-
-							<!-- 그룹별 정모 나의 일정 위젯 -->
-							<div class="widget calendarCenter">
-								<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
-								<c:forEach var="gcl" items="${groupcalendarlist }">
-									<input type="hidden" id="cal${gcl.rownum}"
-										value="${gcl.startdate }">
-								</c:forEach>
-								<h4 class="widget-title">나의 일정</h4>
-
-								<div class="calendarDiv">
-									<table id="calendar" class="calendarTable">
-										<tr>
-											<!-- label은 마우스로 클릭을 편하게 해줌 -->
-											<th id="prevcal"><label><i
-													class="fas fa-angle-left calendarBtn"></i></label></th>
-											<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-											<th id="nextcal"><label><i
-													class="fas fa-angle-right calendarBtn"></i></label></th>
-										</tr>
-										<tr>
-											<th align="center">일</th>
-											<th align="center">월</th>
-											<th align="center">화</th>
-											<th align="center">수</th>
-											<th align="center">목</th>
-											<th align="center">금</th>
-											<th align="center">토</th>
-										</tr>
-									</table>
-								</div>
-								<div class="scheduleDiv">
-									<hr>
-									<ul class="short-profile scheduleUl" id="shortschedule">
-										<c:if test="${empty shortschedule}">
-											<li><span>일정 없음</span></li>
-										</c:if>
-										<c:if test="${not empty shortschedule}">
-											<c:forEach var="ss" items="${shortschedule }">
-												<li><span>${ss.posttitle }</span>
-													<p>
-														모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소:
-														${ss.location }
-													</p></li>
-											</c:forEach>
-										</c:if>
-									</ul>
-								</div>
-
-							</div>
-							<!-- 그룹별 정모 나의 일정 위젯 -->
-
-						</aside>
-					</div>
-					<!-- 그룹 페이지 위젯 오른쪽 -->
+						<!-- 그룹 페이지 위젯 오른쪽 -->
+						<div class="col-lg-3">
+							<aside class="sidebar static">
+								<jsp:include page="group/group_rightWidget.jsp" />
+							</aside>
+						</div>
+						<!-- 그룹 페이지 위젯 오른쪽 -->
 				</div>
 			</div>
 		</div>

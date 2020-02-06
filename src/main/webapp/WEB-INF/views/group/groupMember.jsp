@@ -1,130 +1,468 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>      
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>       
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>    
+<!-- 헤더 -->   
 <jsp:include page = "../mainpage/header.jsp"/>    
+<!-- 헤더 끝 -->
+
 <!-- 모임 회원 목록, 열람 권한 설정, 클릭 시 회원 상세정보 페이지로 이동 -->    
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-	<title>모임회원 페이지 - timeline-friends.jsp</title>
-	<script src = "resources/js/groupMember.js"></script>
 	<style>
 		.nearby-contct {margin-top : 0 !important}
 		.nearby-contct > li {margin-bottom : 5px !important; padding : 10px !important;}
 		.nav.nav-tabs {margin-bottom : 22px;}
-		/* .nearby-contct li {text-align : center;} */
-	</style>
+		.forgroupname {
+	list-style: none;
+	padding-top: 20px;
+}
+
+.forgroupnamewidth {
+	width: 29%;
+	display: inline-block;
+}
+
+.forgroupnamewidth1 {
+	width: 69%;
+	display: inline-block;
+	position: relative;
+	top: 7px;
+}
+
+.forgroupnameleft {
+	float: left;
+	list-style: none;
+	margin-right: 20px;
+}
+
+.forlogintitle {
+	margin-bottom: 10px !important;
+}
+
+.forSubmitBtnDiv {
+	margin-top: 0px !important;
+	margin-bottom: 5px;
+	width:100%;
+}
+
+.forLoginBtn {
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+	margin-bottom:10px;
+	width: 90%;
+}
+
+.forMemberCountBtnOne {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnTwo {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnThree {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnFour {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnFive {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSix {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forMemberCountBtnSeven {
+	margin-top: 0px !important;
+	padding: 3px !important;
+}
+
+.forJoinBtn {
+	margin-top: 0px !important;
+	padding: 5px !important;
+	float: right;
+	font-size: 14px !important;
+}
+
+.forRegisterBtn {
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+	margin-left: 10%;
+}
+
+.forRememberIdDiv {
+	margin-bottom: 0px !important;
+	margin-top: 5px !important;
+}
+
+.forcheckbox {
+	margin-top: 3px;
+}
+
+.calendarDiv {
+	text-align: center;
+	width: 95%;
+	margin: 0 auto;
+}
+
+.calendarTable {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.calendarBtn {
+	cursor: pointer;
+}
+
+.calendarCell {
+	cursor: pointer;
+}
+
+.calendarDiv td {
+	border-radius: 13px;
+}
+
+.calendarCellSelected {
+	background-color: #4F93CE;
+	color: white !important;
+}
+
+.calendarCellMy {
+	background-color: black;
+	color: white !important;
+}
+
+.scheduleDiv {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.scheduleUl {
+	padding-left: 0px !important;
+}
+
+.card-header-bgcolor {
+	background: white none repeat scroll 0 0 !important;
+}
+
+.schedule-span {
+	margin-bottom: 7px;
+	width: 70% !important;
+}
+
+.schedule-span1 {
+	width: 35% !important;
+}
+
+.nearby-contct>li {
+	padding: 15 px !important;
+}
+
+.paddingZero[aria-expanded="true"] {
+	background: #088dcd;
+	color: #fff;
+	text-decoration: none;
+}
+
+.groupMember {
+	display: inline-block;
+	list-style: outside none none;
+	margin-bottom: 0;
+	padding: 0 25px 20px;
+	width: 100%;
+	max-height: 300px !important;
+}
+
+.groupMember li {
+	display: inline-block;
+	margin-bottom: 20px;
+	position: relative;
+	width: 100%;
+}
+
+.your-page-groupList li {
+	margin-bottom: 3px !important;
+}
+
+.your-page-groupListDiv {
+	min-height: 273px;
+}
+
+.min-width-h4 {
+	margin-bottom: 0px !important;
+}
+
+.height-for-white {
+	height: 70px !important;
+}
+
+.calendarBtn{
+cursor:pointer}
+
+#calendar td{
+cursor:pointer
+}
+.katalkbtn{
+background-color: #423630 !important;
+color: white !important;
+}
+
+.katalkbtn:hover{
+background-color: #594941 !important;
+}
+
+.katalkbtnw{
+color: #423630 !important;
+}
+
+.logintitle{
+font-size:14px;
+margin-top:10px;
+}
+
+.logintitlehr{
+margin-top:5px;
+margin-bottom:2px;
+width:100%;
+}
+
+.logincenter{
+text-align:center;
+}
+
+.logindiv{
+margin-top:10px;
+}
+
+.loginleft{
+float:left;
+font-size:14px;
+margin-left:14px;
+}
+
+.loginright{
+float:right;
+font-size:14px;
+margin-right:14px;
+}
+.leftrightwidth{
+padding-left: 0px !important;
+padding-right: 0px !important;
+width:90%;
+}
+
+.center-pagination {
+	justify-content: center;
+	margin-bottom: 0px;
+}
+.widthpagination{
+width:18% !important;
+}
+.imground{
+border-radius:16px;
+margin-right:10px;
+}
+.hrmargin{
+margin-top:5px !important;
+margin-bottom:5px !important;
+}
+
+.leftpadding{
+padding-left:20px !important;
+padding-right:20px !important;
+}
+
+.commentmargin {
+    margin-right: 7px !important;
+}
+.groupname{
+position:relative;
+top:-9px;
+}
+
+.figure-myimg{
+	width:80px !important;
+	max-width: 100px !important;
+	margin-left: 20px;
+}
+
+.figure-myimg1{
+	width:100%;
 	
-    <!-- 그룹 페이지 상단 -->
-	<section>
-		<input type="hidden" id="thisGroupKey" value="${groupkey}"> 
-		<input type="hidden" id="UserKey" value="1"> <!-- ## 나중에 수정 ## -->
-		<div class="feature-photo">
-			<!-- 현재 모임의 대표사진 -->
-			<figure>
-				<!-- # 추가해야됨 # -->
-				<%-- <img id="groupPageImg" src = "<spring:url value='/image${groupdfile }'/>" alt = "" /> --%>
-				<img id="groupPageImg" src="resources/images/resources/timeline-1.jpg" alt="">
-			</figure>
-			<!-- **********모임 대문 사진 수정*********** -->
-			<form class = "edit-phto" id = "groupMainImgForm"
-				  enctype = "multipart/form-data" action = "group_mainImgUpdate.net" method = "post">
-				  
-				<input type = "hidden" name = "groupKey" value = "${groupKey}"><i class="fa fa-camera-retro"></i>
-				<!-- 대문 사진 수정 버튼 -->
-				<label class="fileContainer">
-					대문 사진 수정 
-				<input type="file" name = "groupMainImgUpload"/>
-				</label>
-			</form>
-			<!-- **********모임 대문 사진 수정*********** -->
-			
-			<div class="container-fluid height-for-white">
-				<div class="row merged">
-					<div class="col-lg-2 col-sm-3">
-						<div class="user-avatar">
-							<!-- 그룹 사진 -->
-							<figure>
-								<!-- # 수정해야 됨 # -->
-								<!-- <img id="groupImg" src="<spring:url value='/image${groupcfile }'/>" /> -->
-								<img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">
-								<!-- **********모임 사진 수정*********** -->
-								<form class="edit-phto" id="groupImgForm"
-									  enctype="multipart/form-data" action="group_ImgUpdate.net" method="post">
-									<input type="hidden" name="groupkey" id="hiddenGroupKey" value="${groupkey}">  
-									<i class="fa fa-camera-retro"></i>
-									<!-- 그룹 사진 수정 버튼 -->
-									<label class="fileContainer"> 그룹 사진 수정하기 
-										<input type="file" name="groupImgUpload" />
-									</label>
-									<!-- 그룹 사진 수정 버튼 -->
-								</form>
-								<!-- **********모임 사진 수정*********** -->
-							</figure>
-							<!-- 그룹 사진 -->
-						</div>
+}
+
+.page-metaclass{
+	margin-left: 20px;
+    width: 55% !important;
+}
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom{
+	margin-bottom: 0px !important;
+}
+	</style>
+<section>
+	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
+		type="hidden" id="UserKey" value="${userkey }">
+	<div class="feature-photo">
+		<figure>
+			<img id="groupPageImg"
+				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
+			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
+		</figure>
+		<c:if test="${userinfo.userGrade==1}">
+		<!-- **********모임 대문 사진 수정*********** -->
+		<form class="edit-phto" id="groupMainImgForm"
+			enctype="multipart/form-data" action="group_mainImgUpdate.net"
+			method="post">
+			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
+				class="fa fa-camera-retro"></i>
+			<!-- 대문 사진 수정 버튼 -->
+			<label class="fileContainer"> 대문 사진 수정 <input type="file"
+				name="groupMainImgUpload" />
+			</label>
+		</form>
+		</c:if>
+		<!-- **********모임 대문 사진 수정*********** -->
+
+		<div class="container-fluid height-for-white">
+			<div class="row merged">
+				<div class="col-lg-2 col-sm-3">
+					<div class="user-avatar">
+						<!-- 그룹 사진 -->
+						<figure>
+							<img id="groupImg"
+								src="<spring:url value='/image${group.groupCFile }'/>" />
+							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
+							<!-- **********모임 사진 수정*********** -->
+							<c:if test="${userinfo.userGrade==1}">
+							<form class="edit-phto" id="groupImgForm"
+								enctype="multipart/form-data" action="group_ImgUpdate.net"
+								method="post">
+								<input type="hidden" name="groupkey" id="hiddenGroupKey"
+									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
+								<!-- 그룹 사진 수정 버튼 -->
+								<label class="fileContainer"> 그룹 사진 수정하기 <input
+									type="file" name="groupImgUpload" />
+								</label>
+								<!-- 그룹 사진 수정 버튼 -->
+							</form>
+							</c:if>
+							
+							<!-- **********모임 사진 수정*********** -->
+						</figure>
+						<!-- 그룹 사진 -->
 					</div>
-					<div class="col-lg-10 col-sm-9">
-						<div class="timeline-info">
-							<div class="forgroupnamewidth">
-								<!-- 그룹 이름 -->
-								<ul>
-									<li class="admin-name forgroupname">
-										<h5>${groupname}</h5>
-									</li>
-								</ul>
-								<!-- 그룹 이름 -->
-							</div>
-							<div class="forgroupnamewidth1">
-								<!-- 그룹 간단 정보 -->
-								<ul>
-									<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-									<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-									<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-									<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								</ul>
-								<!-- 그룹 간단 정보 -->
-							</div>
+				</div>
+				<div class="col-lg-10 col-sm-9">
+					<div class="timeline-info">
+						<div class="forgroupnamewidth">
+							<!-- 그룹 이름 -->
+							<ul>
+								<li class="admin-name forgroupname">
+									<h5 class="groupname">${group.groupName}</h5>
+								</li>
+							</ul>
+							<!-- 그룹 이름 -->
+						</div>
+						<div class="forgroupnamewidth1">
+							<!-- 그룹 간단 정보 -->
+							<ul>
+								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
+								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
+								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
+								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
+								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
+							</ul>
+							<!-- 그룹 간단 정보 -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- 그룹 페이지 상단 -->
-	
-	<section>
-		<div class="gap gray-bg">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="row" id="page-contents">
-							<div class="col-lg-3">
-								<aside class="sidebar static">
-									<div class="widget stick-widget">
-										<h4 class="widget-title">Profile intro</h4>
-										<ul class="short-profile">
-											<li>
-												<span>about</span>
-												<p>Hi, i am jhon kates, i am 32 years old and worked as a web developer in microsoft company. </p>
-											</li>
-											<li>
-												<span>fav tv show</span>
-												<p>Hi, i am jhon kates, i am 32 years old and worked as a web developer in microsoft company. </p>
-											</li>
-											<li>
-												<span>favourit music</span>
-												<p>Hi, i am jhon kates, i am 32 years old and worked as a web developer in microsoft company. </p>
-											</li>
-										</ul>
-									</div><!-- profile intro widget -->
+	</div>
+</section>
+<!-- 그룹 페이지 상단 -->
+<!-- 그룹 페이지 메인 -->
+<section>
+	<div class="gap gray-bg">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row" id="page-contents">
 
-								</aside>
-							</div><!-- sidebar -->
-							
-							
+						<!-- 그룹 페이지 위젯 왼쪽 -->
+						<div class="col-lg-3">
+							<aside class="sidebar static">
+								<!-- 그룹 게시판 위젯 -->
+								<jsp:include page="group_leftWidget.jsp" />
+							</aside>
+						</div>
+						<!-- 그룹 페이지 위젯 왼쪽  -->
+
+						<!-- 그룹 페이지 위젯 중간 -->
+						
 							<!-- 가운데 -->
 							<div class="col-lg-6">
 								<div class="central-meta">
@@ -136,11 +474,11 @@
 										</ul>
 										
 										<!-- 검색창 -->
-										<!-- <div class="mesages-lists">
+										<div class="mesages-lists">
 											<form method="post">
 												<input type="text" placeholder="Search member">
 											</form>
-										</div>			  -->
+										</div>			  
 										
 										<!-- 회원의 상세 정보 페이지로 이동하기 위한 폼 -->
 										<form name = "detail">
@@ -191,170 +529,31 @@
 											  <button class="btn-view btn-load-more"></button>
 										  </div>
 										</div>
-										<!-- 회원 리스트 -->
+										<!-- 회원 리스트 끝 -->
 										
 									</div>
 								</div>	
-							</div><!-- centerl meta -->
-							
-								
+							</div>
+						<!-- 그룹 페이지 위젯 중간 -->
+
 						<!-- 그룹 페이지 위젯 오른쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-
-								<!-- 그룹 로그인 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title forlogintitle">로그인</h4>
-									<div class="your-page">
-										<div class="form-group">
-											<input type="text" id="input" required="required" /> <label
-												class="control-label" for="input">아이디</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="form-group">
-											<input type="password" required="required" /> <label
-												class="control-label" for="input">비밀번호</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="checkbox forRememberIdDiv">
-											<label> <input type="checkbox" checked="checked"><i
-												class="check-box forcheckbox"></i>아이디 저장
-											</label>
-										</div>
-
-										<div class="submit-btns forSubmitBtnDiv">
-											<button type="button" class="mtr-btn forLoginBtn">
-												<span>로그인</span>
-											</button>
-											<button type="button" class="mtr-btn forRegisterBtn">
-												<span>회원가입</span>
-											</button>
-										</div>
-
-									</div>
-								</div>
-								<!-- 그룹 로그인 위젯 -->
-
-								<!-- 그룹 나의 정보 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">나의 정보</h4>
-									<div class="your-page your-page-groupListDiv">
-										<figure>
-											<a href="#" title=""><img
-												src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-										</figure>
-										<div class="page-meta">
-											<a href="#" title="" class="underline">동선동탁구대장</a> <span><i
-												class="ti-comment"></i>메세지 <em>9</em></span> <span><i
-												class="ti-bell"></i>알림 <em>2</em></span>
-										</div>
-										<div class="page-likes">
-											<ul class="nav nav-tabs likes-btn">
-												<li class="nav-item"><a class="active" href="#link1"
-													data-toggle="tab">나의모임정보</a></li>
-												<li class="nav-item"><a class="" href="#link2"
-													data-toggle="tab">가입모임목록</a></li>
-											</ul>
-											<!-- Tab panes -->
-											<div class="tab-content">
-												<div class="tab-pane active fade show" id="link1">
-													<span><i class="ti-heart"></i>884</span> <a href="#"
-														title="weekly-likes">35 new likes this week</a>
-													<div class="users-thumb-list">
-														<a href="#" title="Anderw" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-1.jpg" alt="">
-														</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-2.jpg" alt="">
-														</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-3.jpg" alt="">
-														</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-4.jpg" alt="">
-														</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-5.jpg" alt="">
-														</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-6.jpg" alt="">
-														</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-7.jpg" alt="">
-														</a>
-													</div>
-												</div>
-												<div class="tab-pane fade" id="link2">
-													<div>
-														<ul class="your-page-groupList">
-															<li>동.탁</li>
-															<li>동.탁</li>
-															<li>동.탁</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 나의 정보 위젯 -->
-
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-								<div class="widget calendarCenter">
-									<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
-									<c:forEach var="gcl" items="${groupcalendarlist }">
-											<input type="hidden" id="cal${gcl.rownum}" value="${gcl.startdate }">
-									</c:forEach>
-									<h4 class="widget-title">나의 일정</h4>
-
-									<div class="calendarDiv">
-										<table id="calendar" class="calendarTable">
-											<tr>
-												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th id="prevcal"><label><i
-														class="fas fa-angle-left calendarBtn"></i></label></th>
-												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th id="nextcal"><label><i
-														class="fas fa-angle-right calendarBtn"></i></label></th>
-											</tr>
-											<tr>
-												<th align="center">일</th>
-												<th align="center">월</th>
-												<th align="center">화</th>
-												<th align="center">수</th>
-												<th align="center">목</th>
-												<th align="center">금</th>
-												<th align="center">토</th>
-											</tr>
-										</table>
-									</div>
-									<div class="scheduleDiv">
-										<hr>
-										<ul class="short-profile scheduleUl" id="shortschedule">
-											<c:if test="${empty shortschedule}">
-											<li><span>일정 없음</span></li>
-											</c:if>
-											<c:if test="${not empty shortschedule}">
-											<c:forEach var="ss" items="${shortschedule }">
-												<li><span>${ss.posttitle }</span>
-												<p>
-													모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소: ${ss.location }
-												</p></li>
-											</c:forEach>
-											</c:if>
-										</ul>
-									</div>
-
-								</div>
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-
+								<jsp:include page="group_rightWidget.jsp" />
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 오른쪽 -->
-						</div>	
+
 					</div>
 				</div>
 			</div>
-		</div>	
-	</section>
-
+		</div>
+	</div>
+</section>
 	<jsp:include page="../mainpage/footer.jsp" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+	/* groupMember.js */
 	//## 회원 상세정보 ##
 	function memDetail(userkey,groupkey) {
 		var f = document.detail;
@@ -364,6 +563,254 @@
 		f.method = "post";
 		f.submit();
 	};
+	
+	var url = '';	// 이동할 컨트롤러 주소
+	var id = 0;		// 선택된 메뉴의 값을 구하기 위해 id로 구분
+	var menu = 0;	// 선택된 메뉴의 값 (회원 목록 : 0, 회원 요청 : 1)
+	var doc = '';
+
+	//## 메뉴에 따른 회원 리스트 가져오기
+	function getMember(data, url) {
+		$.ajax({
+			type : 'POST',
+			url : url,
+			data : data,
+			success : function(data) {
+				console.log(data);
+				switch(data.menu) {
+				// '회원 목록'
+				case 0:
+					getGroupMem(data);
+					break;
+				// '가입 승인 대기 목록'	
+				case 1:
+					getWaitMem(data);
+					break;
+				}
+			},
+			error : function(request, status, error) {
+				console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			}
+		});
+	};
+
+	//일반 모임 회원 리스트 가져오기
+	function getGroupMem (data) {
+		$('.nearby-contct').empty();
+		
+		// 가입된 회원이 있으면
+		if (data.membercount != 0) {
+			$(data.list).each(function(index, item){
+				doc += '<li>';
+				doc += '	<div class="nearly-pepls">';
+				doc += '		<figure>';
+				doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
+				if (item.profileFile == null) {
+					doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
+				} else {
+					doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+				}
+				doc += '		</figure>';
+				doc += '		<div class="pepl-info">';
+				doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
+				doc += '			<a href="javascript:expelMem(' + item.userKey + ',' + item.groupKey + ')" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>';
+				doc += '			<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>';
+				doc += '		</div>';
+				doc += '	</div>';
+				doc += '</li>';
+			});
+			$('.nearby-contct').append(doc);
+			$('.nav.nav-tabs li span').eq(0).text(data.membercount);
+		}
+	} // getGroupMem end
+
+	//가입 승인 요청 대기 중인 회원 리스트 가져오기
+	function getWaitMem(data) {
+		$('.nearby-contct').empty();
+		
+		// 가입 요청한(승인 대기 중) 회원이 있으면
+		if (data.membercount != 0) {
+			$(data.list).each(function(index, item){
+				doc += '<li>';
+				doc += '	<div class="nearly-pepls">';
+				doc += '		<figure>';
+				doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
+				if (item.profileFile == null) {
+					doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
+				} else {
+					doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+				}
+				doc += '		</figure>';
+				doc += '		<div class="pepl-info">';
+				doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
+				doc += '			<a href="javascript:rejectJoin(' + item.userKey + ',' + item.groupKey + ')" title="요청 거절" class="add-butn more-action" data-ripple="">요청 거절</a>';
+				doc += '			<a href="#" title="" class="add-butn" data-ripple="">승인</a>';
+				doc += '		</div>';
+				doc += '	</div>';
+				doc += '</li>';
+			});
+			$('.nearly-pepls').append(doc);
+			$('.nav.nav-tabs li span').eq(0).text(data.membercount);
+		}
+	} // getWaitMem end
+
+	// 가입 승인 요청 거절
+	function rejectJoin(userkey, groupkey) {
+		$.ajax({
+			type : 'POST',
+			url : 'rejectJoin',
+			data : {userkey : userkey, groupkey : groupkey},
+			success : function(data) {
+				$('.nearby-contct').empty();
+				
+				// 가입 요청한(승인 대기 중) 회원이 있으면
+				if (data.yetMembercount != 0) {
+					$(data.mem).each(function(index, item){
+						doc += '<li>';
+						doc += '	<div class="nearly-pepls">';
+						doc += '		<figure>';
+						doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
+						if (item.profileFile == null) {
+							doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
+						} else {
+							doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+						}
+						doc += '		</figure>';
+						doc += '		<div class="pepl-info">';
+						doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
+						doc += '			<a href="javascript:rejectJoin(' + item.userKey + ',' + item.groupKey + ')" title="요청 거절" class="add-butn more-action" data-ripple="">요청 거절</a>';
+						doc += '			<a href="#" title="" class="add-butn" data-ripple="">승인</a>';
+						doc += '		</div>';
+						doc += '	</div>';
+						doc += '</li>';
+					});
+					$('.nearly-pepls').append(doc);
+					$('.nav.nav-tabs li span').eq(0).text(data.membercount);
+				}
+			}
+		});
+	}
+
+	$(function(){
+		// '회원 목록' 메뉴나 '회원 요청' 메뉴 클릭 시 
+		$('.nav-item a').on('click', function(){
+			console.log('메뉴 클릭!');
+			
+			id = $(this).attr('id');
+			
+			if (id == 'm1') /* 회원 목록 */
+				menu = 0
+			else /* 회원 요청 */
+				menu = 1;
+			
+			var data = 'groupKey=' + $('input[name=getGroupKey]').val() + '&menu=' + menu;
+			console.log('data = ' + data);
+			
+			switch($(this).index()) {
+			// 회원 목록
+			case 0:
+				url = 'getGroupMem';
+				getMember(data, url);
+				break;
+			// 회원 요청	
+			case 1:
+				url = 'getWaitMem';
+				getMember(data, url);
+				break;
+			}
+		});
+	});
+
+	/*
+	// ## 회원 요청 리스트 get
+	function getYetMember(groupKey) {
+		$.ajax({
+			type : 'POST',
+			url : 'getYetMember',
+			data : {groupKey : groupKey},
+			success : function(data) {
+
+				$('nearly-pepls').empty();
+				
+				// 요청 회원이 있으면
+				if (data.membercount != 0) {
+					$(data.mem).each(function(index, item){
+						doc += '<li>';
+						doc += '	<div class="nearly-pepls">';
+						doc += '		<figure>';
+						doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
+						if (item.profileFile == null) {
+							doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
+						} else {
+							doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+						}
+						doc += '		</figure>';
+						doc += '		<div class="pepl-info">';
+						doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
+						doc += '			<a href="javascript:rejectJoin(' + item.userKey + ',' + item.groupKey + ')" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>';
+						doc += '			<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>';
+						doc += '		</div>';
+						doc += '	</div>';
+						doc += '</li>';
+					});
+					$('nearly-pepls').append(doc);
+					$('.nav.nav-tabs li span').eq(0).text(data.membercount);
+			}
+			},		
+			error : function(request, status, error) {
+			console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			}
+		});
+	};
+		
+	// ## 회원 강퇴
+	function expelMem(userKey, groupKey) {
+		doc = '';
+		data = "userKey=" + userKey + "&groupKey=" + groupKey;
+		
+		$.ajax({
+			type : 'POST',
+			url : 'expelMem',
+			data : data,
+			cache : false,
+			success : function(data) {
+				if (data.result == 1)
+					alert('강퇴 완료되었습니다.');
+				else (data.result == -1)
+					alert('강퇴하는 데 실패했습니다.');
+				
+				$('nearly-pepls').empty();
+				
+				// 가입된 회원이 있으면
+				if (data.membercount != 0) {
+					$(data.mem).each(function(index, item){
+						doc += '<li>';
+						doc += '	<div class="nearly-pepls">';
+						doc += '		<figure>';
+						doc += '			<a href = "javascript:memDetail(' + item.userKey + ')" title="">';
+						if (item.profileFile == null) {
+							doc += '<img src="resources/images/default.png" class = "group-img" alt = ""/>';
+						} else {
+							doc += "<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+						}
+						doc += '		</figure>';
+						doc += '		<div class="pepl-info">';
+						doc += '			<h4><a href="javascript:memDetail(' + item.userKey + ',' + item.groupKey + ')" title = "' + item.groupNickname + '">' + item.groupNickname + '</a></h4>';
+						doc += '			<a href="javascript:expelMem(' + item.userKey + ',' + item.groupKey + ')" title="회원 강퇴" class="add-butn more-action" data-ripple="">회원 강퇴</a>';
+						doc += '			<a href="#" title="" class="add-butn" data-ripple="">권한 설정</a>';
+						doc += '		</div>';
+						doc += '	</div>';
+						doc += '</li>';
+					});
+					$('nearly-pepls').append(doc);
+					$('.nav.nav-tabs li span').eq(0).text(data.membercount);
+				}
+			},
+			error : function(request, status, error) {
+				console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			}
+		});
+	}*/
 </script>
 <script type="text/javascript">
 	//달력시작==================================================================

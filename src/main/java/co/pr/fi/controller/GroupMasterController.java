@@ -24,16 +24,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GCategory;
 import co.pr.fi.domain.GCategory2;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
+import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
+import co.pr.fi.domain.MemberList;
+import co.pr.fi.domain.Post;
 import co.pr.fi.domain.RequestCategory;
+import co.pr.fi.domain.Shortschedule;
+import co.pr.fi.domain.UserRegGroup;
 import co.pr.fi.service.CategoryService;
 import co.pr.fi.service.GroupMasterService;
 import co.pr.fi.service.GroupMemberService;
+import co.pr.fi.service.GroupService;
 import co.pr.fi.service.MemberService;
 
 @Controller
@@ -49,6 +56,9 @@ public class GroupMasterController {
 	
 	@Autowired
 	GroupMemberService groupMemberService;
+	
+	@Autowired
+	private GroupService groupservice;
 	
 	// 새로운 모임 생성
 	@PostMapping("/insertGroup")
@@ -275,10 +285,9 @@ public class GroupMasterController {
 	
 	// 모임 내의 회원 리스트 페이지로 이동 (기본적으로 일반회원 리스트 페이지 보여준다.)
 	@GetMapping("/groupMember")
-	public String groupMember(@RequestParam(required = true, defaultValue = "0") int groupKey, 
-									HttpSession session, Model m, HttpServletResponse response) throws IOException {
+	public ModelAndView groupMember(@RequestParam(value = "groupkey") int groupkey, HttpSession session, HttpServletResponse response, ModelAndView mv) throws IOException {
 		System.out.println("회원 리스트 보기 위한 컨트롤러 왔습니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		int userKey = -1;
+		int userkey = -1;
 		if (session.getAttribute("id") == null) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -288,12 +297,13 @@ public class GroupMasterController {
 			out.println("</script>");
 			out.close();
 		} else {
-			userKey = groupMemberService.getUser((String)session.getAttribute("id"));
+			userkey = groupMemberService.getUser((String)session.getAttribute("id"));
+			mv.addObject("userkey", userkey);
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("userkey", userKey);
-		map.put("groupkey", groupKey);
+		map.put("userkey", userkey);
+		map.put("groupkey", groupkey);
 		
 		// 관리자 여부 확인
 		int isAdmin = groupMasterService.isAdmin(map);
@@ -309,17 +319,60 @@ public class GroupMasterController {
 			out.close();
 		}
 		
-		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupKey);	// 일반회원 리스트
-		int membercount = groupMasterService.getMemberCount(groupKey);			// 일반회원 수
+		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupkey);	// 일반회원 리스트
+		int membercount = groupMasterService.getMemberCount(groupkey);			// 일반회원 수
 		
-		int yetMembercount = groupMasterService.getYetMemberCount(groupKey);	// 아직 가입 승인 받지 못한 회원 수
+		int yetMembercount = groupMasterService.getYetMemberCount(groupkey);	// 아직 가입 승인 받지 못한 회원 수
 		
-		m.addAttribute("mem", mem);
-		m.addAttribute("membercount", membercount);
-		m.addAttribute("yetMembercount", yetMembercount);
-		m.addAttribute("groupkey", groupKey);
+		mv.addObject("mem", mem);
+		mv.addObject("membercount", membercount);
+		mv.addObject("yetMembercount", yetMembercount);
+		mv.addObject("groupkey", groupkey);
 		
-		return "group/groupMember";
+		Calendar c = Calendar.getInstance();
+		int month = c.get(Calendar.MONTH) + 1;
+		int year = c.get(Calendar.YEAR);
+		int date = c.get(Calendar.DATE);
+		mv.setViewName("group/groupMember");
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
+		mv.addObject("userinfo",groupmember);
+		GGroup group = groupservice.groupInfo(groupkey);
+		mv.addObject("group", group);
+		String groupmaster = groupservice.groupmaster(groupkey);
+		mv.addObject("groupmaster", groupmaster);
+		int groupmasterkey = groupservice.groupmasterkey(groupkey);
+		mv.addObject("groupmasterkey", groupmasterkey);
+		GLocation location = groupservice.groupwhere(group.getWhereKey());
+		mv.addObject("groupswhere", location.getSWhere());
+		mv.addObject("groupdwhere", location.getDWhere());
+		int age = groupservice.groupage(group.getAgeKey());
+		mv.addObject("groupage", age);
+		String dcategory = groupservice.groupdcategory(group.getCategoryKey(),groupkey);
+		mv.addObject("groupdcategory", dcategory);
+		String scategory = groupservice.groupscategory(group.getCategoryKey(),groupkey);
+		mv.addObject("groupscategory", scategory);
+		int groupmembers = groupservice.groupmembers(groupkey);
+		mv.addObject("groupmembers", groupmembers);
+		List<GGroupBoard> groupboardlist = groupservice.groupboardlist(groupkey);
+		mv.addObject("groupboardlist", groupboardlist);
+		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
+		mv.addObject("groupmemberlist", groupmemberlist);
+		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey,userkey);
+		mv.addObject("groupmeetinglist", groupmeetinglist);
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey,month,year);
+		mv.addObject("groupcalendarlist",groupcalendarlist);
+		mv.addObject("groupcalendarlistCount",groupcalendarlist.size());
+		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroup", userreggroup);
+		mv.addObject("userreggroupcount", userreggroup.size());
+		for(int i = 0; i < groupcalendarlist.size();i++) {
+			if(Integer.parseInt(groupcalendarlist.get(i).getStartdate())==date) {
+				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
+				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
+				mv.addObject("shortschedule", shortschedule);
+			}
+		}
+		return mv;
 	}
 	
 	// 회원 강퇴

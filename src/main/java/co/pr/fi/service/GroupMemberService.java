@@ -26,4 +26,8 @@ public interface GroupMemberService {
 	int getCommentedCount(Map<String, Object> temp);
 	GGroupMember getPic(Map<String, Object> keys);
 	int isGroupMem(int loginuser, int groupKey);
+	int getMyPostCount(int loginuser);	// 내가 작성한 글 수 
+	List<Post> getMyPost(int loginuser, int page, int limit);	// 내가 작성한 글 리스트
+	int getMyCommentCount(int loginuser);
+	List<Post> getMyComment(int loginuser, int page, int limit);
 }

@@ -52,7 +52,7 @@ public class GroupCommentServiceImpl implements GroupCommentService {
 		if (co != null) {
 			return dao.commentDelete(co);
 		}
-		return 0;
+		return result;
 	}
 
 	@Override
