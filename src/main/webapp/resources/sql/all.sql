@@ -358,6 +358,13 @@ CREATE TABLE post
 );
 
 
+					     
+					     
+ALTER TABLE post ADD (boardvote varchar2(5));
+ALTER TABLE post ADD (boardcalendar varchar2(5));
+ALTER TABLE post ADD (boardladder varchar2(5));
+ALTER TABLE post ADD (boardmap varchar2(5));
+					
 
 
 CREATE SEQUENCE postSEQ
