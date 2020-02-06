@@ -81,9 +81,7 @@ public class MemberController {
 	public void kakao(HttpServletResponse resp) throws IOException {
 
 		PrintWriter out = resp.getWriter();
-		out.println("<script>" + "location.href='"
-				+ "https://kauth.kakao.com/oauth/authorize?client_id=b8f7119441a046a5ba3c105d595803dd"
-				+ "&redirect_uri=http://localhost:8088/fi/kokoalogin&response_type=code';" + "</script>");
+		out.println();
 		out.close();
 
 	}
