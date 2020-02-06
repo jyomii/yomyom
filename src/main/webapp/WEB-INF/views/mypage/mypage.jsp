@@ -40,14 +40,14 @@
 					<div class="user-avatar">
 						<c:if test="${mypage.userImageOrigin == null}">
 							<figure>
-								<img src="resources/images/resources/default.png" alt=""
+								<img src="resources/images/resources/bloggrid-4.jpg" alt=""
 									id="imgpic">
 							</figure>
 						</c:if>
 						<c:if test="${mypage.userImageOrigin != null}">
 							<figure>
 								<img
-									src="<spring:url value='/image/${mypage.userImageOrigin }'/>"
+									src="<spring:url value='/image/${mypage.userImageFile }'/>"
 									id="imgpic" />
 							</figure>
 						</c:if>

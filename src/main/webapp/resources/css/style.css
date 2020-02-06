@@ -10192,6 +10192,10 @@ aside.sidebar.full-style {
     overflow: hidden;
 }
 
+
+#groupImg{
+	height:150px;
+}
 .test1>figure:first-child{
 	height: 384px;
 }
