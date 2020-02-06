@@ -10167,7 +10167,6 @@ aside.sidebar.full-style {
 	margin-right: 5px;
 	padding: 8px 20px;
 }
-
 .company-intro {
 	display: inline-block;
 	padding-top: 10px;
@@ -10186,4 +10185,8 @@ aside.sidebar.full-style {
 	font-weight: bold;
 	letter-spacing: 0.5px;
 	text-transform: uppercase;
+}
+
+#groupPageImg{
+	height:384px;
 }

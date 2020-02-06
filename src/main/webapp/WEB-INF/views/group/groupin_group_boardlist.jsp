@@ -370,86 +370,7 @@ top:-9px;
 </style>
 
 <!-- 그룹 페이지 상단 -->
-<section>
-	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
-		type="hidden" id="UserKey" value="${userkey }">
-	<div class="feature-photo">
-		<figure>
-			<img id="groupPageImg"
-				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
-			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
-		</figure>
-		<c:if test="${userinfo.userGrade==1}">
-		<!-- **********모임 대문 사진 수정*********** -->
-		<form class="edit-phto" id="groupMainImgForm"
-			enctype="multipart/form-data" action="group_mainImgUpdate.net"
-			method="post">
-			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
-				class="fa fa-camera-retro"></i>
-			<!-- 대문 사진 수정 버튼 -->
-			<label class="fileContainer"> 대문 사진 수정 <input type="file"
-				name="groupMainImgUpload" />
-			</label>
-		</form>
-		</c:if>
-		<!-- **********모임 대문 사진 수정*********** -->
-
-		<div class="container-fluid height-for-white">
-			<div class="row merged">
-				<div class="col-lg-2 col-sm-3">
-					<div class="user-avatar">
-						<!-- 그룹 사진 -->
-						<figure>
-							<img id="groupImg"
-								src="<spring:url value='/image${group.groupCFile }'/>" />
-							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
-							<!-- **********모임 사진 수정*********** -->
-							<c:if test="${userinfo.userGrade==1}">
-							<form class="edit-phto" id="groupImgForm"
-								enctype="multipart/form-data" action="group_ImgUpdate.net"
-								method="post">
-								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
-								<!-- 그룹 사진 수정 버튼 -->
-								<label class="fileContainer"> 그룹 사진 수정하기 <input
-									type="file" name="groupImgUpload" />
-								</label>
-								<!-- 그룹 사진 수정 버튼 -->
-							</form>
-							</c:if>
-							<!-- **********모임 사진 수정*********** -->
-						</figure>
-						<!-- 그룹 사진 -->
-					</div>
-				</div>
-				<div class="col-lg-10 col-sm-9">
-					<div class="timeline-info">
-						<div class="forgroupnamewidth">
-							<!-- 그룹 이름 -->
-							<ul>
-								<li class="admin-name forgroupname">
-									<h5 class="groupname">${group.groupName}</h5>
-								</li>
-							</ul>
-							<!-- 그룹 이름 -->
-						</div>
-						<div class="forgroupnamewidth1">
-							<!-- 그룹 간단 정보 -->
-							<ul>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
-							</ul>
-							<!-- 그룹 간단 정보 -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<jsp:include page="group_header.jsp" />
 <!-- 그룹 페이지 상단 -->
 <!-- 그룹 페이지 메인 -->
 <section>
@@ -476,93 +397,64 @@ top:-9px;
 											<span><i class="fa fa-users"></i>${boardname}</span>
 										</div>
 										<c:if test="${boardtype=='G'&&userinfo.userGrade==1 }">
-										<button type="button" class="mtr-btn addScheduleBtn">
+										<button type="button" class="mtr-btn addScheduleBtn addboardlistbtn">
 												<span>글쓰기</span>
 											</button>
 											</c:if>
 											<c:if test="${boardtype=='Y'&&userinfo.userGrade==1||userinfo.userGrade==0}">
-										<button type="button" class="mtr-btn addScheduleBtn">
+										<button type="button" class="mtr-btn addScheduleBtn addboardlistbtn">
 												<span>글쓰기</span>
 											</button>
 											</c:if>
 											<div class="mesages-lists paddingtopzero">
 												<ul id="message-list" class="message-list">
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
+													<c:forEach var="pl" items="${postlist}">
+													<li class="unread"><span class="sender-name">${pl.postTitle }</span> <a title="" data-toggle="tooltip"
 														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
-													<li class="unread"><span class="sender-name">안녕하세요
-															자유게시판입니다.</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">2019년
-															12월 31일</span>
-														<p>작성자 이지연 조회수 0 추천수 0</p></li>
+															class="fa fa-paperclip"></i></a><span class="boardListRight">${pl.postDate }</span>
+														<p>작성자 ${pl.groupNickname} . 조회수 ${pl.postReadcount} . 추천수 ${pl.postlike}</p>
+													</li>
+													</c:forEach>
 												</ul>
 												<!-- 페이지네이션 -->
 												<div class="row row-pagination">
-													<div class="col">
-														<ul class="pagination pagination-sm center-pagination"
-															id="pempty">
+											<div class="col">
+												<ul class="pagination pagination-sm center-pagination"
+													id="pempty">
 
-															<li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
-															</li>
+													<c:if test="${page <= 1 }">
+								<li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
+								</li>
+							</c:if>
+							<c:if test="${page > 1 }">
+								<li class="page-item"><a
+									href="groupin_group_board_transfer.net?groupkey=${groupkey }&boardkey=${boardkey }&boardtype=${boardtype}&boardname=${boardname}&page=${page-1 }" class="page-link">이전</a>&nbsp;
+								</li>
+							</c:if>
+							<c:forEach var="a" begin="${startpage }" end="${endpage }">
+								<c:if test="${a == page }">
+									<li class="page-item"><a class="page-link" href="#">${a }</a>
+									</li>
+								</c:if>
+								<c:if test="${a != page }">
+									<li class="page-item"><a href="groupin_group_board_transfer.net?groupkey=${groupkey }&boardkey=${boardkey }&boardtype=${boardtype}&boardname=${boardname}&page=${a }"
+										class="page-link">${a }</a></li>
+								</c:if>
+							</c:forEach>
 
-															<li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
-															</li>
+							<c:if test="${page >= maxpage }">
+								<li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
+								</li>
+							</c:if>
+							<c:if test="${page < maxpage }">
+								<li class="page-item"><a
+									href="groupin_group_board_transfer.net?groupkey=${groupkey }&boardkey=${boardkey }&boardtype=${boardtype}&boardname=${boardname}&page=${page+1 }" class="page-link">&nbsp;다음</a>
+								</li>
+							</c:if>
 
-														</ul>
-													</div>
-												</div>
+												</ul>
+											</div>
+										</div>
 												<!-- 페이지네이션 -->
 
 												<div class="text-align-center">
@@ -707,6 +599,7 @@ top:-9px;
 	//달력끝==================================================================
 </script>
 <script>
+
 buildCalendar();
 $(function() {
 	var mycalendarlistcount = $('#gclc').val();
@@ -714,6 +607,11 @@ $(function() {
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
+	
+	
+	$(".addboardlistbtn").click(function(){
+		location.href="login";
+	})
 	$(".forLoginBtn").click(function(){
 		location.href="login";
 	})

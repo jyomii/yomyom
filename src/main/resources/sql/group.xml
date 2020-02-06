@@ -221,7 +221,6 @@
 		using(userkey) where groupkey=#{groupkey} and
 		usergrade in(0,1)
 	</select>
-
 	<select id="groupmeetinglist" resultType="post"
 		parameterType="int">
 		select rownum, A.* from(select
@@ -238,7 +237,7 @@
 		(postkey) left join calendar using (postkey) group by postkey) using
 		(postkey)
 		where groupkey=#{groupkey} order by
-		cstartdate) A
+		cstartdate) A where boardkey = (select boardkey from ggroupboard where groupkey=#{groupkey} and boardtype='N')
 	</select>
 
 	<select id="groupcalendarmemberlist" resultType="memberlist"
@@ -438,10 +437,9 @@
 		calendarmember set sm='s' where postkey=#{postkey} and userkey=#{temp}
 	</update>
 
-	<select id="schedulelistcount" resultType="int"
+	<select id="boardlistcount" resultType="int"
 		parameterType="int">
-		select count(*) from post left join ggroupboard
-		using(groupkey) where groupkey=#{groupkey} and boardtype='N'
+		select count(*) from post where boardkey=#{boardkey}
 	</select>
 	<select id="getboardlist" resultType="post"
 		parameterType="java.util.Map">
@@ -453,8 +451,8 @@
 		currentperson,postkey from calendarmember left join (select * from
 		post left join ggroupboard using(boardkey) where boardtype='N') using
 		(postkey) left join calendar using (postkey) group by postkey) using
-		(postkey) where groupkey=1 order by cstartdate) A) where
-		rnum&gt;=#{start} AND rnum&lt;=#{end}
+		(postkey) where groupkey=#{groupkey} order by cstartdate) A) where
+		rnum&gt;=#{start} AND rnum&lt;=#{end} and boardkey = (select boardkey from ggroupboard where groupkey=#{groupkey} and boardtype='N')
 
 	</select>
 
@@ -470,4 +468,16 @@
 		groupprivate=#{groupprivate}, groupkatalk=#{groupkatalk} where
 		groupkey=#{groupkey}
 	</update>
+	
+	<select id="getschedulelistcount" resultType="int"
+		parameterType="int">
+		select count(*) from post p left join ggroupboard g using(boardkey) where p.groupkey=#{groupkey} and g.boardtype='N'
+	</select>
+	
+	<select id="getboardlisty" resultType="post"
+		parameterType="java.util.Map">
+		select * from (select rownum rnum, A.* from (select postkey,posttitle,postcontent,to_char(postdate,'yyyy-mm-dd hh24:mi') postdate,userkey,boardvote,boardcalendar,boardladder,boardmap,groupkey,
+postoptionreply,postoptionsearch,boardkey,postreadcount,groupnickname from post left join (select groupnickname, userkey from ggroupmember) using(userkey) order by postdate desc) A) where
+		rnum&gt;=#{start} AND rnum&lt;=#{end} and boardkey = #{boardkey}
+	</select>
 </mapper>

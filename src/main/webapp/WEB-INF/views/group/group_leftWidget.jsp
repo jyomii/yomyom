@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <div class="widget">
-
 									<h4 class="widget-title">게시판</h4>
 									<ul class="naves">
 										<c:forEach var="gbl" items="${groupboardlist }">

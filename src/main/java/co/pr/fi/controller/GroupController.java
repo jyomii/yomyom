@@ -139,7 +139,6 @@ public class GroupController {
 	@RequestMapping(value = "/group_main_ajax.net")
 	public Object ajaxMemberList(@RequestParam(value = "postkey") int postkey,
 			@RequestParam(value = "groupkey") int groupkey) throws Exception {
-		groupservice.calendarmemberlist(postkey, groupkey);
 		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("groupcalendarmemberlist", groupcalendarmemberlist);
@@ -439,16 +438,19 @@ public class GroupController {
 			mv.addObject("userkey", userkey);
 		}
 		if (boardtype.equals("N")) {
+
 			mv.setViewName("group/groupin_group_schedulelist");
 			mv.addObject("boardtype", boardtype);
 			int limit = 7;
-			int listcount = groupservice.getScheduleListCount(boardkey);
+			int listcount = groupservice.boardListCount(boardkey);
 			int maxpage = (listcount + limit - 1) / limit;
 			int startpage = ((page - 1) / 10) * 10 + 1;
 			int endpage = startpage + 10 - 1;
 			if (endpage > maxpage)
 				endpage = maxpage;
 			List<Post> postlist = groupservice.getBoardList(page, limit, groupkey);
+			mv.addObject("groupkey", groupkey);
+			mv.addObject("boardkey", boardkey);
 			mv.addObject("page", page);
 			mv.addObject("maxpage", maxpage);
 			mv.addObject("startpage", startpage);
@@ -458,10 +460,44 @@ public class GroupController {
 			mv.addObject("limit", limit);
 		} else if (boardtype.equals("Y")) {
 			mv.setViewName("group/groupin_group_boardlist");
-			mv.addObject("boardtype", boardtype);
-		} else {
+			mv.addObject("boardtype",boardtype);
+			int limit = 10;
+			int listcount = groupservice.boardListCount(boardkey);
+			int maxpage = (listcount + limit - 1) / limit;
+			int startpage = ((page - 1) / 10) * 10 + 1;
+			int endpage = startpage + 10 - 1;
+			if (endpage > maxpage)
+				endpage = maxpage;
+			List<Post> postlist = groupservice.getBoardListY(page, limit, boardkey);
+			mv.addObject("groupkey", groupkey);
+			mv.addObject("boardkey", boardkey);
+			mv.addObject("page", page);
+			mv.addObject("maxpage", maxpage);
+			mv.addObject("startpage", startpage);
+			mv.addObject("endpage", endpage);
+			mv.addObject("listcount", listcount);
+			mv.addObject("postlist", postlist);
+			mv.addObject("limit", limit);
+		}else {
 			mv.setViewName("group/groupin_group_boardlist");
-			mv.addObject("boardtype", boardtype);
+			mv.addObject("boardtype",boardtype);
+			int limit = 10;
+			int listcount = groupservice.boardListCount(boardkey);
+			int maxpage = (listcount + limit - 1) / limit;
+			int startpage = ((page - 1) / 10) * 10 + 1;
+			int endpage = startpage + 10 - 1;
+			if (endpage > maxpage)
+				endpage = maxpage;
+			List<Post> postlist = groupservice.getBoardListY(page, limit, boardkey);
+			mv.addObject("groupkey", groupkey);
+			mv.addObject("boardkey", boardkey);
+			mv.addObject("page", page);
+			mv.addObject("maxpage", maxpage);
+			mv.addObject("startpage", startpage);
+			mv.addObject("endpage", endpage);
+			mv.addObject("listcount", listcount);
+			mv.addObject("postlist", postlist);
+			mv.addObject("limit", limit);
 		}
 		mv.addObject("boardname", boardname);
 		Calendar c = Calendar.getInstance();
@@ -535,7 +571,7 @@ public class GroupController {
 		int endpage = startpage + 10 - 1;
 		if (endpage > maxpage)
 			endpage = maxpage;
-		System.err.println(limit);
+		mv.addObject("groupkey",groupkey);
 		List<Post> postlist = groupservice.getBoardList(page, limit, groupkey);
 		mv.addObject("page", page);
 		mv.addObject("maxpage", maxpage);
@@ -604,6 +640,7 @@ public class GroupController {
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
+		mv.addObject("groupkey", groupkey);
 		mv.setViewName("group/groupin_group_admin_addSchedule");
 		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo", groupmember);

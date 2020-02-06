@@ -5,6 +5,8 @@ package co.pr.fi.domain;
 // 게시글 
 public class Post {
 	private int rownum;
+	
+	private int rnum;
 	// 작성글키값
 	private int postKey;
 
@@ -31,7 +33,8 @@ public class Post {
 
 	// 게시판 키값
 	private int boardKey;
-
+	
+	
 	// 글 조회수
 	private int postReadcount;
 
@@ -69,6 +72,16 @@ public class Post {
 	private String cmoneytype;
 	private String time;
 	private String minute;
+	
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+
 	public String getStartdate() {
 		return startdate;
 	}
