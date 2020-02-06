@@ -83,6 +83,7 @@ public interface GroupService {
 
 	public void calendardeleteajax(int temp, int postkey);
 
+	
 	public void updateschedule(Post post);
 
 	public void updateschedulecalendar(Post post);
@@ -93,12 +94,16 @@ public interface GroupService {
 	
 	public void calendarmtosajax(int temp, int postkey);
 
-	public int getScheduleListCount(int boardkey);
+	public int boardListCount(int boardkey);
 
 	public List<Post> getBoardList(int page, int limit, int groupkey);
 
 	public void scheduledelete(int postkey);
 
 	public void groupbasicupdate(GGroup group, int groupkey);
+
+	public List<Post> getBoardListY(int page, int limit, int boardkey);
+
+	public int getScheduleListCount(int groupkey);
 
 }

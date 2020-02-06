@@ -193,14 +193,13 @@ public class GroupDAO {
 		sqlSession.update("group.calendarstomajax",list);
 		
 	}
-	
 	public void calendarmtosajax(Map<String, Integer> list) {
 		sqlSession.update("group.calendarmtosajax",list);
 		
 	}
 
-	public int schedulelistcount(int groupkey) {
-		return sqlSession.selectOne("group.schedulelistcount", groupkey);
+	public int boardlistcount(int boardkey) {
+		return sqlSession.selectOne("group.boardlistcount", boardkey);
 	}
 
 	public List<Post> getboardlist(Map<String, Integer> list) {
@@ -217,4 +216,11 @@ public class GroupDAO {
 		
 	}
 
+	public List<Post> getboardlisty(Map<String, Integer> list) {
+		return sqlSession.selectList("group.getboardlisty", list);
+	}
+
+	public int getschedulelistcount(int groupkey) {
+		return sqlSession.selectOne("group.getschedulelistcount", groupkey);
+	}
 }

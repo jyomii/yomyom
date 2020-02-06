@@ -32,9 +32,9 @@ public class GroupServiceImpl implements GroupService {
 		GGroup groupinfo = dao.groupinfo(groupkey);
 
 		String date = groupinfo.getGroupDate();
-		String year = date.substring(0, 4) + "�뀈 ";
-		String month = date.substring(5, 7) + "�썡 ";
-		String day = date.substring(8, 10) + "�씪";
+		String year = date.substring(0, 4) + "년 ";
+		String month = date.substring(5, 7) + "월 ";
+		String day = date.substring(8, 10) + "일";
 		String tdate = year + month + day;
 		groupinfo.setGroupDate(tdate);
 		return groupinfo;
@@ -105,25 +105,25 @@ public class GroupServiceImpl implements GroupService {
 			for (int i = 0; i < MeetingList.size(); i++) {
 				String date = MeetingList.get(i).getCstartdate();
 
-				String year = date.substring(0, 4) + "�뀈 ";
+				String year = date.substring(0, 4) + "년 ";
 
-				String month = date.substring(5, 7) + "�썡 ";
+				String month = date.substring(5, 7) + "월 ";
 
-				String day = date.substring(8, 10) + "�씪 ";
+				String day = date.substring(8, 10) + "일 ";
 
-				String time = date.substring(13, 15) + "�떆 ";
+				String time = date.substring(13, 15) + "시 ";
 
-				String minute = date.substring(16, 18) + "遺�";
-				if (minute.equals("00遺�"))
+				String minute = date.substring(16, 18) + "분";
+				if (minute.equals("00분"))
 					minute = "";
 				MeetingList.get(i).setCstartdate(year + month + day + time + minute);
 				String pdate = MeetingList.get(i).getPostDate();
 
-				String pyear = pdate.substring(0, 4) + "�뀈 ";
+				String pyear = pdate.substring(0, 4) + "년 ";
 
-				String pmonth = pdate.substring(5, 7) + "�썡 ";
+				String pmonth = pdate.substring(5, 7) + "월 ";
 
-				String pday = pdate.substring(8, 10) + "�씪 ";
+				String pday = pdate.substring(8, 10) + "일 ";
 
 				MeetingList.get(i).setPostDate(pyear + pmonth + pday);
 
@@ -270,11 +270,11 @@ public class GroupServiceImpl implements GroupService {
 		post.setStartdate(post.getCstartdate().toString());
 		String date = post.getCstartdate().toString().replace(" ", "");
 		String year = date.substring(0, 4);
-		String month = date.substring(5, date.indexOf("�썡"));
+		String month = date.substring(5, date.indexOf("월"));
 		if (month.length() == 1) {
 			month = "0" + month;
 		}
-		String day = date.substring((date.indexOf("�썡") + 1), date.indexOf("�씪"));
+		String day = date.substring((date.indexOf("월") + 1), date.indexOf("일"));
 		if (day.length() == 1) {
 			day = "0" + day;
 		}
@@ -343,11 +343,11 @@ public class GroupServiceImpl implements GroupService {
 		post.setStartdate(post.getCstartdate().toString());
 		String date = post.getCstartdate().toString().replace(" ", "");
 		String year = date.substring(0, 4);
-		String month = date.substring(5, date.indexOf("�썡"));
+		String month = date.substring(5, date.indexOf("월"));
 		if (month.length() == 1) {
 			month = "0" + month;
 		}
-		String day = date.substring((date.indexOf("�썡") + 1), date.indexOf("�씪"));
+		String day = date.substring((date.indexOf("월") + 1), date.indexOf("일"));
 		if (day.length() == 1) {
 			day = "0" + day;
 		}
@@ -381,8 +381,8 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public int getScheduleListCount(int groupkey) {
-		return dao.schedulelistcount(groupkey);
+	public int boardListCount(int boardkey) {
+		return dao.boardlistcount(boardkey);
 	}
 
 	@Override
@@ -427,5 +427,39 @@ public class GroupServiceImpl implements GroupService {
 		list.put("groupkey", groupkey);
 		dao.groupbasicupdate(list);
 
+	}
+
+	
+	@Override
+	public List<Post> getBoardListY(int page, int limit, int boardkey) {
+		Map<String, Integer> list = new HashMap<String, Integer>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		list.put("start", startrow);
+		list.put("end", endrow);
+		list.put("boardkey", boardkey);
+		List<Post> post=dao.getboardlisty(list);
+		for(int i=0;i<post.size();i++) {
+			String date = post.get(i).getPostDate();
+			String dated = date.replace("-", "");
+			String datedd = dated.replace(" ", "");
+			String year = datedd.substring(0, 4) + "년 ";
+			String month = datedd.substring(4, 6) + "월 ";
+			if(month.indexOf("0")==0) {
+				month = month.replace("0", "");
+			}
+			String day = datedd.substring(6, 9) + "일 ";
+			if(day.indexOf("0")==0) {
+				day = day.replace("0", "");
+			}
+			String time = datedd.substring(8,datedd.length());
+			post.get(i).setPostDate(year+month+day+time);
+		}
+		return post;
+	}
+
+	@Override
+	public int getScheduleListCount(int groupkey) {
+		return dao.getschedulelistcount(groupkey);
 	}
 }
