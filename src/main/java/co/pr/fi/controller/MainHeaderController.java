@@ -261,8 +261,8 @@ public class MainHeaderController {
 		//베스트 : 해당 카테고리의 인원수 가장 많은 모임 3개
 		List<GGroup> bestgroup = mainHeaderService.getBestGroups(categorykey,3);
 		
-		//추천 : 해당 카테고리에서 인원수 제일 많은 모임 리스트 5개
-		List<GGroup>reList = mainHeaderService.getBestGroups(categorykey,5);
+		//추천 : 해당 카테고리에서 인원수 제일 많은 모임 리스트 3개
+		List<GGroup>reList = mainHeaderService.getBestGroups(categorykey,3);
 		
 		//모임 목록 : 해당 카테고리 중 post 등록개수가 일주일간 제일 많은 수
 		List<GGroup> groupList = mainHeaderService.getCategoryActiveGroupList(categorykey);

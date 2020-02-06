@@ -10,6 +10,12 @@
 	</select>
 
 
+<select id="regornot" resultType="int"
+      parameterType="java.util.Map">
+      select count(*) from ggroupmember where groupkey=#{groupkey} and userkey=#{userkey}
+   </select>
+   
+
 	<!-- 가입한 모임의 수 -->
 	<select id="getGroupRank" parameterType="map" resultType="group">
 

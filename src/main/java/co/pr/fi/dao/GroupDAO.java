@@ -223,4 +223,8 @@ public class GroupDAO {
 	public int getschedulelistcount(int groupkey) {
 		return sqlSession.selectOne("group.getschedulelistcount", groupkey);
 	}
+
+	public int regornot(Map<String, Integer> list) {
+	      return sqlSession.selectOne("group.regornot", list);
+	   }
 }
