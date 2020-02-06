@@ -23,12 +23,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.pr.fi.domain.CalendarList;
 import co.pr.fi.domain.GGroup;
+import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
+import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.JoinAnswer;
 import co.pr.fi.domain.JoinQuest;
+import co.pr.fi.domain.MemberList;
 import co.pr.fi.domain.Post;
+import co.pr.fi.domain.Shortschedule;
+import co.pr.fi.domain.UserRegGroup;
 import co.pr.fi.service.GroupMemberService;
+import co.pr.fi.service.GroupService;
 
 @Controller
 public class GroupMemberController {
@@ -36,6 +43,8 @@ public class GroupMemberController {
 	@Autowired
 	GroupMemberService groupMemberService;
 	
+	@Autowired
+	private GroupService groupservice;
 	// 모임 메인 페이지 이동
 	@GetMapping("/groupmain")
 	public String groupmain (@RequestParam(required = false, defaultValue = "0") int groupkey, 
@@ -97,7 +106,7 @@ public class GroupMemberController {
 		}
 		return mv;
 	}
-	/////////////////////////////////////////////////////////////////////////////
+	
 	// 모임 가입하기
 	@PostMapping("/joinGroupAction")
 	public String joinGroupAction(GGroupMember mem, JoinAnswer answer, HttpServletResponse response) throws IOException {
@@ -207,6 +216,7 @@ public class GroupMemberController {
 	public ModelAndView GmemDetail (@RequestParam(required = false, defaultValue = "0") int status,
 									@RequestParam(required = false, defaultValue = "-1") int userkey, 
 									@RequestParam(required = false, defaultValue = "-1") int groupkey,
+									@RequestParam(required = false, defaultValue = "-1") int menu,
 									@RequestParam(required = false, defaultValue = "1") int page,
 									@RequestParam(required = false, defaultValue = "10") int limit,
 									HttpServletResponse response, ModelAndView mv, HttpSession session) throws IOException {
@@ -225,72 +235,160 @@ public class GroupMemberController {
 		}
 		
 		int listcount = 0;
-		status = 1;	// 임시
 		
-		switch (status) {
-		case 0 :
-			// 가입한 모임
-			listcount = groupMemberService.getJoinedCount(userkey);	// 총 리스트 수 		
-			temp = pagination(page, limit, listcount);
-			System.out.println("pagination = " + temp.entrySet());
-			
-			// # 가입한 모임 리스트
-			groupList = groupMemberService.userInGroup(userkey, page, limit);
-			
-			mv.addObject("page", page);
-			mv.addObject("maxpage", temp.get("maxpage"));
-			mv.addObject("startpage", temp.get("startpage"));
-			mv.addObject("endpage", temp.get("endpage"));
-			mv.addObject("listcount", listcount);
-			mv.addObject("list", groupList);
-			mv.addObject("limit", limit);
-			mv.addObject("status", status);
-			break;
-		case 1 :
-			// 작성한 글
-			temp.put("userkey", userkey);
-			temp.put("groupkey", groupkey);
-			
-			listcount = groupMemberService.getWroteCount(temp);	// 유저가 작성한 글의 개수 
-			postList = groupMemberService.wroteInGroup(userkey, groupkey, page, limit);
-			
-			temp = pagination(page, limit, listcount);
-			System.out.println("pagination = " + temp.entrySet());
-			
-			mv.addObject("page", page);
-			mv.addObject("maxpage", temp.get("maxpage"));
-			mv.addObject("startpage", temp.get("startpage"));
-			mv.addObject("endpage", temp.get("endpage"));
-			mv.addObject("listcount", listcount);
-			mv.addObject("list", postList);
-			mv.addObject("limit", limit);
-			mv.addObject("status", status);
-			break;
-		case 2 : 
-			/* 작성한 댓글 */
-			
-			// case 0 : 로그인한 유저가 현재 조회하는 회원이 아닐 경우 비댓은 안 보여야 한다.
-			temp.put("userkey", userkey);		// 현재 조회하려는 회원의 유저키
-			temp.put("groupkey", groupkey);
-			temp.put("loginuser", loginuser);	// 현재 로그인한 유저의 유저키
-			
-			listcount = groupMemberService.getCommentedCount(temp);
-			postList = groupMemberService.postByCommented(userkey, groupkey, loginuser, page, limit);
-			
-			temp = pagination(page, limit, listcount);
-			System.out.println("pagination = " + temp.entrySet());
-			
-			mv.addObject("page", page);
-			mv.addObject("maxpage", temp.get("maxpage"));
-			mv.addObject("startpage", temp.get("startpage"));
-			mv.addObject("endpage", temp.get("endpage"));
-			mv.addObject("listcount", listcount);
-			mv.addObject("list", postList);
-			mv.addObject("limit", limit);
-			mv.addObject("status", status);
-			break;
+		if (menu != -1) status = menu;
+		
+		if (groupkey == -1) {
+			/*** 모임 상관없이 내가 작성한 글이나 내가 작성한 댓글 보기 ***/
+			System.out.println("내가 작성한 글 / 내가 작성한 댓글 보기");
+			switch (status) {
+			case 1:
+				// # 내 작성글
+				listcount = groupMemberService.getMyPostCount(loginuser);		// 내가 작성한 글의 개수
+				postList = groupMemberService.getMyPost(loginuser, page, limit);// 내가 작성한 글 리스트
+				
+				temp = pagination(page, limit, listcount);
+				System.out.println("pagination = " + temp.entrySet());
+				
+				mv.addObject("page", page);
+				mv.addObject("maxpage", temp.get("maxpage"));
+				mv.addObject("startpage", temp.get("startpage"));
+				mv.addObject("endpage", temp.get("endpage"));
+				mv.addObject("listcount", listcount);
+				mv.addObject("list", postList);
+				mv.addObject("limit", limit);
+				mv.addObject("status", status);
+				break;
+			case 2:
+				// # 내 댓글
+				listcount = groupMemberService.getMyCommentCount(loginuser);
+				postList = groupMemberService.getMyComment(loginuser, page, limit);
+				
+				temp = pagination(page, limit, listcount);
+				System.out.println("pagination = " + temp.entrySet());
+				
+				mv.addObject("page", page);
+				mv.addObject("maxpage", temp.get("maxpage"));
+				mv.addObject("startpage", temp.get("startpage"));
+				mv.addObject("endpage", temp.get("endpage"));
+				mv.addObject("listcount", listcount);
+				mv.addObject("list", postList);
+				mv.addObject("limit", limit);
+				mv.addObject("status", status);
+				break;
+			}
+		} else {
+			/*** 특정 모임에서의 작성한 글이나 작성한 댓글 보기 ***/
+			System.out.println("다른 회원의 가입한 모임 / 작성글 / 작성댓글 보기");
+			switch (status) {
+			case 0 :
+				// 가입한 모임
+				listcount = groupMemberService.getJoinedCount(userkey);	// 총 리스트 수 		
+				temp = pagination(page, limit, listcount);
+				System.out.println("pagination = " + temp.entrySet());
+				
+				// # 가입한 모임 리스트
+				groupList = groupMemberService.userInGroup(userkey, page, limit);
+				
+				mv.addObject("page", page);
+				mv.addObject("maxpage", temp.get("maxpage"));
+				mv.addObject("startpage", temp.get("startpage"));
+				mv.addObject("endpage", temp.get("endpage"));
+				mv.addObject("listcount", listcount);
+				mv.addObject("list", groupList);
+				mv.addObject("limit", limit);
+				mv.addObject("status", status);
+				break;
+			case 1 :
+				// 작성한 글
+				temp.put("userkey", userkey);
+				temp.put("groupkey", groupkey);
+				
+				listcount = groupMemberService.getWroteCount(temp);	// 유저가 작성한 글의 개수 
+				postList = groupMemberService.wroteInGroup(userkey, groupkey, page, limit);
+				
+				temp = pagination(page, limit, listcount);
+				System.out.println("pagination = " + temp.entrySet());
+				
+				mv.addObject("page", page);
+				mv.addObject("maxpage", temp.get("maxpage"));
+				mv.addObject("startpage", temp.get("startpage"));
+				mv.addObject("endpage", temp.get("endpage"));
+				mv.addObject("listcount", listcount);
+				mv.addObject("list", postList);
+				mv.addObject("limit", limit);
+				mv.addObject("status", status);
+				break;
+			case 2 : 
+				/* 작성한 댓글 */
+				
+				// case 0 : 로그인한 유저가 현재 조회하는 회원이 아닐 경우 비댓은 안 보여야 한다.
+				temp.put("userkey", userkey);		// 현재 조회하려는 회원의 유저키
+				temp.put("groupkey", groupkey);
+				temp.put("loginuser", loginuser);	// 현재 로그인한 유저의 유저키
+				
+				listcount = groupMemberService.getCommentedCount(temp);
+				postList = groupMemberService.postByCommented(userkey, groupkey, loginuser, page, limit);
+				
+				temp = pagination(page, limit, listcount);
+				System.out.println("pagination = " + temp.entrySet());
+				
+				mv.addObject("page", page);
+				mv.addObject("maxpage", temp.get("maxpage"));
+				mv.addObject("startpage", temp.get("startpage"));
+				mv.addObject("endpage", temp.get("endpage"));
+				mv.addObject("listcount", listcount);
+				mv.addObject("list", postList);
+				mv.addObject("limit", limit);
+				mv.addObject("status", status);
+				break;
+			}
 		}
-		
+/*
+		Calendar c = Calendar.getInstance();
+		int month = c.get(Calendar.MONTH) + 1;
+		int year = c.get(Calendar.YEAR);
+		int date = c.get(Calendar.DATE);
+		mv.setViewName("G_mem_detail");
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
+		mv.addObject("userinfo",groupmember);
+		GGroup group = groupservice.groupInfo(groupkey);
+		mv.addObject("group", group);
+		String groupmaster = groupservice.groupmaster(groupkey);
+		mv.addObject("groupmaster", groupmaster);
+		int groupmasterkey = groupservice.groupmasterkey(groupkey);
+		mv.addObject("groupmasterkey", groupmasterkey);
+		GLocation location = groupservice.groupwhere(group.getWhereKey());
+		mv.addObject("groupswhere", location.getSWhere());
+		mv.addObject("groupdwhere", location.getDWhere());
+		int age = groupservice.groupage(group.getAgeKey());
+		mv.addObject("groupage", age);
+		String dcategory = groupservice.groupdcategory(group.getCategoryKey(),groupkey);
+		mv.addObject("groupdcategory", dcategory);
+		String scategory = groupservice.groupscategory(group.getCategoryKey(),groupkey);
+		mv.addObject("groupscategory", scategory);
+		int groupmembers = groupservice.groupmembers(groupkey);
+		mv.addObject("groupmembers", groupmembers);
+		List<GGroupBoard> groupboardlist = groupservice.groupboardlist(groupkey);
+		mv.addObject("groupboardlist", groupboardlist);
+		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
+		mv.addObject("groupmemberlist", groupmemberlist);
+		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey,userkey);
+		mv.addObject("groupmeetinglist", groupmeetinglist);
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey,month,year);
+		mv.addObject("groupcalendarlist",groupcalendarlist);
+		mv.addObject("groupcalendarlistCount",groupcalendarlist.size());
+		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroup", userreggroup);
+		mv.addObject("userreggroupcount", userreggroup.size());
+		for(int i = 0; i < groupcalendarlist.size();i++) {
+			if(Integer.parseInt(groupcalendarlist.get(i).getStartdate())==date) {
+				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
+				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
+				mv.addObject("shortschedule", shortschedule);
+			}
+		}
+	*/	
 		mv.addObject("userkey", userkey);
 		mv.addObject("groupkey", groupkey);
 		mv.setViewName("G_mem_detail");

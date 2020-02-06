@@ -3,13 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <jsp:include page="mainpage/header.jsp" />
-<!-- 게시글 페이지 - 글제목, 작성자, 내용, 댓글, 비밀댓글, 글 좋아요 개수, 댓글 개수 -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-
-<title>게시글 페이지</title>
 
 <!-- 댓글 등록 아이콘 -->
 <link rel="stylesheet"
@@ -307,126 +300,29 @@ textarea:hover {
 }
 </style>
 
-<script>
-	function memDetail(groupKey, userKey) {
-		var f = document.memDetail; // 폼 name
-		f.groupkey.value = groupKey; // input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
-		f.userkey.value = userKey; // input 태그 중 name이 userKey인 값에 대해서 userkey를 넘긴다.
-		f.action = "G_mem_detail.net"; // 이동할 페이지
-		f.method = "post"; // POST 방식으로 데이터 전송
-		f.submit(); // 폼 전송
-	};
-
-	$(
-			function() {
-				/* 비밀댓글, 댓글 등록 버튼과 겹치지 않게 하기 위한 textarea 라인 당 글자수 제한 */
-				$('textarea').keyup(function() {
-					var len = $(this).val().length;
-					var str = $(this).val();
-
-					if (str % 32 == 0) {
-						//var b = $(this).val(str + '\n');
-						//$(this).html(b.html.replace(/\n/g, '<br/>'));
-					}
-				});
-
-				var submit = '';
-
-				// 하트 눌렀을 때
-				$('.like i').click(
-						function() {
-							var isLiked = $('#isLiked').val();
-							if (isLiked == 1) { // 좋아요 했다가 취소할 것임
-								submit = 'status=' + isLiked + '&postKey='
-										+ $('#detailPostKey').val()
-										+ '&groupKey='
-										+ $('#detailGroupKey').val();
-								likes(submit);
-							} else { // 좋아요 이제 할 것임
-								submit = 'status=' + isLiked + '&postKey='
-										+ $('#detailPostKey').val()
-										+ '&groupKey='
-										+ $('#detailGroupKey').val();
-								likes(submit);
-							}
-						});
-
-				function likes(data) {
-					$.ajax({
-						url : "changeLike",
-						data : data,
-						type : "POST",
-						success : function(data) {
-							switch (data.result) {
-							case 0:
-								// 좋아요 취소 상태
-								$('.like i').removeClass('fas fa-heart')
-										.addClass('far fa-heart');
-								$('#isLiked').val(data.result);
-								// ins 태그는 val() 안 먹힌다.
-								$('.like ins').text('');
-								$('.like ins').text(data.likeCount);
-								break;
-							case 1:
-								// 좋아요 상태
-								$('.like i').removeClass('far fa-heart')
-										.addClass('fas fa-heart');
-								$('#isLiked').val(data.result);
-								$('.like ins').text('');
-								$('.like ins').text(data.likeCount);
-								break;
-							case -1:
-								// 좋아요 취소 실패
-								alert('좋아요 작업 실패했습니다. 다시 시도해주세요.');
-								break;
-							case -2:
-								// 좋아요 실패
-								alert('로그인 후 이용해주세요.');
-								location.href = 'login';
-								break;
-							case -3:
-								// 로그인 x
-								alert('로그인 후 이용해주세요.');
-								location.href = 'login';
-								break;
-							}
-						},
-						error : function(request, status, error) {
-							console.log("code : " + request.status + "\n"
-									+ "message : " + request.responseText
-									+ "\n" + "error : " + error);
-						}
-					}); // ajax end
-				}
-				; // likes end
-			})
-</script>
-
 <!-- 그룹 페이지 상단 -->
 <section>
-	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
-		type="hidden" id="UserKey" value="1">
-	<!-- ## 나중에 수정 ## -->
+	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
+		type="hidden" id="UserKey" value="${userkey }">
 	<div class="feature-photo">
-		<!-- 현재 모임의 대표사진 -->
 		<figure>
-			<!-- # 추가해야됨 # -->
-			<%-- <img id="groupPageImg" src = "<spring:url value='/image${groupdfile }'/>" alt = "" /> --%>
 			<img id="groupPageImg"
-				src="resources/images/resources/timeline-1.jpg" alt="">
+				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
+			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
 		</figure>
+		<c:if test="${userinfo.userGrade==1}">
 		<!-- **********모임 대문 사진 수정*********** -->
 		<form class="edit-phto" id="groupMainImgForm"
 			enctype="multipart/form-data" action="group_mainImgUpdate.net"
 			method="post">
-
-			<input type="hidden" name="groupKey" value="${groupKey}"><i
+			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
 				class="fa fa-camera-retro"></i>
 			<!-- 대문 사진 수정 버튼 -->
 			<label class="fileContainer"> 대문 사진 수정 <input type="file"
 				name="groupMainImgUpload" />
 			</label>
 		</form>
+		</c:if>
 		<!-- **********모임 대문 사진 수정*********** -->
 
 		<div class="container-fluid height-for-white">
@@ -435,22 +331,24 @@ textarea:hover {
 					<div class="user-avatar">
 						<!-- 그룹 사진 -->
 						<figure>
-							<!-- # 수정해야 됨 # -->
-							<!-- <img id="groupImg" src="<spring:url value='/image${groupcfile }'/>" /> -->
 							<img id="groupImg"
-								src="resources/images/resources/user-avatar.jpg" alt="">
+								src="<spring:url value='/image${group.groupCFile }'/>" />
+							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 							<!-- **********모임 사진 수정*********** -->
+							<c:if test="${userinfo.userGrade==1}">
 							<form class="edit-phto" id="groupImgForm"
 								enctype="multipart/form-data" action="group_ImgUpdate.net"
 								method="post">
 								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${groupkey}"> <i class="fa fa-camera-retro"></i>
+									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
 								<!-- 그룹 사진 수정 버튼 -->
 								<label class="fileContainer"> 그룹 사진 수정하기 <input
 									type="file" name="groupImgUpload" />
 								</label>
 								<!-- 그룹 사진 수정 버튼 -->
 							</form>
+							</c:if>
+							
 							<!-- **********모임 사진 수정*********** -->
 						</figure>
 						<!-- 그룹 사진 -->
@@ -462,7 +360,7 @@ textarea:hover {
 							<!-- 그룹 이름 -->
 							<ul>
 								<li class="admin-name forgroupname">
-									<h5>${groupname}</h5>
+									<h5 class="groupname">${group.groupName}</h5>
 								</li>
 							</ul>
 							<!-- 그룹 이름 -->
@@ -470,10 +368,11 @@ textarea:hover {
 						<div class="forgroupnamewidth1">
 							<!-- 그룹 간단 정보 -->
 							<ul>
+								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
 								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
 								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
+								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
 							</ul>
 							<!-- 그룹 간단 정보 -->
 						</div>
@@ -693,15 +592,19 @@ textarea:hover {
 												<div class="we-video-info">
 													<ul>
 														<!-- 조회수 -->
-														<li><span class="views" data-toggle="tooltip"
-															title="views"> <i class="fa fa-eye"></i> <ins>${post.postReadcount}</ins>
-														</span></li>
+														<li>
+															<span class="views" data-toggle="tooltip" title="views"> <i class="fa fa-eye"></i> 
+																<ins>${post.postReadcount}</ins>
+															</span>
+														</li>
 														<!-- 댓글수 -->
-														<li><span class="comment" data-toggle="tooltip"
-															title="Comments"> <i class="far fa-comment-dots"></i>
+														<li>
+															<span class="comment" data-toggle="tooltip" title="Comments"><i class="far fa-comment-dots"></i>
 																<!-- 빈 말풍선 --> <!-- <i class="fas fa-comment-dots"></i> -->
-																<!-- 말풍선 --> <ins>${post.replyCount}</ins>
-														</span></li>
+																<!-- 말풍선 --> 
+															<ins>${post.replyCount}</ins>
+															</span>
+														</li>
 														<!-- 좋아요수 -->
 														<li><span class="like" data-toggle="tooltip"
 															title="like"> <input type="hidden" id="isLiked"
@@ -726,6 +629,7 @@ textarea:hover {
 												<c:forEach var="c" items="${comment}">
 													<!-- 댓글 -->
 													<!-- ************************************************ -->
+													
 													<!-- 전체공개 댓글 - 그냥 조건 없이 쫙 뽑는다. -->
 													<c:if test="${c.commentshow == 0}">
 														<c:if test="${c.commemtReRef != before && before > 0}">
@@ -736,13 +640,100 @@ textarea:hover {
 																<div class="comet-avatar">
 																	<!-- 회원 프사 없을 경우 -->
 																	<c:if test="${c.profileFile == null}">
+																		<img src="resources/images/default.png" class="group-img" alt="" />
+																	</c:if>
+																	<!-- 회원 프사 있을 경우 -->
+																	<c:if test="${c.profileFile != null}">
+																		<img src="<spring:url value='/image${c.profileFile}'/>" class="group-img" alt="" />
+																	</c:if>
+																</div>
+																<div class="we-comment">
+																	<div class="coment-head">
+																		<h5>
+																			<a href="javascript:memDetail(${groupkey},${c.userKey})" title="">${c.groupNickname}</a>
+																		</h5>
+																		<span>${c.commentDate}</span> 
+																		<a class="we-reply" href="javascript:commentReply(${c.commnetNum})" title="Reply"> 
+																			<i class="fa fa-reply"></i>
+																		</a>
+																		<!-- 댓쓴 본인이어야만 수정/삭제 보이게 -->
+																		<c:if test="${loginuser == c.userKey}">
+																			<a class="update"
+																				href="javascript:updateReply(${c.commnetNum})"
+																				title="Update"> <i class="fas fa-eraser"></i>
+																			</a>
+																			<a class="delete"
+																				href="javascript:deleteReply(${c.commnetNum})"
+																				title="Delete"> <i class="far fa-trash-alt"></i>
+																			</a>
+																		</c:if>
+																	</div>
+																	<p>${c.commentContent}</p>
+																</div> 
+														</c:if>
+														<!-- 원문글에 대한 댓글 -->
+														<c:if test="${c.commemtReRef == before}">
+															<ul>
+																<li>
+																	<div class="comet-avatar">
+																		<!-- 회원 프사 없을 경우 -->
+																		<c:if test="${c.profileFile == null}">
+																			<img src="resources/images/default.png" class="group-img" alt="" />
+																		</c:if>
+																		<!-- 회원 프사 있을 경우 -->
+																		<c:if test="${c.profileFile != null}">
+																			<img src="<spring:url value='/image${c.profileFile}'/>" class="group-img" alt="" />
+																		</c:if>
+																			</div>
+																			<div class="we-comment">
+																				<div class="coment-head">
+																					<h5>
+																						<a href="javascript:memDetail(${groupkey},${c.userKey})" title="">${c.groupNickname}</a>
+																					</h5>
+																					<span>${c.commentDate}</span> <a class="we-reply"
+																						href="javascript:commentReply(${c.commnetNum})"
+																						title="Reply"> <i class="fa fa-reply"></i>
+																					</a>
+																					<!-- 댓쓴 본인이어야만 수정/삭제 보이게 -->
+																					<c:if test="${loginuser == c.userKey}">
+																						<a class="update"
+																							href="javascript:updateReply(${c.commnetNum})"
+																							title="Update"> <i class="fas fa-eraser"></i>
+																						</a>
+																						<a class="delete"
+																							href="javascript:deleteReply(${c.commnetNum})"
+																							title="Delete"> <i class="far fa-trash-alt"></i>
+																						</a>
+																					</c:if>
+																				</div>
+																				<p>${c.commentContent}</p>
+																			</div>
+																		</li>
+																	</ul>
+															    </c:if>
+															<!-- 원문글 끝 -->
+													</c:if>
+													<!-- 전체공개 댓글 끝 -->
+													
+													<!-- 비밀공개 댓글 - 로그인한 사람이 글쓴이거나 댓쓴이여야 보인다. -->
+													<c:if test="${c.commentshow == 1}">
+														<c:if test="${c.commemtReRef != before && before > 0}">
+															</li>
+														</c:if>
+														<!-- 원문글 -->
+														<c:if test="${c.commemtReRef != before}">
+														<!-- ## 로그인한 유저가 글쓴이거나 댓쓴이일 때 ## -->
+														<c:if test="${loguser == c.userKey || loginuser == post.userKey}">
+															<li>
+																<div class="comet-avatar">
+																	<!-- 회원 프사 없을 경우 -->
+																	<c:if test="${c.profileFile == null}">
 																		<img src="resources/images/default.png"
 																			class="group-img" alt="" />
 																	</c:if>
 																	<!-- 회원 프사 있을 경우 -->
 																	<c:if test="${c.profileFile != null}">
-																		<img
-																			src="<spring:url value='/image${c.profileFile}'/>"
+																		<img src="<spring:url value='/image${c.profileFile}'/>"
 																			class="group-img" alt="" />
 																	</c:if>
 																</div>
@@ -770,178 +761,56 @@ textarea:hover {
 																		</c:if>
 																	</div>
 																	<p>${c.commentContent}</p>
-																</div> 
-														</c:if>
-														
-														<!-- 원문글에 대한 댓글 -->
-																<c:if test="${c.commemtReRef == before}">
-																	<ul>
-																		<li>
-																			<div class="comet-avatar">
-																				<!-- 회원 프사 없을 경우 -->
-																				<c:if test="${c.profileFile == null}">
-																					<img src="resources/images/default.png"
-																						class="group-img" alt="" />
-																				</c:if>
-																				<!-- 회원 프사 있을 경우 -->
-																				<c:if test="${c.profileFile != null}">
-																					<img
-																						src="<spring:url value='/image${c.profileFile}'/>"
-																						class="group-img" alt="" />
-																				</c:if>
-																			</div>
-																			<div class="we-comment">
-																				<div class="coment-head">
-																					<h5>
-																						<a
-																							href="javascript:memDetail(${groupkey},${c.userKey})"
-																							title="">${c.groupNickname}</a>
-																					</h5>
-																					<span>${c.commentDate}</span> <a class="we-reply"
-																						href="javascript:commentReply(${c.commnetNum})"
-																						title="Reply"> <i class="fa fa-reply"></i>
-																					</a>
-																					<!-- 댓쓴 본인이어야만 수정/삭제 보이게 -->
-																					<c:if test="${loginuser == c.userKey}">
-																						<a class="update"
-																							href="javascript:updateReply(${c.commnetNum})"
-																							title="Update"> <i class="fas fa-eraser"></i>
-																						</a>
-																						<a class="delete"
-																							href="javascript:deleteReply(${c.commnetNum})"
-																							title="Delete"> <i class="far fa-trash-alt"></i>
-																						</a>
-																					</c:if>
-																				</div>
-																				<p>${c.commentContent}</p>
-																			</div>
-																		</li>
-																		
-																	</ul>
-															    </c:if>
-															<!-- 원문글 끝 -->
-															
-													</c:if><!-- show == 0 -->
-													<c:set var="before" value="${c.commemtReRef}" />
-												    
-												</c:forEach>
-												<%--
-												<!-- ************************************************ -->
-												<!-- 비밀공개 댓글 - 로그인한 사람이 글쓴이거나 댓쓴이여야 보인다. -->
-												<c:if test="${c.commentshow == 1}">
-													<!-- ## 로그인한 유저가 글쓴이거나 댓쓴이일 때 ## -->
-													<c:if
-														test="${loguser == c.userKey || loginuser == post.userKey}">
-														<li>
-															<div class="comet-avatar">
-																<!-- 회원 프사 없을 경우 -->
-																<c:if test="${c.profileFile == null}">
-																	<img src="resources/images/default.png"
-																		class="group-img" alt="" />
-																</c:if>
-																<!-- 회원 프사 있을 경우 -->
-																<c:if test="${c.profileFile != null}">
-																	<img src="<spring:url value='/image${c.profileFile}'/>"
-																		class="group-img" alt="" />
-																</c:if>
-															</div>
-															<div class="we-comment">
-																<div class="coment-head">
-																	<h5>
-																		<a
-																			href="javascript:memDetail(${groupkey},${c.userKey})"
-																			title="">${c.groupNickname}</a>
-																	</h5>
-																	<span>${c.commentDate}</span> <a class="we-reply"
-																		href="javascript:commentReply(${c.commnetNum})"
-																		title="Reply"> <i class="fa fa-reply"></i>
-																	</a>
-																	<!-- 댓쓴 본인이어야만 수정/삭제 보이게 -->
-																	<c:if test="${loginuser == c.userKey}">
-																		<a class="update"
-																			href="javascript:updateReply(${c.commnetNum})"
-																			title="Update"> <i class="fas fa-eraser"></i>
-																		</a>
-																		<a class="delete"
-																			href="javascript:deleteReply(${c.commnetNum})"
-																			title="Delete"> <i class="far fa-trash-alt"></i>
-																		</a>
-																	</c:if>
 																</div>
-																<p>${c.commentContent}</p>
-															</div>
-														</li>
+															</c:if>
+															<!-- 원문글 끝 -->
+															<!-- 원문글에 대한 댓글 -->
+															<c:if test="${c.commemtReRef == before}">
+																<ul>
+																	<!-- ## 로그인한 유저가 글쓴이거나 댓쓴이가 아닐 때 ## -->
+																	<li>
+																		<div class="comet-avatar">
+																			<!-- 회원 프사 없을 경우 -->
+																			<c:if test="${c.profileFile == null}">
+																				<img src="resources/images/default.png"
+																					class="group-img" alt="" />
+																			</c:if>
+																			<!-- 회원 프사 있을 경우 -->
+																			<c:if test="${c.profileFile != null}">
+																				<img src="<spring:url value='/image${c.profileFile}'/>"
+																					class="group-img" alt="" />
+																			</c:if>
+																		</div>
+																		<div class="we-comment">
+																			<div class="coment-head">
+																				<h5>
+																					<a
+																						href="javascript:memDetail(${groupkey},${c.userKey})"
+																						title="">${c.groupNickname}</a>
+																				</h5>
+																				<span>${c.commentDate}</span>
+																			</div>
+																			<button type="button" class="secretbtn">
+																				<i class="fas fa-lock" aria-hidden="true"></i>
+																			</button>
+																			<p style="display: inline-block">비밀 댓글 입니다.</p>
+																		</div>
+																	</li>
+																</ul>	
+														</c:if>
 													</c:if>
-
-													<!-- ## 로그인한 유저가 글쓴이거나 댓쓴이가 아닐 때 ## -->
-													<li>
-														<div class="comet-avatar">
-															<!-- 회원 프사 없을 경우 -->
-															<c:if test="${c.profileFile == null}">
-																<img src="resources/images/default.png"
-																	class="group-img" alt="" />
-															</c:if>
-															<!-- 회원 프사 있을 경우 -->
-															<c:if test="${c.profileFile != null}">
-																<img src="<spring:url value='/image${c.profileFile}'/>"
-																	class="group-img" alt="" />
-															</c:if>
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5>
-																	<a
-																		href="javascript:memDetail(${groupkey},${c.userKey})"
-																		title="">${c.groupNickname}</a>
-																</h5>
-																<span>${c.commentDate}</span>
-															</div>
-															<button type="button" class="secretbtn">
-																<i class="fas fa-lock" aria-hidden="true"></i>
-															</button>
-															<p style="display: inline-block">비밀 댓글 입니다.</p>
-														</div>
-													</li>
-												</c:if>
-												<!-- ************************************************ -->
-
-											
+													</c:if>
+													<!-- 비밀댓글 끝 -->
+													<c:set var="before" value="${c.commemtReRef}" />
+												</c:forEach>
 											<!-- 댓글 -->
-
-											<!-- 비댓 샘플 -->
-											<li>
-												<div class="comet-avatar">
-													<img src="resources/images/resources/d.png" alt="">
-												</div>
-												<div class="we-comment">
-													<div class="coment-head">
-														<h5>
-															<a href="time-line.html" title="">허거걱</a>
-														</h5>
-														<span>1 week ago</span> <a class="we-reply" href="#"
-															title="Reply"><i class="fa fa-reply"></i></a>
-													</div>
-													<button type="button" class="secretbtn">
-														<i class="fas fa-lock" aria-hidden="true"></i>
-													</button>
-													<p style="display: inline-block">비밀 댓글 입니다.</p>
-												</div>
-											</li>
- --%>
-
-
-												<!-- 댓글 더보기 -->
-												<!-- <li>
-														<a href="#" title="" class="showmore underline">more comments</a>
-													</li> -->
 
 												<!-- 댓글 등록 부분 -->
 												<li class="post-comment">
 													<div class="comet-avatar">
 														<!-- 현재 로그인한 회원의 프사가 있는지에 따라 사진 지정하는 부분 -->
 														<c:if test="${mem.profileFile == null}">
-															<img src="resources/images/default.png" class="group-img"
-																alt="" />
+															<img src="resources/images/default.png" class="group-img" alt="" />
 														</c:if>
 														<c:if test="${mem.profileFile != null}">
 															<img src="<spring:url value='/image${mem.profileFile}'/>"
@@ -969,7 +838,7 @@ textarea:hover {
 														</form>
 													</div>
 												</li>
-
+												<!-- 댓글 등록 부분 -->
 											</ul>
 										</div>
 									</div>
@@ -977,156 +846,12 @@ textarea:hover {
 								<!-- 상세 게시글 끝 -->
 							</div>
 						</div>
-						<!-- centerl meta -->
 						<!-- 가운데 끝 -->
 
 						<!-- 그룹 페이지 위젯 오른쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-
-								<!-- 그룹 로그인 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title forlogintitle">로그인</h4>
-									<div class="your-page">
-										<div class="form-group">
-											<input type="text" id="input" required="required" /> <label
-												class="control-label" for="input">아이디</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="form-group">
-											<input type="password" required="required" /> <label
-												class="control-label" for="input">비밀번호</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="checkbox forRememberIdDiv">
-											<label> <input type="checkbox" checked="checked"><i
-												class="check-box forcheckbox"></i>아이디 저장
-											</label>
-										</div>
-
-										<div class="submit-btns forSubmitBtnDiv">
-											<button type="button" class="mtr-btn forLoginBtn">
-												<span>로그인</span>
-											</button>
-											<button type="button" class="mtr-btn forRegisterBtn">
-												<span>회원가입</span>
-											</button>
-										</div>
-
-									</div>
-								</div>
-								<!-- 그룹 로그인 위젯 -->
-
-								<!-- 그룹 나의 정보 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">나의 정보</h4>
-									<div class="your-page your-page-groupListDiv">
-										<figure>
-											<a href="#" title=""><img
-												src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-										</figure>
-										<div class="page-meta">
-											<a href="#" title="" class="underline">동선동탁구대장</a> <span><i
-												class="ti-comment"></i>메세지 <em>9</em></span> <span><i
-												class="ti-bell"></i>알림 <em>2</em></span>
-										</div>
-										<div class="page-likes">
-											<ul class="nav nav-tabs likes-btn">
-												<li class="nav-item"><a class="active" href="#link1"
-													data-toggle="tab">나의모임정보</a></li>
-												<li class="nav-item"><a class="" href="#link2"
-													data-toggle="tab">가입모임목록</a></li>
-											</ul>
-											<!-- Tab panes -->
-											<div class="tab-content">
-												<div class="tab-pane active fade show" id="link1">
-													<span><i class="ti-heart"></i>884</span> <a href="#"
-														title="weekly-likes">35 new likes this week</a>
-													<div class="users-thumb-list">
-														<a href="#" title="Anderw" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-1.jpg" alt="">
-														</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-2.jpg" alt="">
-														</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-3.jpg" alt="">
-														</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-4.jpg" alt="">
-														</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-5.jpg" alt="">
-														</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-6.jpg" alt="">
-														</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-7.jpg" alt="">
-														</a>
-													</div>
-												</div>
-												<div class="tab-pane fade" id="link2">
-													<div>
-														<ul class="your-page-groupList">
-															<li>동.탁</li>
-															<li>동.탁</li>
-															<li>동.탁</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 나의 정보 위젯 -->
-
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-								<div class="widget calendarCenter">
-									<input type="hidden" id="gclc"
-										value="${groupcalendarlistCount}">
-									<c:forEach var="gcl" items="${groupcalendarlist }">
-										<input type="hidden" id="cal${gcl.rownum}"
-											value="${gcl.startdate }">
-									</c:forEach>
-									<h4 class="widget-title">나의 일정</h4>
-
-									<div class="calendarDiv">
-										<table id="calendar" class="calendarTable">
-											<tr>
-												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th id="prevcal"><label><i
-														class="fas fa-angle-left calendarBtn"></i></label></th>
-												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th id="nextcal"><label><i
-														class="fas fa-angle-right calendarBtn"></i></label></th>
-											</tr>
-											<tr>
-												<th align="center">일</th>
-												<th align="center">월</th>
-												<th align="center">화</th>
-												<th align="center">수</th>
-												<th align="center">목</th>
-												<th align="center">금</th>
-												<th align="center">토</th>
-											</tr>
-										</table>
-									</div>
-									<div class="scheduleDiv">
-										<hr>
-										<ul class="short-profile scheduleUl" id="shortschedule">
-											<c:if test="${empty shortschedule}">
-												<li><span>일정 없음</span></li>
-											</c:if>
-											<c:if test="${not empty shortschedule}">
-												<c:forEach var="ss" items="${shortschedule }">
-													<li><span>${ss.posttitle }</span>
-														<p>
-															모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소:
-															${ss.location }
-														</p></li>
-												</c:forEach>
-											</c:if>
-										</ul>
-									</div>
-
-								</div>
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-
+								<jsp:include page="group/group_rightWidget.jsp" />
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 오른쪽 -->
@@ -1139,6 +864,7 @@ textarea:hover {
 <jsp:include page="mainpage/footer.jsp" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+	
 	var commentType = 0;
 	var data = '';
 	var type = '';
@@ -1154,23 +880,29 @@ textarea:hover {
 
 	// 댓글 삭제 클릭 시
 	function deleteReply(num) {
+		var doc = '';
 		var answer = confirm('댓글을 삭제하시겠습니까?');
+		console.log('groupkey = ' + $('#detailGroupKey').val());
+		console.log('postkey = ' + $('#detailPostKey').val());
+		var data = 'num=' + num + '&groupkey=' + $('#detailGroupKey').val() + '&postkey=' + $('#detailPostKey').val();
 		if (answer) {
 			$
 					.ajax({
 						url : 'deleteReply',
 						type : 'post',
-						data : {
-							commentnum : num
-						},
+						data : data,
 						dataType : 'json',
 						cache : false,
 						success : function(data) {
 							alert('삭제가 완료됐습니다.');
+							
+							$('.coment-area').empty();
+							$('.comment ins').text('');
+							$('.comment ins').text(data.listcount);
+							
 							if (data.listcount != 0) {
 								doc += '<ul class = we-comet>';
-								$(data.comment)
-										.each(
+								$(data.comment).each(
 												function(index, item) {
 													doc += '<li>';
 													doc += '	<div class="comet-avatar">';
@@ -1243,15 +975,18 @@ textarea:hover {
 									+ "\n" + "error : " + error);
 						}
 					});
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	$(function() {
+		var before = 0;
+		
 		console.log('groupkey = ' + $('#detailGroupKey').val());
 		console.log('postkey = ' + $('#detailPostKey').val());
 
-		$('.post-comt-box').on('keyup', '.post-comt-box textarea', function() {
+		$(document).on('keyup', '.post-comt-box textarea', function() {
 			$('.post-comt-box textarea').css('background', '#088dcd1a');
 		});
 
@@ -1259,7 +994,7 @@ textarea:hover {
 		var lock = false; // 기본 unlock
 		$(document).on(
 				'click',
-				'.post-comt-box i',
+				'.secretbtn>i',
 				function() {
 					if (!lock) { // 비댓
 						console.log('비댓');
@@ -1329,93 +1064,181 @@ textarea:hover {
 		// ## 댓글 타입에 따른 ajax ##
 		function replyAction(data, url) {
 			doc = '';
+			before = 0;
 			console.log('url = ' + url);
 			console.log('data = ' + data);
-			$
-					.ajax({
-						type : "POST",
-						url : url,
-						data : data,
-						dataType : 'json',
-						cache : false,
-						success : function(data) {
-							console.log(data);
+			$.ajax({
+				type : "POST",
+				url : url,
+				data : data,
+				dataType : 'json',
+				cache : false,
+				success : function(data) {
+				console.log(data);
 
-							$('.coment-area').empty();
-							$('.comment ins').text('');
-							$('.comment ins').text(data.listcount);
+				$('.coment-area').empty();
+				$('.comment ins').text('');
+				$('.comment ins').text(data.listcount);
 
-							// 댓글 존재
-							if (data.listcount != 0) {
-								doc += '<ul class = we-comet>';
-								$(data.comment)
-										.each(
-												function(index, item) {
-													doc += '<li>';
-													doc += '	<div class="comet-avatar">';
-													if (item.profileFile == null) {
-														doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
-													} else {
-														doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
-													}
-													doc += '	</div>';
-													doc += '	<div class="we-comment">';
-													doc += '		<div class="coment-head">';
-													doc += '			<h5><a href="javascript:memDetail('
-															+ item.groupKey
-															+ ','
-															+ item.userKey
-															+ ')" title="">'
-															+ item.groupNickname
-															+ '</a></h5>';
-													doc += '			<span>'
-															+ item.commentDate
-															+ '</span>';
-													doc += '			<a class="we-reply" href="javascript:commentReply('
-															+ item.commnetNum
-															+ ')" title="Reply"><i class="fa fa-reply"></i></a>';
-													doc += '			<a class="update" href="javascript:commentUpdate('
-															+ item.commnetNum
-															+ ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
-													doc += '			<a class="delete" href="javascript:commentDelete('
-															+ item.commnetNum
-															+ ')" title="Update"><i class="far fa-trash-alt"></i></a>';
-													doc += '		</div>';
-													doc += '		<p>'
-															+ item.commentContent
-															+ '</p>';
-													doc += '	</div>';
-													doc += '</li>';
-												}); // each end
-							} else { // 댓글 없음
-								doc += '<li>';
-								doc += '	<div style = "text-align : center">등록된 댓글이 없습니다.</div>';
+				// 댓글 존재할 경우 
+				if (data.listcount != 0) {
+					before = 0;
+					doc += '<ul class = we-comet>';
+					
+					// 반복한다.
+					$(data.comment).each(function(index, item) {
+						// 공개댓글인 경우
+						if (item.commentshow == 0) {
+							if (item.commemtReRef != before && before > 0) {
 								doc += '</li>';
 							}
-
-							doc += '<li>';
-							doc += '	<a href = "#" title = "" class = "showmore underline">more comments</a>';
-							doc += '</li>';
-							/* 댓글 등록창 부분 */
-							doc += '<li class = "post-comment">';
-							doc += '	<div class="comet-avatar">';
-							doc += "		<img src= \"<spring:url value='/image" + data.profileFile + "'/>\" class = 'group-img' alt = ''/>";// 여기 이미지 가져오는 객체 이름 바꿔야 함
-							doc += '	</div>';
-							doc += '	<div class="post-comt-box">';
-							doc += '		<form method = "post" id = "ReplyAction" onSubmit = "return false;">';
-							doc += '			<input type = "hidden" name = "commentNum" value = "">';
-							doc += '			<input type = "hidden" name = "commentshow" value = "">';
-							doc += '			<input type = "hidden" name = "commentType" value = "0">';
-							/* 댓글 입력창 */
-							doc += '			<textarea placeholder="Post your comment"></textarea>';
-							doc += '			<button type = "button" class = "secretbtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>';
-							doc += '			<button type = "submit" class = "glyphicon glyphicon-send"></button>';
-							doc += '		</form>';
-							doc += '	</div>';
-							doc += '</li>';
-							doc += '</ul>';
-							$('.coment-area').append(doc);
-						},
+							
+							if (item.commentReRef != before) {
+								doc += '<li>';
+								doc += '	<div class="comet-avatar">';
+								if (item.profileFile == null) {
+									doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
+								} else {
+									doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+								}
+								doc += '	</div>';
+								doc += '	<div class="we-comment">';
+								doc += '		<div class="coment-head">';
+								doc += '			<h5><a href="javascript:memDetail(' + item.groupKey + ',' + item.userKey + ')" title="">' + item.groupNickname + '</a></h5>';
+								doc += '			<span>' + item.commentDate + '</span>';
+								doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
+								/* 글쓴이어야만 수정/삭제 보이게 */
+								if (data.loginuser == item.userKey) {
+									doc += '			<a class="update" href="javascript:commentUpdate(' + item.commnetNum + ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
+									doc += '			<a class="delete" href="javascript:commentDelete(' + item.commnetNum + ')" title="Update"><i class="far fa-trash-alt"></i></a>';
+								}
+								doc += '		</div>';
+								doc += '		<p>' + item.commentContent + '</p>';
+								doc += '	</div>';
+							}
+							/* 원문글에 대한 댓글 */			
+							if (item.commemtReRef == before) {
+								doc += '<ul>';
+								doc += '<li>';
+								doc += '	<div class="comet-avatar">';
+								/* 회원 프사 유무 */
+								if (item.profileFile == null) {
+									doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
+								} else {
+									doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+								}
+								doc += '	</div>';
+								doc += '	<div class="we-comment">';
+								doc += '		<div class="coment-head">';
+								doc += '			<h5><a href="javascript:memDetail(' + item.groupKey + ',' + item.userKey + ')" title="">' + item.groupNickname + '</a></h5>';
+								doc += '			<span>' + item.commentDate + '</span>';
+								doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
+								/* 댓쓴이어야 수정/삭제 보이게 */
+								if (data.loginuser == item.userKey) {
+									doc += '			<a class="update" href="javascript:commentUpdate(' + item.commnetNum + ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
+									doc += '			<a class="delete" href="javascript:commentDelete(' + item.commnetNum + ')" title="Update"><i class="far fa-trash-alt"></i></a>';
+								}
+								doc += '		</div>';
+								doc += '		<p>' + item.commentContent + '</p>';
+								doc += '	</div>';
+								doc += '</li>';
+								doc += '</ul>';
+							}
+						}
+						// 비밀댓글
+						if (item.commentshow == 1) {
+							if (item.commemtReRef != before && before > 0) {
+								doc += '</li>';
+							}
+							
+							if (item.commemtReRef != before) {
+								// 로그인한 유저가 글쓴이거나 댓쓴이일 때
+								if (data.loginuser == item.userKey || data.loginuser == $('input[name=postkey]').val()) {
+									doc += '<li>';
+									doc += '	<div class="comet-avatar">';
+									/* 프사 유무 */
+									if (item.profileFile == null) {
+										doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
+									} else {
+										doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+									}
+									doc += '	</div>';
+									doc += '	<div class="we-comment">';
+									doc += '		<div class="coment-head">';
+									doc += '			<h5><a href="javascript:memDetail(' + item.groupKey + ',' + item.userKey + ')" title="">' + item.groupNickname + '</a></h5>';
+									doc += '			<span>' + item.commentDate + '</span>';
+									doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
+									/* 댓쓴이 본인? */
+									if (data.loginuser == item.userKey) {
+										doc += '			<a class="update" href="javascript:commentUpdate(' + item.commnetNum + ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
+										doc += '			<a class="delete" href="javascript:commentDelete(' + item.commnetNum + ')" title="Update"><i class="far fa-trash-alt"></i></a>';
+									}
+									doc += '		</div>';
+									doc += '		<p>' + item.commentContent + '</p>';
+									doc += '	</div>';
+								}
+							}
+							
+							// 대댓
+ 							if (item.commemtReRef == before) {
+								doc += '<ul>';
+								doc += '<li>';
+								doc += '	<div class="comet-avatar">';
+								if (item.profileFile == null) {
+									doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
+								} else {
+									doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+								}
+								doc += '	</div>';
+								doc += '	<div class="we-comment">';
+								doc += '		<div class="coment-head">';
+								doc += '			<h5><a href="javascript:memDetail(' + item.groupKey + ',' + item.userKey + ')" title="">' + item.groupNickname + '</a></h5>';
+								doc += '			<span>' + item.commentDate + '</span>';
+								doc += '		</div>';
+								doc += '		<button type = "button" class = "secretbtn">';
+								doc += '			<i class = "fas fa-lock" aria-hidden = "true"></i>';
+								doc += '		</button>';
+								doc += '		<p style = "display : inline-block">비밀 댓글입니다.</p>';
+								doc += '	</div>';
+								doc += '</li>';
+								doc += '</ul>';
+							}					
+						} // if 비댓 끝
+								before = item.commemtReRef;
+					}); // each end
+							
+				} else { // 댓글 없음
+					doc += '<li>';
+					doc += '	<div style = "text-align : center">등록된 댓글이 없습니다.</div>';
+					doc += '</li>';
+				}
+				
+				/* 댓글 등록창 부분 */
+				doc += '<li class = "post-comment">';
+				doc += '	<div class="comet-avatar">';
+				if (data.profileFile == null) {
+					doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
+				} else {
+					doc += "		<img src= \"<spring:url value='/image" + data.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+				}
+				doc += '	</div>';
+				doc += '	<div class="post-comt-box">';
+				doc += '		<form method = "post" id = "ReplyAction" onSubmit = "return false;">';
+				doc += '			<input type = "hidden" name = "commentNum" value = "">';
+				doc += '			<input type = "hidden" name = "commentshow" value = "">';
+				doc += '			<input type = "hidden" name = "commentType" value = "0">';
+				
+				/* 댓글 입력창 */
+				doc += '			<textarea placeholder="Post your comment"></textarea>';
+				doc += '			<button type = "button" class = "secretbtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>';
+				doc += '			<button type = "submit" class = "glyphicon glyphicon-send"></button>';
+				doc += '		</form>';
+				doc += '	</div>';
+				doc += '</li>';
+				doc += '</ul>';
+							
+				$('.coment-area').append(doc);
+			},
 						error : function(request, status, error) {
 							console.log("code : " + request.status + "\n"
 									+ "message : " + request.responseText
@@ -1426,6 +1249,98 @@ textarea:hover {
 	}); // ready end
 </script>
 <script>
+function memDetail(groupKey, userKey) {
+	var f = document.memDetail; // 폼 name
+	f.groupkey.value = groupKey; // input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
+	f.userkey.value = userKey; // input 태그 중 name이 userKey인 값에 대해서 userkey를 넘긴다.
+	f.action = "G_mem_detail.net"; // 이동할 페이지
+	f.method = "post"; // POST 방식으로 데이터 전송
+	f.submit(); // 폼 전송
+};
+
+$(
+		function() {
+			/* 비밀댓글, 댓글 등록 버튼과 겹치지 않게 하기 위한 textarea 라인 당 글자수 제한 */
+			$('textarea').keyup(function() {
+				var len = $(this).val().length;
+				var str = $(this).val();
+
+				if (str % 32 == 0) {
+					//var b = $(this).val(str + '\n');
+					//$(this).html(b.html.replace(/\n/g, '<br/>'));
+				}
+			});
+
+			var submit = '';
+
+			// 하트 눌렀을 때
+			$('.like i').click(
+					function() {
+						var isLiked = $('#isLiked').val();
+						if (isLiked == 1) { // 좋아요 했다가 취소할 것임
+							submit = 'status=' + isLiked + '&postKey='
+									+ $('#detailPostKey').val()
+									+ '&groupKey='
+									+ $('#detailGroupKey').val();
+							likes(submit);
+						} else { // 좋아요 이제 할 것임
+							submit = 'status=' + isLiked + '&postKey='
+									+ $('#detailPostKey').val()
+									+ '&groupKey='
+									+ $('#detailGroupKey').val();
+							likes(submit);
+						}
+					});
+
+			function likes(data) {
+				$.ajax({
+					url : "changeLike",
+					data : data,
+					type : "POST",
+					success : function(data) {
+						switch (data.result) {
+						case 0:
+							// 좋아요 취소 상태
+							$('.like i').removeClass('fas fa-heart')
+									.addClass('far fa-heart');
+							$('#isLiked').val(data.result);
+							// ins 태그는 val() 안 먹힌다.
+							$('.like ins').text('');
+							$('.like ins').text(data.likeCount);
+							break;
+						case 1:
+							// 좋아요 상태
+							$('.like i').removeClass('far fa-heart')
+									.addClass('fas fa-heart');
+							$('#isLiked').val(data.result);
+							$('.like ins').text('');
+							$('.like ins').text(data.likeCount);
+							break;
+						case -1:
+							// 좋아요 취소 실패
+							alert('좋아요 작업 실패했습니다. 다시 시도해주세요.');
+							break;
+						case -2:
+							// 좋아요 실패
+							alert('로그인 후 이용해주세요.');
+							location.href = 'login';
+							break;
+						case -3:
+							// 로그인 x
+							alert('로그인 후 이용해주세요.');
+							location.href = 'login';
+							break;
+						}
+					},
+					error : function(request, status, error) {
+						console.log("code : " + request.status + "\n"
+								+ "message : " + request.responseText
+								+ "\n" + "error : " + error);
+					}
+				}); // ajax end
+			}
+			; // likes end
+		})
 	function memDetail(userkey, groupkey) {
 		var f = document.memDetail; // 폼 name
 		f.userkey.value = userkey; // input 태그 중 name이 groupkey인 값에 대해서 userkey를 넘긴다.

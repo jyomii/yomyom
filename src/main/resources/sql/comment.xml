@@ -27,7 +27,7 @@
 	<insert id = "commentReply" parameterType = "map">
 		INSERT INTO GCOMMENT
 		VALUES(GCOMMENTSEQ.NEXTVAL, #{postkey}, #{userkey}, #{content},
-			   #{commentnum}, #{commentReLev}, #{commentReSeq}, SYSDATE, #{groupkey}, #{commentshow})
+			   #{commentnum}, #{commentReLev}, #{commentReSeq}, SYSDATE, #{commentshow}, #{groupkey})
 	</insert>
 	
 	<!-- 댓글이 달리는 원댓의 정보를 가져온다. -->
@@ -38,7 +38,7 @@
 	</select>
 	
 	<!-- 댓글 삭제 -->
-	<delete id = "delete" parameterType = "comment">
+	<delete id = "commentDelete" parameterType = "comment">
 	<![CDATA[
 		DELETE FROM GCOMMENT
 			   WHERE COMMEMTREREF = #{commemtReRef}
@@ -49,10 +49,10 @@
 				   						FROM GCOMMENT
 				   						WHERE COMMEMTREREF = #{commemtReRef}
 									    AND COMMENTRELEV = #{commentReLev}
-									    AND COMMENTRESEQ > #{commentReSeq},
+									    AND COMMENTRESEQ > #{commentReSeq}),
 								    (SELECT MAX(COMMENTRESEQ) + 1
 								    FROM GCOMMENT
-								    WHERE COMMEMTREREF = #{commentReSeq}))
+								    WHERE COMMEMTREREF = #{commemtReRef}))
 								    ) 
 	]]>
 	</delete>
@@ -69,5 +69,28 @@
 		SELECT COUNT(*)
 		FROM GCOMMENT
 		WHERE POSTKEY = #{postkey} AND GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 내가 단 댓글의 개수 -->
+	<select id = "getMyCommentCount" resultType = "int" parameterType = "int">
+		SELECT COUNT(*)
+		FROM GCOMMENT
+		WHERE USERKEY = #{loginuser}
+	</select>
+	
+	<!-- 내가 단 댓글 리스트 -->
+	<select id = "getMyComment" resultType = "post" parameterType = "map">
+		SELECT * FROM (	SELECT ROWNUM R, C.*
+						FROM (	SELECT USERKEY, POSTKEY, COMMENTCONTENT, GROUPKEY, REPLYCOUNT, POSTTITLE, TO_CHAR(COMMENTDATE, 'YYYY-MM-DD') COMMENTDATE, POSTREADCOUNT, COMMENTSHOW 
+								FROM GCOMMENT LEFT JOIN (SELECT POSTKEY, POSTTITLE, REPLYCOUNT, POSTREADCOUNT
+														 FROM POST LEFT JOIN (SELECT POSTKEY, COUNT(POSTKEY) REPLYCOUNT
+													 						  FROM GCOMMENT
+													 						  GROUP BY POSTKEY)
+													 	 USING (POSTKEY)) 
+								USING(POSTKEY)					 						  
+								WHERE USERKEY = #{userkey}
+								ORDER BY COMMENTDATE DESC) C
+					)
+		<![CDATA[WHERE R >= #{START} AND R <= #{END}]]>	
 	</select>
 </mapper>

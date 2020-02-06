@@ -29,7 +29,7 @@
 											title="">모임 기본 설정</a></li>
 										<li><i class="ti-mouse-alt"></i> <a
 											href="groupin_group_admin_scheduleList.net?groupkey=${group.groupKey }" title="">모임 일정 관리</a></li>
-										<li><i class="ti-heart"></i> <a href="#"
+										<li><i class="ti-heart"></i> <a href="groupMember?groupkey=${group.groupKey}"
 											title="">모임 회원 관리</a></li>
 										<li><i class="ti-settings"></i> <a
 											href="groupin_group_admin_board.net?groupkey=${group.groupKey }" title="">모임 게시판 관리</a></li>

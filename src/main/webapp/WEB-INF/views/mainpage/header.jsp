@@ -197,13 +197,23 @@ list-style: none;
 						</c:otherwise>
 					</c:choose>
 
-
+					<form name = "myWrote">
+						<input type = "hidden" name = "menu" value = "">
+					</form>
 				</div>
 			</div>
 		</div>
 		<!-- 기존 화면 header 끝 -->
-
+		
 		<script>
+			function myWrote(menu) {
+				var f = document.myWrote;		// 폼 name
+				f.menu.value = menu;			// input 태그 중 name이 status인 값에 대해서 status를 넘긴다.
+				f.action = "G_mem_detail.net";	// 이동할 페이지
+				f.method = "post";				// POST 방식으로 데이터 전송
+				f.submit();		
+			}
+			
 			init_menu();
 			
 			function admin(link){

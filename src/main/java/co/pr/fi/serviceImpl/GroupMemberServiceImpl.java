@@ -116,6 +116,32 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		return dao.isGroupMem(keys);
 	}
 	
+	@Override
+	public int getMyPostCount(int loginuser) {
+		return dao.getMyPostCount(loginuser);
+	}
+	
+	@Override
+	public List<Post> getMyPost(int loginuser, int page, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map = range(page, limit);
+		map.put("loginuser", loginuser);
+		return dao.getMyPost(map);
+	}
+	
+	@Override
+	public int getMyCommentCount(int loginuser) {
+		return dao.getMyCommentCount(loginuser);
+	}
+
+	@Override
+	public List<Post> getMyComment(int loginuser, int page, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map = range(page, limit);
+		map.put("loginuser", loginuser);
+		return dao.getMyComment(map);
+	}
+	
 	public Map<String, Object> range (int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int startrow = (page - 1) * limit + 1;
@@ -124,6 +150,4 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		map.put("END", endrow);
 		return map;
 	}
-
-
 }
