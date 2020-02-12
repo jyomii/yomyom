@@ -25,9 +25,9 @@ public interface GroupService {
 
 	public int groupage(int agekey);
 
-	public String groupdcategory(int categorykey, int groupkey);
+	public String groupdcategory(int groupkey);
 
-	public String groupscategory(int categorykey, int groupkey);
+	public String groupscategory(int groupkey);
 
 	public int groupmembers(int groupkey);
 
@@ -105,5 +105,7 @@ public interface GroupService {
 	public List<Post> getBoardListY(int page, int limit, int boardkey);
 
 	public int getScheduleListCount(int groupkey);
+
+	public List<Post> groupafterlist(int groupkey);
 
 }

@@ -11,8 +11,13 @@
 		<input type="hidden" id="sboardtype" value="${boardtype }">
 	<div class="feature-photo test1">
 		<figure>
-			<img id="groupPageImg"
+			<c:if test="${empty group.groupCFile}">
+				<img id="groupPageImg" src="resources/images/resources/timeline-1.jpg" alt="">
+			</c:if>
+			<c:if test="${not empty group.groupCFile}">
+				<img id="groupPageImg"
 				src="<spring:url value='/image${group.groupCFile }'/>" alt="" />
+			</c:if>
 			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
 		</figure>
 		<c:if test="${userinfo.userGrade==1}">
@@ -29,15 +34,19 @@
 		</form>
 		</c:if>
 		<!-- **********모임 대문 사진 수정*********** -->
-
 		<div class="container-fluid height-for-white">
 			<div class="row merged">
 				<div class="col-lg-2 col-sm-3">
 					<div class="user-avatar">
 						<!-- 그룹 사진 -->
 						<figure>
-							<img id="groupImg"
+							<c:if test="${empty group.groupDFile}">
+								<img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">
+							</c:if>
+							<c:if test="${not empty group.groupDFile}">
+								<img id="groupImg"
 								src="<spring:url value='/image${group.groupDFile }'/>" />
+							</c:if>
 							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 							<!-- **********모임 사진 수정*********** -->
 							<c:if test="${userinfo.userGrade==1}">
@@ -73,11 +82,11 @@
 						<div class="forgroupnamewidth1">
 							<!-- 그룹 간단 정보 -->
 							<ul>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
+								<li class="forgroupnameleft"><b>카테고리:</b> ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
+								<li class="forgroupnameleft"><b>지역:</b> ${groupswhere }&nbsp;${groupdwhere }</li>
+								<li class="forgroupnameleft"><b>연령대:</b> ${groupage } 대</li>
+								<li class="forgroupnameleft"><b>회원수:</b> ${groupmembers }명</li>
+								<li class="forgroupnameleft"><b>설립일:</b> ${group.groupDate }</li>
 							</ul>
 							<!-- 그룹 간단 정보 -->
 						</div>

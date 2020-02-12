@@ -525,9 +525,13 @@ top:-9px;
 							<!-- 그룹 정모 후기 목록 -->
 							<div class="central-meta item">
 								<div class="groups">
-									<span><i class="fa fa-users"></i>정모 후기</span>
+									<span><i class="fa fa-users"></i>최근 정모 후기</span>
 								</div>
 								<br>
+								<c:if test="${empty groupafterlist }">
+								후기글이 없습니다
+								</c:if>
+								<c:if test="${not empty groupafterlist }">
 								<div class="user-post">
 									<div class="friend-info">
 										<figure>
@@ -544,7 +548,6 @@ top:-9px;
 											<img src="resources/images/resources/user-post.jpg" alt="">
 											<div class="we-video-info">
 												<ul>
-
 													<li><span class="views" data-toggle="tooltip"
 														title="views"> <i class="fa fa-eye"></i> <ins>1.2k</ins>
 													</span></li>
@@ -715,6 +718,7 @@ top:-9px;
 										</ul>
 									</div>
 								</div>
+								</c:if>
 							</div>
 							<!-- 그룹 정모 후기 목록 -->
 

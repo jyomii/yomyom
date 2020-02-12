@@ -15,8 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -146,10 +144,7 @@ public class GroupMasterController {
 				else
 					group.setGroupCFile(fileDBName);
 			}
-
 		}
-		System.out.println(group);
-
 		GUsers user = memberService.getUsers((String) session.getAttribute("id"));
 		group.setUserKey(user.getUserKey());
 
@@ -206,9 +201,16 @@ public class GroupMasterController {
 			groupBoard.setGroupKey(group.getGroupKey());
 			groupBoard.setBoardName("모임 일정 게시판");
 			groupBoard.setBoardType("N");
-
+			
 			groupMasterService.insertGroupBoard(groupBoard);
 
+			// 기본적으로 후기 게시판 생성
+			GGroupBoard groupBoard1 = new GGroupBoard();
+			groupBoard1.setGroupKey(group.getGroupKey());
+			groupBoard1.setBoardName("모임 후기 게시판");
+			groupBoard1.setBoardType("H");
+			
+			groupMasterService.insertGroupBoard(groupBoard1);
 		} else {
 			out.print("alert('모임 생성에 실패했습니다.');history.back();");
 		}
@@ -348,9 +350,9 @@ public class GroupMasterController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(),groupkey);
+		String dcategory = groupservice.groupdcategory(groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(),groupkey);
+		String scategory = groupservice.groupscategory(groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);
