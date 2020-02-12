@@ -40,8 +40,11 @@ DROP SEQUENCE voteSEQ;
 
 
  DROP TABLE calendar;
+ DROP TABLE calendar CASCADE CONSTRAINTS;
 
 DROP TABLE POST;
+DROP TABLE department CASCADE CONSTRAINTS;
+DROP TABLE POST CASCADE CONSTRAINTS;
 DROP  SEQUENCE postSEQ;
 
 DROP TABLE ggroupboard;
@@ -81,10 +84,6 @@ CREATE TABLE glocation
     CONSTRAINT GLOCATIONPK PRIMARY KEY (locationkey)
 );
 
-
-
-
-
 CREATE SEQUENCE glocationSEQ
 START WITH 1
 INCREMENT BY 1;
@@ -95,9 +94,6 @@ CREATE TABLE gage
     CONSTRAINT GAGEPK PRIMARY KEY (agekey)
 );
 
-
-
-
 CREATE TABLE gcategory
 (
     dcategorykey     NUMBER          NOT NULL, 
@@ -105,14 +101,9 @@ CREATE TABLE gcategory
     CONSTRAINT GCATEGORYPK PRIMARY KEY (dcategorykey)
 );
 
-
 CREATE SEQUENCE gcategorySEQ
 START WITH 1
 INCREMENT BY 1;
-
-
-
-
 
 CREATE TABLE gcategory2
 (
@@ -122,28 +113,14 @@ CREATE TABLE gcategory2
     CONSTRAINT GCATEGORY2PK PRIMARY KEY (scategorykey)
 );
 
-
 CREATE SEQUENCE gcategory2SEQ
 START WITH 1
 INCREMENT BY 1;
 
-
-
 ALTER TABLE gcategory2
     ADD CONSTRAINT FKgcategory2dcategorykey FOREIGN KEY (dcategorykey)
         REFERENCES gcategory (dcategorykey) on delete cascade;
-
-
-
-
-
-
-
-
-
-
-
-
+        
 -- glocation Table Create SQL
 CREATE TABLE gusers
 (
@@ -222,18 +199,10 @@ CREATE TABLE ggroup
     grouptype         CHAR(1)          NOT NULL, 
     groupdate		  DATE			   NOT NULL,
     groupstatus        NUMBER           NOT NULL,
+    groupkatalk varchar2(1000),
     CONSTRAINT GGROUPPK PRIMARY KEY (groupkey)
 );
-/* 그룹단톡방 주소 컬럼 추가합니다 -나상엽-*/
-ALTER TABLE ggroup ADD (groupkatalk varchar2(1000));
--- 이미 ggroup 테이블 생성했다면 아래의 쿼리문 추가 실행,,
--- ALTER TABLE ggroup ADD (groupddate DATE NOT NULL);
--- ALTER TABLE ggroup ADD (groupstatus NUMBER NOT NULL);
---ALTER TABLE ggroup MODIFY(groupdfile VARCHAR2(100) null);
---ALTER TABLE ggroup MODIFY(groupidorigin VARCHAR2(100) null);
---ALTER TABLE ggroup MODIFY(groupcfile VARCHAR2(100) null);
---ALTER TABLE ggroup MODIFY(groupcorigin VARCHAR2(100) null);
-                                            
+                                       
 CREATE SEQUENCE ggroupSEQ
 START WITH 1
 INCREMENT BY 1;
@@ -278,12 +247,6 @@ CREATE TABLE ggroupmember
     regdate		date		,
     CONSTRAINT GGROUPMEMBERPK PRIMARY KEY (groupkey,userkey)
 );
-					     
-					     /*
-					     
-					     ALTER TABLE ggroupmember ADD( regdate date);
-
-					     */
 
 /*
     유저 등급 :
@@ -303,14 +266,6 @@ ALTER TABLE ggroupmember
     ADD CONSTRAINT FKggroupmemberuserkeygu FOREIGN KEY (userkey)
         REFERENCES gusers (userkey) on delete cascade;
 
-
-
-
-
-
-
-
-
 -- glocation Table Create SQL
 CREATE TABLE ggroupboard
 (
@@ -322,22 +277,13 @@ CREATE TABLE ggroupboard
     CONSTRAINT GGROUPBOARDPK PRIMARY KEY (boardkey)
 );
 
-
-
-
 CREATE SEQUENCE ggroupboardSEQ
 START WITH 1
 INCREMENT BY 1;
 
-
 ALTER TABLE ggroupboard
     ADD CONSTRAINT FKggroupboardgroupkeygg FOREIGN KEY (groupkey)
         REFERENCES ggroup (groupkey) on delete cascade;
-
-
-
-
-
 
 
 CREATE TABLE post
@@ -357,29 +303,19 @@ CREATE TABLE post
   FOREIGN KEY(boardkey) REFERENCES ggroupboard(boardkey) on delete cascade
 );
 
-
-					     
-					     
 ALTER TABLE post ADD (boardvote varchar2(5));
 ALTER TABLE post ADD (boardcalendar varchar2(5));
 ALTER TABLE post ADD (boardladder varchar2(5));
 ALTER TABLE post ADD (boardmap varchar2(5));
 					
-
-
 CREATE SEQUENCE postSEQ
 START WITH 1
 INCREMENT BY 1;
 
-
-
-
-
-
 CREATE TABLE calendar
 (
     cstartdate             date     NOT NULL, 
-    cenddate               varchar2(50)      NOT NULL, 
+    cenddate               varchar2(50), 
     cmoney                  varchar2(50)    NOT NULL, 
     postkey                 NUMBER    NOT NULL, 
  
@@ -388,12 +324,11 @@ CREATE TABLE calendar
 );
 					     
 /*나상엽 추가*/
-ALTER TABLE calendar ADD (cmoneytype varchar2(5));
+ALTER TABLE calendar ADD (cmoneytype varchar2(50));
 ALTER TABLE calendar ADD (startdate varchar2(50));
 ALTER TABLE calendar ADD (starttime varchar2(50));
 ALTER TABLE calendar ADD (startminute varchar2(50));
-
-ALTER TABLE calendar ADD (maxperson varchar2(5));
+ALTER TABLE calendar ADD (maxperson varchar2(50));
 ALTER TABLE calendar ADD (location varchar2(50));
 ALTER TABLE calendar ADD (startdate varchar2(50));
 ALTER TABLE calendar ADD (starttime varchar2(50));
@@ -407,12 +342,6 @@ ALTER TABLE calendar
     ADD CONSTRAINT FKcalendargrouplocationgl FOREIGN KEY (grouplocation)
         REFERENCES glocation (locationkey);
         
-
-
-
-
-
-
 -- glocation Table Create SQL
 CREATE TABLE vote
 (
@@ -426,27 +355,20 @@ CREATE TABLE vote
     CONSTRAINT VOTEPK PRIMARY KEY (votekey)
 );
 
-
 CREATE SEQUENCE voteSEQ
 START WITH 1
 INCREMENT BY 1;
-
-
 
 ALTER TABLE vote
     ADD CONSTRAINT FKvotepostkeypostpostkey FOREIGN KEY (postkey)
         REFERENCES post (postkey) on delete cascade;
         
-        
-    
 -- glocation Table Create SQL
 CREATE TABLE gusercategory
 (
     userkey        NUMBER    NOT NULL, 
     categorykey    NUMBER    NOT NULL
 );
-
-
 
 ALTER TABLE gusercategory
     ADD CONSTRAINT FKgusercategoryuserkeyg FOREIGN KEY (userkey)
@@ -455,10 +377,6 @@ ALTER TABLE gusercategory
 ALTER TABLE gusercategory
     ADD CONSTRAINT FKgusercategorycategoryke FOREIGN KEY (categorykey)
         REFERENCES gcategory2 (scategorykey) on delete cascade;
-
-
-
-
 
 -- glocation Table Create SQL
 CREATE TABLE usermessage
@@ -488,9 +406,6 @@ ALTER TABLE usermessage
     ADD CONSTRAINT FKusermessagemgreceivegu FOREIGN KEY (mgreceive)
         REFERENCES gusers (userkey) on delete cascade;
         
-
-
-
 -- glocation Table Create SQL
 CREATE TABLE prboard
 (
@@ -502,32 +417,23 @@ CREATE TABLE prboard
     CONSTRAINT PRBOARDPK PRIMARY KEY (prkey)
 );
 
-
-
 CREATE SEQUENCE prboardSEQ
 START WITH 1
 INCREMENT BY 1;
-
 
 ALTER TABLE prboard
     ADD CONSTRAINT FKprboarduserkeyggroupm FOREIGN KEY (userkey, groupkey)
         REFERENCES ggroupmember (userkey, groupkey) on delete cascade;
         
-
-
-
-
 -- glocation Table Create SQL
 CREATE TABLE calendarmember
 (
     userkey     NUMBER    NOT NULL, 
     postkey     NUMBER    NOT NULL, 
-    groupkey    NUMBER    NOT NULL, 
+    groupkey    NUMBER    NOT NULL,
+    sm varchar2(5),
     CONSTRAINT CALENDARMEMBERPK PRIMARY KEY (userkey, postkey, groupkey)
 );
-/*회비 낸사람 안낸사람 컬럼 추가 나상엽*/
-ALTER TABLE calendarmember ADD (sm varchar2(5));
-update CALENDARMEMBER set sm = 's';
 
 ALTER TABLE calendarmember
     ADD CONSTRAINT FKcalendarmemberpostkeyca FOREIGN KEY (postkey)
@@ -536,8 +442,6 @@ ALTER TABLE calendarmember
 ALTER TABLE calendarmember
     ADD CONSTRAINT FKcalendarmemberuserkeyg FOREIGN KEY (userkey, groupkey)
         REFERENCES ggroupmember (userkey, groupkey) on delete cascade;
-
-
 
 -- glocation Table Create SQL
 CREATE TABLE postlike
@@ -548,8 +452,6 @@ CREATE TABLE postlike
     CONSTRAINT POSTLIKEPK PRIMARY KEY (postkey, userkey, groupkey)
 );
 
-
-
 ALTER TABLE postlike
     ADD CONSTRAINT FKpostlikepostkeypostpos FOREIGN KEY (postkey)
         REFERENCES post (postkey) on delete cascade;
@@ -557,9 +459,6 @@ ALTER TABLE postlike
 ALTER TABLE postlike
     ADD CONSTRAINT FKpostlikeuserkeyggroup FOREIGN KEY (userkey, groupkey)
         REFERENCES ggroupmember (userkey, groupkey) on delete cascade;
-
-
-
 
 CREATE TABLE maps
 (
@@ -575,14 +474,10 @@ CREATE TABLE maps
    mapdetailseq	number
 );
 
-
-
 ALTER TABLE maps
     ADD CONSTRAINT FK_maps_post_key_post_post_key FOREIGN KEY (postkey)
         REFERENCES post (postkey);
-                                                 
-                                                 
-        
+                                                
 -- glocation Table Create SQL
 CREATE TABLE ladder
 (
@@ -592,17 +487,13 @@ CREATE TABLE ladder
     CONSTRAINT LADDERPK PRIMARY KEY (ladderkey)
 );
 
-
 CREATE SEQUENCE ladderSEQ
 START WITH 1
 INCREMENT BY 1;
 
-
-
 ALTER TABLE ladder
     ADD CONSTRAINT FKladderpostkeypostpostk FOREIGN KEY (postkey)
         REFERENCES post (postkey) on delete cascade;
-        
         
 -- glocation Table Create SQL
 CREATE TABLE gcomment
@@ -624,17 +515,12 @@ CREATE SEQUENCE gcommentSEQ
 START WITH 1
 INCREMENT BY 1;       
         
-        
-        
-        
 ALTER TABLE gcomment
     ADD CONSTRAINT FKgcommentpostkeypostpos FOREIGN KEY (postkey)
         REFERENCES post (postkey) on delete cascade;
 ALTER TABLE gcomment
     ADD CONSTRAINT FKgcommentuserkeyggroup FOREIGN KEY (userkey, groupkey)
         REFERENCES ggroupmember (userkey, groupkey) on delete cascade;
-        
-        
         
 -- glocation Table Create SQL
 CREATE TABLE votemembber
@@ -651,9 +537,6 @@ CREATE SEQUENCE votemembberSEQ
 START WITH 1
 INCREMENT BY 1;
 
-
-
-
 ALTER TABLE votemembber
     ADD CONSTRAINT FKvotemembbervotekeyvote FOREIGN KEY (votekey)
         REFERENCES vote (votekey) on delete cascade;
@@ -661,9 +544,7 @@ ALTER TABLE votemembber
 ALTER TABLE votemembber
     ADD CONSTRAINT FKvotemembberuserkeyggro FOREIGN KEY (userkey, groupkey)
         REFERENCES ggroupmember (userkey, groupkey) on delete cascade;
-        
-   
-        
+               
 -- glocation Table Create SQL
 CREATE TABLE bfile
 (

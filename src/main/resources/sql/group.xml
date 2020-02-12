@@ -352,12 +352,8 @@
 	</select>
 
 	<insert id="addschedule" parameterType="post">
-		<selectKey keyProperty="postKey" resultType="int"
-			order="BEFORE">
-			select nvl((select max(postKey) from post)+1,0) from dual
-		</selectKey>
 		insert into post
-		values(#{postKey},#{postTitle},#{postContent},sysdate,#{userKey},'n','n','n','n',#{groupKey},'n','y',#{boardKey},0)
+		values((select nvl((max(postKey))+1,0) from post),#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
 	</insert>
 
 	<select id="getgroupboardkey" resultType="int"
@@ -483,5 +479,10 @@
 		select * from (select rownum rnum, A.* from (select postkey,posttitle,postcontent,to_char(postdate,'yyyy-mm-dd hh24:mi') postdate,userkey,boardvote,boardcalendar,boardladder,boardmap,groupkey,
 postoptionreply,postoptionsearch,boardkey,postreadcount,groupnickname from post left join (select groupnickname, userkey from ggroupmember) using(userkey) order by postdate desc) A) where
 		rnum&gt;=#{start} AND rnum&lt;=#{end} and boardkey = #{boardkey}
+	</select>
+	
+	<select id="groupafterlist" resultType="post"
+		parameterType="int">
+		select * from (select rownum rnum, A.* from (select * from post where boardkey=(select boardkey from ggroupboard where boardtype='H' and groupkey = #{groupkey})) A) where rnum = 1
 	</select>
 </mapper>

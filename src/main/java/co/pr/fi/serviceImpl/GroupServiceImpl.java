@@ -62,19 +62,13 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public String groupdcategory(int categorykey, int groupkey) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("categorykey", categorykey);
-		map.put("groupkey", groupkey);
-		return dao.groupdcategory(categorykey);
+	public String groupdcategory(int groupkey) {
+		return dao.groupdcategory(groupkey);
 	}
 
 	@Override
-	public String groupscategory(int categorykey, int groupkey) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("categorykey", categorykey);
-		map.put("groupkey", groupkey);
-		return dao.groupscategory(categorykey);
+	public String groupscategory(int groupkey) {
+		return dao.groupscategory(groupkey);
 	}
 
 	@Override
@@ -469,5 +463,10 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public int getScheduleListCount(int groupkey) {
 		return dao.getschedulelistcount(groupkey);
+	}
+
+	@Override
+	public List<Post> groupafterlist(int groupkey) {
+		return dao.groupafterlist(groupkey);
 	}
 }

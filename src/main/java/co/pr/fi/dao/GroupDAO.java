@@ -227,4 +227,8 @@ public class GroupDAO {
 	public int regornot(Map<String, Integer> list) {
 	      return sqlSession.selectOne("group.regornot", list);
 	   }
+
+	public List<Post> groupafterlist(int groupkey) {
+		return sqlSession.selectOne("group.groupafterlist", groupkey);
+	}
 }

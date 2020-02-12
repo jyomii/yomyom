@@ -92,7 +92,6 @@
 												</div>
 
 												<div class="form-group">
-
 													<select name="whereKey" style="width: 100%;">
 														<option value="0" selected="selected">지역 선택</option>
 														<option value="1">서울특별시</option>

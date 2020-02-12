@@ -107,9 +107,9 @@ public class GroupController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
+		String dcategory = groupservice.groupdcategory(groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
+		String scategory = groupservice.groupscategory(groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);
@@ -117,6 +117,8 @@ public class GroupController {
 		mv.addObject("groupboardlist", groupboardlist);
 		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
 		mv.addObject("groupmemberlist", groupmemberlist);
+		List<Post> groupafterlist = groupservice.groupafterlist(groupkey);
+		mv.addObject("groupafterlist", groupafterlist);
 		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
 		mv.addObject("groupmeetinglist", groupmeetinglist);
 		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
@@ -367,9 +369,9 @@ public class GroupController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
+		String dcategory = groupservice.groupdcategory(groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
+		String scategory = groupservice.groupscategory(groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);
@@ -517,9 +519,9 @@ public class GroupController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
+		String dcategory = groupservice.groupdcategory( groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
+		String scategory = groupservice.groupscategory( groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);
@@ -593,9 +595,9 @@ public class GroupController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
+		String dcategory = groupservice.groupdcategory( groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
+		String scategory = groupservice.groupscategory( groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);
@@ -655,9 +657,9 @@ public class GroupController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
+		String dcategory = groupservice.groupdcategory( groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
+		String scategory = groupservice.groupscategory( groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);
@@ -683,23 +685,20 @@ public class GroupController {
 		return mv;
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/addSchedule.net")
-	public Object addScheduleAjax(Post post, HttpSession session)
+	
+	@PostMapping("/addSchedule.net")
+	public String addSchedule(Post post, HttpSession session, ModelAndView mv)
 			throws JsonParseException, JsonMappingException, IOException {
 		String id = session.getAttribute("id").toString();
 		GUsers guser = groupservice.userkey(id);
+		int groupkey = post.getGroupKey();
 		int userkey = guser.getUserKey();
 		post.setUserKey(userkey);
 		int gboardkey = groupservice.getgroupboardkey(post.getGroupKey());
 		post.setBoardKey(gboardkey);
 		groupservice.addschedule(post);
-		int postkey = post.getPostKey();
 		groupservice.addschedulecalendar(post);
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("postkey", postkey);
-		return map;
+		return "redirect:groupin_group_admin_scheduleList.net?groupkey=" + groupkey;
 	}
 
 	@ResponseBody
@@ -747,9 +746,9 @@ public class GroupController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
+		String dcategory = groupservice.groupdcategory( groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
+		String scategory = groupservice.groupscategory( groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);
@@ -861,67 +860,6 @@ public class GroupController {
 		return map;
 	}
 
-	@GetMapping("/schedulemaps.net")
-	public ModelAndView schedulemaps(@RequestParam(value = "postkey") int postkey, int groupkey, ModelAndView mv,
-			HttpSession session) {
-		String id = "";
-		
-		int userkey = -1;
-		if (session.getAttribute("id") != null) {
-			id = session.getAttribute("id").toString();
-			GUsers guser = groupservice.userkey(id);
-			userkey = guser.getUserKey();
-			mv.addObject("userkey", userkey);
-		} else {
-			mv.addObject("userkey", userkey);
-		}
-		Calendar c = Calendar.getInstance();
-		int month = c.get(Calendar.MONTH) + 1;
-		int year = c.get(Calendar.YEAR);
-		int date = c.get(Calendar.DATE);
-		mv.setViewName("group/groupin_group_scheduleMap");
-		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
-		mv.addObject("userinfo", groupmember);
-		GGroup group = groupservice.groupInfo(groupkey);
-		mv.addObject("group", group);
-		String groupmaster = groupservice.groupmaster(groupkey);
-		mv.addObject("groupmaster", groupmaster);
-		int groupmasterkey = groupservice.groupmasterkey(groupkey);
-		mv.addObject("groupmasterkey", groupmasterkey);
-		GLocation location = groupservice.groupwhere(group.getWhereKey());
-		mv.addObject("groupswhere", location.getSWhere());
-		mv.addObject("groupdwhere", location.getDWhere());
-		int age = groupservice.groupage(group.getAgeKey());
-		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
-		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
-		mv.addObject("groupscategory", scategory);
-		int groupmembers = groupservice.groupmembers(groupkey);
-		mv.addObject("groupmembers", groupmembers);
-		List<GGroupBoard> groupboardlist = groupservice.groupboardlist(groupkey);
-		mv.addObject("groupboardlist", groupboardlist);
-		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
-		mv.addObject("groupmemberlist", groupmemberlist);
-		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
-		mv.addObject("groupmeetinglist", groupmeetinglist);
-		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
-		mv.addObject("groupcalendarlist", groupcalendarlist);
-		mv.addObject("groupcalendarlistCount", groupcalendarlist.size());
-		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
-		mv.addObject("userreggroup", userreggroup);
-		mv.addObject("userreggroupcount", userreggroup.size());
-		for (int i = 0; i < groupcalendarlist.size(); i++) {
-			if (Integer.parseInt(groupcalendarlist.get(i).getStartdate()) == date) {
-				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
-				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
-				mv.addObject("shortschedule", shortschedule);
-			}
-		}
-		mv.addObject("postkey", postkey);
-		return mv;
-	}
-
 	@GetMapping("/map")
 	public String group_freeBoard() {
 		return "exampleMap";
@@ -963,9 +901,9 @@ public class GroupController {
 		mv.addObject("groupdwhere", location.getDWhere());
 		int age = groupservice.groupage(group.getAgeKey());
 		mv.addObject("groupage", age);
-		String dcategory = groupservice.groupdcategory(group.getCategoryKey(), groupkey);
+		String dcategory = groupservice.groupdcategory( groupkey);
 		mv.addObject("groupdcategory", dcategory);
-		String scategory = groupservice.groupscategory(group.getCategoryKey(), groupkey);
+		String scategory = groupservice.groupscategory( groupkey);
 		mv.addObject("groupscategory", scategory);
 		int groupmembers = groupservice.groupmembers(groupkey);
 		mv.addObject("groupmembers", groupmembers);

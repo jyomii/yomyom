@@ -388,6 +388,7 @@ top:-9px;
 							<!-- 그룹장 간단 그룹 소개 -->
 							<div class="central-meta item">
 								
+								
 								<div class="onoff-options">
 											<h5 class="f-title">
 												<i class="ti-settings"></i>모임 기본 설정
@@ -396,15 +397,15 @@ top:-9px;
 											<form id="basicsettingform" action="basicsetting.net?groupkey=${group.groupKey }" method="post">
 												<div class="setting-row">
 													<span>모임 공개 여부</span>
-													<p>공개 / 비공개 설정</p>
+													<p>공개 (O)/ 비공개 (X) 설정</p>
 													<input type="hidden" name="groupkey" value="${group.groupKey }">
-													<c:if test="${group.groupPrivate=='y'}">
+													<c:if test="${group.groupPrivate=='N'}">
 													<input type="checkbox" id="switch00" name="groupPrivate" value="n"/>
 													</c:if> 
-													<c:if test="${group.groupPrivate=='n'}">
+													<c:if test="${group.groupPrivate=='Y'}">
 													<input type="checkbox" id="switch00" name="groupPrivate" value="n" checked/>
 													</c:if>
-													<label for="switch00" data-on-label="ON" data-off-label="OFF"></label>
+													<label for="switch00" data-on-label="O" data-off-label="X"></label>
 												</div>
 												<!--  <div class="setting-row">
 													<span>검색 허용 여부</span>
@@ -420,8 +421,9 @@ top:-9px;
 													<input type="text" id="input" required="required" name="groupkatalk" value="${group.groupkatalk }"/>
 													</c:if>
 													<label
-														class="control-label" for="input">모임 카톡방 주소</label><i
-														class="mtrl-select"></i>
+														class="control-label" for="input">모임 카톡방 주소 등록</label><i
+														class="mtrl-select"></i><br>
+														*카톡방 주소 저장시 왼쪽 메뉴바에 카톡방 바로가기 버튼이 생깁니다.
 												</div>
 												<div class="submit-btns logincenter">
 													<button type="button" id="basicsettingsubmit" class="mtr-btn">
