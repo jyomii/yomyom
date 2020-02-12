@@ -47,10 +47,16 @@ public class GroupCommentServiceImpl implements GroupCommentService {
 	@Override
 	public int commentDelete(int commentnum) {
 		int result = 0;
+		// 삭제하는 댓글의 참조번호, 댓글 깊이, 댓글 순서 파악을 위해 정보를 가져온다.
 		GComment co = dao.getDetail(commentnum);
 		if (co != null) {
-			result = dao.commentDelete(co);
+			return dao.commentDelete(co);
 		}
 		return result;
+	}
+
+	@Override
+	public int getCommentCount(Map<String, Object> data) {
+		return dao.getCommentCount(data);
 	}
 }

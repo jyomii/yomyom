@@ -361,88 +361,9 @@ top:-9px;
 }
 </style>
 
-<!-- 그룹 페이지 상단 -->
-<section>
-	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
-		type="hidden" id="UserKey" value="${userkey }">
-	<div class="feature-photo">
-		<figure>
-			<img id="groupPageImg"
-				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
-			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
-		</figure>
-		<c:if test="${userinfo.userGrade==1}">
-		<!-- **********모임 대문 사진 수정*********** -->
-		<form class="edit-phto" id="groupMainImgForm"
-			enctype="multipart/form-data" action="group_mainImgUpdate.net"
-			method="post">
-			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
-				class="fa fa-camera-retro"></i>
-			<!-- 대문 사진 수정 버튼 -->
-			<label class="fileContainer"> 대문 사진 수정 <input type="file"
-				name="groupMainImgUpload" />
-			</label>
-		</form>
-		</c:if>
-		<!-- **********모임 대문 사진 수정*********** -->
 
-		<div class="container-fluid height-for-white">
-			<div class="row merged">
-				<div class="col-lg-2 col-sm-3">
-					<div class="user-avatar">
-						<!-- 그룹 사진 -->
-						<figure>
-							<img id="groupImg"
-								src="<spring:url value='/image${group.groupCFile }'/>" />
-							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
-							<!-- **********모임 사진 수정*********** -->
-							<c:if test="${userinfo.userGrade==1}">
-							<form class="edit-phto" id="groupImgForm"
-								enctype="multipart/form-data" action="group_ImgUpdate.net"
-								method="post">
-								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
-								<!-- 그룹 사진 수정 버튼 -->
-								<label class="fileContainer"> 그룹 사진 수정하기 <input
-									type="file" name="groupImgUpload" />
-								</label>
-								<!-- 그룹 사진 수정 버튼 -->
-							</form>
-							</c:if>
-							
-							<!-- **********모임 사진 수정*********** -->
-						</figure>
-						<!-- 그룹 사진 -->
-					</div>
-				</div>
-				<div class="col-lg-10 col-sm-9">
-					<div class="timeline-info">
-						<div class="forgroupnamewidth">
-							<!-- 그룹 이름 -->
-							<ul>
-								<li class="admin-name forgroupname">
-									<h5 class="groupname">${group.groupName}</h5>
-								</li>
-							</ul>
-							<!-- 그룹 이름 -->
-						</div>
-						<div class="forgroupnamewidth1">
-							<!-- 그룹 간단 정보 -->
-							<ul>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
-							</ul>
-							<!-- 그룹 간단 정보 -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<!-- 그룹 페이지 상단 -->
+<jsp:include page="group_header.jsp" />
 <!-- 그룹 페이지 상단 -->
 <!-- 그룹 페이지 메인 -->
 <section>
@@ -467,6 +388,7 @@ top:-9px;
 							<!-- 그룹장 간단 그룹 소개 -->
 							<div class="central-meta item">
 								
+								
 								<div class="onoff-options">
 											<h5 class="f-title">
 												<i class="ti-settings"></i>모임 기본 설정
@@ -475,15 +397,15 @@ top:-9px;
 											<form id="basicsettingform" action="basicsetting.net?groupkey=${group.groupKey }" method="post">
 												<div class="setting-row">
 													<span>모임 공개 여부</span>
-													<p>공개 / 비공개 설정</p>
+													<p>공개 (O)/ 비공개 (X) 설정</p>
 													<input type="hidden" name="groupkey" value="${group.groupKey }">
-													<c:if test="${group.groupPrivate=='y'}">
+													<c:if test="${group.groupPrivate=='N'}">
 													<input type="checkbox" id="switch00" name="groupPrivate" value="n"/>
 													</c:if> 
-													<c:if test="${group.groupPrivate=='n'}">
+													<c:if test="${group.groupPrivate=='Y'}">
 													<input type="checkbox" id="switch00" name="groupPrivate" value="n" checked/>
 													</c:if>
-													<label for="switch00" data-on-label="ON" data-off-label="OFF"></label>
+													<label for="switch00" data-on-label="O" data-off-label="X"></label>
 												</div>
 												<!--  <div class="setting-row">
 													<span>검색 허용 여부</span>
@@ -499,8 +421,9 @@ top:-9px;
 													<input type="text" id="input" required="required" name="groupkatalk" value="${group.groupkatalk }"/>
 													</c:if>
 													<label
-														class="control-label" for="input">모임 카톡방 주소</label><i
-														class="mtrl-select"></i>
+														class="control-label" for="input">모임 카톡방 주소 등록</label><i
+														class="mtrl-select"></i><br>
+														*카톡방 주소 저장시 왼쪽 메뉴바에 카톡방 바로가기 버튼이 생깁니다.
 												</div>
 												<div class="submit-btns logincenter">
 													<button type="button" id="basicsettingsubmit" class="mtr-btn">

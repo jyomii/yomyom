@@ -33,12 +33,12 @@
 							<div class="user-avatar">
 							<c:if test = "${mypage.userImageOrigin == null}">
 							 <figure>
-							      <img src="resources/images/resources/user-avatar.jpg" alt="" id="imgpic">
+							      <img src="resources/images/resources/bloggrid-4.jpg" alt="" id="imgpic">
 							   </figure>
 						    </c:if>
 						    <c:if test = "${mypage.userImageOrigin != null}">
 							   	  <figure>
-									<img src="<spring:url value='/image/${mypage.userImageOrigin }'/>" id="imgpic"/>
+									<img src="<spring:url value='/image/${mypage.userImageFile }'/>" id="imgpic"/>
 								  </figure>
 						    </c:if>
 									<form class="edit-phto" id="userImageForm">
@@ -779,24 +779,26 @@
 								<div class="widget">
 											<h4 class="widget-title" id="recentnotice"><i class="ti-bell"></i>최근 알림</h4>
 											<ul class="activitiez">
-												<c:if test="${msgcount > 0 }">
-											<c:forEach var="msg" items="${myMessage}">
+										<c:if test="${msgcount > 0 }">
+											<c:forEach var="msg" items="${getMessage}">
 												<li>
 													<div class="activity-meta">
-														<i>${item.postDate}</i> 
-														<i>${msg.mgDate}</i><span><a href="#" title="">
-														${msg.msContent} </a></span>
+														<i>${item.postDate}</i> <i>${msg.mgDate}</i><span><a
+															href="#" title=""> ${msg.mgContent} </a></span>
 														<h6>
-															by <a href="time-line.html">${mg.send}</a>
+															<script type="text/javascript">
+															var date1 = '${msg.mgDate}';
+															document.write(timeBefore(new Date(date1)));
+															</script>
 														</h6>
 													</div>
 												</li>
 											</c:forEach>
-											</c:if>
-											<c:if test="${msgcount == 0 }">
+										</c:if>
+										<c:if test="${msgcount == 0 }">
 											   받은 내역이 없습니다.
 											</c:if>
-											</ul>
+									</ul>
 										</div><!-- recent activites -->
 								</aside>
 							</div><!-- sidebar -->

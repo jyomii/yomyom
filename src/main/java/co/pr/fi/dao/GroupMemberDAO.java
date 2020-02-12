@@ -89,4 +89,20 @@ public class GroupMemberDAO {
 	public int isGroupMem(Map<String, Object> keys) {
 		return sqlSession.selectOne("group.isGroupMem", keys);
 	}
+
+	public int getMyPostCount(int loginuser) {
+		return sqlSession.selectOne("post.getMyPostCount", loginuser);
+	}
+
+	public List<Post> getMyPost(Map<String, Object> map) {
+		return sqlSession.selectList("post.getMyPost", map);
+	}
+
+	public int getMyCommentCount(int loginuser) {
+		return sqlSession.selectOne("comment.getMyCommentCount", loginuser);
+	}
+
+	public List<Post> getMyComment(Map<String, Object> map) {
+		return sqlSession.selectList("comment.getMyComment", map);
+	}
 }

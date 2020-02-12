@@ -18,5 +18,5 @@ public interface GroupBoardService {
 	int revokeLike(Map<String, Object> keys);					// 좋아요 취소
 	int doLike(Map<String, Object> keys);						// 좋아요
 	int likeCount(Map<String, Object> keys);
-	int getCommentCount(Map<String, Object> data);										// 현재 글에 대한 댓글수
+	int getCommentCount(Map<String, Object> data);				// 현재 글에 대한 댓글수
 }

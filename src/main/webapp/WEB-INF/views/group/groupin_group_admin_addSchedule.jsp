@@ -456,86 +456,7 @@ border: 2px solid lightblue;
 </style>
 
 <!-- 그룹 페이지 상단 -->
-<section>
-	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
-		type="hidden" id="UserKey" value="${userkey }">
-	<div class="feature-photo">
-		<figure>
-			<img id="groupPageImg"
-				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
-			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
-		</figure>
-		<c:if test="${userinfo.userGrade==1}">
-		<!-- **********모임 대문 사진 수정*********** -->
-		<form class="edit-phto" id="groupMainImgForm"
-			enctype="multipart/form-data" action="group_mainImgUpdate.net"
-			method="post">
-			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
-				class="fa fa-camera-retro"></i>
-			<!-- 대문 사진 수정 버튼 -->
-			<label class="fileContainer"> 대문 사진 수정 <input type="file"
-				name="groupMainImgUpload" />
-			</label>
-		</form>
-		</c:if>
-		<!-- **********모임 대문 사진 수정*********** -->
-
-		<div class="container-fluid height-for-white">
-			<div class="row merged">
-				<div class="col-lg-2 col-sm-3">
-					<div class="user-avatar">
-						<!-- 그룹 사진 -->
-						<figure>
-							<img id="groupImg"
-								src="<spring:url value='/image${group.groupCFile }'/>" />
-							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
-							<!-- **********모임 사진 수정*********** -->
-							<c:if test="${userinfo.userGrade==1}">
-							<form class="edit-phto" id="groupImgForm"
-								enctype="multipart/form-data" action="group_ImgUpdate.net"
-								method="post">
-								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
-								<!-- 그룹 사진 수정 버튼 -->
-								<label class="fileContainer"> 그룹 사진 수정하기 <input
-									type="file" name="groupImgUpload" />
-								</label>
-								<!-- 그룹 사진 수정 버튼 -->
-							</form>
-							</c:if>
-							<!-- **********모임 사진 수정*********** -->
-						</figure>
-						<!-- 그룹 사진 -->
-					</div>
-				</div>
-				<div class="col-lg-10 col-sm-9">
-					<div class="timeline-info">
-						<div class="forgroupnamewidth">
-							<!-- 그룹 이름 -->
-							<ul>
-								<li class="admin-name forgroupname">
-									<h5 class="groupname">${group.groupName}</h5>
-								</li>
-							</ul>
-							<!-- 그룹 이름 -->
-						</div>
-						<div class="forgroupnamewidth1">
-							<!-- 그룹 간단 정보 -->
-							<ul>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
-							</ul>
-							<!-- 그룹 간단 정보 -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<jsp:include page="group_header.jsp" />
 <!-- 그룹 페이지 상단 -->
 <!-- 그룹 페이지 메인 -->
 <section>
@@ -585,7 +506,7 @@ border: 2px solid lightblue;
 											<h5 class="f-title">
 												<i class="ti-info-alt"></i> 정모 내용
 											</h5>
-											<form id="addscheduleform" method="post">
+											<form id="addscheduleform" method="Post" action="addSchedule.net">
 											<input type="hidden" name="groupKey" value="${group.groupKey }">
 											<div class="form-radio">
 												<div class="radio">
@@ -663,26 +584,6 @@ border: 2px solid lightblue;
 											<input type="hidden" id="thistf" value="f">
 										</div>
 							</div>
-							<div class="central-meta item">
-							<h5 class="f-title ext-margin margintopZero"><i class="ti-share"></i>길 찾기 및 경로 추가하기</h5><br>
-	
-	<button type="button" id="receiveFromChild" class="mtr-btn mbformap" onclick="javascript:openWin();"><span>지도 만들기</span></button>
-	<!--  <button type="button" class="mtr-btn" onclick="javascript:saveMap();"><span>지도 저장하기</span></button>
-	<button type="button" class="mtr-btn" onclick="javascript:loadMap();"><span>지도 불러오기</span></button>
-	<button type="button" class="mtr-btn" onclick="javascript:deleteMap();"><span>지도 삭제하기</span></button>-->
-	<div id="map" style="width: 350px; height: 350px;"></div>
-
-
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81901835c348429fbab043210a118692&libraries=drawing,services"></script>
-
-	<script>
-	
-		
-	</script>
-							</div>
-
 						</div>
 						<!-- 그룹 페이지 위젯 중간 -->
 
@@ -834,312 +735,6 @@ border: 2px solid lightblue;
 </script>
 <script>
 buildCalendar();
-var w = window.innerWidth / 2;
-var h = window.innerHeight / 2;
-var overlays = []; // 지도에 그려진 도형을 담을 배열
-//현재 지도에 그려진 객체들 정보
-var ReturnValue, Level = 3, Latlng = new kakao.maps.LatLng(33.450701, 126.570667);
-$('#map').height(h);
-$('#map').width(w);
-
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-mapOption = {
-	center : Latlng, // 지도의 중심좌표
-	draggable : false,
-	level : Level
-// 지도의 확대 레벨
-};
-
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption);
-function openWin() {
-
-	var windowObj = window
-			.open(
-					"DrawMap",
-					"지도 추가",
-					"width="
-							+ w
-							+ ", height="
-							+ h
-							+ ",status=no, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
-
-}
-
-//리턴받은 지도 데이터를 뿌립니다.
-function getReturnValue(returnValue, level, latlng) {
-	console.log(returnValue);
-	if(returnValue.marker.length==0&&returnValue.polyline.length==0){
-		$("#thistf").val("f");
-	}else{
-		$("#thistf").val("t");
-	}
-	ReturnValue = returnValue;
-	Level = level;
-	Latlng = latlng;
-
-	// 이동할 위도 경도 위치를 생성합니다 
-	var moveLatLon = new kakao.maps.LatLng(latlng.getLat(), latlng
-			.getLng());
-
-	// 지도 중심을 이동 시킵니다
-	map.setCenter(moveLatLon);
-	map.setLevel(level);
-
-	//지도에 그려진 도형이 있다면 모두 지웁니다
-	removeOverlays();
-
-	// 지도에 가져온 데이터로 도형들을 그립니다
-	drawMarker(returnValue[kakao.maps.drawing.OverlayType.MARKER]);
-	drawPolyline(returnValue[kakao.maps.drawing.OverlayType.POLYLINE]);
-
-}
-
-// Drawing Manager에서 가져온 데이터 중 마커를 아래 지도에 표시하는 함수입니다
-function drawMarker(markers) {
-	var len = markers.length, i = 0;
-
-	for (; i < len; i++) {
-		var marker = new kakao.maps.Marker(
-				{
-					map : map,
-					position : new kakao.maps.LatLng(markers[i].y,
-							markers[i].x),
-					zIndex : markers[i].zIndex
-				});
-
-		overlays.push(marker);
-	}
-}
-
-// 아래 지도에 그려진 도형이 있다면 모두 지웁니다
-function removeOverlays() {
-	var len = overlays.length, i = 0;
-
-	for (; i < len; i++) {
-		overlays[i].setMap(null);
-	}
-
-	overlays = [];
-}
-
-// Drawing Manager에서 가져온 데이터 중 선을 아래 지도에 표시하는 함수입니다
-function drawPolyline(lines) {
-	var len = lines.length, i = 0;
-
-	for (; i < len; i++) {
-		var path = pointsToPath(lines[i].points);
-		var style = lines[i].options;
-		var polyline = new kakao.maps.Polyline({
-			map : map,
-			path : path,
-			strokeColor : style.strokeColor,
-			strokeOpacity : style.strokeOpacity,
-			strokeStyle : style.strokeStyle,
-			strokeWeight : style.strokeWeight
-		});
-
-		overlays.push(polyline);
-	}
-}
-
-// Drawing Manager에서 가져온 데이터 중 
-// 선 정보를 kakao.maps.LatLng객체로 생성하고 배열로 반환하는 함수입니다 
-function pointsToPath(points) {
-	var len = points.length, path = [], i = 0;
-
-	for (; i < len; i++) {
-		var latlng = new kakao.maps.LatLng(points[i].y, points[i].x);
-		path.push(latlng);
-	}
-
-	return path;
-}
-
-
-function deleteMap(){
-	
-	$.ajax({
-		url : "deleteMap",
-		success : function(result){
-			
-			if(result >0)
-				alert("삭제되었습니다.");
-			
-		}
-	});
-	
-}
-//현재 지도 저장하기
-
-function saveMap(postkey) {
-	
-	var info = [];
-
-	var index = 0;
-
-	//마커 정보 DB화 
-	for (var i = 0; i < ReturnValue.marker.length; i++) {
-
-		var item = {
-			postkey : postkey,
-			lat : ReturnValue.marker[i].y,
-			lng : ReturnValue.marker[i].x,
-			mapoption : 'M',
-			mapseq : index++
-
-
-		};
-
-		if (i == 0) {
-			item.maplevel = Level;
-			item.maplat = Latlng.getLat();
-			item.maplng = Latlng.getLng();
-		}
-
-		info.push(item);
-
-	}
-
-	//선 정보 DB화
-	//선 묶음 
-	 var detailseq = 0;
-
-	for (var j = 0; j < ReturnValue.polyline.length; j++) {
-
-		//j번 선정보의 선묶음
-		for (var k = 0; k < ReturnValue.polyline[j].points.length; k++) {
-
-			var item = {
-				postkey : postkey,
-				lat : ReturnValue.polyline[j].points[k].y,
-				lng : ReturnValue.polyline[j].points[k].x,
-				mapoption : 'L',
-				mapseq : index,
-				mapdetailseq : detailseq++
-
-			};
-			
-			
-			if(info.length == 0){
-                item.maplevel = Level;
-                item.maplat = Latlng.getLat();
-                item.maplng = Latlng.getLng();
-             }
-
-			info.push(item);
-
-		}
-
-		index++;
-
-	}
-
-	var jsonData = JSON.stringify(info);
-	jQuery.ajaxSettings.traditional = true;
-
-	$.ajax({
-
-		url : "saveMap",
-		data : {
-			"info" : jsonData,
-			"postkey" : postkey
-		},
-		method : "post",
-		success : function(result) {
-			if(result > 0)
-			alert('추가되었습니다.');
-		}
-
-	});
-}
-
-//저장한 지도 불러오기
-function loadMap() {
-
-	$.ajax({
-
-		url : "getMap",
-		data : {
-			"postkey" : 0
-		},
-		method : "get",
-		success : function(result) {
-			
-			var moveLatLon = new kakao.maps.LatLng(result[0].maplat,
-					result[0].maplng);
-
-			//지도 그리기
-			map.setCenter(moveLatLon);
-			map.setLevel(result[0].maplevel);
-
-			
-			//선 번호
-			var index = 0;
-			//선 묶음
-			var lines = [];
-			
-			//line / marker 그리기
-			for (var i = 0; i < result.length; i++) {
-
-				//마커일경우
-				if (result[i].mapoption == 'M') {
-				
-					var marker = new kakao.maps.Marker({
-						map : map,
-						position : new kakao.maps.LatLng(result[i].lat,
-								result[i].lng),
-						zIndex : 0
-					});
-
-					overlays.push(marker);
-				} else {
-					//선인 경우 선묶음인걸 확인하고 그려야함
-					
-					
-					if(index == 0){
-						index = result[i].mapseq;
-					}
-					
-					if(index != result[i].mapseq){
-						
-						index = result[i].mapseq;
-						
-						DrawLine(lines);
-						lines = [];
-					}
-					
-					
-					lines.push({x: result[i].lng,
-						y: result[i].lat});
-					
-					
-				}
-			}
-			
-			
-			DrawLine(lines);
-
-		}
-
-	});
-}
-
-
-function DrawLine(lines){
-	
-	var path = pointsToPath(lines);
-	
-	var polyline = new kakao.maps.Polyline({
-		map : map,
-		path : path
-		
-	});
-	console.log(lines);
-	overlays.push(polyline);
-	
-	
-}
 //============================================================
 $(function() {
   var mycalendarlistcount = $('#gclc').val();
@@ -1154,8 +749,6 @@ $(function() {
 	  }else if($("#moneyCheck").is(":checked")==true&&$("#cmoney").val()==""){
 		  alert("빈칸을 채워주세요");
 	  }else{
-		  var s = $("#thistf").val()
-		  if(s=='f'){
 			  if($("#time").val().length==1){
 				  var t = $("#time").val();
 				  $("#time").val("0"+t)
@@ -1164,16 +757,8 @@ $(function() {
 				  var t = $("#minute").val();
 				  $("#minute").val("0"+t)
 			  }
-			  ajaxAddSchedule();
 			  var groupkey = $("#thisGroupKey").val();
-			  location.href="groupin_group_admin_scheduleList.net?groupkey="+groupkey;
-		  }else{
-		  	ajaxAddSchedule();
-		  	var postkey = $('#thispostkey').val();
-		  	saveMap(postkey);
-		  	var groupkey = $("#thisGroupKey").val();
-		 	location.href="groupin_group_admin_scheduleList.net?groupkey="+groupkey;
-		  }
+			  $("#addscheduleform").submit();
 	  }
   })
   
@@ -1457,24 +1042,7 @@ $(function() {
           }
       }) // ajax
   } // function ajax end
-  function ajaxAddSchedule() {
-	  var post = $('#addscheduleform').serialize();
-      $.ajax({
-          type: "post",
-          async: false,
-          url: "addSchedule.net",
-          data: post,
-          dataType: "json",
-          cache: false,
-          success: function(data) {
-        	  $('#thispostkey').val(data.postkey);
-        	  alert("에이잭스"+$('#thispostkey').val());
-          },
-          error: function() {
-              console.log('에러')
-          }
-      }) // ajax
-  } // function ajax end
+  
 })
 </script>
 

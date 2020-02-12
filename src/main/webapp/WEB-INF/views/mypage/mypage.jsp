@@ -24,6 +24,7 @@
 #recentnotice:hover {
   cursor:pointer;
 }
+
 </style>
 
 <section>
@@ -39,19 +40,19 @@
 					<div class="user-avatar">
 						<c:if test="${mypage.userImageOrigin == null}">
 							<figure>
-								<img src="resources/images/resources/user-avatar.jpg" alt=""
+								<img src="resources/images/resources/bloggrid-4.jpg" alt=""
 									id="imgpic">
 							</figure>
 						</c:if>
 						<c:if test="${mypage.userImageOrigin != null}">
 							<figure>
 								<img
-									src="<spring:url value='/image/${mypage.userImageOrigin }'/>"
+									src="<spring:url value='/image/${mypage.userImageFile }'/>"
 									id="imgpic" />
 							</figure>
 						</c:if>
 						<form class="edit-phto" id="userImageForm">
-							<input type="hidden" name="userKey" value="${mypage.userKey }">
+							<input type="hidden" id="userKey" name="userKey" value="${mypage.userKey }">
 							<i class="fa fa-camera-retro"></i> <label class="fileContainer">
 								프로필 사진 변경 <input type="file" id="uploadfile"
 								name="userImageUpdate" accept="image/gif, image/jpeg, image/png" />
@@ -199,21 +200,22 @@
 													<li>
 														<div class="nearly-pepls">
 															<figure>
-																<img src="resources/images/resources/nearly1.jpg" alt="">
+																<img src="<spring:url value='/image/${list.groupDFile}'/>" alt="">
 																</a>
 															</figure>
 															<div class="pepl-info">
 																<input type="hidden" name="userId" value="${id}"
 																	id="userId"> <input type="hidden"
-																	name="groupKey" value="${list.groupKey}" id="groupKey">
+																	name="groupKey" value="${list.groupKey}">
+																	
 																<input type="hidden" name="groupName"
 																	value="${list.groupName}" id="groupName">
 																<h4>
-																	<a href="time-line.html">${list.groupName }</a>
+																	<a href="group_main?groupkey=${list.groupKey}">${list.groupName }</a>
 																</h4>
 														
 															
-																<a href="#" title="" class="add-butn" data-ripple="" onclick="favgroup()">즐겨찾기 추가</a>
+																<a href="#" title="" class="add-butn" data-ripple="" onclick="favgroup(${list.groupKey})">즐겨찾기 추가</a>
 																
 															</div>
 														</div>
@@ -233,12 +235,12 @@
 													<li>
 														<div class="nearly-pepls">
 															<figure>
-																<img src="resources/images/resources/nearly1.jpg" alt="">
+																<img src="<spring:url value='/image/${mylist.groupDFile }'/>" alt="">
 																</a>
 															</figure>
 															<div class="pepl-info">
 																<h4>
-																	<a href="time-line.html">${mylist.groupName }</a>
+																	<a href="group_main?groupkey=${mylist.groupKey}">${mylist.groupName }</a>
 																</h4>
 																<a href="#" title="" class="add-butn" data-ripple="">모임
 																	설정</a>
@@ -261,14 +263,14 @@
 													<li>
 														<div class="nearly-pepls">
 															<figure>
-																<img src="resources/images/resources/nearly1.jpg" alt="">
+																<img src="<spring:url value='/image/${favlist.groupDFile }'/>" alt="">
 																</a>
 															</figure>
 															<div class="pepl-info">
 																<h4>
-																	<a href="time-line.html">${favlist.groupName }</a>
+																	<a href="group_main?groupkey=${favlist.groupKey}">${favlist.groupName }</a>
 																</h4>
-																<a href="#" title="" class="add-butn" data-ripple="" onclick="favgroupD()">즐겨찾기 해제</a>
+																<a href="#" class="add-butn" data-ripple="" onclick="favgroupD(${favlist.groupKey})">즐겨찾기 해제</a>
 															</div>
 														</div>
 													</li>
@@ -295,13 +297,16 @@
 									</h4>
 									<ul class="activitiez">
 										<c:if test="${msgcount > 0 }">
-											<c:forEach var="msg" items="${myMessage}">
+											<c:forEach var="msg" items="${getMessage}">
 												<li>
 													<div class="activity-meta">
 														<i>${item.postDate}</i> <i>${msg.mgDate}</i><span><a
-															href="#" title=""> ${msg.msContent} </a></span>
+															href="#" title=""> ${msg.mgContent} </a></span>
 														<h6>
-															by <a href="time-line.html">${mg.send}</a>
+															<script type="text/javascript">
+															var date1 = '${msg.mgDate}';
+															document.write(timeBefore(new Date(date1)));
+															</script>
 														</h6>
 													</div>
 												</li>
@@ -357,14 +362,13 @@
 
 <script>
 
-function favgroup(){
+function favgroup(groupKey){
     if(confirm("즐겨찾는 모임에 추가 하시겠습니니까?")){
-       
         $.ajax({
 			url : "favgroup",
 			type : "POST",
 			data : {"userKey" : $('#userKey').val(),
-			        "groupKey" : $('#groupKey').val()},
+			        "groupKey" : groupKey},
 			success : function() {
 				alert("추가되었습니다.");
 				location.reload();
@@ -378,14 +382,14 @@ function favgroup(){
     }
 };
     
-    function favgroupD(){
+    function favgroupD(groupKey){
         if(confirm("즐겨찾는 모임을 해제 하시겠습니니까?")){
            
             $.ajax({
     			url : "favgroupD",
     			type : "POST",
     			data : {"userKey" : $('#userKey').val(),
-    			        "groupKey" : $('#groupKey').val()},
+    			        "groupKey" : groupKey},
     			success : function() {
     				alert("해제되었습니다.");
     				location.reload();
@@ -400,8 +404,6 @@ function favgroup(){
     
 };
 
-	var date1 = '${item.postDate}';
-	document.write(timeBefore(new Date(date1)));
 
 	//프사 등록
 	$('input[type=file]').on('change', preview);

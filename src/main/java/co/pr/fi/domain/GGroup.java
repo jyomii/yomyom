@@ -44,6 +44,7 @@ public class GGroup {
  private String groupPrivate;
 
  
+ 
  //마지막 모임 활동 날짜(조인)
  private LocalDateTime lastDate;
  

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!-- 그룹 로그인 위젯 -->
+								<!-- 그룹 로그인 위젯 -->
+
 								<c:if test="${userkey==-1}">
 								<div class="widget logincenter">
 								<div class="logindiv">
@@ -22,6 +23,7 @@
 								<!-- 그룹 로그인 위젯 -->
 								<c:if test="${userkey!=-1}">
 								<!-- 그룹 나의 정보 위젯 -->
+								
 								<div class="widget">
 									<h4 class="widget-title">나의 정보</h4>
 									<div class="your-page your-page-groupListDiv" style="height:378px">
@@ -32,9 +34,16 @@
 										<div class="page-meta page-metaclass">
 											<a href="#" title="" class="underline">${userinfo.groupNickname}</a>
 											<span>가입일 : ${userinfo.regdate}</span>
-											<span><i class="far fa-bell"></i>알림 <em>55</em></span>
-												<span><i class="far fa-file-alt commentmargin"></i>내가 쓴 글 보기 <em>55</em></span>
-												<span><i class="far fa-comment"></i>내가 쓴 댓글 보기 <em>55</em></span>
+											<span><i class="far fa-bell"></i>알림 </span>
+
+           <!--
+												<a href="javascript:myWrote(1)"><span><i class="far fa-file-alt commentmargin"></i>내가 쓴 글 보기 </span></a>
+												<a href="javascript:myWrote(2)"><span><i class="far fa-comment"></i>내가 쓴 댓글 보기 </span></a>
+                      -->
+
+												<span><i class="far fa-file-alt commentmargin"></i><a href="">내가 쓴 글 보기 </a></span>
+												<span><i class="far fa-comment"></i><a href="">내가 쓴 댓글 보기</a> </span>
+                      
 										</div>
 										<div class="page-likes">
 											<ul class="nav nav-tabs likes-btn">
@@ -158,6 +167,5 @@
 											</c:if>
 										</ul>
 									</div>
-
 								</div>
 								<!-- 그룹별 정모 나의 일정 위젯 -->

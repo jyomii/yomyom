@@ -91,12 +91,12 @@
 							<div class="user-avatar">
 							<c:if test = "${mypage.userImageOrigin == null}">
 							 <figure>
-							      <img src="resources/images/resources/user-avatar.jpg" alt="" id="imgpic">
+							      <img src="resources/images/resources/bloggrid-4.jpg" alt="" id="imgpic">
 							   </figure>
 						    </c:if>
 						    <c:if test = "${mypage.userImageOrigin != null}">
 							   	  <figure>
-									<img src="<spring:url value='/image/${mypage.userImageOrigin }'/>" id="imgpic"/>
+									<img src="<spring:url value='/image/${mypage.userImageFile }'/>" id="imgpic"/>
 								  </figure>
 						    </c:if>
 									<form class="edit-phto" id="userImageForm">
@@ -195,22 +195,23 @@
 													<li>
 														<div class="nearly-pepls">
 															<figure>
-																<img src="resources/images/resources/nearly1.jpg" alt="">
+																<img src="<spring:url value='/image/${list.groupDFile}'/>" alt="">
 																</a>
 															</figure>
 															<div class="pepl-info">
 																<input type="hidden" name="userId" value="${id}"
 																	id="userId"> <input type="hidden"
-																	name="groupKey" value="${list.groupKey}" id="groupKey">
+																	name="groupKey" value="${list.groupKey}">
+																	
 																<input type="hidden" name="groupName"
 																	value="${list.groupName}" id="groupName">
 																<h4>
 																	<a href="time-line.html">${list.groupName }</a>
 																</h4>
-																<a id="check" href="#" title="" class="add-butn"
-																	data-ripple="" data-groupname='${list.groupName }'
-																	class="modalclick" data-toggle="modal"
-																	data-target="#myModal">모임 탈퇴</a>
+														
+															
+																<a href="#" title="" class="add-butn" data-ripple="" onclick="favgroup(${list.groupKey})">즐겨찾기 추가</a>
+																
 															</div>
 														</div>
 													</li>
@@ -229,12 +230,12 @@
 													<li>
 														<div class="nearly-pepls">
 															<figure>
-																<img src="resources/images/resources/nearly1.jpg" alt="">
+																<img src="<spring:url value='/image/${mylist.groupDFile }'/>" alt="">
 																</a>
 															</figure>
 															<div class="pepl-info">
 																<h4>
-																	<a href="time-line.html">${mylist.groupName }</a>
+																	<a href="groupmain?groupkey=${mylist.groupKey}">${mylist.groupName }</a>
 																</h4>
 																<a href="#" title="" class="add-butn" data-ripple="">모임
 																	설정</a>
@@ -257,14 +258,14 @@
 													<li>
 														<div class="nearly-pepls">
 															<figure>
-																<img src="resources/images/resources/nearly1.jpg" alt="">
+																<img src="<spring:url value='/image/${favlist.groupDFile }'/>" alt="">
 																</a>
 															</figure>
 															<div class="pepl-info">
 																<h4>
-																	<a href="time-line.html">${favlist.groupName }</a>
+																	<a href="groupmain?groupkey=${favlist.groupKey}">${favlist.groupName }</a>
 																</h4>
-																<a href="#" title="" class="add-butn" data-ripple="">즐겨찾기 취소</a>
+																<a href="#" class="add-butn" data-ripple="" onclick="favgroupD(${favlist.groupKey})">즐겨찾기 해제</a>
 															</div>
 														</div>
 													</li>
@@ -288,29 +289,31 @@
 					<aside class="sidebar static">
 
 						<div class="widget">
-							<h4 class="widget-title" id="recentnotice">
-								<i class="ti-bell"></i>최근 알림
-							</h4>
-							<ul class="activitiez">
-							<c:if test="${msgcount > 0 }">
-											<c:forEach var="msg" items="${myMessage}">
+									<h4 class="widget-title" id="recentnotice">
+										<i class="ti-bell"></i>최근 알림
+									</h4>
+									<ul class="activitiez">
+										<c:if test="${msgcount > 0 }">
+											<c:forEach var="msg" items="${getMessage}">
 												<li>
 													<div class="activity-meta">
-														<i>${item.postDate}</i> 
-														<i>${msg.mgDate}</i><span><a href="#" title="">
-														${msg.msContent} </a></span>
+														<i>${item.postDate}</i> <i>${msg.mgDate}</i><span><a
+															href="#" title=""> ${msg.mgContent} </a></span>
 														<h6>
-															by <a href="time-line.html">${mg.send}</a>
+															<script type="text/javascript">
+															var date1 = '${msg.mgDate}';
+															document.write(timeBefore(new Date(date1)));
+															</script>
 														</h6>
 													</div>
 												</li>
 											</c:forEach>
-											</c:if>
-											<c:if test="${msgcount == 0 }">
+										</c:if>
+										<c:if test="${msgcount == 0 }">
 											   받은 내역이 없습니다.
 											</c:if>
-							</ul>
-						</div>
+									</ul>
+								</div>
 						<!-- recent activites -->
 					</aside>
 				</div>

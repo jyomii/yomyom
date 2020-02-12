@@ -118,7 +118,7 @@
 													<h3 class="sender-name">관리자</h3> <span
 													class="make-important"><i class="fa fa-thumb-tack"></i></span>
 
-													<p>` ${item.mgContent}</p></li>
+													<p>${item.mgContent}</p></li>
 											</c:forEach>
 
 

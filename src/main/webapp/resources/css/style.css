@@ -4857,8 +4857,7 @@ canvas {
 #all-menu dl {   
 	display: table-cell;
     /* width: 180px; */
-    padding-left: 20px;
-    padding-right: 20px;
+    padding:20px;
     border-left: 1px solid #eee;
     width: auto;
 }
@@ -5714,6 +5713,7 @@ px
 
 .g-post-classic>figure img {
 	width: 100%;
+ height: 16vh;
 }
 
 .g-post-classic>figure>i {
@@ -10167,7 +10167,6 @@ aside.sidebar.full-style {
 	margin-right: 5px;
 	padding: 8px 20px;
 }
-
 .company-intro {
 	display: inline-block;
 	padding-top: 10px;
@@ -10186,4 +10185,24 @@ aside.sidebar.full-style {
 	font-weight: bold;
 	letter-spacing: 0.5px;
 	text-transform: uppercase;
+}
+
+#groupPageImg {
+    /* height: 384px; */
+    overflow: hidden;
+}
+
+
+#groupImg{
+	height:150px;
+}
+.test1>figure:first-child{
+	height: 384px;
+}
+
+.container-fluid.height-for-white{
+
+    position: relative;
+    background: white;
+
 }

@@ -119,7 +119,8 @@ list-style: none;
 					<li>
 					
 						<div class="box-search">
-							<form class="form-search" style="margin-top: 1em;">
+						<!-- style="margin-top: 1em;"-->
+							<form class="form-search">
 								<input name="text" type="text" placeholder=""
 									style="color:black;">
 								<button class="sendAll">
@@ -152,7 +153,7 @@ list-style: none;
 					<c:choose>
 
 						<c:when test="${empty id }">
-							<img src="resources/images/default.png" style="width:40px;" alt="">
+							<img src="resources/images/default.png" style="width:40px;"  alt="">
 
 							<div class="user-setting" onclick="location.href='login'">
 								<a title=""><i class="ti-pencil-alt"></i>로그인</a>
@@ -164,10 +165,10 @@ list-style: none;
 
 							<c:choose>
 								<c:when test="${empty image}">
-									<img src="resources/images/default.png" style="width:40px;" alt="">
+									<img src="resources/images/default.png" style="width:40px; " alt="">
 								</c:when>
 								<c:otherwise>
-									<img style="width:40px;" alt="" src="<spring:url value='/image${image}'/>" />
+									<img style="width:40px; height:40px;" alt="" src="<spring:url value='/image${image}'/>" />
 								</c:otherwise>
 							</c:choose>
 
@@ -196,13 +197,23 @@ list-style: none;
 						</c:otherwise>
 					</c:choose>
 
-
+					<form name = "myWrote">
+						<input type = "hidden" name = "menu" value = "">
+					</form>
 				</div>
 			</div>
 		</div>
 		<!-- 기존 화면 header 끝 -->
-
+		
 		<script>
+			function myWrote(menu) {
+				var f = document.myWrote;		// 폼 name
+				f.menu.value = menu;			// input 태그 중 name이 status인 값에 대해서 status를 넘긴다.
+				f.action = "G_mem_detail.net";	// 이동할 페이지
+				f.method = "post";				// POST 방식으로 데이터 전송
+				f.submit();		
+			}
+			
 			init_menu();
 			
 			function admin(link){
@@ -329,6 +340,9 @@ list-style: none;
 					success : function(result){
 						//메세지 필터
 						
+						
+						if(result != null || result.length != 0){
+							
 						var msg = result.filter(function (item) {
 							return item.checkDate == null 
 							});
@@ -342,7 +356,7 @@ list-style: none;
 						
 						count = msg.length;
 					}
-					
+					}
 				});
 				
 			

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.pr.fi.domain.GComment;
+import co.pr.fi.domain.GGroupMember;
 import co.pr.fi.service.GroupBoardService;
 import co.pr.fi.service.GroupCommentService;
 import co.pr.fi.service.GroupMemberService;
@@ -41,10 +42,12 @@ public class GroupCommentController {
 							   @RequestParam(required = false, defaultValue = "-1") int commentnum,
 							   @RequestParam(required = false, defaultValue = "0") int commentshow,
 							   HttpSession session) {
+		
 		System.out.println("***************************************************");
 		System.out.println("### 댓글에 답댓 달기 ###");
 		System.out.println("postKey = " + postKey + ", groupKey = " + groupKey);
 		System.out.println("***************************************************");
+		
 		Map<String, Object> data = new HashMap<String, Object>();
 		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
 		
@@ -74,7 +77,7 @@ public class GroupCommentController {
 			return data;
 		}
 		
-		listcount = groupBoardService.getCommentCount(data); 		// 현재 게시글에 해당하는 댓글수
+		listcount = groupCommentService.getCommentCount(data); 		// 현재 게시글에 해당하는 댓글수
 
 		int page = 1;
 		int limit = 10;
@@ -88,7 +91,7 @@ public class GroupCommentController {
 		data.put("listcount", listcount);	// 댓글 개수
 		data.put("page", page);	// 페이지
 		data.put("limit", limit);	// 최대 개수
-		
+		data.put("loginuser", userkey);
 		return data;
 	}
 	
@@ -106,7 +109,7 @@ public class GroupCommentController {
 		System.out.println("postKey = " + postKey + ", groupKey = " + groupKey);
 		
 		Map<String, Object> data = new HashMap<String, Object>();
-		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
+		List<GComment> commentList = new ArrayList<GComment>();	// 현재 글에 달린 댓글 리스트
 		
 		int listcount = 0;
 		
@@ -142,6 +145,7 @@ public class GroupCommentController {
 		data.put("page", page);
 		data.put("limit", limit);
 		commentList = groupBoardService.getBoardComment(data);	// 현재 게시글에 해당하는 댓글리스트
+		GGroupMember mem = groupMemberService.getPic(data);
 		
 		// 데이터 리턴
 		data = pagination(page, limit, listcount);
@@ -149,6 +153,8 @@ public class GroupCommentController {
 		data.put("listcount", listcount);	// 댓글 개수
 		data.put("page", page);	// 페이지
 		data.put("limit", limit);	// 최대 개수
+		data.put("loginuser", userKey);
+		data.put("profileFile", mem.getProfileFile());
 		
 		return data;
 	}
@@ -156,29 +162,60 @@ public class GroupCommentController {
 	// # 댓글 삭제
 	@ResponseBody
 	@PostMapping("deleteReply")
-	public Object deleteReply (@RequestParam(required = false, defaultValue = "-1") int commentnum,
+	public Object deleteReply (@RequestParam(required = true, defaultValue = "-1") int commentnum,
+								@RequestParam(required = false, defaultValue = "-1") int postkey,
+								@RequestParam(required = false, defaultValue = "-1") int groupkey,
 							   HttpSession session) {
 		
-		Map<String, Object> keys = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<String, Object>();
+		List<GComment> commentList = new ArrayList<GComment>();	// 현재 글에 달린 댓글 리스트
+		int listcount = 0;
+		
+		int userKey = groupMemberService.getUser((String)session.getAttribute("id"));
 		
 		int result = groupCommentService.commentDelete(commentnum);
 		if (result == 0) {	// 삭제 실패
-			keys.put("result", result);
+			data.put("result", result);
+			return data;
 		}
 		
-		return keys;
+		data.put("postkey", postkey);
+		data.put("groupkey", groupkey);
+		// 여기 keys가 뭘 받는지 체크 ###
+		listcount = groupBoardService.getCommentCount(data); 		// 현재 게시글에 해당하는 댓글수
+		
+		int page = 1;
+		int limit = 10;
+		
+		data.put("page", page);
+		data.put("limit", limit);
+		commentList = groupBoardService.getBoardComment(data);	// 현재 게시글에 해당하는 댓글리스트
+		
+		GGroupMember mem = groupMemberService.getPic(data);
+		
+		// 데이터 리턴
+		data = pagination(page, limit, listcount);
+		data.put("comment", commentList);	// 댓글리스트
+		data.put("listcount", listcount);	// 댓글 개수
+		data.put("page", page);	// 페이지
+		data.put("limit", limit);	// 최대 개수
+		data.put("loginuser", userKey);
+		data.put("profileFile", mem.getProfileFile());
+		return data;
 	}
 	
 	// # 댓글 수정
 	@ResponseBody
 	@PostMapping("updateReply")
 	public Object updateReply (@RequestParam(required = false, defaultValue = "-1") int commentnum,
-							   @RequestParam(required = false, defaultValue = "-1") String content) {
+							   @RequestParam(required = false, defaultValue = "-1") String content,
+							   HttpSession session) {
 		Map<String, Object> keys = new HashMap<String, Object>();
 		keys.put("commentnum", commentnum);
 		keys.put("content", content);
 
 		int result = groupCommentService.update(keys);
+		keys.put("loginuser", Integer.parseInt(session.getAttribute("id").toString()));
 		return keys;
 	}
 	

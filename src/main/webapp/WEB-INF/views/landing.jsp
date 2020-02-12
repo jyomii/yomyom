@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<title>우리사이트 이름 뭐라고하셨죠?</title>
+<title>LOGIN</title>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="icon" href="resources/images/fav.png" type="image/png"
@@ -123,13 +123,11 @@ list-style: none;}
 							<form method="post" action="loginprocess">
 
 								<div class="form-group">
-
-									<button class="mtr-btn"
-										style="background: #fef01b; color: #556677; border: 0; width: 100%;"
+									<button class="mtr-btn" style="background: #fef01b; color: #556677; border: 0; width: 100%;"
 										onclick="location.href='kakao'">
 										<img src="resources/images/kakao-talk.png"
-											style="width: 30px; height: 30px; float: left;">카카오톡으로
-										  로그인
+											style="width: 30px; height: 30px; float: left;">
+											카카오톡으로 로그인
 									</button>
 								</div>
 								<p style="text-align: center;">또는</p>

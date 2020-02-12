@@ -92,7 +92,6 @@
 												</div>
 
 												<div class="form-group">
-
 													<select name="whereKey" style="width: 100%;">
 														<option value="0" selected="selected">지역 선택</option>
 														<option value="1">서울특별시</option>
@@ -612,7 +611,7 @@
 		//모임 이름 확인
 		$('input[name="groupName"]').keyup(function() {
 
-			var reg_hanengnum = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{3,20}$/;
+			var reg_hanengnum = /^[\s|ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{3,20}$/;
 
 			var name = $(this).val();
 			var label = $(this).next();

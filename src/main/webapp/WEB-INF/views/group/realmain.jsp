@@ -2,24 +2,68 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+
 <!-- Header -->
-<jsp:include page="mainpage/header.jsp" />
+<jsp:include page="../mainpage/header.jsp" />
 <!-- Header end -->
 
 <style>
+.text-end{
+text-overflow:ellipsis;
+white-space:nowrap;
+word-wrap:normal;
+width:100%;
+overflow:hidden;
+}
+.carousel-inner {
+	height: 50vh;
+}
+
+
+
+
+.pickgradient {
+	width: 100%;
+	display: inline-block;
+	background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%,
+		rgba(255, 255, 255, 0.1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000',
+		endColorstr='#00000000', GradientType=0); /* IE6-9 */
+}
+
+.d-block {
+	top:-15vh;
+	width: 100%;
+	position: relative;
+	z-index: -1;
+	display: block;
+}
+
+.carousel-item.active img{
+animation: crescendo 6s alternate infinite ease-in;
+
+}
+
+@keyframes crescendo {
+  0%   {transform: scale(1);}
+  100% {transform: scale(1.1);}
+}
 .forgroupname {
 	list-style: none;
 	padding-top: 20px;
 }
 
 .forgroupnamewidth {
-	width: 30%;
+	width: 29%;
 	display: inline-block;
 }
 
 .forgroupnamewidth1 {
-	width: 60%;
+	width: 69%;
 	display: inline-block;
+	position: relative;
+	top: 7px;
 }
 
 .forgroupnameleft {
@@ -34,13 +78,15 @@
 
 .forSubmitBtnDiv {
 	margin-top: 0px !important;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
+	width:100%;
 }
 
 .forLoginBtn {
 	padding-left: 25px !important;
 	padding-right: 25px !important;
-	margin-left: 13%;
+	margin-bottom:10px;
+	width: 90%;
 }
 
 .forMemberCountBtnOne {
@@ -203,83 +249,248 @@ cursor:pointer}
 #calendar td{
 cursor:pointer
 }
+.katalkbtn{
+background-color: #423630 !important;
+color: white !important;
+}
+
+.katalkbtn:hover{
+background-color: #594941 !important;
+}
+
+.katalkbtnw{
+color: #423630 !important;
+}
+
+.logintitle{
+font-size:14px;
+margin-top:10px;
+}
+
+.logintitlehr{
+margin-top:5px;
+margin-bottom:2px;
+width:100%;
+}
+
+.logincenter{
+text-align:center;
+}
+
+.logindiv{
+margin-top:10px;
+}
+
+.loginleft{
+float:left;
+font-size:14px;
+margin-left:14px;
+}
+
+.loginright{
+float:right;
+font-size:14px;
+margin-right:14px;
+}
+.leftrightwidth{
+padding-left: 0px !important;
+padding-right: 0px !important;
+width:90%;
+}
+
+.center-pagination {
+	justify-content: center;
+	margin-bottom: 0px;
+}
+.widthpagination{
+width:18% !important;
+}
+.imground{
+border-radius:16px;
+margin-right:10px;
+}
+.hrmargin{
+margin-top:5px !important;
+margin-bottom:5px !important;
+}
+
+.leftpadding{
+padding-left:20px !important;
+padding-right:20px !important;
+}
+
+.commentmargin {
+    margin-right: 7px !important;
+}
+.groupname{
+position:relative;
+top:-9px;
+}
+
+.figure-myimg{
+	width:80px !important;
+	max-width: 100px !important;
+	margin-left: 20px;
+}
+
+.figure-myimg1{
+	width:100%;
+	
+}
+
+.page-metaclass{
+	margin-left: 20px;
+    width: 55% !important;
+}
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom{
+	margin-bottom: 0px !important;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
 <section>
-	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
-		type="hidden" id="UserKey" value="1">
-	<div class="feature-photo test1">
-		<figure>
-			<img id="groupPageImg"
-				src="<spring:url value='/image${groupdfile }'/>" alt="" />
-			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
-		</figure>
-		<!-- **********모임 대문 사진 수정*********** -->
-		<form class="edit-phto" id="groupMainImgForm"
-			enctype="multipart/form-data" action="group_mainImgUpdate.net"
-			method="post">
-			<input type="hidden" name="groupkey" value="${groupkey }"> <i
-				class="fa fa-camera-retro"></i>
-			<!-- 대문 사진 수정 버튼 -->
-			<label class="fileContainer"> 대문 사진 수정 <input type="file"
-				name="groupMainImgUpload" />
-			</label>
-		</form>
-		<!-- **********모임 대문 사진 수정*********** -->
+	<div class="feature-photo">
 
-		<div class="container-fluid height-for-white">
-			<div class="row merged">
-				<div class="col-lg-2 col-sm-3">
-					<div class="user-avatar">
-						<!-- 그룹 사진 -->
-						<figure>
-							<img id="groupImg"
-								src="<spring:url value='/image${groupcfile }'/>" />
-							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
-							<!-- **********모임 사진 수정*********** -->
-							<form class="edit-phto" id="groupImgForm"
-								enctype="multipart/form-data" action="group_ImgUpdate.net"
-								method="post">
-								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${groupkey}"> <i class="fa fa-camera-retro"></i>
-								<!-- 그룹 사진 수정 버튼 -->
-								<label class="fileContainer"> 그룹 사진 수정하기 <input
-									type="file" name="groupImgUpload" />
-								</label>
-								<!-- 그룹 사진 수정 버튼 -->
-							</form>
-							<!-- **********모임 사진 수정*********** -->
-						</figure>
-						<!-- 그룹 사진 -->
-					</div>
-				</div>
-				<div class="col-lg-10 col-sm-9">
-					<div class="timeline-info">
-						<div class="forgroupnamewidth">
-							<!-- 그룹 이름 -->
-							<ul>
-								<li class="admin-name forgroupname">
-									<h5>${groupname}</h5>
-								</li>
-							</ul>
-							<!-- 그룹 이름 -->
-						</div>
-						<div class="forgroupnamewidth1">
-							<!-- 그룹 간단 정보 -->
-							<ul>
-								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-							</ul>
-							<!-- 그룹 간단 정보 -->
-						</div>
-					</div>
-				</div>
+
+		<div id="carouselExampleCaptions" class="carousel slide"
+			data-ride="carousel">
+			<div class="carousel-inner">
+
+				<c:forEach items="${bestgroup}" var="item" varStatus="status">
+
+
+					<c:choose>
+						<c:when test="${status.first eq true}">
+							<div class="carousel-item active" style="overflow: hidden;">
+								<c:choose>
+									<c:when test="${empty item.groupCFile }">
+										<div class="pickgradient">
+											<img src="resources/images/group_default2.jpg"
+												class="d-block" alt="...">
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="pickgradient">
+											<img class="d-block"
+												src="<spring:url value='/image${item.groupCFile }'/>" />
+										</div>
+									</c:otherwise>
+								</c:choose>
+
+							<div class="g-post-classic-recommands"
+								style="right: 5vh; text-align: right; width: auto; opacity: 0.8; position: absolute; top:3vh;">
+								<h1 style="font-weight: bold;">BEST GROUPS :
+									${item.groupName }</h1>
+								<p class="text-end">${item.groupInfo }</p>
+							</div>
+							</div>
+
+
+						</c:when>
+						<c:otherwise>
+						<div class="carousel-item" style="overflow: hidden;">
+								<c:choose>
+									<c:when test="${empty item.groupCFile }">
+										<div class="pickgradient">
+											<img src="resources/images/group_default2.jpg" class="d-block" alt="...">
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="pickgradient">
+											<img class="d-block" src="<spring:url value='/image${item.groupCFile }'/>" />
+										</div>
+									</c:otherwise>
+								</c:choose>
+
+							<div class="g-post-classic-recommands"
+								style="right: 5vh; text-align: right; width: auto; opacity: 0.8; position: absolute; top:3vh;">
+								<h1 style="font-weight: bold;">BEST GROUPS :
+									${item.groupName }</h1>
+								<p class="text-end">${item.groupInfo }</p>
+							</div>
+							</div>
+						</c:otherwise>
+						
+						
+					</c:choose>
+				</c:forEach>
 			</div>
+
+
+			<a class="carousel-control-prev" href="#carouselExampleCaptions"
+				role="button" data-slide="prev"> <span
+				class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+				class="sr-only">Previous</span>
+			</a> <a class="carousel-control-next" href="#carouselExampleCaptions"
+				role="button" data-slide="next"> <span
+				class="carousel-control-next-icon" aria-hidden="true"></span> <span
+				class="sr-only">Next</span>
+			</a>
 		</div>
+
+
+
+
+
+
+
 	</div>
+
+
 </section>
 <!-- 그룹 페이지 상단 -->
 <!-- 그룹 페이지 메인 -->
@@ -293,597 +504,181 @@ cursor:pointer
 						<!-- 그룹 페이지 위젯 왼쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-								<!-- 그룹 게시판 위젯 -->
 								<div class="widget">
-									<h4 class="widget-title">게시판</h4>
+								<input type="hidden" id="userkey" value="${userkey}">
+									<h4 class="widget-title">카테고리</h4>
 									<ul class="naves">
-										<c:forEach var="gbl" items="${groupboardlist }">
-											<li><i class="ti-clipboard"></i> 
-											<a href="newsfeed.html"title="">${gbl.boardName}</a> 
-											<input type="hidden"value="${gbl.boardType }"></li>
+										<c:forEach items="${dcategory }" var="item" varStatus="status">
+											<li><a 
+											 
+											data-toggle="collapse"
+												href="#collapseExample${status.index }" role="button"
+												aria-expanded="false" aria-controls="collapseExample${status.index }"
+												>${item.DCategoryName }</a>
+
+												<div class="collapse" id="collapseExample${status.index }">
+													<div class="card card-body">
+														<ul class="naves">
+
+															<c:forEach items="${scategory}" var="item2">
+
+																<c:if test="${item.DCategoryKey ==  item2.DCategoryKey}">
+																	<li><a href="CateogryMain?categorykey=${item2.SCategoryKey}">${item2.SCategoryName}</a></li>
+																</c:if>
+															</c:forEach>
+
+
+
+														</ul>
+
+													</div>
+												</div></li>
 										</c:forEach>
-										
-										<!-- ## 모임 회원 관리 페이지 임시 ## -->
-										<li>
-											<i class="ti-clipboard"></i> 
-											<a href="groupMember?groupKey=3" title="">모임 회원 게시판</a> 
-										</li>
+
+
 									</ul>
 								</div>
-								<!-- 그룹 게시판 위젯 -->
-
-								<!-- 모임 관리 게시판 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">모임 관리</h4>
-
-									<ul class="naves">
-										<li><i class="ti-info-alt"></i> <a href="group_admin.net"
-											title="">모임 기본 설정</a></li>
-										<li><i class="ti-mouse-alt"></i> <a
-											href="group_admin.net" title="">모임 일정 관리</a></li>
-										<li><i class="ti-heart"></i> <a href="edit-interest.html"
-											title="">모임 회원 관리</a></li>
-										<li><i class="ti-settings"></i> <a
-											href="edit-account-setting.html" title="">모임 게시판 관리</a></li>
-									</ul>
-								</div>
-								<!-- 모임 관리 게시판 위젯 -->
-
-								<!-- 그룹 카톡방 위젯 -->
-								<div class="widget">
-									<div class="banner medium-opacity bluesh">
-										<div
-											style="background-image: url(resources/images/resources/baner-widgetbg.jpg)"
-											class="bg-image"></div>
-										<!--  <div class="baner-top">
-													<span><img src="resources/images/book-icon.png"
-														alt=""></span> <i class="fa fa-ellipsis-h"></i>
-												</div>-->
-										<div class="banermeta">
-											<p>
-												그룹 카카오톡<br>채팅방에<br>참여하세요!
-											</p>
-											<!--<span>like them all</span>-->
-											<a href="#" title="" data-ripple="">카톡방 참여하기</a>
-										</div>
-									</div>
-								</div>
-								<!-- 그룹 카톡방 위젯 -->
-
-								<!-- 그룹 가입 회원 목록 -->
-								<div class="widget friend-list">
-									<h4 class="widget-title">모임의 회원들</h4>
-									<div id="searchDir"></div>
-									<ul id="people-list" class="friendz-list">
-										<c:forEach var="gml" items="${groupmemberlist }">
-											<li>
-												<figure>
-													<img src="resources/images/resources/friend-avatar.jpg"
-														alt="">
-												</figure>
-												<div class="friendz-meta">
-													<a href="time-line.html"></a>${gml.groupnickname } <i
-														class="__cf_email__">모임장</i>
-												</div>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>
-								<!-- 그룹 가입 회원 목록 -->
-
+								<!-- Shortcuts -->
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 왼쪽  -->
 
 						<!-- 그룹 페이지 위젯 중간 -->
 						<div class="col-lg-6">
-
-							<!-- 그룹장 간단 그룹 소개 -->
-							<div class="central-meta item">
-								<div class="user-post">
-									<div class="friend-info">
-										<!-- 그룹 사진 -->
-										<figure>
-											<img src="resources/images/resources/friend-avatar10.jpg"
-												alt="">
-										</figure>
-										<!-- 그룹 사진 -->
-
-										<!-- 그룹 이름-->
-										<div class="friend-name">
-											<ins>
-												<a href="time-line.html" title="">${groupname }</a>
-											</ins>
-											<span>모임장 : ${groupmaster}</span>
-										</div>
-										<!-- 그룹 이름-->
-
-										<!-- 그룹 소개 본문-->
-										<div class="description">
-											<p>${groupinfo}</p>
-										</div>
-										<!-- 그룹 소개 본문-->
-									</div>
+							<div class="g-post-classic-recommands">
+								<div class="groups recommands">
+									<span><i class="fas fa-star"></i> 추천 모임</span>
 								</div>
+								<c:forEach items="${reList}" varStatus="status" var="item">
+									<div class="g-post-classic nearby-contct height_custom" >
+										<figure>
+
+											<c:choose>
+												<c:when test="${empty item.groupCFile }">
+													<img src="resources/images/group_default2.jpg">
+												</c:when>
+												<c:otherwise>
+
+													<img alt="..."
+														src="<spring:url value='/image${item.groupCFile }'/>" />
+												</c:otherwise>
+											</c:choose>
+
+										</figure>
+										<div class="g-post-meta">
+											<div class="post-title">
+												<h4>
+													<a title="이동" href="group_main.net?groupkey=${item.groupKey }">${item.groupName }</a>
+												</h4>
+												<p class="text-end">${item.groupInfo }</p>
+												<span class="p-date">${item.lastDate} 마지막 활동 </span>
+											</div>
+											<div class="g-post-ranking">
+												<a title="" class="likes"><i class="fa fa-heart-o"></i>회원수
+													${item.memberCount } 명 </a>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+
+
 							</div>
-							<!-- 그룹장 간단 그룹 소개 -->
+							
+							
 
-
-							<!-- 그룹 정모 예정 목록 -->
-							<div class="central-meta item">
+							<div class="central-meta">
 								<div class="groups">
-									<span><i class="fa fa-users"></i>예정 모임</span>
+									<span><i class="fas fa-list"></i>모임 목록</span>
 								</div>
 								<ul class="nearby-contct">
-									<c:forEach var="gmtl" items="${groupmeetinglist }" begin="0"
-										end="2">
-										<c:choose>
-											<c:when test="${gmtl.rownum+0 ==1}">
-												<c:set var="l" value="One" />
-												<c:set var="n" value="1" />
-											</c:when>
-											<c:when test="${gmtl.rownum+0 ==2}">
-												<c:set var="l" value="Two" />
-												<c:set var="n" value="2" />
-											</c:when>
-											<c:otherwise>
-												<c:set var="l" value="Three" />
-												<c:set var="n" value="3" />
-											</c:otherwise>
-										</c:choose>
+
+									<c:forEach items="${groupList }" var="item">
 										<li>
-											<div class="card">
-												<div class="card-header card-header-bgcolor"
-													id="heading${l}">
-													<div class="nearly-pepls">
-														<figure>
-															<a href="time-line.html" title=""><img
-																src="resources/images/resources/group1.jpg" alt=""></a>
-														</figure>
-														<div class="pepl-info">
-															<h4 class="min-width-h4">
-																<a href="time-line.html" title="">${gmtl.postTitle}</a>
-															</h4>
-															<br> <br> <span class="schedule-span">장소:
-																${gmtl.location}</span>
-															<c:if test="${gmtl.joinbtn eq 'yes'}">
-																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
-																	<span>참여하기</span>
-																</button>
-															</c:if>
-															<c:if test="${gmtl.joinbtn eq 'no'}">
-																<button type="button" class="mtr-btn forJoinBtn gmtlcancelbtn">
-																	<span>취소하기</span>
-																</button>
-															</c:if>
-															<input type="hidden" id="postkey${n}"
-																value="${gmtl.postKey }"> <input type="hidden"
-																value="${n}"> <br> <span
-																class="schedule-span1">일시: ${gmtl.cstartdate}</span><br>
-															<span class="schedule-span1">회비: ${gmtl.cmoney}</span>
-															<button type="button"
-																class="mtr-btn forMemberCountBtn${l}"
-																data-toggle="collapse" data-target="#collapse${l}"
-																aria-expanded="true" aria-controls="collapse${l}">
-																<span>참여한 사람들 <span class="currentperson${n}">${gmtl.currentperson }</span>
-																	/ ${gmtl.maxperson}&nbsp;&nbsp;&nbsp;<i
-																	class="fas fa-arrow-down i-change${l}"></i>
-																</span>
-															</button>
-															<input type="hidden" value="${gmtl.postKey }"> <input
-																type="hidden" value="${n}">
-														</div>
-													</div>
-												</div>
-												<div id="collapse${l}" class="collapse"
-													aria-labelledby="heading${l}" data-parent="#accordion">
-													<div class="card-body">
-														<div class="widget friend-list">
-															<div id="searchDir${n}"></div>
-															<ul id="people-list${n}"
-																class="friendz-list people-list groupMember">
+											<div class="nearly-pepls">
+												<figure>
+													<c:choose>
+														<c:when test="${empty item.groupDFile }">
+															<img src="resources/images/group_default.png" alt="">
+														</c:when>
+														<c:otherwise>
 
-																<c:forEach var="gml" items="${groupmemberlist }">
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar.jpg"
-																				alt="">
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html"></a>${gml.groupnickname } <i
-																				class="__cf_email__">모임장</i>
-																		</div>
-																	</li>
-																</c:forEach>
+															<img
+																src="<spring:url value='/image${item.groupDFile }'/>" />
+														</c:otherwise>
+													</c:choose>
 
-															</ul>
-														</div>
-													</div>
+												</figure>
+												<div class="pepl-info">
+													<h4>
+														<a href="group_main.net?groupkey=${item.groupKey }" title="">${item.groupName }</a>
+													</h4>
+													<span class="text-end">${item.groupInfo }</span>
 												</div>
 											</div>
 										</li>
 									</c:forEach>
+
 								</ul>
-								<!-- photos -->
+
+
+
 							</div>
-							<!-- 그룹 정모 예정 목록 -->
-
-							<!-- 그룹 정모 후기 목록 -->
-							<div class="central-meta item">
-								<div class="groups">
-									<span><i class="fa fa-users"></i>정모 후기</span>
-								</div>
-								<br>
-								<div class="user-post">
-									<div class="friend-info">
-										<figure>
-											<img src="resources/images/resources/friend-avatar10.jpg"
-												alt="">
-										</figure>
-										<div class="friend-name">
-											<ins>
-												<a href = "javascript:test(2, 3)" title="">이지연</a>
-											</ins>
-											<span>2019년 12월 31일 송년회 후기</span>
-										</div>
-										<div class="post-meta">
-											<img src="resources/images/resources/user-post.jpg" alt="">
-											<div class="we-video-info">
-												<ul>
-
-													<li><span class="views" data-toggle="tooltip"
-														title="views"> <i class="fa fa-eye"></i> <ins>1.2k</ins>
-													</span></li>
-													<li><span class="comment" data-toggle="tooltip"
-														title="Comments"> <i class="fa fa-comments-o"></i>
-															<ins>52</ins>
-													</span></li>
-													<li><span class="like" data-toggle="tooltip"
-														title="like"> <i class="ti-heart"></i> <ins>2.2k</ins>
-													</span></li>
-													<li><span class="dislike" data-toggle="tooltip"
-														title="dislike"> <i class="ti-heart-broken"></i> <ins>200</ins>
-													</span></li>
-													<li class="social-media">
-														<div class="menu">
-															<div class="btn trigger">
-																<i class="fa fa-share-alt"></i>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-html5"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-facebook"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-google-plus"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-twitter"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-css3"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-instagram"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-dribbble"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-pinterest"></i></a>
-																</div>
-															</div>
-
-														</div>
-													</li>
-												</ul>
-											</div>
-											<div class="description">
-
-												<p>
-													졸잼 <a href="#" title="">#test drive booking !</a> 꽐롸됐어요
-													힘들었어요 그래도 탁구쳤어요
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="coment-area">
-										<ul class="we-comet">
-											<li>
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="we-comment">
-													<div class="coment-head">
-														<h5>
-															<a href="javascript:test(42, 7)" title="">조태석</a>
-														</h5>
-														<span>1 분전</span> <a class="we-reply" href="#"
-															title="Reply"><i class="fa fa-reply"></i></a>
-													</div>
-													<p>힘들었다..</p>
-												</div>
-												<ul>
-													<li>
-														<div class="comet-avatar">
-															<img src="resources/images/resources/comet-2.jpg" alt="">
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5>
-																	<a href="time-line.html" title="">장연지</a>
-																</h5>
-																f <span>1 시간 전</span> <a class="we-reply" href="#"
-																	title="Reply"><i class="fa fa-reply"></i></a>
-															</div>
-															<p>
-																짱힘듬f <a href="#" title="">#Mercedes-Benz</a> 탁구짱
-															</p>
-														</div>
-													</li>
-													<li>
-														<div class="comet-avatar">
-															<img src="resources/images/resources/comet-3.jpg" alt="">
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5>
-																	<a href="time-line.html" title="">고연희</a>
-																</h5>
-																<span>하루 전</span> <a class="we-reply" href="#"
-																	title="Reply"><i class="fa fa-reply"></i></a>
-															</div>
-															<p>일어나보니 탁구장이네요</p>
-														</div>
-													</li>
-												</ul>
-											</li>
-											<li>
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="we-comment">
-													<div class="coment-head">
-														<h5>
-															<a href="time-line.html" title="">Donald Trump</a>
-														</h5>
-														<span>1 week ago</span> <a class="we-reply" href="#"
-															title="Reply"><i class="fa fa-reply"></i></a>
-													</div>
-													<p>
-														we are working for the dance and sing songs. this video is
-														very awesome for the youngster. please vote this video and
-														like our channel <i class="em em-smiley"></i>
-													</p>
-												</div>
-											</li>
-											<li><a href="#" title="" class="showmore underline">더보기</a></li>
-											<li class="post-comment">
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="post-comt-box">
-													<form method="post">
-														<textarea placeholder="댓글을 입력하세요"></textarea>
-														<div class="add-smiles">
-															<span class="em em-expressionless" title="add icon"></span>
-														</div>
-														<div class="smiles-bunch">
-															<i class="em em---1"></i> <i class="em em-smiley"></i> <i
-																class="em em-anguished"></i> <i class="em em-laughing"></i>
-															<i class="em em-angry"></i> <i class="em em-astonished"></i>
-															<i class="em em-blush"></i> <i class="em em-disappointed"></i>
-															<i class="em em-worried"></i> <i
-																class="em em-kissing_heart"></i> <i class="em em-rage"></i>
-															<i class="em em-stuck_out_tongue"></i>
-														</div>
-														<button type="submit"></button>
-													</form>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
+							
+							
+							<div class="central-meta">
+							<div class="groups">
+							<span>	<i class="fa fa-comments"></i> 인기 글</span>
 							</div>
-							<!-- 그룹 정모 후기 목록 -->
-
+							
+							<div class="forum-list nearby-contct">
+							<table class="table">
+							
+								<tbody>
+								<c:forEach items="${bestboard }" var="item">
+									<tr>
+										<td>
+										
+											<a href="javascript:goPage(${item.postKey }, ${item.groupKey });" title="">${item.postTitle } [${item.replyCount}]</a>
+											<p class="text-end">${item.postContent }</p>
+											<p><span>${item.groupNickname }</span>
+											<span style="margin-left: 16px;">${item.groupName }</span>
+											<span style="margin-left: 16px;">
+											<script type="text/javascript">
+											var date1 = '${item.postDate}';
+											document.write(timeBefore(new Date(date1)));
+											</script>
+											</span></p>
+										</td>
+										
+										
+									</tr>
+								</c:forEach>	
+								</tbody>
+							</table>
+						</div>
+							</div>
+							
+							
+							
 						</div>
 						<!-- 그룹 페이지 위젯 중간 -->
 
 						<!-- 그룹 페이지 위젯 오른쪽 -->
 						<div class="col-lg-3">
 							<aside class="sidebar static">
-
-								<!-- 그룹 로그인 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title forlogintitle">로그인</h4>
-									<div class="your-page">
-										<div class="form-group">
-											<input type="text" id="input" required="required" /> <label
-												class="control-label" for="input">아이디</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="form-group">
-											<input type="password" required="required" /> <label
-												class="control-label" for="input">비밀번호</label><i
-												class="mtrl-select"></i>
-										</div>
-										<div class="checkbox forRememberIdDiv">
-											<label> <input type="checkbox" checked="checked"><i
-												class="check-box forcheckbox"></i>아이디 저장
-											</label>
-										</div>
-
-										<div class="submit-btns forSubmitBtnDiv">
-											<button type="button" class="mtr-btn forLoginBtn">
-												<span>로그인</span>
-											</button>
-											<button type="button" class="mtr-btn forRegisterBtn">
-												<span>회원가입</span>
-											</button>
-										</div>
-
-									</div>
-								</div>
-								<!-- 그룹 로그인 위젯 -->
-
-								<!-- 그룹 나의 정보 위젯 -->
-								<div class="widget">
-									<h4 class="widget-title">나의 정보</h4>
-									<div class="your-page your-page-groupListDiv">
-										<figure>
-											<a href="#" title=""><img
-												src="resources/images/resources/friend-avatar9.jpg" alt=""></a>
-										</figure>
-										<div class="page-meta">
-											<a href="#" title="" class="underline">동선동탁구대장</a> <span><i
-												class="ti-comment"></i>메세지 <em>9</em></span> <span><i
-												class="ti-bell"></i>알림 <em>2</em></span>
-										</div>
-										<div class="page-likes">
-											<ul class="nav nav-tabs likes-btn">
-												<li class="nav-item"><a class="active" href="#link1"
-													data-toggle="tab">나의모임정보</a></li>
-												<li class="nav-item"><a class="" href="#link2"
-													data-toggle="tab">가입모임목록</a></li>
-											</ul>
-											<!-- Tab panes -->
-											<div class="tab-content">
-												<div class="tab-pane active fade show" id="link1">
-													<span><i class="ti-heart"></i>884</span> <a href="#"
-														title="weekly-likes">35 new likes this week</a>
-													<div class="users-thumb-list">
-														<a href="#" title="Anderw" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-1.jpg" alt="">
-														</a> <a href="#" title="frank" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-2.jpg" alt="">
-														</a> <a href="#" title="Sara" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-3.jpg" alt="">
-														</a> <a href="#" title="Amy" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-4.jpg" alt="">
-														</a> <a href="#" title="Ema" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-5.jpg" alt="">
-														</a> <a href="#" title="Sophie" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-6.jpg" alt="">
-														</a> <a href="#" title="Maria" data-toggle="tooltip"> <img
-															src="resources/images/resources/userlist-7.jpg" alt="">
-														</a>
-													</div>
-												</div>
-												<div class="tab-pane fade" id="link2">
-													<div>
-														<ul class="your-page-groupList">
-															<li>동.탁</li>
-															<li>동.탁</li>
-															<li>동.탁</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- 나의 정보 위젯 -->
-
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-								<div class="widget calendarCenter">
-									<input type="hidden" id="gclc" value="${groupcalendarlistCount}">
-									<c:forEach var="gcl" items="${groupcalendarlist }">
-											<input type="hidden" id="cal${gcl.rownum}" value="${gcl.startdate }">
-									</c:forEach>
-									<h4 class="widget-title">나의 일정</h4>
-
-									<div class="calendarDiv">
-										<table id="calendar" class="calendarTable">
-											<tr>
-												<!-- label은 마우스로 클릭을 편하게 해줌 -->
-												<th id="prevcal"><label><i
-														class="fas fa-angle-left calendarBtn"></i></label></th>
-												<th id="tbCalendarYM" colspan="5">yyyy년 m월</th>
-												<th id="nextcal"><label><i
-														class="fas fa-angle-right calendarBtn"></i></label></th>
-											</tr>
-											<tr>
-												<th align="center">일</th>
-												<th align="center">월</th>
-												<th align="center">화</th>
-												<th align="center">수</th>
-												<th align="center">목</th>
-												<th align="center">금</th>
-												<th align="center">토</th>
-											</tr>
-										</table>
-									</div>
-									<div class="scheduleDiv">
-										<hr>
-										<ul class="short-profile scheduleUl" id="shortschedule">
-											<c:if test="${empty shortschedule}">
-											<li><span>일정 없음</span></li>
-											</c:if>
-											<c:if test="${not empty shortschedule}">
-											<c:forEach var="ss" items="${shortschedule }">
-												<li><span>${ss.posttitle }</span>
-												<p>
-													모임명: ${ss.groupname }<br>시간: ${ss.startdate} <br>장소: ${ss.location }
-												</p></li>
-											</c:forEach>
-											</c:if>
-										</ul>
-									</div>
-
-								</div>
-								<!-- 그룹별 정모 나의 일정 위젯 -->
-
+								<jsp:include page="group_rightWidget.jsp" />
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 오른쪽 -->
-						<form name = "myForm">
-							<input type = "hidden" name = "userKey" value = "">
-							<input type = "hidden" name = "groupKey" value = "">
-						</form>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
-<!-- 그룹 페이지 메인 -->
-<!-- footer -->
-<jsp:include page="mainpage/footer.jsp" />
-<!-- footer end -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-// ### TEST ###
-function test (userKey, groupKey) {
-	var f = document.myForm;		// 폼 name
-	f.userKey.value = userKey;		// input 태그 중 name이 groupKey인 값에 대해서 userKey를 넘긴다.
-	f.groupKey.value = groupKey;	// input 태그 중 name이 groupKey인 값에 대해서 groupKey를 넘긴다.
-	f.action = "G_mem_detail.net";	// 이동할 페이지
-	f.method = "post";				// POST 방식으로 데이터 전송
-	f.submit();		
-}
-</script>
 <script type="text/javascript">
 	//달력시작==================================================================
-	
 	var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 	var date = new Date();//today의 Date를 세어주는 역할
 	function prevCalendar() {//이전 달
@@ -894,13 +689,18 @@ function test (userKey, groupKey) {
 				.getDate());
 		buildCalendar(); //달력 cell 만들어 출력 
 	}
-
 	function nextCalendar() {//다음 달
 		// 다음 달을 today에 값을 저장하고 달력에 today 넣어줌
 		//today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
 		//getMonth()는 현재 달을 받아 오므로 다음달을 출력하려면 +1을 해줘야함
-		today = new Date(today.getFullYear(), today.getMonth() + 1, today
+		var btoday = today.getMonth();
+		today = new Date(today.getFullYear(), today.getMonth()+1, today
 				.getDate());
+		var atoday = today.getMonth();
+		if(atoday-btoday==2){
+			today = new Date(today.getFullYear(), today.getMonth()-1, today
+					.getDate());
+		}
 		buildCalendar();//달력 cell 만들어 출력
 	}
 	function buildCalendar() {//현재 달 달력 만들기
@@ -921,8 +721,7 @@ function test (userKey, groupKey) {
 		//innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
 		//new를 찍지 않아서 month는 +1을 더해줘야 한다. 
 		tbCalendarYM.innerHTML = today.getFullYear() + "년 "
-				+ (today.getMonth() + 1) + "월";
-
+				+ (today.getMonth()+1) + "월";
 		/*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
 		while (tbCalendar.rows.length > 2) {
 			//열을 지워줌
@@ -974,67 +773,113 @@ function test (userKey, groupKey) {
 	//달력끝==================================================================
 </script>
 <script>
+
+function goPage(postKey, groupKey){
+	
+	 // name이 paging인 태그
+      var f = document.paging;
+
+      // form 태그의 하위 태그 값 매개 변수로 대입
+      f.postKey.value = postKey;
+      f.groupKey.value = groupKey;
+    
+      // input태그의 값들을 전송하는 주소
+      f.action = "./detailBoard.net"
+
+      // 전송 방식 : post
+      f.method = "post"
+      f.submit();
+}
+buildCalendar();
 $(function() {
-	buildCalendar();
+	$('.carousel').on('slide.bs.carousel', function () {
+		interval : 10000
+	})
 	var mycalendarlistcount = $('#gclc').val();
 	for(var i = 1; i<=mycalendarlistcount;i++){
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
-	
+	$(".forLoginBtn").click(function(){
+		location.href="login";
+	})
+	$(".forLoginBtnx").click(function(){
+		location.href="login";
+	})
 	$("#calendar").on('click', '#prevcal', function(event) {
-		var userkey = $('#UserKey').val();
+		var userkey = $('#userkey').val();
 		prevCalendar();
 		var date = $('#tbCalendarYM').text();
 		ajaxcallist(userkey,date);
 		$('#shortschedule').empty();
-		$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		if(userkey ==-1){
+			$('#shortschedule').append('<li><span>로그인 해주세요</span></li>');
+		}else{
+			$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		}
 		
     })
     
     $("#calendar").on('click', '#nextcal', function(event) {
-    	var userkey = $('#UserKey').val();
+    	var userkey = $('#userkey').val();
     	nextCalendar();
     	var date = $('#tbCalendarYM').text();
     	ajaxcallist(userkey,date);
     	$('#shortschedule').empty();
-    	$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+    	if(userkey ==-1){
+			$('#shortschedule').append('<li><span>로그인 해주세요</span></li>');
+		}else{
+			$('#shortschedule').append('<li><span>날짜를 선택하세요</span></li>');
+		}
     })
     
     
 	$(".nearby-contct").on('click', '.gmtljoinbtn', function(event) {
-		var userkey = $('#UserKey').val();
-        var postkey = $(this).next().val();
+		var userkey = $('#userkey').val();
+		if (userkey!=-1){
+		var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
+        alert(n);
         ajaxJoinBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtljoinbtn');
         $(this).addClass('gmtlcancelbtn');
         $(this).children().html('취소하기');
+		}else{
+			alert("로그인 해주세요 ");
+		}
     })
 
     $(".nearby-contct").on('click', '.gmtlcancelbtn', function(event) {
-        var userkey = $('#UserKey').val();
+        var userkey = $('#userkey').val();
+        if (userkey!=-1){
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtlcancelbtn');
         $(this).addClass('gmtljoinbtn');
         $(this).children().html('참여하기');
+        }else{
+			alert("로그인 해주세요 ");
+		}
     })
 	$(".calendarDiv").on('click', 'td', function(event) {
         if ($(this).text() != "" || $(this).text().length() > 2) {
             $('td').removeClass('calendarCellSelected');
             $(this).addClass('calendarCellSelected');
-            var userkey = $('#UserKey').val(); 
+            var userkey = $('#userkey').val();
             var date = $('#tbCalendarYM').text();
             var day = $(this).text();
             if($(this).hasClass('calendarCellMy')){
             	ajaxcal(userkey,date,day);
             }else{
             	$('#shortschedule').empty();
-            	$('#shortschedule').append('<li><span>일정이 없습니다</span></li>');
+            	if(userkey ==-1){
+        			$('#shortschedule').append('<li><span>로그인 해주세요</span></li>');
+        		}else{
+        			$('#shortschedule').append('<li><span>일정이 없습니다</span></li>');
+        		}
             }
         }
     })
@@ -1044,7 +889,7 @@ $(function() {
     $(".forMemberCountBtnOne").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseOne").hasClass("show")) {
             $('.i-changeOne').removeClass('fa-arrow-up');
@@ -1057,7 +902,7 @@ $(function() {
     $(".forMemberCountBtnTwo").click(function() {
     	var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseTwo").hasClass("show")) {
             $('.i-changeTwo').removeClass('fa-arrow-up');
@@ -1070,7 +915,7 @@ $(function() {
     $(".forMemberCountBtnThree").click(function() {
         var postkey = $(this).next().val();
         var n = $(this).next().next().val();
-        var groupkey = $('#hiddenGroupKey').val();
+        var groupkey = $('#thisGroupKey').val();
         ajax(postkey, groupkey, n);
         if ($("#collapseThree").hasClass("show")) {
             $('.i-changeThree').removeClass('fa-arrow-up');
@@ -1083,10 +928,12 @@ $(function() {
 
     //=======================================================
     $('input[type=file]:eq(0)').on('change', function() {
-        $('#groupMainImgForm').submit();
+        alert("1");
+    	$('#groupMainImgForm').submit();
     });
     $('input[type=file]:eq(1)').on('change', function() {
-        $('#groupImgForm').submit();
+    	alert("1");
+    	$('#groupImgForm').submit();
     });
 
 
@@ -1618,9 +1465,7 @@ $(function() {
             }
         }) // ajax
     } // function ajax end
+    
 })
 </script>
 
-<script src="resources/js/script.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />

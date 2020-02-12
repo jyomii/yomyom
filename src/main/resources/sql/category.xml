@@ -140,17 +140,9 @@
 	</select>
 	
 	
-	 <update id="interestupdate" parameterType="Map">
-		<selectKey order="BEFORE" keyProperty="userkey"
-			resultType="int">
-			select userkey from gusers where userid= #{id}
-		</selectKey>
-		update gusercategory  
-		<foreach item="item" index="index" collection="list">
-			set userKey = #{userkey}, categoryKey = #{item})
-		</foreach>
-		select * from dual
-	</update>
+	 <delete id="mycateD" parameterType="gusercategory">
+		delete from GUSERCATEGORY where userKey = (select userKey from gusers where userId = #{id})
+	</delete>
 
 
 

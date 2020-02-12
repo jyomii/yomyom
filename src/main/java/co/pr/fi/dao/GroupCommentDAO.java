@@ -41,4 +41,8 @@ public class GroupCommentDAO {
 	public int update(Map<String, Object> keys) {
 		return sqlSession.update("comment.update", keys);
 	}
+
+	public int getCommentCount(Map<String, Object> data) {
+		return sqlSession.selectOne("comment.getCommentCount", data);
+	}
 }

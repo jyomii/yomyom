@@ -19,20 +19,16 @@
 	<!-- 추천 모임- 로그인했을 경우 관심 카테고리의 인원 많은 순 -->
 	<select id="BestUserCateogryGroup" resultType="group" parameterType="int">
   <![CDATA[ 
+		select * from (select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
 		
-select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.groupkey) lastDate,
-(select count(*) from ggroupmember where ggroupmember.groupkey = ggroup.groupkey and ggroupmember.usergrade > -1 group by groupkey) memberCount
+	(select count(*) 
+	from ggroupmember 
+	where ggroupmember.groupkey = ggroup.groupkey and ggroupmember.usergrade > -1 
+	group by groupkey) memberCount
+
 from ggroup
 
-		where groupkey in (
-		select groupkey from (select groupkey, count(*)
-		from ggroupmember
-		group by groupkey
-		order by count(*) desc)
-		where rownum <= 3)
-
-		and categoryKey in (select categoryKey from gusercategory where userkey =
-		#{userkey})
+where categoryKey in (select categoryKey from gusercategory where userkey = #{userkey}) order by memberCount desc) where rownum < 4
 			]]>
 	</select>
 
@@ -51,18 +47,6 @@ select ggroup.*, (select max(postdate) from post where post.groupkey = ggroup.gr
 		order by count(*) desc)
 		where rownum <= 3)
 
-		and categoryKey in (
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1,
-		ROUND (DBMS_RANDOM.VALUE () * (select count(*) from gcategory2)) + 1
-)
 			]]>
 	</select>
 

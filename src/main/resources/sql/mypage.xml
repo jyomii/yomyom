@@ -84,7 +84,7 @@
     </select>
     
     <select id="favlist" resultType="userlikegroup" parameterType="int">
-          select * from (select u.userLikeGroupKey, u.userKey, u.groupKey, g.groupName 
+          select * from (select u.userLikeGroupKey, u.userKey, u.groupKey, g.groupName, g.groupDFile  
                   from userlikegroup u join ggroup g on u.groupKey = g.groupKey) where userKey = #{userKey}
         order by groupkey desc  
     </select>
@@ -102,6 +102,17 @@
     </select>
     
     <delete id="favgroupD" parameterType="userlikegroup">
-        delete from userlikegroup where userKey = #{userKey}
+        delete from userlikegroup where userKey = #{userKey} and groupKey = #{groupKey}
     </delete>
+    
+    <select id="favlist2" resultType="userlikegroup" parameterType="String">
+          select * from (select u.userLikeGroupKey, u.userKey, u.groupKey, g.groupName, g.groupDFile  
+                  from userlikegroup u join ggroup g on u.groupKey = g.groupKey) where userKey = (select userKey from GUsers where userId = #{id})
+        order by groupkey desc  
+    </select>
+    
+    <select id="favcount2" resultType="int" parameterType="String">
+         select count(*) from userlikegroup where userKey = (select userKey from GUsers where userId = #{id})
+    </select>
+    
 </mapper>
