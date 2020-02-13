@@ -396,25 +396,38 @@ top:-9px;
 										<div class="groups">
 											<span><i class="fa fa-users"></i>${boardname}</span>
 										</div>
-										<c:if test="${boardtype=='G'&&userinfo.userGrade==1 }">
-										<button type="button" class="mtr-btn addScheduleBtn addboardlistbtn">
+										<c:if test="${boardtype=='G'||boardtype=='X'&&userinfo.userGrade==1 }">
+											<button type="button" class="mtr-btn addScheduleBtn addboardlistbtn">
 												<span>글쓰기</span>
 											</button>
-											</c:if>
-											<c:if test="${boardtype=='Y'&&userinfo.userGrade==1||userinfo.userGrade==0}">
-										<button type="button" class="mtr-btn addScheduleBtn addboardlistbtn">
+											<input type="hidden" value="${boardname}">
+											<input type="hidden" value="${boardkey}">
+											<input type="hidden" value="${boardtype}">
+										</c:if>
+										<c:if test="${boardtype=='Y'||boardtype=='H'&&userinfo.userGrade==1||userinfo.userGrade==0}">
+											<button type="button" class="mtr-btn addScheduleBtn addboardlistbtn">
 												<span>글쓰기</span>
 											</button>
-											</c:if>
+											<input type="hidden" value="${boardname}">
+											<input type="hidden" value="${boardkey}">
+											<input type="hidden" value="${boardtype}">
+										</c:if>
 											<div class="mesages-lists paddingtopzero">
 												<ul id="message-list" class="message-list">
+													<c:if test="${not empty postlist}">
 													<c:forEach var="pl" items="${postlist}">
 													<li class="unread"><span class="sender-name">${pl.postTitle }</span> <a title="" data-toggle="tooltip"
 														data-original-title="Attachment"><i
 															class="fa fa-paperclip"></i></a><span class="boardListRight">${pl.postDate }</span>
-														<p>작성자 ${pl.groupNickname} . 조회수 ${pl.postReadcount} . 추천수 ${pl.postlike}</p>
+														<p>작성자 ${pl.groupNickname} . 조회수 ${pl.postReadcount}</p>
 													</li>
 													</c:forEach>
+													</c:if>
+													<c:if test="${empty postlist}">
+														<div class="text-align-center">
+															<span>등록된 게시글이 없습니다</span>
+														</div>
+													</c:if>
 												</ul>
 												<!-- 페이지네이션 -->
 												<div class="row row-pagination">
@@ -608,9 +621,12 @@ $(function() {
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
 	
-	
 	$(".addboardlistbtn").click(function(){
-		location.href="login";
+		var groupkey = $('#thisGroupKey').val();
+		var boardname = $(this).next().val();
+		var boardkey = $(this).next().next().val();
+		var boardtype = $(this).next().next().next().val();
+		location.href="groupin_group_writeBoard.net?groupkey="+groupkey+"&boardname="+boardname+"&boardkey="+boardkey+"&boardtype="+boardtype;
 	})
 	$(".forLoginBtn").click(function(){
 		location.href="login";

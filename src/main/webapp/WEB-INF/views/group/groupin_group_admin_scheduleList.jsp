@@ -618,7 +618,7 @@ top:-9px;
 										</div>
 										<!-- 페이지네이션 -->
 
-										<div class="center-block" id="ajaxdiv">
+										<!--  <div class="center-block" id="ajaxdiv">
 				
 										
 
@@ -646,7 +646,7 @@ top:-9px;
 											</form>
 										</div>
 							
-							</div>
+							</div>-->
 </div>
 
 						</div>

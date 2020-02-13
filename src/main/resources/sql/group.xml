@@ -366,7 +366,7 @@
 		insert into
 		calendar
 		values(to_date(#{cstartdate},'yyyy-mm-dd
-		hh24:mi'),'',#{cmoney},#{postKey},#{maxperson},#{location},#{cmoneytype},#{startdate},#{time},#{minute})
+		hh24:mi'),'',#{cmoney},#{postKey},#{cmoneytype},#{startdate},#{time},#{minute},#{maxperson},#{location})
 	</insert>
 
 	<insert id="schedulecalendar" parameterType="post">
@@ -436,7 +436,6 @@
 		update
 		calendarmember set sm='s' where postkey=#{postkey} and userkey=#{temp}
 	</update>
-
 	<select id="boardlistcount" resultType="int"
 		parameterType="int">
 		select count(*) from post where boardkey=#{boardkey}
@@ -484,5 +483,15 @@ postoptionreply,postoptionsearch,boardkey,postreadcount,groupnickname from post 
 	<select id="groupafterlist" resultType="post"
 		parameterType="int">
 		select * from (select rownum rnum, A.* from (select * from post where boardkey=(select boardkey from ggroupboard where boardtype='H' and groupkey = #{groupkey})) A) where rnum = 1
+	</select>
+	
+	<insert id="boardwriteinsert" parameterType="post">
+		insert into post
+		values((select nvl((max(postKey))+1,0) from post),#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
+	</insert>
+	
+	<select id="getboardname" resultType="String"
+		parameterType="int">
+		select boardname from ggroupboard where boardkey = #{boardkey}
 	</select>
 </mapper>

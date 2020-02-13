@@ -82,7 +82,6 @@ public interface GroupService {
 	public List<MemberList> modifymember(int postkey);
 
 	public void calendardeleteajax(int temp, int postkey);
-
 	
 	public void updateschedule(Post post);
 
@@ -106,6 +105,10 @@ public interface GroupService {
 
 	public int getScheduleListCount(int groupkey);
 
-	public List<Post> groupafterlist(int groupkey);
+	public Post groupafterlist(int groupkey);
+
+	public void boardwriteinsert(Post post);
+
+	public String getboardname(int boardkey);
 
 }

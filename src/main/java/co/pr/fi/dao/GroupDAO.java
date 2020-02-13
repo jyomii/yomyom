@@ -228,7 +228,16 @@ public class GroupDAO {
 	      return sqlSession.selectOne("group.regornot", list);
 	   }
 
-	public List<Post> groupafterlist(int groupkey) {
+	public Post groupafterlist(int groupkey) {
 		return sqlSession.selectOne("group.groupafterlist", groupkey);
+	}
+
+	public void boardwriteinsert(Post post) {
+		sqlSession.insert("group.boardwriteinsert", post);
+		
+	}
+
+	public String getboardname(int boardkey) {
+		return sqlSession.selectOne("group.getboardname", boardkey);
 	}
 }

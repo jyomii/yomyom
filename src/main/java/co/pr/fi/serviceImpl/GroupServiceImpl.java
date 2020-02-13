@@ -450,7 +450,7 @@ public class GroupServiceImpl implements GroupService {
 			if(month.indexOf("0")==0) {
 				month = month.replace("0", "");
 			}
-			String day = datedd.substring(6, 9) + "일 ";
+			String day = datedd.substring(6, 8) + "일 ";
 			if(day.indexOf("0")==0) {
 				day = day.replace("0", "");
 			}
@@ -466,7 +466,18 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<Post> groupafterlist(int groupkey) {
+	public Post groupafterlist(int groupkey) {
 		return dao.groupafterlist(groupkey);
+	}
+
+	@Override
+	public void boardwriteinsert(Post post) {
+		dao.boardwriteinsert(post);
+		
+	}
+
+	@Override
+	public String getboardname(int boardkey) {
+		return dao.getboardname(boardkey);
 	}
 }

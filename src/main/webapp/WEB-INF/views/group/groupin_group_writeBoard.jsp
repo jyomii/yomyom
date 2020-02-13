@@ -2,9 +2,12 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
 <!-- Header end -->
+
 <style>
 .forgroupname {
 	list-style: none;
@@ -356,6 +359,63 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
+
+.forDeleteMargin {
+	margin-right: 2%
+}
+
+.addScheduleBtn {
+	float: right;
+	padding-left: 13px !important;
+	padding-right: 13px !important;
+}
+
+.search-text-field {
+	margin-left: 3%;
+}
+
+.search-text-free {
+	background: #f5f5f5 none repeat scroll 0 0;
+	border: 1px solid #dadede;
+	border-radius: 30px;
+	color: #7b7b7b;
+	font-size: 15px;
+	padding: 7px 20px;
+	width: 70%;
+	margin-left: 2%;
+	margin-bottom: 10px;
+	margin-top: 3px;
+}
+
+.search-text-btn {
+	margin-left: 2%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.row-pagination {
+	padding-top: 30px;
+}
+
+.center-pagination {
+	justify-content: center;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.search-condition {
+	margin-right: 10px;
+}
+
+.margin-Bottom {
+	margin-bottom: 0px !important;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -381,344 +441,57 @@ top:-9px;
 
 						<!-- 그룹 페이지 위젯 중간 -->
 						<div class="col-lg-6">
-
-							<!-- 그룹장 간단 그룹 소개 -->
-							<div class="central-meta item">
-								<div class="user-post">
-									<div class="friend-info">
-										<!-- 그룹 사진 -->
-										<figure>
-											<img src="resources/images/resources/friend-avatar10.jpg"
-												alt="">
-										</figure>
-										<!-- 그룹 사진 -->
-
-										<!-- 그룹 이름-->
-										<div class="friend-name">
-											<ins>
-												<a href="time-line.html" title="">${group.groupName }</a>
-											</ins>
-											<span>모임장 : ${groupmaster}</span>
+						<div class="central-meta">
+										<div class="editing-info">
+											<h5 class="f-title">
+												<i class="ti-info-alt"></i>${boardname } 글쓰기
+											</h5>
+											<form id="boardwritesubmit" method="post" action="boardwritesubmit.net?boardname=${boardname }&boardtype=${boardtype}">
+												<!-- <div class="checkbox">
+													<label> <input type="checkbox" checked="checked"><i
+														class="check-box"></i>Graduate
+													</label>
+												</div>
+												<div class="checkbox">
+													<label> <input type="checkbox" checked="checked"><i
+														class="check-box"></i>Masters
+													</label>
+												</div> -->
+												<input type="hidden" value="${boardkey}" name="boardKey">
+												<input type="hidden" value="${userkey}" name="userKey">
+												<input type="hidden" value="${groupkey}" name="groupKey">
+												
+												<div class="form-group">
+													<input type="text" id="input" required="required" name="postTitle" /> <label
+														class="control-label" for="input">제목</label><i
+														class="mtrl-select"></i>
+												</div>
+												<!-- <div class="form-group half">
+													<input type="text" required="required" /> <label
+														class="control-label" for="input">From</label><i
+														class="mtrl-select"></i>
+												</div>
+												<div class="form-group half">
+													<input type="text" required="required" /> <label
+														class="control-label" for="input">To</label><i
+														class="mtrl-select"></i>
+												</div> -->
+												<div class="form-group">
+													<textarea rows="4" id="textarea" required="required" name="postContent"></textarea>
+													<label class="control-label" for="textarea">내용</label><i
+														class="mtrl-select"></i>
+												</div>
+												<div class="submit-btns">
+													<button type="button" class="mtr-btn inserboardwrite">
+														<span>글쓰기</span>
+													</button>
+												</div>
+											</form>
 										</div>
-										<!-- 그룹 이름-->
 
-										<!-- 그룹 소개 본문-->
-										<div class="description">
-											<p>${group.groupInfo}</p>
-										</div>
-										<!-- 그룹 소개 본문-->
+
+
 									</div>
-								</div>
-							</div>
-							<!-- 그룹장 간단 그룹 소개 -->
-
-
-							<!-- 그룹 정모 예정 목록 -->
-							<div class="central-meta item">
-								<div class="groups">
-									<span><i class="fa fa-users"></i>예정 모임</span>
-								</div>
-								<ul class="nearby-contct">
-									<c:if test="${not empty groupmeetinglist }">
-									<c:forEach var="gmtl" items="${groupmeetinglist }" begin="0"
-										end="2">
-										<c:choose>
-											<c:when test="${gmtl.rownum+0 ==1}">
-												<c:set var="l" value="One" />
-												<c:set var="n" value="1" />
-											</c:when>
-											<c:when test="${gmtl.rownum+0 ==2}">
-												<c:set var="l" value="Two" />
-												<c:set var="n" value="2" />
-											</c:when>
-											<c:otherwise>
-												<c:set var="l" value="Three" />
-												<c:set var="n" value="3" />
-											</c:otherwise>
-										</c:choose>
-										
-										<li>
-											<div class="card">
-												<div class="card-header card-header-bgcolor"
-													id="heading${l}">
-													<div class="nearly-pepls">
-														<figure>
-															<a href="time-line.html" title=""><img
-																src="resources/images/resources/group1.jpg" alt=""></a>
-														</figure>
-														<div class="pepl-info">
-															<h4 class="min-width-h4">
-																<a href="time-line.html" title="">${gmtl.postTitle}</a>
-															</h4>
-															<br> <br> <a href="schedulemaps.net?postkey=${gmtl.postKey}"><span class="schedule-span">장소:
-																${gmtl.location}</span></a>
-															<c:if test="${gmtl.joinbtn eq 'yes'}">
-																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
-																	<span>참여하기</span>
-																</button>
-															</c:if>
-															<c:if test="${gmtl.joinbtn eq 'no'}">
-																<button type="button" class="mtr-btn forJoinBtn gmtlcancelbtn">
-																	<span>취소하기</span>
-																</button>
-															</c:if>
-															<input type="hidden" id="postkey${n}"
-																value="${gmtl.postKey }"> <input type="hidden"
-																value="${n}"> <br> <span
-																class="schedule-span1">일시: ${gmtl.cstartdate}</span><br>
-															<span class="schedule-span1">회비: ${gmtl.cmoney}</span>
-															<button type="button"
-																class="mtr-btn forMemberCountBtn${l}"
-																data-toggle="collapse" data-target="#collapse${l}"
-																aria-expanded="true" aria-controls="collapse${l}">
-																<span>참여한 사람들 <span class="currentperson${n}">${gmtl.currentperson }</span>
-																	/ ${gmtl.maxperson}&nbsp;&nbsp;&nbsp;<i
-																	class="fas fa-arrow-down i-change${l}"></i>
-																</span>
-															</button>
-															<input type="hidden" value="${gmtl.postKey }"> <input
-																type="hidden" value="${n}">
-														</div>
-													</div>
-												</div>
-												<div id="collapse${l}" class="collapse"
-													aria-labelledby="heading${l}" data-parent="#accordion">
-													<div class="card-body">
-														<div class="widget friend-list">
-															<div id="searchDir${n}"></div>
-															<ul id="people-list${n}"
-																class="friendz-list people-list groupMember">
-																<c:forEach var="gml" items="${groupmemberlist}">
-																	<li>
-																		<figure>
-																			<img
-																				src="resources/images/resources/friend-avatar.jpg"
-																				alt="">
-																		</figure>
-																		<div class="friendz-meta">
-																			<a href="time-line.html"></a>${gml.groupnickname } <i
-																				class="__cf_email__">&nbsp;</i>
-																		</div>
-																	</li>
-																</c:forEach>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</li>
-									</c:forEach>
-									</c:if>
-									<c:if test="${empty groupmeetinglist }">
-										<div class="text-align-center">
-										<span>예정된 모임이 없습니다</span>
-										</div>
-									</c:if>
-								</ul>
-								<!-- photos -->
-							</div>
-							<!-- 그룹 정모 예정 목록 -->
-
-							<!-- 그룹 정모 후기 목록 -->
-							<div class="central-meta item">
-								<div class="groups">
-									<span><i class="fa fa-users"></i>최근 정모 후기</span>
-								</div>
-								<br>
-								<c:if test="${empty groupafterlist }">
-								후기글이 없습니다
-								</c:if>
-								<c:if test="${not empty groupafterlist }">
-								<div class="user-post">
-									<div class="friend-info">
-										<figure>
-											<img src="resources/images/resources/friend-avatar10.jpg"
-												alt="">
-										</figure>
-										<div class="friend-name">
-											<ins>
-												<a href="time-line.html" title="">이지연</a>
-											</ins>
-											<span>2019년 12월 31일 송년회 후기</span>
-										</div>
-										<div class="post-meta">
-											<img src="resources/images/resources/user-post.jpg" alt="">
-											<div class="we-video-info">
-												<ul>
-													<li><span class="views" data-toggle="tooltip"
-														title="views"> <i class="fa fa-eye"></i> <ins>1.2k</ins>
-													</span></li>
-													<li><span class="comment" data-toggle="tooltip"
-														title="Comments"> <i class="fa fa-comments-o"></i>
-															<ins>52</ins>
-													</span></li>
-													<li><span class="like" data-toggle="tooltip"
-														title="like"> <i class="ti-heart"></i> <ins>2.2k</ins>
-													</span></li>
-													<li><span class="dislike" data-toggle="tooltip"
-														title="dislike"> <i class="ti-heart-broken"></i> <ins>200</ins>
-													</span></li>
-													<li class="social-media">
-														<div class="menu">
-															<div class="btn trigger">
-																<i class="fa fa-share-alt"></i>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-html5"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-facebook"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-google-plus"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-twitter"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-css3"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-instagram"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-dribbble"></i></a>
-																</div>
-															</div>
-															<div class="rotater">
-																<div class="btn btn-icon">
-																	<a href="#" title=""><i class="fa fa-pinterest"></i></a>
-																</div>
-															</div>
-
-														</div>
-													</li>
-												</ul>
-											</div>
-											<div class="description">
-
-												<p>
-													졸잼 <a href="#" title="">#test drive booking !</a> 꽐롸됐어요
-													힘들었어요 그래도 탁구쳤어요
-												</p>
-											</div>
-										</div>
-									</div>
-									
-									<div class="coment-area">
-										<ul class="we-comet">
-											<li>
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="we-comment">
-													<div class="coment-head">
-														<h5>
-															<a href="time-line.html" title="">조태석</a>
-														</h5>
-														<span>1 분전</span> <a class="we-reply" href="#"
-															title="Reply"><i class="fa fa-reply"></i></a>
-													</div>
-													<p>힘들었다..</p>
-												</div>
-												<ul>
-													<li>
-														<div class="comet-avatar">
-															<img src="resources/images/resources/comet-2.jpg" alt="">
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5>
-																	<a href="time-line.html" title="">장연지</a>
-																</h5>
-																f <span>1 시간 전</span> <a class="we-reply" href="#"
-																	title="Reply"><i class="fa fa-reply"></i></a>
-															</div>
-															<p>
-																짱힘듬f <a href="#" title="">#Mercedes-Benz</a> 탁구짱
-															</p>
-														</div>
-													</li>
-													<li>
-														<div class="comet-avatar">
-															<img src="resources/images/resources/comet-3.jpg" alt="">
-														</div>
-														<div class="we-comment">
-															<div class="coment-head">
-																<h5>
-																	<a href="time-line.html" title="">고연희</a>
-																</h5>
-																<span>하루 전</span> <a class="we-reply" href="#"
-																	title="Reply"><i class="fa fa-reply"></i></a>
-															</div>
-															<p>일어나보니 탁구장이네요</p>
-														</div>
-													</li>
-												</ul>
-											</li>
-											<li>
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="we-comment">
-													<div class="coment-head">
-														<h5>
-															<a href="time-line.html" title="">Donald Trump</a>
-														</h5>
-														<span>1 week ago</span> <a class="we-reply" href="#"
-															title="Reply"><i class="fa fa-reply"></i></a>
-													</div>
-													<p>
-														we are working for the dance and sing songs. this video is
-														very awesome for the youngster. please vote this video and
-														like our channel <i class="em em-smiley"></i>
-													</p>
-												</div>
-											</li>
-											<li><a href="#" title="" class="showmore underline">더보기</a></li>
-											<li class="post-comment">
-												<div class="comet-avatar">
-													<img src="resources/images/resources/comet-1.jpg" alt="">
-												</div>
-												<div class="post-comt-box">
-													<form method="post">
-														<textarea placeholder="댓글을 입력하세요"></textarea>
-														<div class="add-smiles">
-															<span class="em em-expressionless" title="add icon"></span>
-														</div>
-														<div class="smiles-bunch">
-															<i class="em em---1"></i> <i class="em em-smiley"></i> <i
-																class="em em-anguished"></i> <i class="em em-laughing"></i>
-															<i class="em em-angry"></i> <i class="em em-astonished"></i>
-															<i class="em em-blush"></i> <i class="em em-disappointed"></i>
-															<i class="em em-worried"></i> <i
-																class="em em-kissing_heart"></i> <i class="em em-rage"></i>
-															<i class="em em-stuck_out_tongue"></i>
-														</div>
-														<button type="submit"></button>
-													</form>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-								</c:if>
-							</div>
-							<!-- 그룹 정모 후기 목록 -->
-
 						</div>
 						<!-- 그룹 페이지 위젯 중간 -->
 
@@ -831,6 +604,7 @@ top:-9px;
 	}
 	//달력끝==================================================================
 </script>
+
 <script>
 buildCalendar();
 $(function() {
@@ -839,6 +613,9 @@ $(function() {
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
+	$(".inserboardwrite").click(function(){
+		$("#boardwritesubmit").submit();
+	})
 	$(".forLoginBtn").click(function(){
 		location.href="login";
 	})

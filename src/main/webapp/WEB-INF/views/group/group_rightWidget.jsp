@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 								<!-- 그룹 로그인 위젯 -->
-
 								<c:if test="${userkey==-1}">
 								<div class="widget logincenter">
 								<div class="logindiv">

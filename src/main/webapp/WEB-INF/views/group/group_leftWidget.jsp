@@ -8,8 +8,7 @@
 										<c:forEach var="gbl" items="${groupboardlist }">
 											<li><i class="ti-clipboard"></i> <input type="hidden"
 												value="${gbl.boardType }">
-												
-												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}&boardname=${gbl.boardName}"
+												<a href="groupin_group_board_transfer.net?groupkey=${group.groupKey }&boardkey=${gbl.boardKey }&boardtype=${gbl.boardType}"
 												title="">${gbl.boardName}</a>
 												<input type="hidden" id="bn${gbl.boardSeq }" value="${gbl.boardName }">
 												<input type="hidden" id="bk${gbl.boardSeq }" value="${gbl.boardKey }">

@@ -117,7 +117,7 @@ public class GroupController {
 		mv.addObject("groupboardlist", groupboardlist);
 		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
 		mv.addObject("groupmemberlist", groupmemberlist);
-		List<Post> groupafterlist = groupservice.groupafterlist(groupkey);
+		Post groupafterlist = groupservice.groupafterlist(groupkey);
 		mv.addObject("groupafterlist", groupafterlist);
 		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
 		mv.addObject("groupmeetinglist", groupmeetinglist);
@@ -180,7 +180,6 @@ public class GroupController {
 		String ym1 = ym.replace("월", "");
 		String ym2 = ym1.replace(" ", "");
 		int year = Integer.parseInt(ym2.substring(0, 4));
-		System.out.println("!!!!!!!!!!!" + year);
 		int month = 0;
 		if (ym2.length() == 6) {
 			month = Integer.parseInt(ym2.substring(ym2.length() - 2, ym2.length()));
@@ -426,7 +425,6 @@ public class GroupController {
 	@GetMapping("/groupin_group_board_transfer.net")
 	public ModelAndView group_board_transfer(@RequestParam(value = "groupkey") int groupkey,
 			@RequestParam(value = "boardkey") int boardkey, @RequestParam(value = "boardtype") String boardtype,
-			@RequestParam(value = "boardname") String boardname,
 			@RequestParam(value = "page", defaultValue = "1", required = false) int page, ModelAndView mv,
 			HttpSession session) {
 		int userkey = -1;
@@ -440,7 +438,6 @@ public class GroupController {
 			mv.addObject("userkey", userkey);
 		}
 		if (boardtype.equals("N")) {
-
 			mv.setViewName("group/groupin_group_schedulelist");
 			mv.addObject("boardtype", boardtype);
 			int limit = 7;
@@ -501,6 +498,7 @@ public class GroupController {
 			mv.addObject("postlist", postlist);
 			mv.addObject("limit", limit);
 		}
+		String boardname = groupservice.getboardname(boardkey);
 		mv.addObject("boardname", boardname);
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1;
@@ -687,8 +685,8 @@ public class GroupController {
 
 	
 	@PostMapping("/addSchedule.net")
-	public String addSchedule(Post post, HttpSession session, ModelAndView mv)
-			throws JsonParseException, JsonMappingException, IOException {
+	public String addSchedule(Post post, HttpSession session)
+			throws Exception {
 		String id = session.getAttribute("id").toString();
 		GUsers guser = groupservice.userkey(id);
 		int groupkey = post.getGroupKey();
@@ -701,18 +699,19 @@ public class GroupController {
 		return "redirect:groupin_group_admin_scheduleList.net?groupkey=" + groupkey;
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/updateSchedule.net")
-	public void updateScheduleAjax(Post post, HttpSession session)
-			throws JsonParseException, JsonMappingException, IOException {
+	@PostMapping("/modifySchedule.net")
+	public String modfiySchedule(Post post, HttpSession session)
+			throws Exception {
 		String id = session.getAttribute("id").toString();
 		GUsers guser = groupservice.userkey(id);
+		int groupkey = post.getGroupKey();
 		int userkey = guser.getUserKey();
 		post.setUserKey(userkey);
 		int gboardkey = groupservice.getgroupboardkey(post.getGroupKey());
 		post.setBoardKey(gboardkey);
 		groupservice.updateschedule(post);
 		groupservice.updateschedulecalendar(post);
+		return "redirect:groupin_group_admin_scheduleList.net?groupkey=" + groupkey;
 	}
 
 	@GetMapping("/groupin_group_admin_modifySchedule.net")
@@ -940,11 +939,83 @@ public class GroupController {
 	public String basicsetting(@RequestParam(value = "groupkey") int groupkey, GGroup group, HttpServletRequest request)
 			throws Exception {
 		groupservice.groupbasicupdate(group, groupkey);
-		System.out.println(group.getGroupkatalk());
-		System.out.println(group.getGroupPrivate());
 		return "redirect:groupin_group_admin.net?groupkey=" + groupkey;
 	}
-
+	
+	@GetMapping("/groupin_group_writeBoard.net")
+	public ModelAndView groupin_group_writeBoard(@RequestParam(value = "groupkey") int groupkey,@RequestParam(value = "boardname") String boardname,@RequestParam(value = "boardkey") int boardkey,@RequestParam(value = "boardtype") String boardtype, ModelAndView mv,
+			HttpSession session) {
+		String id = "";
+		int userkey = -1;
+		if (session.getAttribute("id") != null) {
+			id = session.getAttribute("id").toString();
+			GUsers guser = groupservice.userkey(id);
+			userkey = guser.getUserKey();
+			mv.addObject("userkey", userkey);
+		} else {
+			mv.addObject("userkey", userkey);
+		}
+		Calendar c = Calendar.getInstance();
+		int month = c.get(Calendar.MONTH) + 1;
+		int year = c.get(Calendar.YEAR);
+		int date = c.get(Calendar.DATE);
+		mv.addObject("groupkey", groupkey);
+		mv.addObject("boardname", boardname);
+		mv.addObject("boardkey", boardkey);
+		mv.addObject("boardtype", boardtype);
+		mv.setViewName("group/groupin_group_writeBoard");
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
+		mv.addObject("userinfo", groupmember);
+		GGroup group = groupservice.groupInfo(groupkey);
+		mv.addObject("group", group);
+		String groupmaster = groupservice.groupmaster(groupkey);
+		mv.addObject("groupmaster", groupmaster);
+		int groupmasterkey = groupservice.groupmasterkey(groupkey);
+		mv.addObject("groupmasterkey", groupmasterkey);
+		GLocation location = groupservice.groupwhere(group.getWhereKey());
+		mv.addObject("groupswhere", location.getSWhere());
+		mv.addObject("groupdwhere", location.getDWhere());
+		int age = groupservice.groupage(group.getAgeKey());
+		mv.addObject("groupage", age);
+		String dcategory = groupservice.groupdcategory(groupkey);
+		mv.addObject("groupdcategory", dcategory);
+		String scategory = groupservice.groupscategory(groupkey);
+		mv.addObject("groupscategory", scategory);
+		int groupmembers = groupservice.groupmembers(groupkey);
+		mv.addObject("groupmembers", groupmembers);
+		List<GGroupBoard> groupboardlist = groupservice.groupboardlist(groupkey);
+		mv.addObject("groupboardlist", groupboardlist);
+		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
+		mv.addObject("groupmemberlist", groupmemberlist);
+		Post groupafterlist = groupservice.groupafterlist(groupkey);
+		mv.addObject("groupafterlist", groupafterlist);
+		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
+		mv.addObject("groupmeetinglist", groupmeetinglist);
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
+		mv.addObject("groupcalendarlist", groupcalendarlist);
+		mv.addObject("groupcalendarlistCount", groupcalendarlist.size());
+		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroup", userreggroup);
+		mv.addObject("userreggroupcount", userreggroup.size());
+		for (int i = 0; i < groupcalendarlist.size(); i++) {
+			if (Integer.parseInt(groupcalendarlist.get(i).getStartdate()) == date) {
+				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
+				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
+				mv.addObject("shortschedule", shortschedule);
+			}
+		}
+		return mv;
+	}
+	
+	@PostMapping("/boardwritesubmit.net")
+	public String basicsetting(@RequestParam(value = "boardtype") String boardtype, Post post, HttpServletRequest request)
+			throws Exception {
+		int groupkey = post.getGroupKey();
+		int boardkey = post.getBoardKey();
+		groupservice.boardwriteinsert(post);
+		return "redirect:groupin_group_board_transfer.net?groupkey=" + groupkey +"&boardkey="+ boardkey + "&boardtype="+boardtype;
+	}
+	
 	@RequestMapping(value = "/group_admin_modifySchedule.net", method = RequestMethod.GET)
 	public String group_admin_modifySchedule() {
 		return "member/groupin_group_admin_modifySchedule";
