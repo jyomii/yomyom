@@ -757,7 +757,6 @@ $(function() {
 				  var t = $("#minute").val();
 				  $("#minute").val("0"+t)
 			  }
-			  var groupkey = $("#thisGroupKey").val();
 			  $("#addscheduleform").submit();
 	  }
   })

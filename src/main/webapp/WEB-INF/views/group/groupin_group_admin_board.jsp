@@ -706,7 +706,9 @@ $(function() {
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
 	var boardlistcount = $('#gblc').val();
-	for(var i = 1; i<=boardlistcount;i++){
+	for(var i = 0; i<=boardlistcount;i++){
+		if(i==0)
+			i=1;
 		var boardname = $('#bn'+i).val();
 		var boardkey = $('#bk'+i).val();
 		var boardtype = $('#bt'+i).val();
@@ -714,13 +716,19 @@ $(function() {
 	}
 	
 	$("#itemBoxWrap").on('change','#writemaster',function(){
-		if($(this).is(":checked")==true){
-			$(this).parent().parent().prev().find('.boardType').val('X');
+		if($(this).parent().parent().prev().find('.boardType').val('X')){
+			if($(this).is(":checked")==false){
+				$(this).parent().parent().prev().find('.boardType').val('H');
+			}
 		}else{
-			$(this).parent().parent().prev().find('.boardType').val('Y');
+			if($(this).is(":checked")==true){
+				$(this).parent().parent().prev().find('.boardType').val('X');
+			}else{
+				$(this).parent().parent().prev().find('.boardType').val('Y');
+			}
 		}
-		
 	})
+
 	
 	$("#itemBoxWrap").on('click','.deleteUboard',function(){
 		var groupkey = $('#thisGroupKey').val();
