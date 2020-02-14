@@ -285,11 +285,10 @@ public class GroupMasterController {
 		return mv;
 
 	}
-	
+
 	// 모임 내의 회원 리스트 페이지로 이동 (기본적으로 일반회원 리스트 페이지 보여준다.)
 	@GetMapping("/groupMember")
 	public ModelAndView groupMember(@RequestParam(value = "groupkey") int groupkey, HttpSession session, HttpServletResponse response, ModelAndView mv) throws IOException {
-		System.out.println("회원 리스트 보기 위한 컨트롤러 왔습니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		int userkey = -1;
 		if (session.getAttribute("id") == null) {
 			response.setContentType("text/html; charset=utf-8");
@@ -299,6 +298,7 @@ public class GroupMasterController {
 			out.println("location.href = 'login'");
 			out.println("</script>");
 			out.close();
+			return null;
 		} else {
 			userkey = groupMemberService.getUser((String)session.getAttribute("id"));
 			mv.addObject("userkey", userkey);
@@ -320,6 +320,7 @@ public class GroupMasterController {
 			out.println("history.back();");
 			out.println("</script>");
 			out.close();
+			return null;
 		}
 		
 		List<GGroupMember> mem = groupMasterService.getGroupMembers(groupkey);	// 일반회원 리스트
@@ -327,16 +328,15 @@ public class GroupMasterController {
 		
 		int yetMembercount = groupMasterService.getYetMemberCount(groupkey);	// 아직 가입 승인 받지 못한 회원 수
 		
-		mv.addObject("mem", mem);
-		mv.addObject("membercount", membercount);
-		mv.addObject("yetMembercount", yetMembercount);
-		mv.addObject("groupkey", groupkey);
+		mv.addObject("mem", mem);						// 일반회원 리스트
+		mv.addObject("membercount", membercount);		// 일반회원 수
+		mv.addObject("yetMembercount", yetMembercount);	// 아직 가입 승인 받지 못한 회원 수
+		mv.addObject("groupkey", groupkey);				// 모임키값
 		
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
-		mv.setViewName("group/groupMember");
 		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo",groupmember);
 		GGroup group = groupservice.groupInfo(groupkey);
@@ -375,9 +375,10 @@ public class GroupMasterController {
 				mv.addObject("shortschedule", shortschedule);
 			}
 		}
+		mv.setViewName("group/groupMember");
 		return mv;
 	}
-	
+
 	// 회원 강퇴
 	@ResponseBody
 	@PostMapping("expelMem")
@@ -440,9 +441,9 @@ public class GroupMasterController {
 		return map;
 	}
 	
-	// 가입 요청 목록에서 '요청 삭제' 클릭할 경우 - ggroupmember에서 delete
+	/*** 가입 요청 목록에서 '요청 거절' 클릭할 경우 - ggroupmember에서 delete ***/
 	@ResponseBody
-	@GetMapping("rejectJoin")
+	@PostMapping("rejectJoin")
 	public Object rejectJoin (@RequestParam(required = true) int userkey, @RequestParam(required = true) int groupkey) {
 		
 		Map<String, Object> keys = new HashMap<String, Object>();
@@ -453,20 +454,22 @@ public class GroupMasterController {
 		
 		int result = groupMasterService.rejectJoin(keys);
 		
+		// 요청 거절 완료 
 		if (result == 1)
-			mem = groupMasterService.getYetGroupMember(groupkey);
+			mem = groupMasterService.getYetGroupMember(groupkey);					// 가입 승인 받지 못한 회원 리스트
 		
-		int yetMembercount = groupMasterService.getYetMemberCount(groupkey);		// 아직 가입 승인 받지 못한 회원 수
+		int yetMembercount = groupMasterService.getYetMemberCount(groupkey);		// 가입 승인 받지 못한 회원 수
 		
+		keys.put("result", result);
 		keys.put("mem", mem);
 		keys.put("yetMembercount", yetMembercount);
 		return keys;
 	}
 	
-	// 가입 요청 목록에서 '승인' 클릭할 경우 - ggroupmember에서 update
+	/*** 가입 요청 목록에서 '승인' 클릭할 경우 - ggroupmember에서 update ***/
 	@ResponseBody
-	@GetMapping("cofirmJoin")
-	public Object cofirmJoin (@RequestParam(required = true) int userkey, @RequestParam(required = true) int groupkey) {
+	@PostMapping("confirmJoin")
+	public Object confirmJoin (@RequestParam(required = true) int userkey, @RequestParam(required = true) int groupkey) {
 		
 		Map<String, Object> keys = new HashMap<String, Object>();
 		List<GGroupMember> mem = new ArrayList<GGroupMember>();
@@ -479,7 +482,37 @@ public class GroupMasterController {
 		if (result == 1)
 			mem = groupMasterService.getYetGroupMember(groupkey);
 		
-		keys.put("list", mem);
+		int yetMembercount = groupMasterService.getYetMemberCount(groupkey);	// 가입 승인 받지 못한 회원 수
+		int membercount = groupMasterService.getMemberCount(groupkey);			// 일반회원 수
+		
+		keys.put("result", result);
+		keys.put("mem", mem);
+		keys.put("yetMembercount", yetMembercount);
+		keys.put("membercount", membercount);
+		return keys;
+	}
+	
+	/*** 일반 회원 목록에서 '회원 강등' 클릭했을 경우 ***/
+	@ResponseBody
+	@PostMapping("downgrade")
+	public Object downgrade (@RequestParam(required = true) int userkey, @RequestParam(required = true) int groupkey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		List<GGroupMember> mem = new ArrayList<GGroupMember>();
+		
+		keys.put("userkey", userkey);
+		keys.put("groupkey", groupkey);
+		
+		int result = groupMasterService.downgrade(keys);
+		
+		if (result == 1) 
+			mem = groupMasterService.getGroupMembers(groupkey);
+		int membercount = groupMasterService.getMemberCount(groupkey);
+		int yetMembercount = groupMasterService.getYetMemberCount(groupkey);
+		
+		keys.put("result", result);
+		keys.put("mem", mem);
+		keys.put("membercount", membercount);
+		keys.put("yetMembercount", yetMembercount);
 		return keys;
 	}
 }

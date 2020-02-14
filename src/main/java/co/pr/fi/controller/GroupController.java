@@ -3,18 +3,19 @@ package co.pr.fi.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,34 +25,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import co.pr.fi.domain.CalendarList;
+import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupBoardList;
 import co.pr.fi.domain.GGroupMember;
-import co.pr.fi.domain.CalendarList;
-import co.pr.fi.domain.CalendarMember;
-import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GLocation;
 import co.pr.fi.domain.GUsers;
-import co.pr.fi.domain.Maps;
+import co.pr.fi.domain.JoinQuest;
+import co.pr.fi.domain.MemberList;
 import co.pr.fi.domain.Post;
-import co.pr.fi.domain.GCalendar;
-import co.pr.fi.domain.GCalendarMemberList;
 import co.pr.fi.domain.Shortschedule;
 import co.pr.fi.domain.UserRegGroup;
-import co.pr.fi.domain.MemberList;
 import co.pr.fi.service.GroupBoardService;
+import co.pr.fi.service.GroupMemberService;
 import co.pr.fi.service.GroupService;
 
 @Controller
 public class GroupController {
 	@Autowired
 	private GroupService groupservice;
+	
 	@Autowired
 	private GroupBoardService groupBoardService;
+	
+	@Autowired
+	private GroupMemberService groupMemberService;
 	
 	//헤더를 통한 모임 랭킹 접근
 	@GetMapping("/groupRank")
@@ -134,6 +133,11 @@ public class GroupController {
 				mv.addObject("shortschedule", shortschedule);
 			}
 		}
+		
+		int isMem = groupservice.isMem(groupkey, userkey);
+		mv.addObject("isMem", isMem);
+
+		mv.setViewName("group/groupin_group_main");
 		return mv;
 	}
 
@@ -1030,5 +1034,144 @@ public class GroupController {
 	public String group_boardWrite() {
 		return "member/groupin_group_boardWrite";
 	}
-
+	
+	@RequestMapping(value = "/group_admin_signup.net")
+	public ModelAndView group_admin_signup(@RequestParam(value = "groupkey") int groupkey, 
+											HttpServletResponse response, ModelAndView mv, HttpSession session) throws IOException {
+		int userkey = -1;
+		if (session.getAttribute("id") == null) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용해주세요.');");
+			out.println("location.href = 'login'");
+			out.println("</script>");
+			out.close();
+			return null;
+		} else {
+			userkey = groupMemberService.getUser((String) session.getAttribute("id"));
+		}
+		
+		// 기존에 입력한 가입양식이 있으면 그거 가져가야 되고 없으면 새로 입력해 달라고 해야함
+		List<JoinQuest> list = groupMemberService.getJoinSample(groupkey);	// 현재 모임의 가입 양식 가져오기
+		if (!list.isEmpty()) {
+			mv.addObject("quest1", list.get(0).getQuest1());
+			mv.addObject("quest2", list.get(0).getQuest2());
+			mv.addObject("quest3", list.get(0).getQuest3());
+			mv.addObject("quest4", list.get(0).getQuest4());
+			mv.addObject("quest5", list.get(0).getQuest5());
+			mv.addObject("introduce", list.get(0).getIntroduce());
+		}
+		
+		Calendar c = Calendar.getInstance();
+		int month = c.get(Calendar.MONTH) + 1;
+		int year = c.get(Calendar.YEAR);
+		int date = c.get(Calendar.DATE);
+		
+		mv.addObject("groupkey", groupkey);
+		
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
+		mv.addObject("userinfo", groupmember);
+		
+		GGroup group = groupservice.groupInfo(groupkey); // 모임 정보
+		mv.addObject("group", group);
+		
+		String groupmaster = groupservice.groupmaster(groupkey);
+		mv.addObject("groupmaster", groupmaster);
+		
+		int groupmasterkey = groupservice.groupmasterkey(groupkey);	// 모임장키
+		mv.addObject("groupmasterkey", groupmasterkey);
+		
+		GLocation location = groupservice.groupwhere(group.getWhereKey());	// 지역
+		mv.addObject("groupswhere", location.getSWhere());
+		mv.addObject("groupdwhere", location.getDWhere());
+		
+		int age = groupservice.groupage(group.getAgeKey());	// 연령대
+		mv.addObject("groupage", age);
+		
+		String dcategory = groupservice.groupdcategory(groupkey);	// 카테고리 대분류
+		mv.addObject("groupdcategory", dcategory);
+		
+		String scategory = groupservice.groupscategory(groupkey);	// 카테고리 소분류
+		mv.addObject("groupscategory", scategory);
+		
+		int groupmembers = groupservice.groupmembers(groupkey);
+		mv.addObject("groupmembers", groupmembers);
+		
+		List<GGroupBoard> groupboardlist = groupservice.groupboardlist(groupkey);
+		mv.addObject("groupboardlist", groupboardlist);
+		
+		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
+		mv.addObject("groupmemberlist", groupmemberlist);
+		
+		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
+		mv.addObject("groupmeetinglist", groupmeetinglist);
+		
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
+		mv.addObject("groupcalendarlist", groupcalendarlist);
+		mv.addObject("groupcalendarlistCount", groupcalendarlist.size());
+		
+		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroup", userreggroup);
+		mv.addObject("userreggroupcount", userreggroup.size());
+		
+		for (int i = 0; i < groupcalendarlist.size(); i++) {
+			if (Integer.parseInt(groupcalendarlist.get(i).getStartdate()) == date) {
+				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
+				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
+				mv.addObject("shortschedule", shortschedule);
+			}
+		}
+		
+		mv.setViewName("group/groupin_group_admin_signup");;
+		return mv;
+	}
+	
+	@ResponseBody
+	@PostMapping("groupSignupSetting")
+	public Object signupSetting(JoinQuest quest, String groupkey) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("=====================================================");
+		System.out.println(quest.getQuest1());
+		System.out.println(quest.getIntroduce());
+		System.out.println("=====================================================");
+		
+		int result = -1;
+		
+		if (quest.getIntroduce() == null || quest.getIntroduce().equals("")) {
+			quest.setIntroduce("자기소개를 입력해주세요.");
+		}
+		
+		// 일단 해당 모임이 만들어놓은 가입양식이 있는지 (select)
+		result = groupservice.getSignupSample(Integer.parseInt(groupkey));
+		
+		switch(result) {
+		case 0:
+			// 가입양식 추가
+			map.put("quest", quest);
+			map.put("groupkey", groupkey);
+			result = groupservice.addSignupSample(map);	
+			if (result == 1) {
+				map.clear();
+				List<JoinQuest> list = groupMemberService.getJoinSample(Integer.parseInt(groupkey));	// 현재 모임의 가입 양식 가져오기
+				if (!list.isEmpty()) {
+					map.put("quest1", list.get(0).getQuest1());
+					map.put("quest2", list.get(0).getQuest2());
+					map.put("quest3", list.get(0).getQuest3());
+					map.put("quest4", list.get(0).getQuest4());
+					map.put("quest5", list.get(0).getQuest5());
+					map.put("introduce", list.get(0).getIntroduce());
+				}
+				map.put("result", result);
+			}
+			break;
+		case 1:
+			// 가입양식 수정
+			map.put("quest", quest);
+			map.put("groupkey", groupkey);
+			result = groupservice.updateSignupSample(map);
+			break;
+		}
+		return map;
+	}
 }

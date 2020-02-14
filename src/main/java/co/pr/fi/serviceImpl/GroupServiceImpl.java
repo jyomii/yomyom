@@ -480,4 +480,27 @@ public class GroupServiceImpl implements GroupService {
 	public String getboardname(int boardkey) {
 		return dao.getboardname(boardkey);
 	}
+
+	@Override
+	public int isMem(int groupkey, int userkey) {
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put("groupkey", groupkey);
+		keys.put("userkey", userkey);
+		return dao.isMem(keys);
+	}
+
+	@Override
+	public int getSignupSample(int groupkey) {
+		return dao.getSignupSample(groupkey);
+	}
+
+	@Override
+	public int addSignupSample(Map<String, Object> map) {
+		return dao.addSignupSample(map);
+	}
+
+	@Override
+	public int updateSignupSample(Map<String, Object> map) {
+		return dao.updateSignupSample(map);
+	}
 }

@@ -33,4 +33,6 @@ public interface GroupMasterService {
 	int rejectJoin(Map<String, Object> keys);
 
 	int confirmJoin(Map<String, Object> keys);
+
+	int downgrade(Map<String, Object> keys);
 }

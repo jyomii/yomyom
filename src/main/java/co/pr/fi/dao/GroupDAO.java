@@ -234,10 +234,25 @@ public class GroupDAO {
 
 	public void boardwriteinsert(Post post) {
 		sqlSession.insert("group.boardwriteinsert", post);
-		
 	}
 
 	public String getboardname(int boardkey) {
 		return sqlSession.selectOne("group.getboardname", boardkey);
+	}
+
+	public int isMem(Map<String, Object> keys) {
+		return sqlSession.selectOne("group.isMem", keys);
+	}
+
+	public int getSignupSample(int groupkey) {
+		return sqlSession.selectOne("group.getSignupSample", groupkey);
+	}
+
+	public int addSignupSample(Map<String, Object> map) {
+		return sqlSession.insert("group.addSignupSample", map);
+	}
+
+	public int updateSignupSample(Map<String, Object> map) {
+		return sqlSession.update("group.updateSignupSample", map);
 	}
 }

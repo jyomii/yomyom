@@ -5,17 +5,15 @@
 <jsp:include page="mainpage/header.jsp" />
 
 <!-- 댓글 등록 아이콘 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <!-- 자물쇠 아이콘 -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
 	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
 	crossorigin="anonymous">
-<!-- 제이쿼리 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- 제이쿼리 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
+/* 고연희 스타일 */
 .ySub {
 	display: inline-block;
 	position: relative;
@@ -101,6 +99,7 @@ textarea:hover {
 	margin-right: 3px;
 }
 
+/* 고연희 스타일 끝 */
 .forgroupname {
 	list-style: none;
 	padding-top: 20px;
@@ -302,25 +301,19 @@ textarea:hover {
 
 <!-- 그룹 페이지 상단 -->
 <section>
-	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
-		type="hidden" id="UserKey" value="${userkey }">
+	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> 
+	<input type="hidden" id="UserKey" value="${userkey }">
 	<div class="feature-photo">
 		<figure>
-			<img id="groupPageImg"
-				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
-			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
+			<img id="groupPageImg" src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
 		</figure>
+		
 		<c:if test="${userinfo.userGrade==1}">
 		<!-- **********모임 대문 사진 수정*********** -->
-		<form class="edit-phto" id="groupMainImgForm"
-			enctype="multipart/form-data" action="group_mainImgUpdate.net"
-			method="post">
-			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
-				class="fa fa-camera-retro"></i>
+		<form class="edit-phto" id="groupMainImgForm" enctype="multipart/form-data" action="group_mainImgUpdate.net" method="post">
+			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
 			<!-- 대문 사진 수정 버튼 -->
-			<label class="fileContainer"> 대문 사진 수정 <input type="file"
-				name="groupMainImgUpload" />
-			</label>
+			<label class="fileContainer"> 대문 사진 수정 <input type="file" name="groupMainImgUpload" /></label>
 		</form>
 		</c:if>
 		<!-- **********모임 대문 사진 수정*********** -->
@@ -331,20 +324,14 @@ textarea:hover {
 					<div class="user-avatar">
 						<!-- 그룹 사진 -->
 						<figure>
-							<img id="groupImg"
-								src="<spring:url value='/image${group.groupCFile }'/>" />
+							<img id="groupImg" src="<spring:url value='/image${group.groupCFile }'/>" />
 							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
 							<!-- **********모임 사진 수정*********** -->
 							<c:if test="${userinfo.userGrade==1}">
-							<form class="edit-phto" id="groupImgForm"
-								enctype="multipart/form-data" action="group_ImgUpdate.net"
-								method="post">
-								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
+							<form class="edit-phto" id="groupImgForm" enctype="multipart/form-data" action="group_ImgUpdate.net" method="post">
+								<input type="hidden" name="groupkey" id="hiddenGroupKey" value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
 								<!-- 그룹 사진 수정 버튼 -->
-								<label class="fileContainer"> 그룹 사진 수정하기 <input
-									type="file" name="groupImgUpload" />
-								</label>
+								<label class="fileContainer"> 그룹 사진 수정하기 <input type="file" name="groupImgUpload" /></label>
 								<!-- 그룹 사진 수정 버튼 -->
 							</form>
 							</c:if>
