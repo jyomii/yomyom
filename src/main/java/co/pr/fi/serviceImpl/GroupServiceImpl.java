@@ -467,12 +467,15 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public Post groupafterlist(int groupkey) {
 		Post post = dao.groupafterlist(groupkey);
-		int userkey = post.getUserKey();
+		int userkey = 0;
+		if (post != null) {
+			userkey = post.getUserKey();
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("userkey", userkey);
 		map.put("groupkey", groupkey);
 		String groupNickname = dao.getgroupnickname(map);
 		post.setGroupNickname(groupNickname);
+		}
 		return post;
 	}
 

@@ -7,7 +7,6 @@
 <!-- 헤더 끝 -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- 아이콘 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 <style>
@@ -948,11 +947,13 @@ function wroteComment(data) {
 	}
 } // wroteComment end
 
+/*** 회원이 가입 시 작성한 가입양식 ***/
 function getAnswer(data) {
 	console.log(data);
+	$('.pagination').html('');
 	doc += '<div class="central-meta">';
 	doc += '	<div class="editing-info">';
-	doc += '		<h5 class="f-title"><i class="ti-info-alt"></i>모임 가입</h5>';
+	doc += '		<h5 class="f-title"><i class="ti-info-alt"></i>작성한 가입양식</h5>';
 	if (data.answer1 != null) {
 		doc += '<div class="form-group">';
 		doc += '	<input type="text" id="answer1" name="answer1" value="' + data.answer1 + '"disabled/>';
