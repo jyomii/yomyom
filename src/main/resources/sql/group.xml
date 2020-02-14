@@ -472,7 +472,6 @@
 		parameterType="int">
 		select count(*) from post p left join ggroupboard g using(boardkey) where p.groupkey=#{groupkey} and g.boardtype='N'
 	</select>
-	
 	<select id="getboardlisty" resultType="post"
 		parameterType="java.util.Map">
 		select * from (select rownum rnum, A.* from (select postkey,posttitle,postcontent,to_char(postdate,'yyyy-mm-dd hh24:mi') postdate,userkey,boardvote,boardcalendar,boardladder,boardmap,groupkey,
@@ -493,5 +492,13 @@ postoptionreply,postoptionsearch,boardkey,postreadcount,groupnickname from post 
 	<select id="getboardname" resultType="String"
 		parameterType="int">
 		select boardname from ggroupboard where boardkey = #{boardkey}
+	</select>
+	<select id="getgroupnickname" resultType="String"
+		parameterType="java.util.Map">
+		select groupnickname from ggroupmember where userkey = #{userkey} and groupkey = #{groupkey}
+	</select>
+	<select id="detailpost" resultType="post"
+		parameterType="int">
+		select * from post where postkey=#{postkey}
 	</select>
 </mapper>

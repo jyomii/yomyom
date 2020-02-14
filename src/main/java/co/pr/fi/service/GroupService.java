@@ -111,4 +111,6 @@ public interface GroupService {
 
 	public String getboardname(int boardkey);
 
+	public Post detailpost(int postkey, int groupkey);
+
 }

@@ -197,7 +197,7 @@ public class GroupDAO {
 		sqlSession.update("group.calendarmtosajax",list);
 		
 	}
-
+	
 	public int boardlistcount(int boardkey) {
 		return sqlSession.selectOne("group.boardlistcount", boardkey);
 	}
@@ -239,5 +239,13 @@ public class GroupDAO {
 
 	public String getboardname(int boardkey) {
 		return sqlSession.selectOne("group.getboardname", boardkey);
+	}
+
+	public String getgroupnickname(Map<String, Integer> map) {
+		return sqlSession.selectOne("group.getgroupnickname", map);
+	}
+
+	public Post detailpost(int postkey) {
+		return sqlSession.selectOne("group.detailpost", postkey);
 	}
 }
