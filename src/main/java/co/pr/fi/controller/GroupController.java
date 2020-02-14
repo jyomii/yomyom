@@ -4,6 +4,7 @@ package co.pr.fi.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.pr.fi.domain.CalendarList;
+import co.pr.fi.domain.GComment;
 import co.pr.fi.domain.GGroup;
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupBoardList;
@@ -1107,18 +1109,80 @@ public class GroupController {
 	
 	
 	@GetMapping("/group_boarddetail.net")
-	public ModelAndView group_boarddetail(@RequestParam(value = "groupkey") int groupkey,@RequestParam(value = "postkey") int postkey,@RequestParam(value = "boardkey") int boardkey,@RequestParam(value = "boardtype") String boardtype, ModelAndView mv,
-			HttpSession session) {
+
+	public ModelAndView group_boarddetail(@RequestParam(value = "groupkey") int groupkey,@RequestParam(value = "postkey") int postkey,@RequestParam(value = "boardkey") int boardkey,@RequestParam(value = "boardtype") String boardtype, @RequestParam(required = false, defaultValue = "1") int page,
+										  @RequestParam(required = false, defaultValue = "10") int limit, ModelAndView mv,
+			HttpServletResponse response, HttpSession session) throws IOException {
 		String id = "";
 		int userkey = -1;
+		int loginuser = -1;
+		
 		if (session.getAttribute("id") != null) {
 			id = session.getAttribute("id").toString();
 			GUsers guser = groupservice.userkey(id);
 			userkey = guser.getUserKey();
 			mv.addObject("userkey", userkey);
+			
+			loginuser = groupMemberService.getUser((String)session.getAttribute("id"));
 		} else {
-			mv.addObject("userkey", userkey);
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 후 이용해주세요.');");
+			out.println("location.href = 'login'");
+			out.println("</script>");
+			out.close();
+			return null;
 		}
+		
+		mv.addObject("loginuser", loginuser);
+
+		// 현재 모임에서 가입 승인된 일반 회원인지 판단 (-1만 아니면 됨)
+		int ggroupmem = groupMemberService.isGroupMem(loginuser, groupkey);
+		if (ggroupmem == 0) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('일반회원만 조회할 수 있습니다.');");
+			out.println("history.back();");
+			out.println("</script>");
+			out.close();
+		}
+		
+
+		Map<String, Object> keys = new HashMap<String, Object>();
+		Post post = new Post();	// 게시글 관련
+		List<GComment> commentList = new ArrayList<GComment>();	// 댓글 관련
+		int listcount = 0;	// 댓글수 변수
+		keys.put("postkey", postkey);
+		keys.put("groupkey", groupkey);
+		keys.put("userkey", loginuser);
+		
+		listcount = groupBoardService.getCommentCount(keys); 	// 현재 게시글에 해당하는 댓글수
+		post = groupBoardService.detailBoard(keys);				// 현재 게시글에 대한 데이터
+		
+		keys.put("page", page);
+		keys.put("limit", limit);
+		commentList = groupBoardService.getBoardComment(keys);	// 현재 게시글에 해당하는 댓글리스트
+		
+		int isLiked = groupBoardService.isLiked(keys);
+		GGroupMember mem = groupMemberService.getPic(keys);
+		
+		keys = pagination(page, limit, listcount);
+		
+		if (post != null) {
+			mv.addObject("post", post);				// 글쓴이와 게시글 관련 
+			mv.addObject("comment", commentList);	// 댓쓴이와 댓글들 관련
+			mv.addObject("isLiked", isLiked);		// 좋아요 여부 (1: 좋아요, 0: 좋아요 x)
+			mv.addObject("postkey", postkey);
+			mv.addObject("groupkey", groupkey);
+			mv.addObject("page", keys.get("page"));
+			mv.addObject("limit", keys.get("limit"));
+			mv.addObject("listcount", keys.get("listcount"));
+			mv.addObject("mem", mem);
+			mv.addObject("loginuser", loginuser);	// 현재 로그인한 유저 키값
+		}
+		
 		Calendar c = Calendar.getInstance();
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
@@ -1150,8 +1214,8 @@ public class GroupController {
 		mv.addObject("groupboardlist", groupboardlist);
 		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
 		mv.addObject("groupmemberlist", groupmemberlist);
-		Post post = groupservice.detailpost(postkey,groupkey);
-		mv.addObject("post", post);
+		//Post post = groupservice.detailpost(postkey,groupkey);
+		//mv.addObject("post", post);
 		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
 		mv.addObject("groupmeetinglist", groupmeetinglist);
 		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
@@ -1322,6 +1386,21 @@ public class GroupController {
 			result = groupservice.updateSignupSample(map);
 			break;
 		}
+		return map;
+	}
+	
+	public Map<String, Object> pagination (int page, int limit, int listcount) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int maxpage = (listcount + limit - 1) / limit;	// 총 페이지 수
+		int startpage = ((page - 1) / 10) * 10 + 1;		// 현재 페이지에 보여줄 시작 페이지 수
+		int endpage = startpage + 10 - 1;				// 현재 페이지에 보여줄 마지막 페이지 수
+		
+		if (endpage > maxpage) endpage = maxpage;
+		
+		map.put("maxpage", maxpage);
+		map.put("startpage", startpage);
+		map.put("endpage", endpage);
 		return map;
 	}
 }
