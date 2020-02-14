@@ -263,4 +263,14 @@ public class GroupDAO {
 	public Post detailpost(int postkey) {
 		return sqlSession.selectOne("group.detailpost", postkey);
 	}
+
+	public void boardupdate(Post post) {
+		sqlSession.update("group.boardupdate", post);
+		
+	}
+
+	public void boarddelete(int postkey) {
+		sqlSession.delete("group.boarddelete", postkey);
+		
+	}
 }

@@ -72,8 +72,16 @@ public class Post {
 	private String cmoneytype;
 	private String time;
 	private String minute;
+	private String boardtype;
 	
-	
+	public String getBoardtype() {
+		return boardtype;
+	}
+
+	public void setBoardtype(String boardtype) {
+		this.boardtype = boardtype;
+	}
+
 	public int getRnum() {
 		return rnum;
 	}

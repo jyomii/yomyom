@@ -438,14 +438,15 @@ top:-9px;
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 왼쪽  -->
+
 						<!-- 그룹 페이지 위젯 중간 -->
 						<div class="col-lg-6">
 						<div class="central-meta">
 										<div class="editing-info">
 											<h5 class="f-title">
-												<i class="ti-info-alt"></i>${boardname } 글쓰기
+												<i class="ti-info-alt"></i>글 수정하기
 											</h5>
-											<form id="boardwritesubmit" method="post" action="boardwritesubmit.net?boardname=${boardname }&boardtype=${boardtype}">
+											<form id="boardupdatesubmit" method="post" action="boardupdatesubmit.net">
 												<!-- <div class="checkbox">
 													<label> <input type="checkbox" checked="checked"><i
 														class="check-box"></i>Graduate
@@ -460,9 +461,9 @@ top:-9px;
 												<input type="hidden" value="${boardkey}" name="boardKey">
 												<input type="hidden" value="${userkey}" name="userKey">
 												<input type="hidden" value="${groupkey}" name="groupKey">
-												
+												<input type="hidden" value="${post.postKey}" name="postKey">
 												<div class="form-group">
-													<input type="text" id="input" required="required" name="postTitle" /> <label
+													<input type="text" id="input" required="required" name="postTitle" value="${post.postTitle }"/> <label
 														class="control-label" for="input">제목</label><i
 														class="mtrl-select"></i>
 												</div>
@@ -477,13 +478,13 @@ top:-9px;
 														class="mtrl-select"></i>
 												</div> -->
 												<div class="form-group">
-													<textarea rows="4" id="textarea" required="required" name="postContent"></textarea>
+													<textarea rows="4" id="textarea" required="required" name="postContent">${post.postContent }</textarea>
 													<label class="control-label" for="textarea">내용</label><i
 														class="mtrl-select"></i>
 												</div>
 												<div class="submit-btns">
-													<button type="button" class="mtr-btn inserboardwrite">
-														<span>글쓰기</span>
+													<button type="button" class="mtr-btn updateboardwrite">
+														<span>수정하기</span>
 													</button>
 												</div>
 											</form>
@@ -613,8 +614,8 @@ $(function() {
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
-	$(".inserboardwrite").click(function(){
-		$("#boardwritesubmit").submit();
+	$(".updateboardwrite").click(function(){
+		$("#boardupdatesubmit").submit();
 	})
 	$(".forLoginBtn").click(function(){
 		location.href="login";

@@ -433,13 +433,14 @@ public class GroupServiceImpl implements GroupService {
 
 	
 	@Override
-	public List<Post> getBoardListY(int page, int limit, int boardkey) {
+	public List<Post> getBoardListY(int page, int limit, int boardkey, int groupkey) {
 		Map<String, Integer> list = new HashMap<String, Integer>();
 		int startrow = (page - 1) * limit + 1;
 		int endrow = startrow + limit - 1;
 		list.put("start", startrow);
 		list.put("end", endrow);
 		list.put("boardkey", boardkey);
+		list.put("groupkey", groupkey);
 		List<Post> post=dao.getboardlisty(list);
 		for(int i=0;i<post.size();i++) {
 			String date = post.get(i).getPostDate();
@@ -467,9 +468,8 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public Post groupafterlist(int groupkey) {
 		Post post = dao.groupafterlist(groupkey);
-		int userkey = 0;
-		if (post != null) {
-			userkey = post.getUserKey();
+		if(post!=null) {
+		int userkey = post.getUserKey();
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("userkey", userkey);
 		map.put("groupkey", groupkey);
@@ -485,6 +485,7 @@ public class GroupServiceImpl implements GroupService {
 		
 	}
 
+	
 	@Override
 	public String getboardname(int boardkey) {
 		return dao.getboardname(boardkey);
@@ -524,4 +525,15 @@ public class GroupServiceImpl implements GroupService {
 		post.setGroupNickname(groupNickname);
 		return post;
 	}
+
+@Override
+public void boardupdate(Post post) {
+	dao.boardupdate(post);
+}
+
+@Override
+public void boarddelete(int postkey) {
+	dao.boarddelete(postkey);
+	
+}
 }

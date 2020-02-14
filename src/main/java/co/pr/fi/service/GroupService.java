@@ -102,7 +102,7 @@ public interface GroupService {
 
 	public void groupbasicupdate(GGroup group, int groupkey);
 
-	public List<Post> getBoardListY(int page, int limit, int boardkey);
+	public List<Post> getBoardListY(int page, int limit, int boardkey, int groupkey);
 
 	public int getScheduleListCount(int groupkey);
 
@@ -121,6 +121,11 @@ public interface GroupService {
 	public int updateSignupSample(Map<String, Object> map);
 
 	public Post detailpost(int postkey, int groupkey);
+
+	public void boardupdate(Post post);
+
+	
+	public void boarddelete(int postkey);
 
 
 }
