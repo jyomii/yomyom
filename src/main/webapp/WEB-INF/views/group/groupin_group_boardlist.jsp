@@ -509,7 +509,6 @@ cursor: default !important;
 							</aside>
 						</div>
 						<!-- 그룹 페이지 위젯 오른쪽 -->
-
 					</div>
 				</div>
 			</div>

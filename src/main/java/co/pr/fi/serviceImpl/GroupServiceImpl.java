@@ -139,18 +139,19 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public List<MemberList> calendarmemberlist(int postkey, int groupkey) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("postkey", postkey);
 		map.put("groupkey", groupkey);
 		return dao.groupcalendarmemberlist(map);
 	}
 
 	@Override
-	public void calendarmemberinsert(int postkey, int groupkey, int userkey) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
+	public void calendarmemberinsert(int postkey, int groupkey, int userkey, String cmoneytype) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("postkey", postkey);
 		map.put("groupkey", groupkey);
 		map.put("userkey", userkey);
+		map.put("cmoneytype", cmoneytype);
 		dao.groupcalendarmemberinsert(map);
 
 	}
@@ -535,5 +536,15 @@ public void boardupdate(Post post) {
 public void boarddelete(int postkey) {
 	dao.boarddelete(postkey);
 	
+}
+
+@Override
+public List<MemberList> smodifymember(int postkey) {
+	return dao.smodifymember(postkey);
+}
+
+@Override
+public List<MemberList> smodifymemberm(int postkey) {
+	return dao.smodifymemberm(postkey);
 }
 }

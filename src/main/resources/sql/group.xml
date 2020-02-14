@@ -232,9 +232,9 @@
 		select rownum, A.* from(select
 		postkey,posttitle,to_char(postdate,'YYYY-MM-DD')
 		postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
-		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson
+		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson,cmoneytype
 		from post left join calendar
-		using(postkey) left join (select count(*)
+		using(postkey) left join (select count(decode(sm,'S',1))
 		currentperson,postkey from calendarmember left join
 		(select * from post
 		left join ggroupboard using(boardkey) where
@@ -252,13 +252,13 @@
 		parameterType="java.util.Map">
 		select userimagefile, groupnickname from gusers left
 		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.groupkey=#{groupkey} and a.postkey=#{postkey}
+		using(userkey) where a.groupkey=#{groupkey} and a.postkey=#{postkey} and a.sm='S'
 	</select>
 
 	<insert id="groupcalendarmemberinsert"
 		parameterType="java.util.Map">
 		insert into calendarmember
-		values(#{userkey},#{postkey},#{groupkey},'s')
+		values(#{userkey},#{postkey},#{groupkey},#{cmoneytype})
 	</insert>
 
 	<select id="calendarmemberjoinbtn" parameterType="java.util.Map"
@@ -401,7 +401,15 @@
 		select userimagefile, groupnickname, userkey from gusers
 		left
 		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.postkey=#{postkey} and a.sm='s'
+		using(userkey) where a.postkey=#{postkey} and a.sm='M'
+	</select>
+	
+	<select id="smodifymember" resultType="memberlist"
+		parameterType="int">
+		select userimagefile, groupnickname, userkey from gusers
+		left
+		join GGROUPMEMBER using(userkey) left join calendarmember a
+		using(userkey) where a.postkey=#{postkey} and a.sm='S'
 	</select>
 
 	<delete id="calendardeleteajax" parameterType="java.util.Map">
@@ -428,18 +436,26 @@
 		select userimagefile, groupnickname, userkey from gusers
 		left
 		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.postkey=#{postkey} and a.sm='m'
+		using(userkey) where a.postkey=#{postkey} and a.sm='S'
+	</select>
+	
+	<select id="smodifymemberm" resultType="memberlist"
+		parameterType="int">
+		select userimagefile, groupnickname, userkey from gusers
+		left
+		join GGROUPMEMBER using(userkey) left join calendarmember a
+		using(userkey) where a.postkey=#{postkey} and a.sm='M'
 	</select>
 
 
 	<update id="calendarstomajax" parameterType="java.util.Map">
 		update
-		calendarmember set sm='m' where postkey=#{postkey} and userkey=#{temp}
+		calendarmember set sm='S' where postkey=#{postkey} and userkey=#{temp}
 	</update>
 
 	<update id="calendarmtosajax" parameterType="java.util.Map">
 		update
-		calendarmember set sm='s' where postkey=#{postkey} and userkey=#{temp}
+		calendarmember set sm='M' where postkey=#{postkey} and userkey=#{temp}
 	</update>
 	<select id="boardlistcount" resultType="int" parameterType="int">
 		select count(*) from post where boardkey=#{boardkey}

@@ -156,8 +156,8 @@ public class GroupController {
 	@ResponseBody
 	@RequestMapping(value = "/group_main_ajaxJoin.net")
 	public Object ajaxJoin(@RequestParam(value = "postkey") int postkey, @RequestParam(value = "groupkey") int groupkey,
-			@RequestParam(value = "userkey") int userkey) throws Exception {
-		groupservice.calendarmemberinsert(postkey, groupkey, userkey);
+			@RequestParam(value = "userkey") int userkey, @RequestParam(value = "cmoneytype") String cmoneytype) throws Exception {
+		groupservice.calendarmemberinsert(postkey, groupkey, userkey, cmoneytype);
 		List<MemberList> groupcalendarmemberlist = groupservice.calendarmemberlist(postkey, groupkey);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("groupcalendarmemberlist", groupcalendarmemberlist);
@@ -428,6 +428,7 @@ public class GroupController {
 		return "redirect:groupin_group_admin_board.net?groupkey=" + groupkey;
 	}
 
+	
 	@GetMapping("/groupin_group_board_transfer.net")
 	public ModelAndView group_board_transfer(@RequestParam(value = "groupkey") int groupkey,
 			@RequestParam(value = "boardkey") int boardkey, @RequestParam(value = "boardtype") String boardtype,
@@ -780,12 +781,12 @@ public class GroupController {
 		mv.addObject("modifypost", modifypost);
 		CalendarList modifycalendar = groupservice.modifycalendar(postkey);
 		mv.addObject("modifycalendar", modifycalendar);
-		List<MemberList> modifymember = groupservice.modifymember(postkey);
-		List<MemberList> modifymemberm = groupservice.modifymemberm(postkey);
-		mv.addObject("modifymember", modifymember);
-		mv.addObject("modifymembercount", modifymember.size());
-		mv.addObject("modifymemberm", modifymemberm);
-		mv.addObject("modifymembercountm", modifymemberm.size());
+		List<MemberList> smodifymember = groupservice.smodifymember(postkey);
+		List<MemberList> smodifymemberm = groupservice.smodifymemberm(postkey);
+		mv.addObject("smodifymember", smodifymember);
+		mv.addObject("smodifymembercount", smodifymember.size());
+		mv.addObject("smodifymemberm", smodifymemberm);
+		mv.addObject("smodifymembercountm", smodifymemberm.size());
 		return mv;
 	}
 
@@ -857,6 +858,7 @@ public class GroupController {
 			@RequestParam(value = "postkey") int postkey) throws Exception {
 		for (int i = 0; i < list.size(); i++) {
 			groupservice.calendarmtosajax(list.get(i), postkey);
+			
 		}
 		List<MemberList> modifymemberm = groupservice.modifymemberm(postkey);
 		HashMap<String, Object> map = new HashMap<String, Object>();

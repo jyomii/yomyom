@@ -10,15 +10,15 @@
 											<div class="frnds">
 												<ul class="nav nav-tabs">
 													<li class="nav-item forMoneyList forMoneyListLeft"><a
-														class="active" href="#frends" data-toggle="tab">신청자</a> <span class="foremptyscount1">${modifymembercount}</span></li>
+														class="active" href="#frends" data-toggle="tab">신청자</a> <span class="foremptyscount1">${smodifymembercountm}</span></li>
 													<li class="nav-item forMoneyList"><a class=""
-														href="#frends-req" data-toggle="tab">참석자</a><span class="foremptymcount">${modifymembercountm}</span></li>
+														href="#frends-req" data-toggle="tab">참석자</a><span class="foremptymcount">${smodifymembercount}</span></li>
 												</ul>
 												<div class="tab-content">
 													<div class="tab-pane active fade show " id="frends">
 														<div id="searchDir1"></div>
 														<ul id="people-list1" class="checkboxList foremptys1">
-															<c:forEach var="mm" items="${modifymember}">
+															<c:forEach var="mmm" items="${smodifymemberm}">
 															<li>
 																<figure>
 																	<img src="resources/images/resources/friend-avatar.jpg"
@@ -27,9 +27,9 @@
 																<div class="friendz-meta">
 																	<div class="checkbox">
 																		<label> 
-																		<input type="hidden" value="${mm.userkey }">
+																		<input type="hidden" value="${mmm.userkey }">
 																		<input type="checkbox" name="slist"><i
-																			class="check-box"></i>${mm.groupnickname }
+																			class="check-box"></i>${mmm.groupnickname }
 																		</label>
 																	</div>
 																</div>
@@ -50,7 +50,7 @@
 													<div class="tab-pane fade" id="frends-req">
 														<div id="searchDir2"></div>
 														<ul id="people-list2" class="checkboxList foremptym">
-															<c:forEach var="mmm" items="${modifymemberm}">
+															<c:forEach var="mm" items="${smodifymember}">
 															<li>
 																<figure>
 																	<img src="resources/images/resources/friend-avatar.jpg"
@@ -59,9 +59,9 @@
 																<div class="friendz-meta">
 																	<div class="checkbox">
 																		<label> 
-																		<input type="hidden" value="${mmm.userkey }">
+																		<input type="hidden" value="${mm.userkey }">
 																		<input type="checkbox" name="mlist"><i
-																			class="check-box"></i>${mmm.groupnickname }
+																			class="check-box"></i>${mm.groupnickname }
 																		</label>
 																	</div>
 																</div>
