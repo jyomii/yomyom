@@ -6,15 +6,17 @@
 	<select id="getPic" resultType="groupmember" parameterType="map">
 		SELECT *
 		FROM GGROUPMEMBER
-		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+		WHERE USERKEY = #{userkey} AND GROUPKEY =
+		#{groupkey}
 	</select>
 
 
 	<select id="regornot" resultType="int"
-      parameterType="java.util.Map">
-      select count(*) from ggroupmember where groupkey=#{groupkey} and userkey=#{userkey}
-   </select>
-   
+		parameterType="java.util.Map">
+		select count(*) from ggroupmember where groupkey=#{groupkey} and
+		userkey=#{userkey}
+	</select>
+
 
 	<select id="getGroupRank" parameterType="map" resultType="group">
 
@@ -58,10 +60,12 @@
 	</select>
 
 	<!-- 가입 전 이미 가입한 회원인지 판단 -->
-	<select id="isNewMem" resultType="int" parameterType="groupmember">
+	<select id="isNewMem" resultType="int"
+		parameterType="groupmember">
 		SELECT COUNT(*)
 		FROM GGROUPMEMBER
-		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
+		WHERE USERKEY =
+		#{userKey} AND GROUPKEY = #{groupKey}
 	</select>
 
 	<!-- 현재 로그인한 유저의 유저키 가져오기 -->
@@ -96,7 +100,8 @@
 	<!-- 가입하기 -->
 	<insert id="joinGroup" parameterType="groupmember">
 		INSERT INTO GGROUPMEMBER
-		VALUES(#{groupKey}, #{userKey}, #{groupNickname}, -1, #{profileFile}, #{profileOrigin}, SYSDATE)
+		VALUES(#{groupKey}, #{userKey}, #{groupNickname}, -1, #{profileFile},
+		#{profileOrigin}, SYSDATE)
 	</insert>
 
 	<!-- 가입양식 작성 -->
@@ -137,7 +142,8 @@
 		FROM (
 		SELECT GROUPKEY, COUNT(GROUPKEY) MEMBERCOUNT
 		FROM GGROUPMEMBER
-		GROUP BY GROUPKEY)
+		GROUP BY
+		GROUPKEY)
 		JOIN
 		( SELECT GROUPKEY, GROUPDFILE, GROUPNAME, GROUPPRIVATE
 		FROM GGROUP
@@ -237,7 +243,9 @@
 		(postkey) left join calendar using (postkey) group by postkey) using
 		(postkey)
 		where groupkey=#{groupkey} order by
-		cstartdate) A where boardkey = (select boardkey from ggroupboard where groupkey=#{groupkey} and boardtype='N')
+		cstartdate) A where
+		boardkey = (select boardkey from ggroupboard where
+		groupkey=#{groupkey} and boardtype='N')
 	</select>
 
 	<select id="groupcalendarmemberlist" resultType="memberlist"
@@ -349,7 +357,8 @@
 
 	<insert id="addschedule" parameterType="post">
 		insert into post
-		values((select nvl((max(postKey))+1,0) from post),#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
+		values((select nvl((max(postKey))+1,0) from
+		post),#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
 	</insert>
 
 	<select id="getgroupboardkey" resultType="int"
@@ -432,8 +441,7 @@
 		update
 		calendarmember set sm='s' where postkey=#{postkey} and userkey=#{temp}
 	</update>
-	<select id="boardlistcount" resultType="int"
-		parameterType="int">
+	<select id="boardlistcount" resultType="int" parameterType="int">
 		select count(*) from post where boardkey=#{boardkey}
 	</select>
 	<select id="getboardlist" resultType="post"
@@ -447,7 +455,8 @@
 		post left join ggroupboard using(boardkey) where boardtype='N') using
 		(postkey) left join calendar using (postkey) group by postkey) using
 		(postkey) where groupkey=#{groupkey} order by cstartdate) A) where
-		rnum&gt;=#{start} AND rnum&lt;=#{end} and boardkey = (select boardkey from ggroupboard where groupkey=#{groupkey} and boardtype='N')
+		rnum&gt;=#{start} AND rnum&lt;=#{end} and boardkey = (select boardkey
+		from ggroupboard where groupkey=#{groupkey} and boardtype='N')
 
 	</select>
 
@@ -463,96 +472,121 @@
 		groupprivate=#{groupprivate}, groupkatalk=#{groupkatalk} where
 		groupkey=#{groupkey}
 	</update>
-	
+
 	<select id="getschedulelistcount" resultType="int"
 		parameterType="int">
-		select count(*) from post p left join ggroupboard g using(boardkey) where p.groupkey=#{groupkey} and g.boardtype='N'
+		select count(*) from post p left join ggroupboard g
+		using(boardkey) where p.groupkey=#{groupkey} and g.boardtype='N'
 	</select>
 	<select id="getboardlisty" resultType="post"
 		parameterType="java.util.Map">
-		select * from (select rownum rnum, A.* from (select postkey,posttitle,postcontent,to_char(postdate,'yyyy-mm-dd hh24:mi') postdate,userkey,boardvote,boardcalendar,boardladder,boardmap,groupkey,
-postoptionreply,postoptionsearch,boardkey,postreadcount,groupnickname from post left join (select groupnickname, userkey from ggroupmember) using(userkey) order by postdate desc) A) where
-		rnum&gt;=#{start} AND rnum&lt;=#{end} and boardkey = #{boardkey}
+		select * from
+		(select rownum rnum, A.* from
+		(select postkey, posttitle, postcontent, to_char(postdate,'yyyy-mm-dd
+		hh24:mi') postdate, userkey, p.groupkey, postoptionreply, boardkey,
+		postreadcount,
+		boardvote,boardcalendar,boardladder,boardmap,groupnickname from post p
+		left join (select * from ggroupmember where groupkey=#{groupkey}) using(userkey)
+		where boardkey = #{boardkey} order by postdate desc) A) where rnum&gt;=#{start} AND rnum&lt;=#{end}
 	</select>
-	
+
 	<select id="groupafterlist" resultType="post"
 		parameterType="int">
-		select * from (select rownum rnum, A.* from (select * from post where boardkey=(select boardkey from ggroupboard where boardtype='H' and groupkey = #{groupkey})) A) where rnum = 1
+		select * from (select rownum rnum, A.* from (select *
+		from post where boardkey=(select boardkey from ggroupboard where
+		boardtype='H' and groupkey = #{groupkey})) A) where rnum = 1
 	</select>
-	
+
 	<insert id="boardwriteinsert" parameterType="post">
 		insert into post
-		values((select nvl((max(postKey))+1,0) from post),#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
+		values((select nvl((max(postKey))+1,0) from
+		post),#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
 	</insert>
-	
+
 	<select id="getboardname" resultType="String"
 		parameterType="int">
-		select boardname from ggroupboard where boardkey = #{boardkey}
+		select boardname from ggroupboard where boardkey =
+		#{boardkey}
 	</select>
-  
+
 	<select id="getgroupnickname" resultType="String"
 		parameterType="java.util.Map">
-		select groupnickname from ggroupmember where userkey = #{userkey} and groupkey = #{groupkey}
+		select groupnickname from ggroupmember where userkey =
+		#{userkey} and groupkey = #{groupkey}
 	</select>
-	<select id="detailpost" resultType="post"
-		parameterType="int">
-		select * from post where postkey=#{postkey}
+	<select id="detailpost" resultType="post" parameterType="int">
+		select *
+		from post where postkey=#{postkey}
 	</select>
-  
-  <!-- 현재 접속한 모임에 가입된 유저인지 -->
-	<select id = "isMem" resultType = "int" parameterType = "map">
-		SELECT COUNT(*)
+
+	<!-- 현재 접속한 모임에 가입된 유저인지 -->
+	<select id="isMem" resultType="int" parameterType="map">
+		SELECT
+		COUNT(*)
 		FROM GGROUPMEMBER
-		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+		WHERE USERKEY = #{userkey} AND GROUPKEY =
+		#{groupkey}
 	</select>
-	
+
 	<!-- 현재 모임의 가입양식 조회 -->
-	<select id = "getSignupSample" resultType = "int" parameterType = "int">
+	<select id="getSignupSample" resultType="int"
+		parameterType="int">
 		SELECT COUNT(*)
 		FROM JOINQUEST
-		WHERE GROUPKEY = #{groupkey}
+		WHERE GROUPKEY =
+		#{groupkey}
 	</select>
-	
+
 	<!-- 가입양식 추가 -->
-	<insert id = "addSignupSample" parameterType = "map">
+	<insert id="addSignupSample" parameterType="map">
 		INSERT INTO JOINQUEST
-		VALUES ((SELECT NVL(MAX(QUESTKEY), 0) + 1 FROM JOINQUEST), 
-				#{groupkey}, 
-				#{quest.quest1, jdbcType = VARCHAR}, 
-				#{quest.quest2, jdbcType = VARCHAR}, 
-				#{quest.quest3, jdbcType = VARCHAR},
-				#{quest.quest4, jdbcType = VARCHAR},
-				#{quest.quest5, jdbcType = VARCHAR},
-				#{quest.introduce})
+		VALUES ((SELECT NVL(MAX(QUESTKEY), 0) + 1 FROM JOINQUEST),
+		#{groupkey},
+		#{quest.quest1, jdbcType = VARCHAR},
+		#{quest.quest2, jdbcType = VARCHAR},
+		#{quest.quest3, jdbcType = VARCHAR},
+		#{quest.quest4, jdbcType = VARCHAR},
+		#{quest.quest5, jdbcType = VARCHAR},
+		#{quest.introduce})
 	</insert>
-	
+
 	<!-- 가입양식 수정 -->
-	<!-- <update id = "updateSignupSample" parameterType = "map">
-		UPDATE JOINQUEST
-		<set>
-			<if test = "quest1 != null"></if>
-		</set> 
-		WHERE GROUPKEY = #{groupkey}
-	</update> -->
-	
+	<!-- <update id = "updateSignupSample" parameterType = "map"> UPDATE JOINQUEST 
+		<set> <if test = "quest1 != null"></if> </set> WHERE GROUPKEY = #{groupkey} 
+		</update> -->
+
 	<!-- 가입양식 가져오기 -->
-	<select id = "getQuestList" parameterType = "int" resultType = "joinQuest">
+	<select id="getQuestList" parameterType="int"
+		resultType="joinQuest">
 		SELECT *
 		FROM JOINQUEST
 		WHERE GROUPKEY = #{groupkey}
 	</select>
-	
+
 	<!-- 현재 모임의 모임장 유저키 가져오기 -->
-	<select id = "getMaster" parameterType = "int" resultType = "int">
-		SELECT USERKEY
+	<select id="getMaster" parameterType="int" resultType="int">
+		SELECT
+		USERKEY
 		FROM GGROUP
 		WHERE GROUPKEY = #{groupkey}
 	</select>
-	
+
 	<!-- 회원이 입력한 가입양식 가져오기 -->
-	<select id = "getAnswerSample" parameterType = "map" resultType = "joinAnswer">
+	<select id="getAnswerSample" parameterType="map"
+		resultType="joinAnswer">
 		SELECT *
 		FROM JOINANSWER
-		WHERE GROUPKEY = #{groupkey} AND USERKEY = #{userkey}
-  </select>  
+		WHERE GROUPKEY = #{groupkey} AND
+		USERKEY = #{userkey}
+	</select>
+	
+	<update id="boardupdate" parameterType="post">
+		update post set
+		posttitle=#{postTitle}, postcontent=#{postContent} where
+		postkey=#{postKey}
+	</update>
+	
+	<delete id="boarddelete" parameterType="int">
+		delete from post where postkey = #{postKey}
+	</delete>
 </mapper>

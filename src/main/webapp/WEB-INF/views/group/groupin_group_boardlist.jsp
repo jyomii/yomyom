@@ -392,7 +392,7 @@ cursor: default !important;
 						<!-- 그룹 페이지 위젯 왼쪽  -->
 
 						<!-- 그룹 페이지 위젯 중간 -->
-						
+
 						<div class="col-lg-6">
 							<div class="central-meta item">
 										<div class="inbox-lists">
@@ -419,7 +419,7 @@ cursor: default !important;
 												<ul id="message-list" class="message-list">
 													<c:if test="${not empty postlist}">
 													<c:forEach var="pl" items="${postlist}">
-													<li class="unread"><span class="sender-name"><a href="group_boarddetail.net?groupkey=${groupkey }&postkey=${pl.postKey }">${pl.postTitle }</a></span><span class="boardListRight">${pl.postDate }</span>
+													<li class="unread"><span class="sender-name"><a href="group_boarddetail.net?groupkey=${groupkey }&postkey=${pl.postKey }&boardkey=${boardkey}&boardtype=${boardtype}">${pl.postTitle }</a></span><span class="boardListRight">${pl.postDate }</span>
 														<p class="cursord">작성자 ${pl.groupNickname} . 조회수 ${pl.postReadcount}</p>
 													</li>
 													</c:forEach>

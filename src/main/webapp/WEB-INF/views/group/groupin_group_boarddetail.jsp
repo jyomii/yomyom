@@ -356,6 +356,22 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
+.float-rightgo{
+float: right;
+}
+
+.rightmargingo{
+margin-right: 30px;
+}
+
+.bupdatebtn{
+cursor: pointer;
+}
+
+.bdeletebtn{
+cursor: pointer;
+}
+
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -413,18 +429,15 @@ top:-9px;
 													</c:if>
 												</a>
 											</figure>
+											<input type="hidden" id="thisboardkey" value="${boardkey }">
+											<input type="hidden" id="thisboardtype" value="${boardtype }">
 											<div class="friend-name">
 												<ins>${post.postTitle}</ins>
-												<span> <b>${post.groupNickname}</b> | published :
-													${post.postDate} 
-													<!-- updatePost, deletePost는 안 만들었으니까 만들어야 된다. -->
-													<c:if test="${loginuser == post.userKey}">
-														<a class="update"
-															href="javascript:updatePost(${c.commnetNum})"
-															title="Update"><i class="fas fa-eraser"></i></a>
-														<a class="delete"
-															href="javascript:deletePost(${c.commnetNum})"
-															title="Delete"><i class="far fa-trash-alt"></i></a>
+												<span> <b>작성자 : ${post.groupNickname}</b> | ${post.postDate} 
+													<c:if test="${userkey == post.userKey||userinfo.userGrade==1}">
+														<i class="far fa-trash-alt float-rightgo bdeletebtn"></i>
+														<input type="hidden" value="${post.postKey} ">
+														<i class="fas fa-eraser float-rightgo rightmargingo bupdatebtn"></i>
 													</c:if>
 												</span>
 											</div>
@@ -802,6 +815,7 @@ top:-9px;
 	}
 	//달력끝==================================================================
 </script>
+
 <script>
 buildCalendar();
 $(function() {
@@ -810,6 +824,28 @@ $(function() {
 		var temp = $('#cal'+i).val();
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
+	
+	$(".bupdatebtn").click(function(){
+		var groupkey = $('#thisGroupKey').val();
+		var postkey = $(this).prev().val();
+		var boardkey = $('#thisboardkey').val();
+		var boardtype = $('#thisboardtype').val();
+		location.href="groupin_group_updateBoard.net?groupkey="+groupkey+"&postkey="+postkey+"&boardkey="+boardkey+"&boardtype="+boardtype;
+	})
+	$(".bdeletebtn").click(function(){
+		var test = confirm("정말 삭제하시겠습니까?");
+		if (test==true){
+			var groupkey = $('#thisGroupKey').val();
+			var postkey = $(this).next().val();
+			var boardkey = $('#thisboardkey').val();
+			var boardtype = $('#thisboardtype').val();
+			location.href="groupin_group_deleteBoard.net?groupkey="+groupkey+"&postkey="+postkey+"&boardkey="+boardkey+"&boardtype="+boardtype;
+		}
+	})
+	
+	
+	
+	
 	$(".forLoginBtn").click(function(){
 		location.href="login";
 	})
