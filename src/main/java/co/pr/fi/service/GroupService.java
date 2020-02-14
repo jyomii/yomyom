@@ -42,7 +42,7 @@ public interface GroupService {
 
 	public List<MemberList> calendarmemberlist(int postkey, int groupkey);
 
-	public void calendarmemberinsert(int postkey, int groupkey, int userkey);
+	public void calendarmemberinsert(int postkey, int groupkey, int userkey, String cmoneytype);
 
 	public void calendarmemberdelete(int postkey, int groupkey, int userkey);
 
@@ -126,6 +126,10 @@ public interface GroupService {
 
 	
 	public void boarddelete(int postkey);
+
+	public List<MemberList> smodifymember(int postkey);
+
+	public List<MemberList> smodifymemberm(int postkey);
 
 
 }

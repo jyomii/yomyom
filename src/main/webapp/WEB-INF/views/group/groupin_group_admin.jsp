@@ -7,7 +7,6 @@
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
 <!-- Header end -->
-
 <style>
 .forgroupname {
 	list-style: none;
@@ -359,6 +358,22 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
+.radio-left{
+	width:10% !important;
+	margin-bottom:0px !important;
+}
+.radio-right{
+	width:10% !important;
+	margin-top:0px !important;
+	margin-bottom:0px !important;
+}
+.flaot-right-to{
+float:right;
+}
+
+.left{
+left: 35%;
+}
 </style>
 
 
@@ -396,16 +411,41 @@ top:-9px;
 											<form id="basicsettingform" action="basicsetting.net?groupkey=${group.groupKey }" method="post">
 												<div class="setting-row">
 													<span>모임 공개 여부</span>
-													<p>공개 (O)/ 비공개 (X) 설정</p>
+													<p>공개  / 비공개  설정</p>
 													<input type="hidden" name="groupkey" value="${group.groupKey }">
-													<c:if test="${group.groupPrivate=='N'}">
-													<input type="checkbox" id="switch00" name="groupPrivate" value="n"/>
+													<c:if test="${group.groupPrivate=='n'}">
+													<div class="form-radio left">
+														
+														<div class="radio radio-left">
+															<label> <input type="radio" 
+															name="groupPrivate" value="y"><i class="check-box"></i>공개
+															</label>
+														</div>
+														<div class="radio radio-right">
+															<label> <input type="radio" checked="checked" name="groupPrivate" value="n"><i
+															class="check-box"></i>비공개
+															</label>
+														</div>
+														
+													</div>
 													</c:if> 
-													<c:if test="${group.groupPrivate=='Y'}">
-													<input type="checkbox" id="switch00" name="groupPrivate" value="n" checked/>
+													<c:if test="${group.groupPrivate=='y'}">
+													<div class="form-radio">
+														
+														<div class="radio radio-left">
+															<label> <input type="radio"  checked="checked" name="groupPrivate" value="y"><i class="check-box"></i>공개
+															</label>
+														</div>
+														<div class="radio radio-right">
+															<label> <input type="radio" 
+															 name="groupPrivate" value="n"><i
+															class="check-box"></i>비공개
+															</label>
+														</div>
+														
+													</div>
 													</c:if>
-													<label for="switch00" data-on-label="O" data-off-label="X"></label>
-												</div>
+													</div>
 												<!--  <div class="setting-row">
 													<span>검색 허용 여부</span>
 													<p>검색 허용 / 비허용 설정</p>

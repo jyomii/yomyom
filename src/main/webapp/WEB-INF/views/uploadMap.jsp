@@ -5,7 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
+
 <body>
 
 
@@ -17,11 +19,9 @@
 	<button onclick="javascript:loadMap();">저장한 지도 불러오기</button>
 	<button onclick="javascript:deleteMap();">저장한 지도 삭제하기</button>
 	<div id="map" style="width: 350px; height: 350px;"></div>
-
-
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81901835c348429fbab043210a118692&libraries=drawing,services"></script>
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71851d7efcc82896ade029d259354bc9&libraries=drawing,services"></script>
 
 	<script>
 		var w = window.innerWidth / 2;
@@ -314,6 +314,8 @@
 			
 		}
 	</script>
+
+	
 
 
 </body>

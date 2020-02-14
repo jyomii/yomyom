@@ -64,6 +64,7 @@
 	
 }
 </style>
+
 </head>
 <body>
 	<div class="map_wrap">
@@ -90,13 +91,9 @@
 			<ul id="placesList"></ul>
 			<div id="pagination"></div>
 		</div>
-
-
-	</div>
-
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81901835c348429fbab043210a118692&libraries=drawing,services"></script>
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71851d7efcc82896ade029d259354bc9&libraries=drawing,services"></script>
 	<script>
 		// 마커를 담을 배열입니다
 		var markers = [];
@@ -496,7 +493,7 @@
        window.close();
       }
     </script>
-  
-	
+
+	</div>
 </body>
 </html>

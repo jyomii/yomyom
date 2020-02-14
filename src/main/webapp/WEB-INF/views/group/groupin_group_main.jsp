@@ -356,6 +356,15 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
+
+.floatrightsm{
+float: right;
+color: orange;
+}
+
+.width100{
+width:100%;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -447,20 +456,45 @@ top:-9px;
 																src="resources/images/resources/group1.jpg" alt=""></a>
 														</figure>
 														<div class="pepl-info">
-															<h4 class="min-width-h4">
+															<h4 class="min-width-h4 width100">
 																<a href="time-line.html" title="">${gmtl.postTitle}</a>
+																<c:if test="${gmtl.cmoneytype=='M'}">
+																	<span class="floatrightsm">회비입금순 신청</span>
+																</c:if>
+																<c:if test="${gmtl.cmoneytype=='S'}">
+																	<span class="floatrightsm">선착순 참여</span>
+																</c:if>
 															</h4>
+															
 															<br> <br> <a href="schedulemaps.net?postkey=${gmtl.postKey}"><span class="schedule-span">장소:
 																${gmtl.location}</span></a>
 															<c:if test="${gmtl.joinbtn eq 'yes'}">
+																<c:if test="${gmtl.cmoneytype=='M'}">
+																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
+																	<span>신청하기</span>
+																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
+																<c:if test="${gmtl.cmoneytype=='S'}">
 																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
 																	<span>참여하기</span>
 																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
 															</c:if>
 															<c:if test="${gmtl.joinbtn eq 'no'}">
+																<c:if test="${gmtl.cmoneytype=='M'}">
+																<button type="button" class="mtr-btn forJoinBtn gmtlcancelbtn">
+																	<span>신청취소</span>
+																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
+																<c:if test="${gmtl.cmoneytype=='S'}">
 																<button type="button" class="mtr-btn forJoinBtn gmtlcancelbtn">
 																	<span>취소하기</span>
 																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
 															</c:if>
 															<input type="hidden" id="postkey${n}"
 																value="${gmtl.postKey }"> <input type="hidden"
@@ -881,29 +915,40 @@ $(function() {
 		var userkey = $('#UserKey').val();
 		var date = $('#tbCalendarYM').text();
 		if (userkey!=-1){
-		var postkey = $(this).next().val();
-        var n = $(this).next().next().val();
+		var cmoneytype =  $(this).next().val();
+		var postkey = $(this).next().next().val();
+        var n = $(this).next().next().next().val();
         var groupkey = $('#thisGroupKey').val();
         ajaxcallist(userkey,date);
-        ajaxJoinBtn(postkey, groupkey, userkey, n);
+        ajaxJoinBtn(postkey, groupkey, userkey, n, cmoneytype);
         $(this).removeClass('gmtljoinbtn');
         $(this).addClass('gmtlcancelbtn');
-        $(this).children().html('취소하기');
+       	 if(cmoneytype=='M'){
+        	$(this).children().html('신청취소');
+       	 }else{
+        	$(this).children().html('취소하기');
+       	 }
 		}else{
 			alert("로그인 해주세요 ");
 		}
     })
 
+    
     $(".nearby-contct").on('click', '.gmtlcancelbtn', function(event) {
         var userkey = $('#UserKey').val();
         if (userkey!=-1){
-        var postkey = $(this).next().val();
-        var n = $(this).next().next().val();
+        var postkey = $(this).next().next().val();
+        var n = $(this).next().next().next().val();
         var groupkey = $('#thisGroupKey').val();
+        var cmoneytype =  $(this).next().val();
         ajaxJoinCancelBtn(postkey, groupkey, userkey, n);
         $(this).removeClass('gmtlcancelbtn');
         $(this).addClass('gmtljoinbtn');
-        $(this).children().html('참여하기');
+        if(cmoneytype=='M'){
+        	$(this).children().html('신청하기');
+        }else{
+        	$(this).children().html('참여하기');
+        }
         }else{
 			alert("로그인 해주세요 ");
 		}
@@ -1372,9 +1417,9 @@ $(function() {
             }
         }) // ajax
     } // function ajax end
-    function ajaxJoinBtn(postkey, groupkey, userkey, n) {
+    function ajaxJoinBtn(postkey, groupkey, userkey, n, cmoneytype) {
         output = "";
-        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
+        var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey+ "&cmoneytype=" + cmoneytype;
         var empty = "people-list" + n;
         $.ajax({
             type: "post",

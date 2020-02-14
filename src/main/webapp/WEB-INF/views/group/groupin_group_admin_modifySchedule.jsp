@@ -680,7 +680,7 @@ border: 2px solid lightblue;
 													</button>
 												
 												</div>
-												<input type="hidden" name="postKey" value="${modifypost.postKey }">
+												<input type="hidden" id="postKey" name="postKey" value="${modifypost.postKey }">
 											</form>
 											<input type="hidden" id="thispostkey">
 											<input type="hidden" id="thistf" value="f">
@@ -854,15 +854,15 @@ $(function() {
 
             $(".friend-list").on("click","#slistformsubmit",function(event) {
                 var Array = [];
-
+				
                 $('input[name="slist"]:checked').each(function(i) {
                     Array.push($(this).prev().val());
                     console.log(Array);
                 });
-                console.log(Array);
-                var postkey = $('#postkey').val()
+                var postkey = $('#postKey').val()
+                
                 var data = {
-                    "postkey": $('#postkey').val(),
+                    "postkey": postkey,
                     "Array": Array
                 };
                 $.ajax({
@@ -901,9 +901,9 @@ $(function() {
                     console.log(Array);
                 });
                 console.log(Array);
-                var postkey = $('#postkey').val()
+                var postkey = $('#postKey').val()
                 var data = {
-                    "postkey": $('#postkey').val(),
+                    "postkey": postkey,
                     "Array": Array
                 };
                 $.ajax({
@@ -932,7 +932,6 @@ $(function() {
                         console.log('에러')
                     }
                 }) // ajax
-
             })
 
             $(".friend-list").on("click","#mlistformsubmit",function(event) {
@@ -943,9 +942,9 @@ $(function() {
                     console.log(Array);
                 });
                 console.log(Array);
-                var postkey = $('#postkey').val()
+                var postkey = $('#postKey').val();
                 var data = {
-                    "postkey": $('#postkey').val(),
+                    "postkey": postkey,
                     "Array": Array
                 };
                 $.ajax({
@@ -984,12 +983,13 @@ $(function() {
                     Array.push($(this).prev().val());
                     console.log(Array);
                 });
-                console.log(Array);
-                var postkey = $('#postkey').val()
+                var postkey = $('#postKey').val();
+                console.log(postkey);
                 var data = {
-                    "postkey": $('#postkey').val(),
+                    "postkey": postkey,
                     "Array": Array
                 };
+                console.log(data);
                 $.ajax({
                     type: "post",
                     async: false,
@@ -998,12 +998,15 @@ $(function() {
                     dataType: "json",
                     cache: false,
                     success: function(data) {
+                    	console.log("에이잭스")
                         $('.foremptys1').empty();
                         $('.foremptyscount1').empty();
                         $('.foremptyscount1').html(data.modifymembercount);
+                        console.log("에이잭스")
                         output = "";
                         $(data.modifymember).each(
                             function(index, item) {
+                            	console.log("에이잭스")
                                 output += "<li><figure>";
                                 output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                                 output += "</figure><div class='friendz-meta'><div class='checkbox'>";
@@ -1027,9 +1030,10 @@ $(function() {
                 $('input[name="mlist"]:checked').each(function(i) {
                     Array.push($(this).prev().val());
                 });
-                var postkey = $('#postkey').val()
+                console.log(Array);
+                var postkey = $('#postKey').val();
                 var data = {
-                    "postkey": $('#postkey').val(),
+                    "postkey": postkey,
                     "Array": Array
                 };
                 $.ajax({
@@ -1527,7 +1531,7 @@ $(function() {
                 }); // ajax
             } // function ajax end
             function slistajaxlist() {
-                var postkey = $('#postkey').val();
+                var postkey = $('#postKey').val();
                 var data = "postkey=" + postkey;
                 $.ajax({
                     type: "post",
@@ -1557,7 +1561,7 @@ $(function() {
                 }) // ajax
             } // function ajax end
             function mlistajaxlist() {
-            	var postkey = $('#postkey').val();
+            	var postkey = $('#postKey').val();
                 var data = "postkey=" + postkey;
                 $.ajax({
                 	type: "post",

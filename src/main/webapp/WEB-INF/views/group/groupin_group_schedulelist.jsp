@@ -502,16 +502,41 @@ top:-9px;
 									</c:if>
 								</ul>
 <!-- 페이지네이션 -->
+
 										<div class="row row-pagination">
 											<div class="col">
 												<ul class="pagination pagination-sm center-pagination"
 													id="pempty">
 
-													<li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
-													</li>
+													<c:if test="${page <= 1 }">
+								<li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
+								</li>
+							</c:if>
+							<c:if test="${page > 1 }">
+								<li class="page-item"><a
+									href="groupin_group_board_transfer.net?groupkey=${groupkey }&boardkey=${boardkey }&boardtype=${boardtype}&boardname=${boardname}&page=${page-1 }" class="page-link">이전</a>&nbsp;
+								</li>
+							</c:if>
+							<c:forEach var="a" begin="${startpage }" end="${endpage }">
+								<c:if test="${a == page }">
+									<li class="page-item"><a class="page-link" href="#">${a }</a>
+									</li>
+								</c:if>
+								<c:if test="${a != page }">
+									<li class="page-item"><a href="groupin_group_board_transfer.net?groupkey=${groupkey }&boardkey=${boardkey }&boardtype=${boardtype}&boardname=${boardname}&page=${a }"
+										class="page-link">${a }</a></li>
+								</c:if>
+							</c:forEach>
 
-													<li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
-													</li>
+							<c:if test="${page >= maxpage }">
+								<li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
+								</li>
+							</c:if>
+							<c:if test="${page < maxpage }">
+								<li class="page-item"><a
+									href="groupin_group_board_transfer.net?groupkey=${groupkey }&boardkey=${boardkey }&boardtype=${boardtype}&boardname=${boardname}&page=${page+1 }" class="page-link">&nbsp;다음</a>
+								</li>
+							</c:if>
 
 												</ul>
 											</div>

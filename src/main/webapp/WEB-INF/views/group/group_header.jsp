@@ -67,7 +67,6 @@
 							</c:if>
 							<!-- **********모임 사진 수정*********** -->
 						</figure>
-						
 						<!-- 그룹 사진 -->
 					</div>
 				</div>
@@ -77,7 +76,7 @@
 							<!-- 그룹 이름 -->
 							<ul>
 								<li class="admin-name forgroupname">
-									<h5 class="groupname">${group.groupName}</h5>
+									<h5 class="groupname"><a href="group_main.net?groupkey=${groupkey }">${group.groupName}</a></h5>
 								</li>
 							</ul>
 							<!-- 그룹 이름 -->

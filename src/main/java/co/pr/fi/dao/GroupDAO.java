@@ -75,11 +75,11 @@ public class GroupDAO {
 		return sqlSession.selectList("group.groupmeetinglist", groupkey);
 	}
 
-	public List<MemberList> groupcalendarmemberlist(Map<String, Integer> map) {
+	public List<MemberList> groupcalendarmemberlist(Map<String, Object> map) {
 		return sqlSession.selectList("group.groupcalendarmemberlist", map);
 	}
 
-	public void groupcalendarmemberinsert(Map<String, Integer> map) {
+	public void groupcalendarmemberinsert(Map<String, Object> map) {
 		sqlSession.insert("group.groupcalendarmemberinsert", map);
 
 	}
@@ -272,5 +272,13 @@ public class GroupDAO {
 	public void boarddelete(int postkey) {
 		sqlSession.delete("group.boarddelete", postkey);
 		
+	}
+
+	public List<MemberList> smodifymemberm(int postkey) {
+		return sqlSession.selectList("group.smodifymemberm", postkey);
+	}
+	
+	public List<MemberList> smodifymember(int postkey) {
+		return sqlSession.selectList("group.smodifymember", postkey);
 	}
 }
