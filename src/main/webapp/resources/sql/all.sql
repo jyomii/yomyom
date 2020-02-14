@@ -330,9 +330,6 @@ ALTER TABLE calendar ADD (starttime varchar2(50));
 ALTER TABLE calendar ADD (startminute varchar2(50));
 ALTER TABLE calendar ADD (maxperson varchar2(50));
 ALTER TABLE calendar ADD (location varchar2(50));
-ALTER TABLE calendar ADD (startdate varchar2(50));
-ALTER TABLE calendar ADD (starttime varchar2(50));
-ALTER TABLE calendar ADD (startminute varchar2(50));
 
 ALTER TABLE calendar
     ADD CONSTRAINT FKcalendarpostkeypostpost FOREIGN KEY (postkey)
@@ -635,6 +632,13 @@ CREATE TABLE JOINQUEST(
 	INTRODUCE	VARCHAR2(100)	NULL,
 	CONSTRAINT JOINQUESTPK PRIMARY KEY (GROUPKEY)
 );  
+
+-- 질문이 좀 길어져서 value too large 에러 발생.. 길이 추가
+alter table joinquest modify (quest1 varchar2(300));
+alter table joinquest modify (quest2 varchar2(300));
+alter table joinquest modify (quest3 varchar2(300));
+alter table joinquest modify (quest4 varchar2(300));
+alter table joinquest modify (quest5 varchar2(300));
 
 CREATE TABLE JOINANSWER(
 	GROUPKEY	NUMBER			NOT NULL,
