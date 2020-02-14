@@ -459,7 +459,6 @@ public class GroupServiceImpl implements GroupService {
 		}
 		return post;
 	}
-
 	@Override
 	public int getScheduleListCount(int groupkey) {
 		return dao.getschedulelistcount(groupkey);
@@ -467,7 +466,14 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public Post groupafterlist(int groupkey) {
-		return dao.groupafterlist(groupkey);
+		Post post = dao.groupafterlist(groupkey);
+		int userkey = post.getUserKey();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userkey", userkey);
+		map.put("groupkey", groupkey);
+		String groupNickname = dao.getgroupnickname(map);
+		post.setGroupNickname(groupNickname);
+		return post;
 	}
 
 	@Override
@@ -502,5 +508,17 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public int updateSignupSample(Map<String, Object> map) {
 		return dao.updateSignupSample(map);
+  }
+  
+  @Override
+	public Post detailpost(int postkey,int groupkey) {
+		Post post = dao.detailpost(postkey);
+		int userkey = post.getUserKey();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userkey", userkey);
+		map.put("groupkey", groupkey);
+		String groupNickname = dao.getgroupnickname(map);
+		post.setGroupNickname(groupNickname);
+		return post;
 	}
 }

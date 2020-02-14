@@ -120,4 +120,7 @@ public interface GroupService {
 
 	public int updateSignupSample(Map<String, Object> map);
 
+	public Post detailpost(int postkey, int groupkey);
+
+
 }

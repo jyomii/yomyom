@@ -5,7 +5,6 @@
 <!-- Header -->
 <jsp:include page="../mainpage/header.jsp" />
 <!-- Header end -->
-
 <style>
 .forgroupname {
 	list-style: none;
@@ -367,6 +366,10 @@ top:-9px;
 .paddingtopzero{
 	padding-top:0px !important;
 }
+
+.cursord{
+cursor: default !important;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -416,10 +419,8 @@ top:-9px;
 												<ul id="message-list" class="message-list">
 													<c:if test="${not empty postlist}">
 													<c:forEach var="pl" items="${postlist}">
-													<li class="unread"><span class="sender-name">${pl.postTitle }</span> <a title="" data-toggle="tooltip"
-														data-original-title="Attachment"><i
-															class="fa fa-paperclip"></i></a><span class="boardListRight">${pl.postDate }</span>
-														<p>작성자 ${pl.groupNickname} . 조회수 ${pl.postReadcount}</p>
+													<li class="unread"><span class="sender-name"><a href="group_boarddetail.net?groupkey=${groupkey }&postkey=${pl.postKey }">${pl.postTitle }</a></span><span class="boardListRight">${pl.postDate }</span>
+														<p class="cursord">작성자 ${pl.groupNickname} . 조회수 ${pl.postReadcount}</p>
 													</li>
 													</c:forEach>
 													</c:if>
