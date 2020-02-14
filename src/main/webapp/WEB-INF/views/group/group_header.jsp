@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<style>
+#joinBtn {background : #4F93CD; color : white; border : none; line-height : 2 !important;}
+</style>
 <section>
 	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
 		type="hidden" id="UserKey" value="${userkey }">
@@ -87,6 +90,10 @@
 								<li class="forgroupnameleft"><b>연령대:</b> ${groupage } 대</li>
 								<li class="forgroupnameleft"><b>회원수:</b> ${groupmembers }명</li>
 								<li class="forgroupnameleft"><b>설립일:</b> ${group.groupDate }</li>
+								<!-- 로그인을 안 했거나 가입하지 않은 유저일 경우에만 '가입하기' 버튼 보임 -->
+								<c:if test = "${id == null || isMem == 0}">
+									<li class="forgroupnameleft"><button id = "joinBtn">가입하기</button></li>
+								</c:if>
 							</ul>
 							<!-- 그룹 간단 정보 -->
 						</div>

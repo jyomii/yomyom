@@ -5,14 +5,11 @@
 <!-- 헤더 -->
 <jsp:include page="mainpage/header.jsp" />
 <!-- 헤더 끝 -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- 아이콘 -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-	crossorigin="anonymous">
-<!-- 스타일 추가 -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 <style>
 .user-active {
 	list-style-type: none;
@@ -108,9 +105,20 @@ li .current {
 }
 
 .nearby-contct {margin-top : 0 !important}
-		.nearby-contct > li {margin-bottom : 5px !important; padding : 10px !important;}
-		.nav.nav-tabs {margin-bottom : 22px;}
-		.forgroupname {
+.nearby-contct > li {margin-bottom : 5px !important; padding : 10px !important;}
+.nav.nav-tabs {margin-bottom : 22px;}
+
+.forum-list table {
+	background: #fff none repeat scroll 0 0;
+    border: 1px solid #eaeaea;
+}
+
+.forum-list table th {
+	border-bottom : 1px solid #eaeaea;
+	border-top : 1px solid #eaeaea;
+}
+
+.forgroupname {
 	list-style: none;
 	padding-top: 20px;
 }
@@ -425,10 +433,11 @@ top:-9px;
 	color: #7b7b7b;
 	font-size: 15px;
 	padding: 7px 20px;
-	width: 70%;
-	margin-left: 2%;
-	margin-bottom: 10px;
-	margin-top: 3px;
+	box-sizing: border-box;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .search-text-btn {
@@ -461,125 +470,50 @@ top:-9px;
 	margin-bottom: 0px !important;
 }
 </style>
-<section>
-	<input type="hidden" id="thisGroupKey" value="${group.groupKey }"> <input
-		type="hidden" id="UserKey" value="${userkey }">
-	<div class="feature-photo">
-		<figure>
-			<img id="groupPageImg"
-				src="<spring:url value='/image${group.groupDFile }'/>" alt="" />
-			<!--<img id="groupImg" src="resources/images/resources/timeline-1.jpg" alt="">-->
-		</figure>
-		<c:if test="${userinfo.userGrade==1}">
-		<!-- **********모임 대문 사진 수정*********** -->
-		<form class="edit-phto" id="groupMainImgForm"
-			enctype="multipart/form-data" action="group_mainImgUpdate.net"
-			method="post">
-			<input type="hidden" name="groupkey" value="${group.groupKey }"> <i
-				class="fa fa-camera-retro"></i>
-			<!-- 대문 사진 수정 버튼 -->
-			<label class="fileContainer"> 대문 사진 수정 <input type="file"
-				name="groupMainImgUpload" />
-			</label>
-		</form>
-		</c:if>
-		<!-- **********모임 대문 사진 수정*********** -->
-
-		<div class="container-fluid height-for-white">
-			<div class="row merged">
-				<div class="col-lg-2 col-sm-3">
-					<div class="user-avatar">
-						<!-- 그룹 사진 -->
-						<figure>
-							<img id="groupImg"
-								src="<spring:url value='/image${group.groupCFile }'/>" />
-							<!-- <img id="groupImg" src="resources/images/resources/user-avatar.jpg" alt="">-->
-							<!-- **********모임 사진 수정*********** -->
-							<c:if test="${userinfo.userGrade==1}">
-							<form class="edit-phto" id="groupImgForm"
-								enctype="multipart/form-data" action="group_ImgUpdate.net"
-								method="post">
-								<input type="hidden" name="groupkey" id="hiddenGroupKey"
-									value="${group.groupKey }"> <i class="fa fa-camera-retro"></i>
-								<!-- 그룹 사진 수정 버튼 -->
-								<label class="fileContainer"> 그룹 사진 수정하기 <input
-									type="file" name="groupImgUpload" />
-								</label>
-								<!-- 그룹 사진 수정 버튼 -->
-							</form>
-							</c:if>
-							
-							<!-- **********모임 사진 수정*********** -->
-						</figure>
-						<!-- 그룹 사진 -->
-					</div>
-				</div>
-				<div class="col-lg-10 col-sm-9">
-					<div class="timeline-info">
-						<div class="forgroupnamewidth">
-							<!-- 그룹 이름 -->
-							<ul>
-								<li class="admin-name forgroupname">
-									<h5 class="groupname">${group.groupName}</h5>
-								</li>
-							</ul>
-							<!-- 그룹 이름 -->
-						</div>
-						<div class="forgroupnamewidth1">
-							<!-- 그룹 간단 정보 -->
-							<ul>
-								<li class="forgroupnameleft">카테고리: ${groupdcategory }&nbsp;>&nbsp;${groupscategory }</li>
-								<li class="forgroupnameleft">지역: ${groupswhere }&nbsp;${groupdwhere }</li>
-								<li class="forgroupnameleft">연령대: ${groupage } 대</li>
-								<li class="forgroupnameleft">회원수: ${groupmembers }명</li>
-								<li class="forgroupnameleft">설립일: ${group.groupDate }</li>
-							</ul>
-							<!-- 그룹 간단 정보 -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<!-- 그룹 페이지 상단 -->
+<jsp:include page="group/group_header.jsp"/>
 <!-- 그룹 페이지 상단 -->
 
 <div class="theme-layout">
 	<section>
-		<div class="gap100">
+		<div class="gap gray-bg">
 			<div>
 				<div class="row">
-						<!-- 그룹 페이지 위젯 왼쪽 -->
-						<div class="col-lg-3">
-							<aside class="sidebar static">
-								<!-- 그룹 게시판 위젯 -->
-								<jsp:include page="group/group_leftWidget.jsp" />
-							</aside>
-						</div>
-						<!-- 그룹 페이지 위젯 왼쪽  -->
+				
+					<!-- 그룹 페이지 위젯 왼쪽 -->
+					<div class="col-lg-3">
+						<aside class="sidebar static">
+							<!-- 그룹 게시판 위젯 -->
+							<jsp:include page="group/group_leftWidget.jsp" />
+						</aside>
+					</div>
+					<!-- 그룹 페이지 위젯 왼쪽  -->
 				
 					<!-- 가운데 위젯 -->
 					<div class="col-lg-6">
 						<div class="forum-warper">
 							<div class="post-filter-sec">
 								<ul class="user-active">
-									<li><a href="/"><i class="fas fa-users"></i>가입한 모임</a></li>
+									<li class = "selected-menu"><a href="/"><i class="fas fa-users"></i>가입한 모임</a></li>
 									<li><a href="/"><i class="fas fa-user-edit"></i>작성한 글</a></li>
 									<li><a href="/"><i class="fas fa-comments"></i>작성한 댓글</a></li>
+									<c:if test = "${loginuser == userkey || loginuser == masterkey}">
+										<li><a href="/"><i class="far fa-address-card"></i>작성한 가입양식</a></li>
+									</c:if>
 								</ul>
 							</div>
 						</div>
 						<form name="myForm">
-							<input type="hidden" id="userkey" name="userkey"
-								value="${userkey}"> <input type="hidden" id="groupkey"
-								name="groupkey" value="${groupkey}"> <input
-								type="hidden" id="postkey" name="postkey" value="${postkey}">
+							<input type="hidden" id="userkey" name="userkey" value="${userkey}"> 
+							<input type="hidden" id="groupkey" name="groupkey" value="${groupkey}">
+							<input type="hidden" id="postkey" name="postkey" value="${postkey}">
 							<input type="hidden" id="status" name="status" value="${status}">
 							<input type="hidden" id="page" name="page" value="${page}">
 						</form>
 						<div class="forum-list">
-							<table class="table table-responsive">
-								<!-- ## 가입한 모임 리스트 ## -->
+							<table class="table table-responsive" id = "detailTable">
+							
+								<!-- 가입한 모임 리스트 -->
 								<c:if test="${status == 0}">
 									<thead>
 										<tr>
@@ -593,12 +527,10 @@ top:-9px;
 										<c:if test="${listcount > 0}">
 											<c:forEach var="b" items="${list}">
 												<tr>
-													<td><img
-														src="<spring:url value='/image${b.groupDFile}'/>"
-														class="group-img" alt="" /> <!-- 주소 상엽씨버전으로 바꾸면 js에서도 수정해줘 -->
-														<%-- <a href = "group_main.net?groupkey=${b.groupKey}" title = "${b.groupName}">${b.groupName}</a> --%>
-														<a href="groupmain?groupkey=${b.groupKey}"
-														title="${b.groupName}">${b.groupName}</a></td>
+													<td>
+														<img src="<spring:url value='/image${b.groupDFile}'/>" class="group-img" alt="" />
+														<a href="group_main.net?groupkey=${b.groupKey}" title="${b.groupName}">${b.groupName}</a>
+													</td>
 													<td>${b.memberCount}명</td>
 													<td>${b.groupDate}</td>
 												</tr>
@@ -612,8 +544,9 @@ top:-9px;
 										</c:if>
 									</tbody>
 								</c:if>
-
-								<!-- ## 작성한 글 리스트 ## -->
+								<!-- 가입한 모임 리스트 -->
+								
+								<!-- 작성한 글 리스트 -->
 								<c:if test="${status == 1}">
 									<thead>
 										<tr>
@@ -627,9 +560,7 @@ top:-9px;
 										<c:if test="${listcount > 0}">
 											<c:forEach var="b" items="${list}">
 												<tr>
-													<td><a
-														href="javascript:board(${b.postKey},${b.groupKey})"
-														title="${b.postTitle}">${b.postTitle}</a></td>
+													<td><a href="javascript:board(${b.postKey},${b.groupKey})" title="${b.postTitle}">${b.postTitle}</a></td>
 													<td>${b.postReadcount}</td>
 													<td>${b.postDate}</td>
 												</tr>
@@ -643,8 +574,9 @@ top:-9px;
 										</c:if>
 									</tbody>
 								</c:if>
+								<!-- 작성한 글 리스트 -->
 
-								<!-- ## 작성한 댓글 리스트 ## -->
+								<!-- 작성한 댓글 리스트 -->
 								<c:if test="${status == 2}">
 									<thead>
 										<tr>
@@ -654,20 +586,21 @@ top:-9px;
 										</tr>
 									</thead>
 									<tbody>
+										<!-- 작성한 댓글이 있는 경우 -->
 										<c:if test="${listcount > 0}">
 											<c:forEach var="b" items="${list}">
 												<tr>
 													<td>
 														<div class="comment-info">
-															<span><a
-																href="javascript:board(${b.postKey},${b.groupKey})"
-																title="${b.commentContent}">${b.commentContent}</a></span>
+															<span>
+																<a href="javascript:board(${b.postKey},${b.groupKey})" title="${b.commentContent}">${b.commentContent}</a>
+															</span>
 														</div>
 														<div class="comment-subject">
-															<span><a
-																href="javascript:board(${b.postKey},${b.groupKey})"
-																title="${b.postTitle}">${b.postTitle}</a></span> <span
-																class="comment-num">[${b.replyCount}]</span>
+															<span>
+																<a href="javascript:board(${b.postKey},${b.groupKey})" title="${b.postTitle}">${b.postTitle}</a>
+															</span> 
+															<span class="comment-num">[${b.replyCount}]</span>
 														</div>
 													</td>
 													<td>${b.postReadcount}</td>
@@ -675,6 +608,7 @@ top:-9px;
 												</tr>
 											</c:forEach>
 										</c:if>
+										<!-- 작성한 댓글이 없는 경우 -->
 										<c:if test="${listcount == 0}">
 											<tr>
 												<td colspan="3">작성한 댓글이 없습니다.</td>
@@ -682,8 +616,10 @@ top:-9px;
 										</c:if>
 									</tbody>
 								</c:if>
+								<!-- 작성한 댓글 리스트 -->
 							</table>
 						</div>
+						
 						<c:if test="${listcount > 0}">
 							<div class="center-block">
 								<div class="row">
@@ -691,31 +627,27 @@ top:-9px;
 										<ul class="pagination">
 											<!-- 1페이지 -->
 											<c:if test="${page <= 1}">
-												<li class="page-item"><a class="page-link current"
-													href="#">«&nbsp;</a></li>
+												<li class="page-item"><a class="page-link current" href="#">«&nbsp;</a></li>
 											</c:if>
 											<!-- 2페이지부터 -->
 											<c:if test="${page > 1}">
-												<li class="page-item"><a class="page-link"
-													href="javascript:go(${page-1})">«&nbsp;</a></li>
+												<li class="page-item"><a class="page-link" href="javascript:go(${page-1})">«&nbsp;</a></li>
 											</c:if>
+											
 											<c:forEach var="p" begin="${startpage}" end="${endpage}">
 												<c:if test="${p == page}">
-													<li class="page-item"><a href="#"
-														class="page-link current">${p}</a></li>
+													<li class="page-item"><a href="#" class="page-link current">${p}</a></li>
 												</c:if>
 												<c:if test="${p != page}">
-													<li class="page-item"><a href="javascript:go(${p})"
-														class="page-link">${p}</a></li>
+													<li class="page-item"><a href="javascript:go(${p})" class="page-link">${p}</a></li>
 												</c:if>
 											</c:forEach>
+											
 											<c:if test="${page >= maxpage}">
-												<li class="page-item"><a class="page-link current"
-													href="#">&nbsp;»</a></li>
+												<li class="page-item"><a class="page-link current" href="#">&nbsp;»</a></li>
 											</c:if>
 											<c:if test="${page < maxpage}">
-												<li class="page-item"><a class="page-link"
-													href="javascript:go(${page+1})">&nbsp;»</a></li>
+												<li class="page-item"><a class="page-link" href="javascript:go(${page+1})">&nbsp;»</a></li>
 											</c:if>
 										</ul>
 									</div>
@@ -725,20 +657,18 @@ top:-9px;
 					</div>
 					<!-- 가운데 위젯 끝 -->
 
-						<!-- 그룹 페이지 위젯 오른쪽 -->
-						<div class="col-lg-3">
-							<aside class="sidebar static">
-								<jsp:include page="group/group_rightWidget.jsp" />
-							</aside>
-						</div>
-						<!-- 그룹 페이지 위젯 오른쪽 -->
+					<!-- 그룹 페이지 위젯 오른쪽 -->
+					<div class="col-lg-3">
+						<aside class="sidebar static">
+							<jsp:include page="group/group_rightWidget.jsp" />
+						</aside>
+					</div>
+					<!-- 그룹 페이지 위젯 오른쪽 -->
 				</div>
 			</div>
 		</div>
 	</section>
-
 </div>
-<jsp:include page="mainpage/footer.jsp" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 //가입한 모임 페이지로 이동
@@ -785,7 +715,7 @@ function viewList(call) {
 		dataType : 'json',
 		cache : false,
 		success : function(data) {
-			$('table').html('');
+			$('.col-lg-6>.forum-list').html('');
 			switch (data.status) {
 				case 0:
 					signedGroup(data);
@@ -795,6 +725,9 @@ function viewList(call) {
 					break;
 				case 2:
 					wroteComment(data);
+					break;
+				case 3:
+					getAnswer(data);
 					break;
 			}
 		},
@@ -807,6 +740,7 @@ function viewList(call) {
 /* ##### 가입한 모임 ##### */
 function signedGroup (data) {
 	console.log(data.list);
+	doc += '<table class="table table-responsive" id = "detailTable">';
 	doc += '<thead>';
 	doc += '	<tr>';
 	doc += '		<th scope = "col">Name</th>';
@@ -820,9 +754,7 @@ function signedGroup (data) {
 			doc += '	<tr>';
 			doc += '		<td>';
 			doc += "			<img src= \"<spring:url value='/image" + item.groupDFile + "'/>\" class = 'group-img' alt = ''/>";
-			// 주소 상엽씨버전으로 바꾸면 jsp에서도 수정해줘
-			//doc += '			<a href = "group_main.net?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
-			doc += '			<a href = "groupmain?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
+			doc += '			<a href = "group_main.net?groupkey=' + item.groupKey + '" title = "">' + item.groupName + '</a>';
 			doc += '		</td>';
 			doc += '		<td>';
 			doc += 				item.memberCount + '명';
@@ -834,8 +766,8 @@ function signedGroup (data) {
 		}); 
 		
 		doc += '</tbody>';
-		
-		$('table').append(doc);
+		doc += '</table>';
+		$('.col-lg-6>.forum-list').html(doc);
 		$('.pagination').html('');
 		
 		doc = "";
@@ -867,13 +799,15 @@ function signedGroup (data) {
 		} else {
 			doc += '<tr><td colspan = 3>작성글이 존재하지 않습니다.</td></tr>'
 			doc += '</tbody>';
-			$('table').append(doc);
+			doc += '</table>';
+			$('.col-lg-6>.forum-list').html(doc);
 		}
 } // signedGroup end
 
 /* ##### 작성한 글 ##### */
 function wroteTitle(data) {
-	console.log(data.list);
+	console.log(data);
+	doc += '<table class="table table-responsive" id = "detailTable">';
 	doc += '<thead>';
 	doc += '	<tr>';
 	doc += '		<th scope = "col">Subject</th>';
@@ -898,8 +832,8 @@ function wroteTitle(data) {
 			doc += '	</tr>';
 		});	// each end
 		doc += '</tbody>';
-		
-		$('table').append(doc);
+		doc += '</table>';
+		$('.col-lg-6>.forum-list').html(doc);
 		$('.pagination').html('');
 		
 		doc = "";
@@ -931,13 +865,15 @@ function wroteTitle(data) {
 	} else {
 		doc += '<tr><td colspan = 3>작성글이 존재하지 않습니다.</td></tr>'
 		doc += '</tbody>';
-		$('table').append(doc);
+		doc += '</table>';
+		$('.col-lg-6>.forum-list').html(doc);
 	}
 } // wroteTitle end
 
 /* ##### 작성한 댓글 ##### */
 function wroteComment(data) {
-	console.log(data.list);
+	console.log(data);
+	doc += '<table class="table table-responsive" id = "detailTable">';
 	doc += '<thead>';
 	doc += '	<tr>';
 	doc += '		<th scope = "col">Comment</th>';
@@ -974,8 +910,8 @@ function wroteComment(data) {
 			doc += '	</tr>';
 		});
 		doc += '</tbody>';
-		
-		$('table').append(doc);
+		doc += '</table>';
+		$('.col-lg-6>.forum-list').html(doc);
 		$('.pagination').html('');
 		
 		doc = "";
@@ -1007,32 +943,71 @@ function wroteComment(data) {
 	} else {
 		doc += '<tr><td colspan = 3>댓글이 존재하지 않습니다.</td></tr>'
 		doc += '</tbody>';
-
-		$('table').append(doc);
+		doc += '</table>';
+		$('.col-lg-6>.forum-list').html(doc);
 	}
 } // wroteComment end
 
-$(function() {
-	var status = 0;	// 어떤 메뉴를 눌렀는지 확인
-	var tbl = '';	// append시킬 변수 
+function getAnswer(data) {
+	console.log(data);
+	doc += '<div class="central-meta">';
+	doc += '	<div class="editing-info">';
+	doc += '		<h5 class="f-title"><i class="ti-info-alt"></i>모임 가입</h5>';
+	if (data.answer1 != null) {
+		doc += '<div class="form-group">';
+		doc += '	<input type="text" id="answer1" name="answer1" value="' + data.answer1 + '"disabled/>';
+		doc += '	<label class="control-label" for="answer1">' + data.answer1 + '</label><i class="mtrl-select"></i>';
+		doc += '</div>';
+	}
+	if (data.answer2 != null) {
+		doc += '<div class="form-group">';
+		doc += '<input type="text" id="answer2" name="answer2" readOnly/>';
+		doc += '<label class="control-label" for="answer2">' + data.answer2 + '</label><i class="mtrl-select"></i>';
+		doc += '</div>';
+	}
+	if (data.answer3 != null) {
+		doc += '<div class="form-group">';
+		doc += '<input type="text" id="answer3" name="answer3" readOnly/>';
+		doc += '<label class="control-label" for="answer3">' + data.answer3 + '</label><i class="mtrl-select"></i>';
+		doc += '</div>';
+	}
+	if (data.answer4 != null) {
+		doc += '<div class="form-group">';
+		doc += '<input type="text" id="answer4" name="answer4" readOnly/>';
+		doc += '<label class="control-label" for="answer4">' + data.answer4 + '</label><i class="mtrl-select"></i>';
+		doc += '</div>';
+	}
+	if (data.answer5 != null) {
+		doc += '<div class="form-group">';
+		doc += '<input type="text" id="answer5" name="answer5" readOnly/>';
+		doc += '<label class="control-label" for="answer5">' + data.answer5 + '</label><i class="mtrl-select"></i>';
+		doc += '</div>';
+	}
+	if (data.introduce != null) {
+		doc += '<div class="form-group">';
+		doc += '<textarea rows = "4" id="introduce" name="introduce" value = ' + data.introduce + 'readOnly/></textarea>';
+		doc += '<label class="control-label" for="introduce">' + data.introduce + '</label><i class="mtrl-select"></i>';
+		doc += '</div>';
+	}
+	doc += '	</div>';
+	doc += '</div>';
+	$('.col-lg-6>.forum-list').html(doc);
+}; // getAnswer end
 
+$(function() {
 	// 일반적으로 회원 누르고 왔을 때 / 모임 내 프로필 상에서 내가 쓴 글, 내가 쓴 댓글 보려고 왔을 때 구분
 	var getStatus = $('#status').val();
-
-	if (getStatus == 0)
-		$('.user-active li').eq(0).addClass('selected-menu');
-	else if (getStatus == 1)
-		$('.user-active li').eq(1).addClass('selected-menu');
-	else
-		$('.user-active li').eq(2).addClass('selected-menu');
-
+	$('.user-active li').eq(getStatus).addClass('selected-menu');
 
 	/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴에 대한 색 변경 */ 
 	$('.user-active li').click(function(){
 		$('.user-active li').removeClass('selected-menu');
 		$(this).addClass('selected-menu');
+		
+		// status : 어떤 메뉴를 눌렀는지 확인 (0: 가입한 모임, 1: 작성한 글, 2: 작성한 댓글, 3: 작성한 가입양식)
 		var call = "userkey=" + $('#userkey').val() + "&groupkey=" + $('#groupkey').val() + "&status=" + $(this).index();
-		viewList(call);
+		
+		viewList(call);	/*** ajax 실행 ***/
 	});
 
 	/* 가입한 모임, 작성글, 작성댓글 중 선택한 메뉴 클릭 시 이동 X */

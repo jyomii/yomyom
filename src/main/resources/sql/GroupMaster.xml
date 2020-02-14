@@ -69,6 +69,7 @@
 		SELECT GROUPKEY, USERKEY, GROUPNICKNAME, USERGRADE, PROFILEFILE
 		FROM GGROUPMEMBER
 		WHERE GROUPKEY = #{groupkey} AND USERGRADE = #{grade}
+		ORDER BY REGDATE
 	</select>
 	
 	<!-- 현재 모임 가입한 회원수  -->
@@ -83,6 +84,7 @@
 		SELECT GROUPKEY, USERKEY, GROUPNICKNAME, USERGRADE, PROFILEFILE
 		FROM GGROUPMEMBER
 		WHERE GROUPKEY = #{groupkey} AND USERGRADE = #{grade}
+		ORDER BY REGDATE
 	</select>
 	
 	<!-- 모임 가입 요청 회원수 -->
@@ -116,7 +118,14 @@
 	<!-- 회원의 가입 요청 승인 -->
 	<update id = "confirmJoin" parameterType = "map">
 		UPDATE GGROUPMEMBER
-		SET USERGRADE = USERGRADE + 1
+		SET USERGRADE = USERGRADE+1
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+	</update>
+	
+	<!-- 회원 강등 처리 -->
+	<update id = "downgrade" parameterType = "map">
+		UPDATE GGROUPMEMBER
+		SET USERGRADE = USERGRADE-1
 		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
 	</update>
 </mapper>

@@ -150,4 +150,14 @@ public class GroupMemberServiceImpl implements GroupMemberService {
 		map.put("END", endrow);
 		return map;
 	}
+
+	@Override
+	public int getMaster(int groupkey) {
+		return dao.getMaster(groupkey);
+	}
+
+	@Override
+	public JoinAnswer getAnswerSample(Map<String, Object> temp) {
+		return dao.getAnswerSample(temp);
+	}
 }

@@ -10,13 +10,12 @@
 	</select>
 
 
-<select id="regornot" resultType="int"
+	<select id="regornot" resultType="int"
       parameterType="java.util.Map">
       select count(*) from ggroupmember where groupkey=#{groupkey} and userkey=#{userkey}
    </select>
    
 
-	<!-- 가입한 모임의 수 -->
 	<select id="getGroupRank" parameterType="map" resultType="group">
 
 		select * from
@@ -59,12 +58,10 @@
 	</select>
 
 	<!-- 가입 전 이미 가입한 회원인지 판단 -->
-	<select id="isNewMem" resultType="int"
-		parameterType="groupmember">
+	<select id="isNewMem" resultType="int" parameterType="groupmember">
 		SELECT COUNT(*)
 		FROM GGROUPMEMBER
-		WHERE USERKEY =
-		#{userKey} AND GROUPKEY = #{groupKey}
+		WHERE USERKEY = #{userKey} AND GROUPKEY = #{groupKey}
 	</select>
 
 	<!-- 현재 로그인한 유저의 유저키 가져오기 -->
@@ -99,8 +96,7 @@
 	<!-- 가입하기 -->
 	<insert id="joinGroup" parameterType="groupmember">
 		INSERT INTO GGROUPMEMBER
-		VALUES(#{groupKey}, #{userKey}, #{groupNickname}, -1, #{profileFile},
-		#{profileOrigin})
+		VALUES(#{groupKey}, #{userKey}, #{groupNickname}, -1, #{profileFile}, #{profileOrigin}, SYSDATE)
 	</insert>
 
 	<!-- 가입양식 작성 -->
@@ -493,6 +489,7 @@ postoptionreply,postoptionsearch,boardkey,postreadcount,groupnickname from post 
 		parameterType="int">
 		select boardname from ggroupboard where boardkey = #{boardkey}
 	</select>
+  
 	<select id="getgroupnickname" resultType="String"
 		parameterType="java.util.Map">
 		select groupnickname from ggroupmember where userkey = #{userkey} and groupkey = #{groupkey}
@@ -501,4 +498,61 @@ postoptionreply,postoptionsearch,boardkey,postreadcount,groupnickname from post 
 		parameterType="int">
 		select * from post where postkey=#{postkey}
 	</select>
+  
+  <!-- 현재 접속한 모임에 가입된 유저인지 -->
+	<select id = "isMem" resultType = "int" parameterType = "map">
+		SELECT COUNT(*)
+		FROM GGROUPMEMBER
+		WHERE USERKEY = #{userkey} AND GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 현재 모임의 가입양식 조회 -->
+	<select id = "getSignupSample" resultType = "int" parameterType = "int">
+		SELECT COUNT(*)
+		FROM JOINQUEST
+		WHERE GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 가입양식 추가 -->
+	<insert id = "addSignupSample" parameterType = "map">
+		INSERT INTO JOINQUEST
+		VALUES ((SELECT NVL(MAX(QUESTKEY), 0) + 1 FROM JOINQUEST), 
+				#{groupkey}, 
+				#{quest.quest1, jdbcType = VARCHAR}, 
+				#{quest.quest2, jdbcType = VARCHAR}, 
+				#{quest.quest3, jdbcType = VARCHAR},
+				#{quest.quest4, jdbcType = VARCHAR},
+				#{quest.quest5, jdbcType = VARCHAR},
+				#{quest.introduce})
+	</insert>
+	
+	<!-- 가입양식 수정 -->
+	<!-- <update id = "updateSignupSample" parameterType = "map">
+		UPDATE JOINQUEST
+		<set>
+			<if test = "quest1 != null"></if>
+		</set> 
+		WHERE GROUPKEY = #{groupkey}
+	</update> -->
+	
+	<!-- 가입양식 가져오기 -->
+	<select id = "getQuestList" parameterType = "int" resultType = "joinQuest">
+		SELECT *
+		FROM JOINQUEST
+		WHERE GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 현재 모임의 모임장 유저키 가져오기 -->
+	<select id = "getMaster" parameterType = "int" resultType = "int">
+		SELECT USERKEY
+		FROM GGROUP
+		WHERE GROUPKEY = #{groupkey}
+	</select>
+	
+	<!-- 회원이 입력한 가입양식 가져오기 -->
+	<select id = "getAnswerSample" parameterType = "map" resultType = "joinAnswer">
+		SELECT *
+		FROM JOINANSWER
+		WHERE GROUPKEY = #{groupkey} AND USERKEY = #{userkey}
+  </select>  
 </mapper>

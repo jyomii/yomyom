@@ -97,4 +97,9 @@ public class GroupMasterServiceImpl implements GroupMasterService {
 		return dao.confirmJoin(keys);
 	}
 
+	@Override
+	public int downgrade(Map<String, Object> keys) {
+		return dao.downgrade(keys);
+	}
+
 }

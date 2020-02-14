@@ -67,4 +67,8 @@ public class GroupMasterDAO {
 	public int confirmJoin(Map<String, Object> keys) {
 		return sqlSession.update("GroupMaster.confirmJoin", keys);
 	}
+
+	public int downgrade(Map<String, Object> keys) {
+		return sqlSession.update("GroupMaster.downgrade", keys);
+	}
 }

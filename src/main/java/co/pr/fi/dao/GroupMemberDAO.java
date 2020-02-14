@@ -105,4 +105,12 @@ public class GroupMemberDAO {
 	public List<Post> getMyComment(Map<String, Object> map) {
 		return sqlSession.selectList("comment.getMyComment", map);
 	}
+
+	public int getMaster(int groupkey) {
+		return sqlSession.selectOne("group.getMaster", groupkey);
+	}
+
+	public JoinAnswer getAnswerSample(Map<String, Object> temp) {
+		return sqlSession.selectOne("group.getAnswerSample", temp);
+	}
 }

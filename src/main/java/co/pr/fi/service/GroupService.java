@@ -1,6 +1,7 @@
 package co.pr.fi.service;
 
 import java.util.List;
+import java.util.Map;
 
 import co.pr.fi.domain.GGroupBoard;
 import co.pr.fi.domain.GGroupMember;
@@ -111,6 +112,15 @@ public interface GroupService {
 
 	public String getboardname(int boardkey);
 
+	public int isMem(int groupkey, int userkey);
+
+	public int getSignupSample(int groupkey);
+
+	public int addSignupSample(Map<String, Object> map);
+
+	public int updateSignupSample(Map<String, Object> map);
+
 	public Post detailpost(int postkey, int groupkey);
+
 
 }
