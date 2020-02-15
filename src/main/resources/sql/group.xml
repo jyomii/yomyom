@@ -13,7 +13,8 @@
 
 	<select id="regornot" resultType="int"
 		parameterType="java.util.Map">
-		select count(*) from ggroupmember where groupkey=#{groupkey} and
+		select count(*) from ggroupmember where
+		groupkey=#{groupkey} and
 		userkey=#{userkey}
 	</select>
 
@@ -229,30 +230,25 @@
 	</select>
 	<select id="groupmeetinglist" resultType="post"
 		parameterType="int">
-		select rownum, A.* from(select
+		select
 		postkey,posttitle,to_char(postdate,'YYYY-MM-DD')
-		postdate,userkey,groupkey,boardkey,boardmap,to_char(cstartdate,'YYYY-MM-DD
-		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson,cmoneytype
-		from post left join calendar
-		using(postkey) left join (select count(decode(sm,'S',1))
-		currentperson,postkey from calendarmember left join
-		(select * from post
-		left join ggroupboard using(boardkey) where
-		boardtype='N')
-		using
-		(postkey) left join calendar using (postkey) group by postkey) using
-		(postkey)
-		where groupkey=#{groupkey} order by
-		cstartdate) A where
-		boardkey = (select boardkey from ggroupboard where
-		groupkey=#{groupkey} and boardtype='N')
+		postdate,p.userkey,p.groupkey,boardkey,boardmap,to_char(cstartdate,'YYYY-MM-DD
+		HH24:MI')
+		cstartdate,cenddate,cmoney,maxperson,location,cmoneytype,boardtype,currentperson
+		from post p left join calendar using(postkey) left join ggroupboard
+		using(boardkey) left join (select count(decode(sm,'S',1))
+		currentperson, postkey from calendarmember group by postkey)
+		using(postkey) where boardtype='N' and p.groupkey=#{groupkey} order by
+		cstartdate desc
 	</select>
 
 	<select id="groupcalendarmemberlist" resultType="memberlist"
 		parameterType="java.util.Map">
 		select userimagefile, groupnickname from gusers left
-		join (select * from GGROUPMEMBER where groupkey=#{groupkey}) using(userkey) left join calendarmember a
-		using(userkey) where a.postkey=#{postkey} and a.sm='S'
+		join (select * from GGROUPMEMBER where groupkey=#{groupkey})
+		using(userkey) left join calendarmember a
+		using(userkey) where
+		a.postkey=#{postkey} and a.sm='S'
 	</select>
 
 	<insert id="groupcalendarmemberinsert"
@@ -301,14 +297,18 @@
 		parameterType="java.util.Map">
 		select * from (select posttitle, to_char(cstartdate,
 		'YYYY-MM-DD
-		HH24:MI') startdate, location, groupname, postkey, p.groupkey from (select *
+		HH24:MI') startdate, location, groupname, postkey,
+		p.groupkey from (select *
 		from
-		calendarmember left join calendar using(postkey) where
+		calendarmember left join calendar
+		using(postkey) where
 		userkey=#{userkey}) left
-		join (select * from post left join GGROUP
+		join (select * from post
+		left join GGROUP
 		using(groupkey)) p
 		using(postkey))
-		where startdate like #{fulldate}
+		where startdate like
+		#{fulldate}
 	</select>
 
 
@@ -357,9 +357,9 @@
 
 	<insert id="addschedule" parameterType="post">
 		<selectKey keyProperty="postKey" resultType="int"
-         order="BEFORE">
-         select nvl((select max(postKey) from post)+1,0) from dual
-         </selectKey>
+			order="BEFORE">
+			select nvl((select max(postKey) from post)+1,0) from dual
+		</selectKey>
 		insert into post
 		values(#{postKey},#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
 	</insert>
@@ -401,18 +401,14 @@
 
 	<select id="modifymember" resultType="memberlist"
 		parameterType="int">
-		select userimagefile, groupnickname, userkey from gusers
-		left
-		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.postkey=#{postkey} and a.sm='M'
+		select * from ggroupmember left join calendarmember
+		using(groupkey) where postkey = #{postkey} and sm='M'
 	</select>
-	
+
 	<select id="smodifymember" resultType="memberlist"
 		parameterType="int">
-		select userimagefile, groupnickname, userkey from gusers
-		left
-		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.postkey=#{postkey} and a.sm='S'
+		select * from ggroupmember left join calendarmember
+		using(groupkey) where postkey = #{postkey} and sm='S'
 	</select>
 
 	<delete id="calendardeleteajax" parameterType="java.util.Map">
@@ -436,20 +432,15 @@
 
 	<select id="modifymemberm" resultType="memberlist"
 		parameterType="int">
-		select userimagefile, groupnickname, userkey from gusers
-		left
-		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.postkey=#{postkey} and a.sm='S'
-	</select>
-	
-	<select id="smodifymemberm" resultType="memberlist"
-		parameterType="int">
-		select userimagefile, groupnickname, userkey from gusers
-		left
-		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.postkey=#{postkey} and a.sm='M'
+		select * from ggroupmember left join calendarmember
+		using(groupkey) where postkey = #{postkey} and sm='S'
 	</select>
 
+	<select id="smodifymemberm" resultType="memberlist"
+		parameterType="int">
+		select * from ggroupmember left join calendarmember
+		using(groupkey) where postkey = #{postkey} and sm='M'
+	</select>
 
 	<update id="calendarstomajax" parameterType="java.util.Map">
 		update
@@ -485,10 +476,10 @@
 		postkey=#{postkey}
 	</delete>
 
-	<update id="groupbasicupdate" parameterType="group">
+	<update id="groupbasicupdate" parameterType="java.util.Map">
 		update
 		ggroup set
-		groupprivate=#{groupprivate}, groupkatalk=#{groupkatalk} where
+		groupprivate=#{groupprivate}, groupkatalk=#{groupkatalk}, groupinfo=#{groupinfo} where
 		groupkey=#{groupkey}
 	</update>
 
@@ -501,12 +492,15 @@
 		parameterType="java.util.Map">
 		select * from
 		(select rownum rnum, A.* from
-		(select postkey, posttitle, postcontent, to_char(postdate,'yyyy-mm-dd
+		(select
+		postkey, posttitle, postcontent, to_char(postdate,'yyyy-mm-dd
 		hh24:mi') postdate, userkey, p.groupkey, postoptionreply, boardkey,
 		postreadcount,
 		boardvote,boardcalendar,boardladder,boardmap,groupnickname from post p
-		left join (select * from ggroupmember where groupkey=#{groupkey}) using(userkey)
-		where boardkey = #{boardkey} order by postdate desc) A) where rnum&gt;=#{start} AND rnum&lt;=#{end}
+		left join (select * from ggroupmember where groupkey=#{groupkey})
+		using(userkey)
+		where boardkey = #{boardkey} order by postdate desc) A)
+		where rnum&gt;=#{start} AND rnum&lt;=#{end}
 	</select>
 
 	<select id="groupafterlist" resultType="post"
@@ -562,10 +556,12 @@
 		VALUES ((SELECT NVL(MAX(QUESTKEY), 0) + 1 FROM JOINQUEST),
 		#{groupkey},
 		#{quest.quest1, jdbcType = VARCHAR},
-		#{quest.quest2, jdbcType = VARCHAR},
+		#{quest.quest2,
+		jdbcType = VARCHAR},
 		#{quest.quest3, jdbcType = VARCHAR},
 		#{quest.quest4, jdbcType = VARCHAR},
-		#{quest.quest5, jdbcType = VARCHAR},
+		#{quest.quest5, jdbcType =
+		VARCHAR},
 		#{quest.introduce})
 	</insert>
 	<!-- 가입양식 수정 -->
@@ -597,21 +593,25 @@
 		WHERE GROUPKEY = #{groupkey} AND
 		USERKEY = #{userkey}
 	</select>
-	
+
 	<update id="boardupdate" parameterType="post">
 		update post set
 		posttitle=#{postTitle}, postcontent=#{postContent} where
 		postkey=#{postKey}
 	</update>
-	
+
 	<delete id="boarddelete" parameterType="int">
-		delete from post where postkey = #{postKey}
+		delete from post where
+		postkey = #{postKey}
 	</delete>
-	
+
 	<select id="userreggroupl" resultType="userreggroup"
 		parameterType="java.util.Map">
-		select * from (select rownum rnum, A.* from (select groupcfile, groupname, groupkey from ggroup left
-		join GGROUPMEMBER a using(groupkey) where a.userkey=#{userkey} order by groupname desc) A) where rnum&gt;=#{start} AND rnum&lt;=#{end}
+		select * from (select rownum rnum, A.* from (select
+		groupcfile, groupname, groupkey from ggroup left
+		join GGROUPMEMBER a
+		using(groupkey) where a.userkey=#{userkey} order by groupname desc) A)
+		where rnum&gt;=#{start} AND rnum&lt;=#{end}
 	</select>
-	
+
 </mapper>

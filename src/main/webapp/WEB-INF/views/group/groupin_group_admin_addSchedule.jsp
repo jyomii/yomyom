@@ -440,6 +440,7 @@ height: 350px;
 border: 2px solid lightblue;
 }
 
+
 .mbformap {
 	margin-bottom: 20px;
 	margin-top: 0px !important;

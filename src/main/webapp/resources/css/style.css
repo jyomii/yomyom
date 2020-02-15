@@ -1190,7 +1190,7 @@ header.sticky {
 	width: 20%;
 }
 
-.sidebar .widget li {
+.sidebar .widget li:not(.disabled) {
 	display: inline-block;
 	margin-bottom: 20px;
 	position: relative;

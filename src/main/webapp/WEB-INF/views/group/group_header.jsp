@@ -5,7 +5,6 @@
 <style>
 #joinBtn {background : #4F93CD; color : white; border : none; line-height : 2 !important;}
 </style>
-
 <section>
 	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
 		type="hidden" id="UserKey" value="${userkey }">

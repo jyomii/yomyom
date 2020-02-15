@@ -430,6 +430,18 @@ top:-9px;
 .margintopZero{
 	margin-top:0px !important;
 }
+.floatrightsm{
+float: right !important;
+color: orange;
+}
+
+.width100{
+width:100% !important;
+}
+
+.orange{
+color: orange;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -463,7 +475,6 @@ top:-9px;
 												<span>정모 추가하기</span>
 											</button>
 										</div>
-										
 										<ul class="nearby-contct">
 											<!-- ======================================================================= -->
 										<c:if test="${not empty groupmeetinglist }">
@@ -508,11 +519,25 @@ top:-9px;
 																	src="resources/images/resources/group1.jpg" alt=""></a>
 															</figure>
 															<div class="pepl-info">
-																<h4>
+																<h4 class="min-width-h4 width100">
 																	<a href="time-line.html" title="">${gmtl.postTitle}</a>
+																	<c:if test="${gmtl.cmoneytype=='M'}">
+																	<span class="floatrightsm">회비입금순 신청</span>
+																	</c:if>
+																	<c:if test="${gmtl.cmoneytype=='S'}">
+																	<span class="floatrightsm">선착순 참여</span>
+																	</c:if>
 																</h4>
-																<br> <br> <span class="schedule-span">장소:
-																${gmtl.location}</span>
+																<br> <br> <span class="schedule-span">
+																<c:if test="${gmtl.boardmap=='y'}">
+															<a href="schedulemaps.net?groupkey=${groupkey }&postkey=${gmtl.postKey}">장소:
+																${gmtl.location} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="orange"><i class="fas fa-map-marked-alt"></i> 모임장소 및 경로(코스)가 링크되어 있습니다!</span></a>
+															</c:if>	
+															<c:if test="${gmtl.boardmap=='n'}">
+															장소: ${gmtl.location}
+															</c:if>	
+																</span>
+																
 																<button type="button" class="mtr-btn forJoinBtn delschedulebtn">
 																	<span>삭제하기</span>
 																</button>
@@ -522,6 +547,7 @@ top:-9px;
 																	class="mtr-btn forJoinBtn forDeleteMargin modschedulebtn">
 																	<span>수정하기</span>
 																</button>
+																
 																<input type="hidden" id="postkey${n}"
 																value="${gmtl.postKey }"> <input type="hidden"
 																value="${n}"> <br> <span

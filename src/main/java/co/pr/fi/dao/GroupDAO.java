@@ -211,6 +211,7 @@ public class GroupDAO {
 		
 	}
 
+	
 	public void groupbasicupdate(Map<String, Object> list) {
 		sqlSession.update("group.groupbasicupdate",list);
 		

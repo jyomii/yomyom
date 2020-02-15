@@ -607,7 +607,6 @@ border: 2px solid lightblue;
 												</div>
 											</div>
 
-											
 												<div class="form-group">
 													<input type="text" required="required" id="posttitle" name="postTitle" value="${modifypost.postTitle }"/>
 													<label class="control-label" for="input">정모 제목</label><i
