@@ -42,7 +42,6 @@ import co.pr.fi.domain.UserRegGroup;
 import co.pr.fi.service.GroupBoardService;
 import co.pr.fi.service.GroupMemberService;
 import co.pr.fi.service.GroupService;
-
 @Controller
 public class GroupController {
 	@Autowired
@@ -77,7 +76,7 @@ public class GroupController {
 	}
 
 	@GetMapping("/group_main.net")
-	public ModelAndView group_main(@RequestParam(value = "groupkey") int groupkey,@RequestParam(value = "page", defaultValue = "1", required = false) int page, ModelAndView mv,
+	public ModelAndView group_main(@RequestParam(value = "groupkey") int groupkey, @RequestParam(value = "upage", defaultValue = "1", required = false) int upage, ModelAndView mv,
 			HttpSession session) {
 		String id = "";
 		int userkey = -1;
@@ -94,24 +93,23 @@ public class GroupController {
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
 		//페이지네이션
-		List<UserRegGroup> userreggroupc = groupservice.userreggroup(userkey);
-		mv.addObject("userreggroupcount", userreggroupc.size());
-		int limit = 3;
-		int listcount = userreggroupc.size();
-		int maxpage = (listcount + limit - 1) / limit;
-		int startpage = ((page - 1) / 10) * 10 + 1;
-		int endpage = startpage + 10 - 1;
-		if (endpage > maxpage)
-			endpage = maxpage;
-		List<UserRegGroup> userreggroup = groupservice.userreggroupl(page, limit,userkey);
-		mv.addObject("groupkey", groupkey);
-		mv.addObject("page", page);
-		mv.addObject("maxpage", maxpage);
-		mv.addObject("startpage", startpage);
-		mv.addObject("endpage", endpage);
-		mv.addObject("listcount", listcount);
-		mv.addObject("userreggroup", userreggroup);
-		mv.addObject("limit", limit);
+		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroupcount", userreggroup.size());
+		int ulimit = 3;
+		int ulistcount = userreggroup.size();
+		int umaxpage = (ulistcount + ulimit - 1) / ulimit;
+		int ustartpage = ((upage - 1) / 10) * 10 + 1;
+		int uendpage = ustartpage + 10 - 1;
+		if (uendpage > umaxpage)
+			uendpage = umaxpage;
+		List<UserRegGroup> uuserreggroup = groupservice.userreggroupl(upage, ulimit, userkey);
+		mv.addObject("upage", upage);
+		mv.addObject("umaxpage", umaxpage);
+		mv.addObject("ustartpage", ustartpage);
+		mv.addObject("uendpage", uendpage);
+		mv.addObject("ulistcount", ulistcount);
+		mv.addObject("userreggroup", uuserreggroup);
+		mv.addObject("ulimit", ulimit);
 		//
 		mv.addObject("groupkey", groupkey);
 		mv.setViewName("group/groupin_group_main");

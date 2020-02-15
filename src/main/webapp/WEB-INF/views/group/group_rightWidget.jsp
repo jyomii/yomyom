@@ -67,35 +67,36 @@
 															</c:if>
 														</ul>
 														
+														
 														<div>
 														<div class="row row-pagination forpagen">
 														    <div class="col">
 														        <ul class="pagination pagination-sm center-pagination" id="grpage">
 														            <c:if test="${upage <= 1 }">
-														                <li class="page-item disabled"><a class="page-link" href="#">이전&nbsp;</a>
+														                <li class="page-item disa"><a class="page-link" href="#">이전&nbsp;</a>
 														                </li>
 														            </c:if>
 														
 														            <c:if test="${upage > 1 }">
-														                <li class="page-item disabled"><a href="javascript:go(${upage-1})" class="page-link">이전</a>&nbsp;
+														                <li class="page-item disa"><a href="javascript:go(${upage-1})" class="page-link">이전</a>&nbsp;
 														                </li>
 														            </c:if>
 														            <c:forEach var="u" begin="${ustartpage }" end="${uendpage }">
 														                <c:if test="${u == upage }">
-														                    <li class="page-item disabled"><a class="page-link" href="#">${u }</a>
+														                    <li class="page-item disa"><a class="page-link" href="#">${u }</a>
 														                    </li>
 														                </c:if>
 														                <c:if test="${u != upage }">
-														                    <li class="page-item disabled"><a href="javascript:go(${u})" class="page-link">${u }</a></li>
+														                    <a href="javascript:go(${u})" class="page-link"><li class="page-item disabled">${u }</li></a>
 														                </c:if>
 														            </c:forEach>
 														
 														            <c:if test="${upage >= umaxpage }">
-														                <li class="page-item disabled"><a class="page-link" href="#">&nbsp;다음</a>
+														                <li class="page-item disa"><a class="page-link" href="#">&nbsp;다음</a>
 														                </li>
 														            </c:if>
 														            <c:if test="${upage < umaxpage }">
-														                <li class="page-item disabled"><a href="javascript:go(${upage+1})" class="page-link">&nbsp;다음</a>
+														                <li class="page-item disa"><a href="javascript:go(${upage+1})" class="page-link">&nbsp;다음</a>
 														                </li>
 														            </c:if>
 														

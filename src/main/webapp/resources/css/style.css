@@ -1189,8 +1189,7 @@ header.sticky {
 	position: absolute;
 	width: 20%;
 }
-
-.sidebar .widget li:not(.disabled) {
+.sidebar .widget li:not(.disa) {
 	display: inline-block;
 	margin-bottom: 20px;
 	position: relative;

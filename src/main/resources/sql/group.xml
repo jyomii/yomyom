@@ -220,7 +220,6 @@
 		#{groupkey}
 		order by boardseq
 	</select>
-
 	<select id="groupmemberlist" resultType="memberlist"
 		parameterType="int">
 		select userimagefile, groupnickname from gusers left
@@ -239,7 +238,7 @@
 		using(boardkey) left join (select count(decode(sm,'S',1))
 		currentperson, postkey from calendarmember group by postkey)
 		using(postkey) where boardtype='N' and p.groupkey=#{groupkey} order by
-		cstartdate desc
+		cstartdate
 	</select>
 
 	<select id="groupcalendarmemberlist" resultType="memberlist"

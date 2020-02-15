@@ -1615,6 +1615,7 @@ $(function() {
         }) // ajax
     } // function ajax end
 
+    
     function ajaxJoinCancelBtn(postkey, groupkey, userkey, n) {
         output = "";
         var data = "postkey=" + postkey + "&groupkey=" + groupkey + "&userkey=" + userkey;
