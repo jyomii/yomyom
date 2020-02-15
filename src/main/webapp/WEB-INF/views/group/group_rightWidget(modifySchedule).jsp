@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!-- 그룹 로그인 위젯 -->
-
 								<c:if test="${modifycalendar.cmoneytype =='M'}">
 								<div class="widget friend-list">
 											<h4 class="widget-title">회비 참석자 관리</h4>
@@ -88,13 +87,13 @@
 											<div class="frnds">
 												<ul class="nav nav-tabs">
 													<li class="nav-item forMoneyList forMoneyListbtnPart"><a class="active show"
-														href="#frends-req">참석자</a><span>${modifymembercount}</span></li>
+														href="#frends-req">참석자</a><span>${smodifymembercount}</span></li>
 												</ul>
 												<div class="tab-content">
 													<div class="tab-pane active fade show " id="frends">
 														<div id="searchDir3"></div>
 														<ul id="people-list3" class="checkboxList">
-															<c:forEach var="mm" items="${modifymember}">
+															<c:forEach var="mm" items="${smodifymember}">
 															<li>
 																<figure>
 																	<img src="resources/images/resources/friend-avatar.jpg"

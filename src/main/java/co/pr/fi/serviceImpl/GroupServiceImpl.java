@@ -427,11 +427,11 @@ public class GroupServiceImpl implements GroupService {
 		Map<String, Object> list = new HashMap<String, Object>();
 		list.put("groupprivate", group.getGroupPrivate());
 		list.put("groupkatalk", group.getGroupkatalk());
+		list.put("groupinfo", group.getGroupInfo());
 		list.put("groupkey", groupkey);
 		dao.groupbasicupdate(list);
 
 	}
-
 	
 	@Override
 	public List<Post> getBoardListY(int page, int limit, int boardkey, int groupkey) {

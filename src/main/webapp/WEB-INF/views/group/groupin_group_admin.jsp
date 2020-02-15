@@ -413,32 +413,32 @@ left: 35%;
 													<span>모임 공개 여부</span>
 													<p>공개  / 비공개  설정</p>
 													<input type="hidden" name="groupkey" value="${group.groupKey }">
-													<c:if test="${group.groupPrivate=='n'}">
+													<c:if test="${group.groupPrivate=='N'}">
 													<div class="form-radio left">
 														
 														<div class="radio radio-left">
 															<label> <input type="radio" 
-															name="groupPrivate" value="y"><i class="check-box"></i>공개
+															name="groupPrivate" value="Y"><i class="check-box"></i>공개
 															</label>
 														</div>
 														<div class="radio radio-right">
-															<label> <input type="radio" checked="checked" name="groupPrivate" value="n"><i
+															<label> <input type="radio" checked="checked" name="groupPrivate" value="N"><i
 															class="check-box"></i>비공개
 															</label>
 														</div>
 														
 													</div>
 													</c:if> 
-													<c:if test="${group.groupPrivate=='y'}">
-													<div class="form-radio">
+													<c:if test="${group.groupPrivate=='Y'}">
+													<div class="form-radio left">
 														
 														<div class="radio radio-left">
-															<label> <input type="radio"  checked="checked" name="groupPrivate" value="y"><i class="check-box"></i>공개
+															<label> <input type="radio"  checked="checked" name="groupPrivate" value="Y"><i class="check-box"></i>공개
 															</label>
 														</div>
 														<div class="radio radio-right">
 															<label> <input type="radio" 
-															 name="groupPrivate" value="n"><i
+															 name="groupPrivate" value="N"><i
 															class="check-box"></i>비공개
 															</label>
 														</div>
@@ -463,6 +463,11 @@ left: 35%;
 														class="control-label" for="input">모임 카톡방 주소 등록</label><i
 														class="mtrl-select"></i><br>
 														*카톡방 주소 저장시 왼쪽 메뉴바에 카톡방 바로가기 버튼이 생깁니다.
+												</div>
+												<div class="form-group">
+													<textarea rows="4" id="textarea" required="required" name="groupInfo">${group.groupInfo}</textarea>
+													<label class="control-label" for="textarea">간단 소개 등록/수정</label><i
+														class="mtrl-select"></i>
 												</div>
 												<div class="submit-btns logincenter">
 													<button type="button" id="basicsettingsubmit" class="mtr-btn">

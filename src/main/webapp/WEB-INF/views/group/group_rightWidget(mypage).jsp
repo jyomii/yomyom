@@ -47,31 +47,53 @@
 											<div class="tab-content">
 												<div class="tab-pane active fade show" id="link1">
 													<div>
-														<ul class="your-page-groupList leftpadding">
+														<ul class="your-page-groupList leftpadding ggroupajaxlist">
 															<c:if test="${not empty userreggroup }">
 															<c:forEach var="urg" items="${userreggroup }">
 																<li><img
-																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="#">${urg.groupname }</a><br><hr class="hrmargin"></li>
+																	src="resources/images/resources/userlist-1.jpg" class="imground"><a href="group_main.net?groupkey=${urg.groupkey }">${urg.groupname }</a><br><hr class="hrmargin"></li>
 															</c:forEach>
 															</c:if>
 															<c:if test="${empty userreggroup }">
 																<li>가입된 모임이 없습니다.</li>
 															</c:if>
 														</ul>
-												<c:if test="${userreggroupcount>3 }">		
-												<div class="row row-pagination" style="padding-top:0px !important;">
-													<div class="col">
-														<ul class="pagination pagination-sm center-pagination"
-															id="pempty">
-															<li class="page-item widthpagination"><a class="page-link" href="#">이전&nbsp;</a>
-															</li>
-
-															<li class="page-item widthpagination"><a class="page-link" href="#">&nbsp;다음</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-												</c:if>
+														<div>
+														<div class="row row-pagination forpagen">
+														    <div class="col">
+														        <ul class="pagination pagination-sm center-pagination" id="grpage">
+														            <c:if test="${page <= 1 }">
+														                <li class="page-item"><a class="page-link" href="#">이전&nbsp;</a>
+														                </li>
+														            </c:if>
+														
+														            <c:if test="${page > 1 }">
+														                <li class="page-item"><a href="javascript:go(${page-1})" class="page-link">이전</a>&nbsp;
+														                </li>
+														            </c:if>
+														            <c:forEach var="a" begin="${startpage }" end="${endpage }">
+														                <c:if test="${a == page }">
+														                    <li class="page-item"><a class="page-link" href="#">${a }</a>
+														                    </li>
+														                </c:if>
+														                <c:if test="${a != page }">
+														                    <li class="page-item"><a href="javascript:go(${a})" class="page-link">${a }</a></li>
+														                </c:if>
+														            </c:forEach>
+														
+														            <c:if test="${page >= maxpage }">
+														                <li class="page-item"><a class="page-link" href="#">&nbsp;다음</a>
+														                </li>
+														            </c:if>
+														            <c:if test="${page < maxpage }">
+														                <li class="page-item"><a href="javascript:go(${page+1})" class="page-link">&nbsp;다음</a>
+														                </li>
+														            </c:if>
+														
+														        </ul>
+														    </div>
+														</div>
+														</div>
 													</div>
 												</div>
 												<div class="tab-pane fade" id="link2">

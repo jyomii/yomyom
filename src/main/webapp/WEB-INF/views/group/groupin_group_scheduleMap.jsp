@@ -359,8 +359,17 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
-</style>
 
+.margintopZero{
+margin-top: 0px !important;
+}
+
+#map{
+width: 100% !important;
+height: 350px;
+border: 2px solid lightblue;
+}
+</style>
 <!-- 그룹 페이지 상단 -->
 <jsp:include page="group_header.jsp" />
 <!-- 그룹 페이지 상단 -->
@@ -386,7 +395,6 @@ top:-9px;
 
 							<!-- 그룹장 간단 그룹 소개 -->
 							<div class="central-meta item">
-							<div class="central-meta item">
 							<h5 class="f-title ext-margin margintopZero"><i class="ti-share"></i>지도 보기</h5><br>
 	
 	<!--<button type="button" id="receiveFromChild" class="mtr-btn mbformap" onclick="javascript:openWin();"><span>지도 만들기</span></button>
@@ -403,9 +411,7 @@ top:-9px;
 							</div>
 
 						</div>
-							</div>
-						
-						</div>
+					
 						<!-- 그룹 페이지 위젯 중간 -->
 
 						<!-- 그룹 페이지 위젯 오른쪽 -->

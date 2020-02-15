@@ -513,7 +513,6 @@ cursor: pointer;
 											<input type="hidden" id="detailGroupKey" name="groupkey" value="${groupkey}"> 
 											<input type="hidden" id="detailPostKey" name="postkey" value="${postkey}">
 											<!-- ---------------------------------------- -->
-
 											<figure>
 												<!-- 작성자 -->
 												<a href="javascript:memDetail(${groupkey},${post.userKey})">
