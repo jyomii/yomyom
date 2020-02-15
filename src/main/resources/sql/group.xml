@@ -231,7 +231,7 @@
 		parameterType="int">
 		select rownum, A.* from(select
 		postkey,posttitle,to_char(postdate,'YYYY-MM-DD')
-		postdate,userkey,groupkey,boardkey,to_char(cstartdate,'YYYY-MM-DD
+		postdate,userkey,groupkey,boardkey,boardmap,to_char(cstartdate,'YYYY-MM-DD
 		HH24:MI') cstartdate,cenddate,cmoney,maxperson,location,currentperson,cmoneytype
 		from post left join calendar
 		using(postkey) left join (select count(decode(sm,'S',1))
@@ -251,8 +251,8 @@
 	<select id="groupcalendarmemberlist" resultType="memberlist"
 		parameterType="java.util.Map">
 		select userimagefile, groupnickname from gusers left
-		join GGROUPMEMBER using(userkey) left join calendarmember a
-		using(userkey) where a.groupkey=#{groupkey} and a.postkey=#{postkey} and a.sm='S'
+		join (select * from GGROUPMEMBER where groupkey=#{groupkey}) using(userkey) left join calendarmember a
+		using(userkey) where a.postkey=#{postkey} and a.sm='S'
 	</select>
 
 	<insert id="groupcalendarmemberinsert"
@@ -301,12 +301,12 @@
 		parameterType="java.util.Map">
 		select * from (select posttitle, to_char(cstartdate,
 		'YYYY-MM-DD
-		HH24:MI') startdate, location, groupname from (select *
+		HH24:MI') startdate, location, groupname, postkey, p.groupkey from (select *
 		from
 		calendarmember left join calendar using(postkey) where
 		userkey=#{userkey}) left
 		join (select * from post left join GGROUP
-		using(groupkey))
+		using(groupkey)) p
 		using(postkey))
 		where startdate like #{fulldate}
 	</select>
@@ -356,9 +356,12 @@
 	</select>
 
 	<insert id="addschedule" parameterType="post">
+		<selectKey keyProperty="postKey" resultType="int"
+         order="BEFORE">
+         select nvl((select max(postKey) from post)+1,0) from dual
+         </selectKey>
 		insert into post
-		values((select nvl((max(postKey))+1,0) from
-		post),#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
+		values(#{postKey},#{postTitle},#{postContent},sysdate,#{userKey},#{groupKey},'n','n',#{boardKey},0,'n','n','n','n')
 	</insert>
 
 	<select id="getgroupboardkey" resultType="int"
@@ -565,7 +568,6 @@
 		#{quest.quest5, jdbcType = VARCHAR},
 		#{quest.introduce})
 	</insert>
-
 	<!-- 가입양식 수정 -->
 	<!-- <update id = "updateSignupSample" parameterType = "map"> UPDATE JOINQUEST 
 		<set> <if test = "quest1 != null"></if> </set> WHERE GROUPKEY = #{groupkey} 
@@ -605,4 +607,11 @@
 	<delete id="boarddelete" parameterType="int">
 		delete from post where postkey = #{postKey}
 	</delete>
+	
+	<select id="userreggroupl" resultType="userreggroup"
+		parameterType="java.util.Map">
+		select * from (select rownum rnum, A.* from (select groupcfile, groupname, groupkey from ggroup left
+		join GGROUPMEMBER a using(groupkey) where a.userkey=#{userkey} order by groupname desc) A) where rnum&gt;=#{start} AND rnum&lt;=#{end}
+	</select>
+	
 </mapper>

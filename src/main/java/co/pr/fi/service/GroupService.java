@@ -131,5 +131,7 @@ public interface GroupService {
 
 	public List<MemberList> smodifymemberm(int postkey);
 
+	public List<UserRegGroup> userreggroupl(int page, int limit, int userkey);
+
 
 }

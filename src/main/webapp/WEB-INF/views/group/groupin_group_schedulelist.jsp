@@ -358,6 +358,19 @@ top:-9px;
 .margin-Bottom{
 	margin-bottom: 0px !important;
 }
+
+.floatrightsm{
+float: right;
+color: orange;
+}
+
+.width100{
+width:100%;
+}
+
+.orange{
+color: orange;
+}
 </style>
 
 <!-- 그룹 페이지 상단 -->
@@ -432,20 +445,51 @@ top:-9px;
 																src="resources/images/resources/group1.jpg" alt=""></a>
 														</figure>
 														<div class="pepl-info">
-															<h4 class="min-width-h4">
+															<h4 class="min-width-h4 width100">
 																<a href="time-line.html" title="">${gmtl.postTitle}</a>
+																<c:if test="${gmtl.cmoneytype=='M'}">
+																	<span class="floatrightsm">회비입금순 신청</span>
+																</c:if>
+																<c:if test="${gmtl.cmoneytype=='S'}">
+																	<span class="floatrightsm">선착순 참여</span>
+																</c:if>
 															</h4>
-															<br> <br> <span class="schedule-span">장소:
-																${gmtl.location}</span>
+															<br> <br> <span class="schedule-span">
+															<c:if test="${gmtl.boardmap=='y'}">
+															<a href="schedulemaps.net?groupkey=${groupkey }&postkey=${gmtl.postKey}">장소:
+																${gmtl.location} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="orange"><i class="fas fa-map-marked-alt"></i> 모임장소 및 경로(코스)가 링크되어 있습니다!</span></a>
+															</c:if>	
+															<c:if test="${gmtl.boardmap=='n'}">
+															장소: ${gmtl.location}
+															</c:if>	
+															</span>
 															<c:if test="${gmtl.joinbtn eq 'yes'}">
+																<c:if test="${gmtl.cmoneytype=='M'}">
+																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
+																	<span>신청하기</span>
+																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
+																<c:if test="${gmtl.cmoneytype=='S'}">
 																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
 																	<span>참여하기</span>
 																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
 															</c:if>
 															<c:if test="${gmtl.joinbtn eq 'no'}">
+																<c:if test="${gmtl.cmoneytype=='M'}">
+																<button type="button" class="mtr-btn forJoinBtn gmtlcancelbtn">
+																	<span>신청취소</span>
+																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
+																<c:if test="${gmtl.cmoneytype=='S'}">
 																<button type="button" class="mtr-btn forJoinBtn gmtlcancelbtn">
 																	<span>취소하기</span>
 																</button>
+																<input type="hidden" value="${gmtl.cmoneytype}">
+																</c:if>
 															</c:if>
 															<input type="hidden" id="postkey${n}"
 																value="${gmtl.postKey }"> <input type="hidden"
@@ -1346,7 +1390,7 @@ $(function() {
                 output = "";
             	$(data.shortscheduleSelected).each(
                         function(index, item) {
-                        	output += "<li><span>"+item.posttitle+"</span>";
+                        	output += "<li><span><a href='group_main.net?groupkey="+item.groupkey+"'>"+item.posttitle+"</a></span>";
                         	output += "<p>모임명: "+item.groupname +"<br>시간: "+item.startdate+"<br>장소:"+item.location+"</p></li>";
                         })
                         $('#shortschedule').append(output);

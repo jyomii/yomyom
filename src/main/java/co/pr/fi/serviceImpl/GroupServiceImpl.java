@@ -547,4 +547,15 @@ public List<MemberList> smodifymember(int postkey) {
 public List<MemberList> smodifymemberm(int postkey) {
 	return dao.smodifymemberm(postkey);
 }
+
+@Override
+public List<UserRegGroup> userreggroupl(int page, int limit, int userkey) {
+	Map<String, Integer> map = new HashMap<String, Integer>();
+	int startrow = (page - 1) * limit + 1;
+	int endrow = startrow + limit - 1;
+	map.put("start", startrow);
+	map.put("end", endrow);
+	map.put("userkey", userkey);
+	return dao.userreggroupl(map);
+}
 }

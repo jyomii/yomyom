@@ -4,6 +4,7 @@ public class UserRegGroup {
 	private String groupname;
 	private String groupcfile;
 	private int groupkey;
+	
 	public String getGroupname() {
 		return groupname;
 	}

@@ -73,7 +73,16 @@ public class Post {
 	private String time;
 	private String minute;
 	private String boardtype;
+	private String boardmap;
 	
+	public String getBoardmap() {
+		return boardmap;
+	}
+
+	public void setBoardmap(String boardmap) {
+		this.boardmap = boardmap;
+	}
+
 	public String getBoardtype() {
 		return boardtype;
 	}

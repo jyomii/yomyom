@@ -232,6 +232,7 @@ public class GroupDAO {
 		return sqlSession.selectOne("group.groupafterlist", groupkey);
 	}
 
+	
 	public void boardwriteinsert(Post post) {
 		sqlSession.insert("group.boardwriteinsert", post);
 	}
@@ -280,5 +281,9 @@ public class GroupDAO {
 	
 	public List<MemberList> smodifymember(int postkey) {
 		return sqlSession.selectList("group.smodifymember", postkey);
+	}
+
+	public List<UserRegGroup> userreggroupl(Map<String, Integer> map) {
+		return sqlSession.selectList("group.userreggroupl", map);
 	}
 }

@@ -6,6 +6,22 @@ public class Shortschedule {
 	private String startdate;
 	private String location;
 	private String groupname;
+	private int postkey;
+	private int groupkey;
+	
+	
+	public int getGroupkey() {
+		return groupkey;
+	}
+	public void setGroupkey(int groupkey) {
+		this.groupkey = groupkey;
+	}
+	public int getPostkey() {
+		return postkey;
+	}
+	public void setPostkey(int postkey) {
+		this.postkey = postkey;
+	}
 	public String getPosttitle() {
 		return posttitle;
 	}

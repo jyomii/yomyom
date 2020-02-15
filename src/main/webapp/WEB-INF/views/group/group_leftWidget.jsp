@@ -50,7 +50,7 @@
 					그룹 카카오톡<br>채팅방에<br>참여하세요!
 				</p>
 				<!--<span>like them all</span>-->
-				<a href="#" title="" data-ripple="" class="katalkbtn">카톡방 참여하기</a>
+				<a href="${group.groupkatalk }" title="" data-ripple="" class="katalkbtn">카톡방 참여하기</a>
 			</div>
 		</div>
 	</div>
