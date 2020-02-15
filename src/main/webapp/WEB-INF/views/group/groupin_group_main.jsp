@@ -357,6 +357,7 @@ top:-9px;
 	margin-bottom: 0px !important;
 }
 
+
 .floatrightsm{
 float: right;
 color: orange;
@@ -364,6 +365,14 @@ color: orange;
 
 .width100{
 width:100%;
+}
+
+.orange{
+color: orange;
+}
+
+.forpagen{
+padding-top:0px !important;	
 }
 </style>
 
@@ -466,8 +475,15 @@ width:100%;
 																</c:if>
 															</h4>
 															
-															<br> <br> <a href="schedulemaps.net?postkey=${gmtl.postKey}"><span class="schedule-span">장소:
-																${gmtl.location}</span></a>
+															<br> <br> <span class="schedule-span">
+															<c:if test="${gmtl.boardmap=='y'}">
+															<a href="schedulemaps.net?groupkey=${groupkey }&postkey=${gmtl.postKey}">장소:
+																${gmtl.location} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="orange"><i class="fas fa-map-marked-alt"></i> 모임장소 및 경로(코스)가 링크되어 있습니다!</span></a>
+															</c:if>	
+															<c:if test="${gmtl.boardmap=='n'}">
+															장소: ${gmtl.location}
+															</c:if>	
+																</span>
 															<c:if test="${gmtl.joinbtn eq 'yes'}">
 																<c:if test="${gmtl.cmoneytype=='M'}">
 																<button type="button" class="mtr-btn forJoinBtn gmtljoinbtn">
@@ -1438,7 +1454,7 @@ $(function() {
                         output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                         output += "</figure><div class='friendz-meta'>";
                         output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                        output += "<i class='__cf_email__'>&nbsp;</i></div></li>";
                     })
                 $("#" + empty).append(output);
             },
@@ -1469,7 +1485,7 @@ $(function() {
                         output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                         output += "</figure><div class='friendz-meta'>";
                         output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                        output += "<i class='__cf_email__'>&nbsp;</i></div></li>";
                     })
                 $("#" + empty).append(output);
             },
@@ -1499,7 +1515,7 @@ $(function() {
                         output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                         output += "</figure><div class='friendz-meta'>";
                         output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                        output += "<i class='__cf_email__'>&nbsp;</i></div></li>";
                     })
                 $("#" + empty).append(output);
             },
@@ -1547,7 +1563,7 @@ $(function() {
                 output = "";
             	$(data.shortscheduleSelected).each(
                         function(index, item) {
-                        	output += "<li><span>"+item.posttitle+"</span>";
+                        	output += "<li><span><a href='group_main.net?groupkey="+item.groupkey+"'>"+item.posttitle+"</a></span>";
                         	output += "<p>모임명: "+item.groupname +"<br>시간: "+item.startdate+"<br>장소:"+item.location+"</p></li>";
                         })
                         $('#shortschedule').append(output);

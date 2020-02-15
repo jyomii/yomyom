@@ -29,6 +29,7 @@ public class GroupBoardServiceImpl implements GroupBoardService {
 		return null;
 	}
 
+	
 	@Override
 	public int uploadMap(List<Maps> list2) {
 	

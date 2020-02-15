@@ -5,6 +5,7 @@
 <style>
 #joinBtn {background : #4F93CD; color : white; border : none; line-height : 2 !important;}
 </style>
+
 <section>
 	<input type="hidden" id="thisGroupKey" value="${groupkey }"> <input
 		type="hidden" id="UserKey" value="${userkey }">
@@ -12,6 +13,7 @@
 		<input type="hidden" id="sboardname" value="${boardname }">
 		<input type="hidden" id="sgroupkey" value="${groupkey }">
 		<input type="hidden" id="sboardtype" value="${boardtype }">
+		<input type="hidden" id="postkey" value="${postkey }">
 	<div class="feature-photo test1">
 		<figure>
 			<c:if test="${empty group.groupCFile}">

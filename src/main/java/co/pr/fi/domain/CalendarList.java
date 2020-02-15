@@ -2,7 +2,6 @@ package co.pr.fi.domain;
 
 import java.sql.Date;
 
-
 //일정 
 public class CalendarList {
 
@@ -44,7 +43,17 @@ public class CalendarList {
 	private Date cEndDate;
 
 	// 회비
-	private int cMoney;
+	private String cMoney;
+
+
+
+	public String getcMoney() {
+		return cMoney;
+	}
+
+	public void setcMoney(String cMoney) {
+		this.cMoney = cMoney;
+	}
 
 	// 모임게시글키값
 	private int postKey;
@@ -90,13 +99,6 @@ public class CalendarList {
 		this.cEndDate = cEndDate;
 	}
 
-	public int getcMoney() {
-		return cMoney;
-	}
-
-	public void setcMoney(int cMoney) {
-		this.cMoney = cMoney;
-	}
 
 	public int getPostKey() {
 		return postKey;

@@ -77,7 +77,7 @@ public class GroupController {
 	}
 
 	@GetMapping("/group_main.net")
-	public ModelAndView group_main(@RequestParam(value = "groupkey") int groupkey, ModelAndView mv,
+	public ModelAndView group_main(@RequestParam(value = "groupkey") int groupkey,@RequestParam(value = "page", defaultValue = "1", required = false) int page, ModelAndView mv,
 			HttpSession session) {
 		String id = "";
 		int userkey = -1;
@@ -93,6 +93,26 @@ public class GroupController {
 		int month = c.get(Calendar.MONTH) + 1;
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
+		//페이지네이션
+		List<UserRegGroup> userreggroupc = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroupcount", userreggroupc.size());
+		int limit = 3;
+		int listcount = userreggroupc.size();
+		int maxpage = (listcount + limit - 1) / limit;
+		int startpage = ((page - 1) / 10) * 10 + 1;
+		int endpage = startpage + 10 - 1;
+		if (endpage > maxpage)
+			endpage = maxpage;
+		List<UserRegGroup> userreggroup = groupservice.userreggroupl(page, limit,userkey);
+		mv.addObject("groupkey", groupkey);
+		mv.addObject("page", page);
+		mv.addObject("maxpage", maxpage);
+		mv.addObject("startpage", startpage);
+		mv.addObject("endpage", endpage);
+		mv.addObject("listcount", listcount);
+		mv.addObject("userreggroup", userreggroup);
+		mv.addObject("limit", limit);
+		//
 		mv.addObject("groupkey", groupkey);
 		mv.setViewName("group/groupin_group_main");
 		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
@@ -125,9 +145,7 @@ public class GroupController {
 		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
 		mv.addObject("groupcalendarlist", groupcalendarlist);
 		mv.addObject("groupcalendarlistCount", groupcalendarlist.size());
-		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
-		mv.addObject("userreggroup", userreggroup);
-		mv.addObject("userreggroupcount", userreggroup.size());
+		
 		for (int i = 0; i < groupcalendarlist.size(); i++) {
 			if (Integer.parseInt(groupcalendarlist.get(i).getStartdate()) == date) {
 				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
@@ -690,20 +708,22 @@ public class GroupController {
 		return mv;
 	}
 
-	
-	@PostMapping("/addSchedule.net")
-	public String addSchedule(Post post, HttpSession session)
+	@ResponseBody
+	@RequestMapping(value = "/addSchedule.net")
+	public Object addSchedule(Post post, HttpSession session)
 			throws Exception {
 		String id = session.getAttribute("id").toString();
 		GUsers guser = groupservice.userkey(id);
-		int groupkey = post.getGroupKey();
 		int userkey = guser.getUserKey();
 		post.setUserKey(userkey);
 		int gboardkey = groupservice.getgroupboardkey(post.getGroupKey());
 		post.setBoardKey(gboardkey);
 		groupservice.addschedule(post);
+		int postkey = post.getPostKey();
 		groupservice.addschedulecalendar(post);
-		return "redirect:groupin_group_admin_scheduleList.net?groupkey=" + groupkey;
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+	    map.put("postkey", postkey);
+	    return map;
 	}
 
 	@PostMapping("/modifySchedule.net")
@@ -1234,6 +1254,107 @@ public class GroupController {
 			}
 		}
 		return mv;
+	}
+	
+	@GetMapping("/schedulemaps.net")
+    public ModelAndView schedulemaps(@RequestParam(value="groupkey") int groupkey, @RequestParam(value="postkey") int postkey, ModelAndView mv, HttpSession session) {
+		String id = "";
+		int userkey = -1;
+		if (session.getAttribute("id") != null) {
+			id = session.getAttribute("id").toString();
+			GUsers guser = groupservice.userkey(id);
+			userkey = guser.getUserKey();
+			mv.addObject("userkey", userkey);
+		} else {
+			mv.addObject("userkey", userkey);
+		}
+		Calendar c = Calendar.getInstance();
+		int month = c.get(Calendar.MONTH) + 1;
+		int year = c.get(Calendar.YEAR);
+		int date = c.get(Calendar.DATE);
+		mv.addObject("groupkey", groupkey);
+		mv.addObject("postkey", postkey);
+		mv.setViewName("group/groupin_group_scheduleMap");
+		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
+		mv.addObject("userinfo", groupmember);
+		GGroup group = groupservice.groupInfo(groupkey);
+		mv.addObject("group", group);
+		String groupmaster = groupservice.groupmaster(groupkey);
+		mv.addObject("groupmaster", groupmaster);
+		int groupmasterkey = groupservice.groupmasterkey(groupkey);
+		mv.addObject("groupmasterkey", groupmasterkey);
+		GLocation location = groupservice.groupwhere(group.getWhereKey());
+		mv.addObject("groupswhere", location.getSWhere());
+		mv.addObject("groupdwhere", location.getDWhere());
+		int age = groupservice.groupage(group.getAgeKey());
+		mv.addObject("groupage", age);
+		String dcategory = groupservice.groupdcategory(groupkey);
+		mv.addObject("groupdcategory", dcategory);
+		String scategory = groupservice.groupscategory(groupkey);
+		mv.addObject("groupscategory", scategory);
+		int groupmembers = groupservice.groupmembers(groupkey);
+		mv.addObject("groupmembers", groupmembers);
+		List<GGroupBoard> groupboardlist = groupservice.groupboardlist(groupkey);
+		mv.addObject("groupboardlist", groupboardlist);
+		List<MemberList> groupmemberlist = groupservice.groupmemberlist(groupkey);
+		mv.addObject("groupmemberlist", groupmemberlist);
+		Post groupafterlist = groupservice.groupafterlist(groupkey);
+		mv.addObject("groupafterlist", groupafterlist);
+		List<Post> groupmeetinglist = groupservice.groupmeetinglist(groupkey, userkey);
+		mv.addObject("groupmeetinglist", groupmeetinglist);
+		List<CalendarList> groupcalendarlist = groupservice.groupcalendarlist(userkey, month, year);
+		mv.addObject("groupcalendarlist", groupcalendarlist);
+		mv.addObject("groupcalendarlistCount", groupcalendarlist.size());
+		List<UserRegGroup> userreggroup = groupservice.userreggroup(userkey);
+		mv.addObject("userreggroup", userreggroup);
+		mv.addObject("userreggroupcount", userreggroup.size());
+		for (int i = 0; i < groupcalendarlist.size(); i++) {
+			if (Integer.parseInt(groupcalendarlist.get(i).getStartdate()) == date) {
+				int d = Integer.parseInt(groupcalendarlist.get(i).getStartdate());
+				List<Shortschedule> shortschedule = groupservice.shortschedule(userkey, d, year, month);
+				mv.addObject("shortschedule", shortschedule);
+			}
+		}
+		
+		int isMem = groupservice.isMem(groupkey, userkey);
+		mv.addObject("isMem", isMem);
+		return mv;
+    }
+	
+	@ResponseBody
+	@RequestMapping(value = "/grouplistajax.net")
+	public Object grouplistajax(@RequestParam(value = "page", defaultValue = "1", required = false) int page,HttpSession session)
+			throws Exception {
+		System.err.println("!!!!!!!!!!!!!!!!!!"+page);
+		String id = "";
+		int userkey = -1;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if (session.getAttribute("id") != null) {
+			id = session.getAttribute("id").toString();
+			GUsers guser = groupservice.userkey(id);
+			userkey = guser.getUserKey();
+			map.put("userkey", userkey);
+		} else {
+			map.put("userkey", userkey);
+		}
+		List<UserRegGroup> userreggroupc = groupservice.userreggroup(userkey);
+		map.put("userreggroupcount", userreggroupc.size());
+		int limit = 3;
+		int listcount = userreggroupc.size();
+		int maxpage = (listcount + limit - 1) / limit;
+		int startpage = ((page - 1) / 10) * 10 + 1;
+		int endpage = startpage + 10 - 1;
+		if (endpage > maxpage)
+			endpage = maxpage;
+		List<UserRegGroup> userreggroup = groupservice.userreggroupl(page, limit,userkey);
+		map.put("page", page);
+		map.put("maxpage", maxpage);
+		map.put("startpage", startpage);
+		map.put("endpage", endpage);
+		map.put("listcount", listcount);
+		map.put("userreggroup", userreggroup);
+		map.put("limit", limit);
+		return map;
 	}
 	
 	@RequestMapping(value = "/group_admin_modifySchedule.net", method = RequestMethod.GET)

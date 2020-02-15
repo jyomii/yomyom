@@ -22,6 +22,7 @@ public class GroupBoardDAO {
 		return sqlSession.selectOne("post.detailBoard", keys);
 	}
 
+	
 	// 게시글 조회수 증가
 	public int updateReadCount(int postkey) {
 		return sqlSession.update("post.updateReadCount", postkey);

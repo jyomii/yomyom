@@ -17,6 +17,7 @@ function board(postkey, groupkey) {
 	f.submit();						// 폼 전송
 }
 
+
 function go(page) {
 	var data = "status=" + $('#status').val() + "&page=" + page + "&userkey=" + $('#userkey').val() + "&groupkey=" + $('#groupkey').val();
 	viewList(data);

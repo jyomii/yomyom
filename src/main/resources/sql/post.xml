@@ -21,6 +21,7 @@
 	SELECT * FROM DUAL
 	</insert>
 	
+	
 	<!-- 게시글 조회 -->
 	<select id = "detailBoard" resultType = "post" parameterType = "map">
 		SELECT PROFILEFILE, GROUPNICKNAME, POSTKEY, POSTTITLE, POSTCONTENT, POSTDATE, USERKEY, POSTREADCOUNT, GROUPKEY, POSTLIKE, REPLYCOUNT

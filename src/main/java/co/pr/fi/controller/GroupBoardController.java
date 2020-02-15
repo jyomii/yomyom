@@ -188,6 +188,7 @@ public class GroupBoardController {
 		return "uploadMap";
 	}
 
+	
 	/*새롭게 만든 지도 저장하기*/
 	@ResponseBody
 	@PostMapping("/saveMap")

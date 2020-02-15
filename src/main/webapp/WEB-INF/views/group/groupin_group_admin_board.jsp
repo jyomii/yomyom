@@ -706,9 +706,7 @@ $(function() {
 		$('#day'+temp).parent().addClass('calendarCellMy');
 	}
 	var boardlistcount = $('#gblc').val();
-	for(var i = 0; i<=boardlistcount;i++){
-		if(i==0)
-			i=1;
+	for(var i = 0; i<boardlistcount;i++){
 		var boardname = $('#bn'+i).val();
 		var boardkey = $('#bk'+i).val();
 		var boardtype = $('#bt'+i).val();
@@ -1403,7 +1401,7 @@ $(function() {
                 output = "";
             	$(data.shortscheduleSelected).each(
                         function(index, item) {
-                        	output += "<li><span>"+item.posttitle+"</span>";
+                        	output += "<li><span><a href='group_main.net?groupkey="+item.groupkey+"'>"+item.posttitle+"</a></span>";
                         	output += "<p>모임명: "+item.groupname +"<br>시간: "+item.startdate+"<br>장소:"+item.location+"</p></li>";
                         })
                         $('#shortschedule').append(output);
