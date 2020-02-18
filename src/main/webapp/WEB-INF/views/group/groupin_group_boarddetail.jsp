@@ -801,120 +801,100 @@ top:-9px;
 	</div>
 </section>
 <script>
-	var commentType = 0;
-	var data = '';
-	var type = '';
-	var url = '';
+var commentType = 0;	// 댓글? 비댓?
+var data = '';
+var type = '';
+var url = '';
 
-	//답댓 클릭 시
-	function commentReply(commentNo) {
-		$('input[name=commentType]').val(1);
-		$('input[name=commentNum]').val(commentNo);
-		$('.post-comt-box textarea').css('background', '#088dcd1a').focus();
-		console.log('답댓 달 댓글의 번호 = ' + commentNo);
-	}; // reply end
+//답댓 클릭 시
+function commentReply(commentNo) {
+	$('input[name=commentType]').val(1);
+	$('input[name=commentNum]').val(commentNo);
+	$('.post-comt-box textarea').css('background', '#088dcd1a').focus();
+	console.log('답댓 달 댓글의 번호 = ' + commentNo);
+}; // reply end
 
-	// 댓글 삭제 클릭 시
-	function deleteReply(num) {
-		var doc = '';
-		var answer = confirm('댓글을 삭제하시겠습니까?');
-		console.log('groupkey = ' + $('#detailGroupKey').val());
-		console.log('postkey = ' + $('#detailPostKey').val());
-		var data = 'num=' + num + '&groupkey=' + $('#detailGroupKey').val() + '&postkey=' + $('#detailPostKey').val();
-		if (answer) {
-			$
-					.ajax({
-						url : 'deleteReply',
-						type : 'post',
-						data : data,
-						dataType : 'json',
-						cache : false,
-						success : function(data) {
-							alert('삭제가 완료됐습니다.');
+// 댓글 삭제 클릭 시
+function deleteReply(num) {
+	var doc = '';
+	var answer = confirm('댓글을 삭제하시겠습니까?');
+	console.log('groupkey = ' + $('#detailGroupKey').val());
+	console.log('postkey = ' + $('#detailPostKey').val());
+	var data = 'num=' + num + '&groupkey=' + $('#detailGroupKey').val() + '&postkey=' + $('#detailPostKey').val();
+	if (answer) {
+		$.ajax({
+			url : 'deleteReply',
+			type : 'post',
+			data : data,
+			dataType : 'json',
+			cache : false,
+			success : function(data) {
+				alert('삭제가 완료됐습니다.');
 							
-							$('.coment-area').empty();
-							$('.comment ins').text('');
-							$('.comment ins').text(data.listcount);
+				$('.coment-area').empty();
+				$('.comment ins').text('');
+				$('.comment ins').text(data.listcount);
 							
-							if (data.listcount != 0) {
-								doc += '<ul class = we-comet>';
-								$(data.comment).each(
-												function(index, item) {
-													doc += '<li>';
-													doc += '	<div class="comet-avatar">';
-													if (item.profileFile == null) {
-														doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
-													} else {
-														doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
-													}
-													doc += '	</div>';
-													doc += '	<div class="we-comment">';
-													doc += '		<div class="coment-head">';
-													doc += '			<h5><a href="javascript:memDetail('
-															+ item.groupKey
-															+ ','
-															+ item.userKey
-															+ ')" title="">'
-															+ item.groupNickname
-															+ '</a></h5>';
-													doc += '			<span>'
-															+ item.commentDate
-															+ '</span>';
-													doc += '			<a class="we-reply" href="javascript:commentReply('
-															+ item.commnetNum
-															+ ')" title="Reply"><i class="fa fa-reply"></i></a>';
-													doc += '			<a class="update" href="javascript:commentUpdate('
-															+ item.commnetNum
-															+ ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
-													doc += '			<a class="delete" href="javascript:commentDelete('
-															+ item.commnetNum
-															+ ')" title="Update"><i class="far fa-trash-alt"></i></a>';
-													doc += '		</div>';
-													doc += '		<p>'
-															+ item.commentContent
-															+ '</p>';
-													doc += '	</div>';
-													doc += '</li>';
-												}); // each end
-							} else { // 댓글 없음
-								doc += '<li>';
-								doc += '	<div style = "text-align : center">등록된 댓글이 없습니다.</div>';
-								doc += '</li>';
-							}
-
-							doc += '<li>';
-							doc += '	<a href = "#" title = "" class = "showmore underline">more comments</a>';
-							doc += '</li>';
-							/* 댓글 등록창 부분 */
-							doc += '<li class = "post-comment">';
-							doc += '	<div class="comet-avatar">';
-							doc += "		<img src= \"<spring:url value='/image" + data.profileFile + "'/>\" class = 'group-img' alt = ''/>";
-							doc += '	</div>';
-							doc += '	<div class="post-comt-box">';
-							doc += '		<form method = "post" id = "ReplyAction" onSubmit = "return false;">';
-							doc += '			<input type = "hidden" name = "commentNum" value = "">';
-							doc += '			<input type = "hidden" name = "commentshow" value = "">';
-							doc += '			<input type = "hidden" name = "commentType" value = "0">';
-							/* 댓글 입력창 */
-							doc += '			<textarea placeholder="Post your comment"></textarea>';
-							doc += '			<button type = "button" class = "secretbtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>';
-							doc += '			<button type = "submit" class = "glyphicon glyphicon-send"></button>';
-							doc += '		</form>';
-							doc += '	</div>';
-							doc += '</li>';
-							doc += '</ul>';
-							$('.coment-area').append(doc);
-						},
-						error : function(request, status, error) {
-							console.log("code : " + request.status + "\n"
-									+ "message : " + request.responseText
-									+ "\n" + "error : " + error);
+				if (data.listcount != 0) {
+					doc += '<ul class = we-comet>';
+					$(data.comment).each(function(index, item) {
+						doc += '<li>';
+						doc += '	<div class="comet-avatar">';
+						if (item.profileFile == null) {
+							doc += "		<img src= 'resources/images/default.png' class = 'group-img' alt = ''/>";
+						} else {
+							doc += "		<img src= \"<spring:url value='/image" + item.profileFile + "'/>\" class = 'group-img' alt = ''/>";
 						}
-					});
-		} else {
-			return false;
-		}
+						doc += '	</div>';
+						doc += '	<div class="we-comment">';
+						doc += '		<div class="coment-head">';
+						doc += '			<h5><a href="javascript:memDetail(' + item.groupKey + ',' + item.userKey + ')" title="">' + item.groupNickname + '</a></h5>';
+						doc += '			<span>' + item.commentDate + '</span>';
+						doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
+						doc += '			<a class="update" href="javascript:updateReply(' + item.commnetNum + ')" title="Update"><i class="fas fa-eraser"></i></i></a>';
+						doc += '			<a class="delete" href="javascript:deleteReply(' + item.commnetNum + ')" title="Delete"><i class="far fa-trash-alt"></i></a>';
+						doc += '		</div>';
+						doc += '		<p>' + item.commentContent + '</p>';
+						doc += '	</div>';
+						doc += '</li>';
+					}); // each end
+				} else { // 댓글 없음
+					doc += '<li>';
+					doc += '	<div style = "text-align : center">등록된 댓글이 없습니다.</div>';
+					doc += '</li>';
+				}
+
+				doc += '<li>';
+				doc += '	<a href = "#" title = "" class = "showmore underline">more comments</a>';
+				doc += '</li>';
+				/* 댓글 등록창 부분 */
+				doc += '<li class = "post-comment">';
+				doc += '	<div class="comet-avatar">';
+				doc += "		<img src= \"<spring:url value='/image" + data.profileFile + "'/>\" class = 'group-img' alt = ''/>";
+				doc += '	</div>';
+				doc += '	<div class="post-comt-box">';
+				doc += '		<form method = "post" id = "ReplyAction" onSubmit = "return false;">';
+				doc += '			<input type = "hidden" name = "commentNum" value = "">';
+				doc += '			<input type = "hidden" name = "commentshow" value = "">';
+				doc += '			<input type = "hidden" name = "commentType" value = "0">';
+				/* 댓글 입력창 */
+				doc += '			<textarea placeholder="Post your comment"></textarea>';
+				doc += '			<button type = "button" class = "secretbtn"><i class="fas fa-unlock" aria-hidden="true"></i></button>';
+				doc += '			<button type = "submit" class = "glyphicon glyphicon-send"></button>';
+				doc += '		</form>';
+				doc += '	</div>';
+				doc += '</li>';
+				doc += '</ul>';
+				$('.coment-area').append(doc);
+			},
+			error : function(request, status, error) {
+				console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			}
+		});
+	} else {
+		return false;
 	}
+} // deleteReply end
 
 	$(function() {
 		var before = 0;
@@ -1045,8 +1025,8 @@ top:-9px;
 								doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
 								/* 글쓴이어야만 수정/삭제 보이게 */
 								if (data.loginuser == item.userKey) {
-									doc += '			<a class="update" href="javascript:commentUpdate(' + item.commnetNum + ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
-									doc += '			<a class="delete" href="javascript:commentDelete(' + item.commnetNum + ')" title="Update"><i class="far fa-trash-alt"></i></a>';
+									doc += '			<a class="update" href="javascript:updateReply(' + item.commnetNum + ')" title="Update"><i class="fas fa-eraser"></i></i></a>';
+									doc += '			<a class="delete" href="javascript:deleteReply(' + item.commnetNum + ')" title="Delete"><i class="far fa-trash-alt"></i></a>';
 								}
 								doc += '		</div>';
 								doc += '		<p>' + item.commentContent + '</p>';
@@ -1071,8 +1051,8 @@ top:-9px;
 								doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
 								/* 댓쓴이어야 수정/삭제 보이게 */
 								if (data.loginuser == item.userKey) {
-									doc += '			<a class="update" href="javascript:commentUpdate(' + item.commnetNum + ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
-									doc += '			<a class="delete" href="javascript:commentDelete(' + item.commnetNum + ')" title="Update"><i class="far fa-trash-alt"></i></a>';
+									doc += '			<a class="update" href="javascript:updateReply(' + item.commnetNum + ')" title="Update"><i class="fas fa-eraser"></i></i></a>';
+									doc += '			<a class="delete" href="javascript:deleteReply(' + item.commnetNum + ')" title="Delete"><i class="far fa-trash-alt"></i></a>';
 								}
 								doc += '		</div>';
 								doc += '		<p>' + item.commentContent + '</p>';
@@ -1106,8 +1086,8 @@ top:-9px;
 									doc += '			<a class="we-reply" href="javascript:commentReply(' + item.commnetNum + ')" title="Reply"><i class="fa fa-reply"></i></a>';
 									/* 댓쓴이 본인? */
 									if (data.loginuser == item.userKey) {
-										doc += '			<a class="update" href="javascript:commentUpdate(' + item.commnetNum + ')" title="Delete"><i class="fas fa-eraser"></i></i></a>';
-										doc += '			<a class="delete" href="javascript:commentDelete(' + item.commnetNum + ')" title="Update"><i class="far fa-trash-alt"></i></a>';
+										doc += '			<a class="update" href="javascript:updateReply(' + item.commnetNum + ')" title="Update"><i class="fas fa-eraser"></i></i></a>';
+										doc += '			<a class="delete" href="javascript:deleteReply(' + item.commnetNum + ')" title="Delete"><i class="far fa-trash-alt"></i></a>';
 									}
 									doc += '		</div>';
 									doc += '		<p>' + item.commentContent + '</p>';
@@ -1186,12 +1166,12 @@ top:-9px;
 </script>
 <script>
 function memDetail(groupKey, userKey) {
-	var f = document.memDetail; // 폼 name
-	f.groupkey.value = groupKey; // input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
-	f.userkey.value = userKey; // input 태그 중 name이 userKey인 값에 대해서 userkey를 넘긴다.
-	f.action = "G_mem_detail.net"; // 이동할 페이지
-	f.method = "post"; // POST 방식으로 데이터 전송
-	f.submit(); // 폼 전송
+	var f = document.memDetail; 		// 폼 name
+	f.groupkey.value = groupKey; 		// input 태그 중 name이 groupKey인 값에 대해서 groupkey를 넘긴다.
+	f.userkey.value = userKey; 			// input 태그 중 name이 userKey인 값에 대해서 userkey를 넘긴다.
+	f.action = "G_mem_detail.net"; 		// 이동할 페이지
+	f.method = "post"; 					// POST 방식으로 데이터 전송
+	f.submit(); 
 };
 
 $(
@@ -1220,10 +1200,7 @@ $(
 									+ $('#detailGroupKey').val();
 							likes(submit);
 						} else { // 좋아요 이제 할 것임
-							submit = 'status=' + isLiked + '&postKey='
-									+ $('#detailPostKey').val()
-									+ '&groupKey='
-									+ $('#detailGroupKey').val();
+							submit = 'status=' + isLiked + '&postKey=' + $('#detailPostKey').val() + '&groupKey=' + $('#detailGroupKey').val();
 							likes(submit);
 						}
 					});

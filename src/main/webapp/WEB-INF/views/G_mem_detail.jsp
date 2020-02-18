@@ -10,6 +10,11 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 <style>
+.questcontent {
+	color : #088dcd;
+	font-size: .8rem;
+}
+
 .user-active {
 	list-style-type: none;
 }
@@ -955,38 +960,56 @@ function getAnswer(data) {
 	doc += '	<div class="editing-info">';
 	doc += '		<h5 class="f-title"><i class="ti-info-alt"></i>작성한 가입양식</h5>';
 	if (data.answer1 != null) {
+		doc += '<div>';
+		doc += '	<span class = "questcontent">' + data.quest1 + '</span>';
+		doc += '</div>';
 		doc += '<div class="form-group">';
 		doc += '	<input type="text" id="answer1" name="answer1" value="' + data.answer1 + '"disabled/>';
 		doc += '	<label class="control-label" for="answer1">' + data.answer1 + '</label><i class="mtrl-select"></i>';
 		doc += '</div>';
 	}
 	if (data.answer2 != null) {
+		doc += '<div>';
+		doc += '	<span class = "questcontent">' + data.quest2 + '</span>';
+		doc += '</div>';
 		doc += '<div class="form-group">';
-		doc += '<input type="text" id="answer2" name="answer2" readOnly/>';
+		doc += '<input type="text" id="answer2" name="answer2" value="' + data.answer2 + '"disabled/>';
 		doc += '<label class="control-label" for="answer2">' + data.answer2 + '</label><i class="mtrl-select"></i>';
 		doc += '</div>';
 	}
 	if (data.answer3 != null) {
+		doc += '<div>';
+		doc += '	<span class = "questcontent">' + data.quest3 + '</span>';
+		doc += '</div>';
 		doc += '<div class="form-group">';
-		doc += '<input type="text" id="answer3" name="answer3" readOnly/>';
+		doc += '<input type="text" id="answer3" name="answer3" value="' + data.answer3 + '"disabled/>';
 		doc += '<label class="control-label" for="answer3">' + data.answer3 + '</label><i class="mtrl-select"></i>';
 		doc += '</div>';
 	}
 	if (data.answer4 != null) {
+		doc += '<div>';
+		doc += '	<span class = "questcontent">' + data.quest4 + '</span>';
+		doc += '</div>';
 		doc += '<div class="form-group">';
-		doc += '<input type="text" id="answer4" name="answer4" readOnly/>';
+		doc += '<input type="text" id="answer4" name="answer4" value="' + data.answer4 + '"disabled/>';
 		doc += '<label class="control-label" for="answer4">' + data.answer4 + '</label><i class="mtrl-select"></i>';
 		doc += '</div>';
 	}
 	if (data.answer5 != null) {
+		doc += '<div>';
+		doc += '	<span class = "questcontent">' + data.quest5 + '</span>';
+		doc += '</div>';
 		doc += '<div class="form-group">';
-		doc += '<input type="text" id="answer5" name="answer5" readOnly/>';
+		doc += '<input type="text" id="answer5" name="answer5" value="' + data.answer5 + '"disabled/>';
 		doc += '<label class="control-label" for="answer5">' + data.answer5 + '</label><i class="mtrl-select"></i>';
 		doc += '</div>';
 	}
 	if (data.introduce != null) {
+		doc += '<div>';
+		doc += '	<span class = "questcontent">' + data.questintroduce + '</span>';
+		doc += '</div>';
 		doc += '<div class="form-group">';
-		doc += '<textarea rows = "4" id="introduce" name="introduce" value = ' + data.introduce + 'readOnly/></textarea>';
+		doc += '<textarea rows = "4" id="introduce" name="introduce" value = ' + data.introduce + 'disabled/></textarea>';
 		doc += '<label class="control-label" for="introduce">' + data.introduce + '</label><i class="mtrl-select"></i>';
 		doc += '</div>';
 	}

@@ -429,6 +429,8 @@ public class GroupMemberController {
 			/*** 작성한 가입양식 ***/
 			temp.put("userkey", userkey);
 			temp.put("groupkey", groupkey);
+			
+			// 회원이 작성한 가입양식 가져온다.
 			JoinAnswer answer = groupMemberService.getAnswerSample(temp);
 			result.put("answer1", answer.getAnswer1());
 			result.put("answer2", answer.getAnswer2());
@@ -436,6 +438,17 @@ public class GroupMemberController {
 			result.put("answer4", answer.getAnswer4());
 			result.put("answer5", answer.getAnswer5());
 			result.put("introduce", answer.getIntroduce());
+			
+			// 모임의 가입양식 가져온다.
+			List<JoinQuest> list = groupMemberService.getJoinSample(groupkey);
+			if (!list.isEmpty()) {
+				result.put("quest1", list.get(0).getQuest1());
+				result.put("quest2", list.get(0).getQuest2());
+				result.put("quest3", list.get(0).getQuest3());
+				result.put("quest4", list.get(0).getQuest4());
+				result.put("quest5", list.get(0).getQuest5());
+				result.put("questintroduce", list.get(0).getIntroduce());
+			}
 			break;
 		}
 		
