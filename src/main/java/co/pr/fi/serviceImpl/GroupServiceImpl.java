@@ -381,14 +381,57 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<Post> getBoardList(int page, int limit, int groupkey) {
+	public List<Post> getBoardList(int page, int limit, int groupkey, int userkey) {
 		Map<String, Integer> list = new HashMap<String, Integer>();
 		int startrow = (page - 1) * limit + 1;
 		int endrow = startrow + limit - 1;
 		list.put("start", startrow);
 		list.put("end", endrow);
 		list.put("groupkey", groupkey);
-		return dao.getboardlist(list);
+		
+		List<Post> MeetingList = dao.getboardlist(list);
+		if (MeetingList.size() > 0) {
+			for (int i = 0; i < MeetingList.size(); i++) {
+				String date = MeetingList.get(i).getCstartdate();
+
+				String year = date.substring(0, 4) + "년 ";
+
+				String month = date.substring(5, 7) + "월 ";
+
+				String day = date.substring(8, 10) + "일 ";
+
+				String time = date.substring(13, 15) + "시 ";
+
+				String minute = date.substring(16, 18) + "분";
+				if (minute.equals("00분"))
+					minute = "";
+				MeetingList.get(i).setCstartdate(year + month + day + time + minute);
+				String pdate = MeetingList.get(i).getPostDate();
+
+				String pyear = pdate.substring(0, 4) + "년 ";
+
+				String pmonth = pdate.substring(5, 7) + "월 ";
+
+				String pday = pdate.substring(8, 10) + "일 ";
+
+				MeetingList.get(i).setPostDate(pyear + pmonth + pday);
+
+				int postkey = MeetingList.get(i).getPostKey();
+				Map<String, Integer> map = new HashMap<String, Integer>();
+				map.put("postkey", postkey);
+				map.put("groupkey", groupkey);
+				map.put("userkey", userkey);
+				List<CalendarMember> calendarmember = dao.calendarmemberjoinbtn(map);
+				if (calendarmember.size() == 0) {
+					MeetingList.get(i).setJoinbtn("yes");
+				} else {
+					MeetingList.get(i).setJoinbtn("no");
+				}
+			}
+		}
+		
+		
+		return MeetingList;
 	}
 
 	@Override
@@ -537,15 +580,20 @@ public void boarddelete(int postkey) {
 	dao.boarddelete(postkey);
 	
 }
-
 @Override
-public List<MemberList> smodifymember(int postkey) {
-	return dao.smodifymember(postkey);
+public List<MemberList> smodifymember(int postkey,int groupkey) {
+	Map<String, Integer> map = new HashMap<String, Integer>();
+	map.put("postkey", postkey);
+	map.put("groupkey", groupkey);
+	return dao.smodifymember(map);
 }
 
 @Override
-public List<MemberList> smodifymemberm(int postkey) {
-	return dao.smodifymemberm(postkey);
+public List<MemberList> smodifymemberm(int postkey,int groupkey) {
+	Map<String, Integer> map = new HashMap<String, Integer>();
+	map.put("postkey", postkey);
+	map.put("groupkey", groupkey);
+	return dao.smodifymemberm(map);
 }
 
 @Override

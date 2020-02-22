@@ -276,12 +276,12 @@ public class GroupDAO {
 		
 	}
 
-	public List<MemberList> smodifymemberm(int postkey) {
-		return sqlSession.selectList("group.smodifymemberm", postkey);
+	public List<MemberList> smodifymemberm(Map<String, Integer> map) {
+		return sqlSession.selectList("group.smodifymemberm", map);
 	}
 	
-	public List<MemberList> smodifymember(int postkey) {
-		return sqlSession.selectList("group.smodifymember", postkey);
+	public List<MemberList> smodifymember(Map<String, Integer> map) {
+		return sqlSession.selectList("group.smodifymember", map);
 	}
 
 	public List<UserRegGroup> userreggroupl(Map<String, Integer> map) {

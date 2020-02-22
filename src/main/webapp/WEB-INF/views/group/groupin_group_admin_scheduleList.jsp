@@ -466,7 +466,6 @@ color: orange;
 
 						<!-- 그룹 페이지 위젯 중간 -->
 						<div class="col-lg-6">
-
 							<!-- 그룹장 간단 그룹 소개 -->
 							<div class="central-meta item">
 								<div class="groups">
@@ -478,7 +477,7 @@ color: orange;
 										<ul class="nearby-contct">
 											<!-- ======================================================================= -->
 										<c:if test="${not empty groupmeetinglist }">
-										<c:forEach var="gmtl" items="${groupmeetinglist }">
+										<c:forEach var="gmtl" items="${postlist }">
 										<c:choose>
 											<c:when test="${gmtl.rnum+0 ==1}">
 												<c:set var="l" value="One" />

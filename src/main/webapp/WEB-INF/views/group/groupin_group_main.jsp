@@ -457,11 +457,11 @@ cursor: pointer;
 									<c:forEach var="gmtl" items="${groupmeetinglist }" begin="0"
 										end="2">
 										<c:choose>
-											<c:when test="${gmtl.rownum+0 ==1}">
+											<c:when test="${gmtl.rnum+0 ==1}">
 												<c:set var="l" value="One" />
 												<c:set var="n" value="1" />
 											</c:when>
-											<c:when test="${gmtl.rownum+0 ==2}">
+											<c:when test="${gmtl.rnum+0 ==2}">
 												<c:set var="l" value="Two" />
 												<c:set var="n" value="2" />
 											</c:when>
