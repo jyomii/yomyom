@@ -10,7 +10,6 @@
 		#{groupkey}
 	</select>
 
-
 	<select id="regornot" resultType="int"
 		parameterType="java.util.Map">
 		select count(*) from ggroupmember where
