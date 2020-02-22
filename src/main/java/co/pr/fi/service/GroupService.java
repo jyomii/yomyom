@@ -96,7 +96,7 @@ public interface GroupService {
 
 	public int boardListCount(int boardkey);
 
-	public List<Post> getBoardList(int page, int limit, int groupkey);
+	public List<Post> getBoardList(int page, int limit, int groupkey, int userkey);
 
 	public void scheduledelete(int postkey);
 
@@ -127,9 +127,9 @@ public interface GroupService {
 	
 	public void boarddelete(int postkey);
 
-	public List<MemberList> smodifymember(int postkey);
+	public List<MemberList> smodifymember(int postkey, int groupkey);
 
-	public List<MemberList> smodifymemberm(int postkey);
+	public List<MemberList> smodifymemberm(int postkey, int groupkey);
 
 	public List<UserRegGroup> userreggroupl(int page, int limit, int userkey);
 

@@ -45,7 +45,6 @@
 														</div>
 													</div>
 
-
 													<div class="tab-pane fade" id="frends-req">
 														<div id="searchDir2"></div>
 														<ul id="people-list2" class="checkboxList foremptym">

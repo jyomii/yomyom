@@ -403,29 +403,29 @@ color: orange;
 										</div>
 										<ul class="nearby-contct">
 										<c:if test="${not empty groupmeetinglist }">
-									<c:forEach var="gmtl" items="${groupmeetinglist }">
+									<c:forEach var="gmtl" items="${postlist }">
 										<c:choose>
-											<c:when test="${gmtl.rownum+0 ==1}">
+											<c:when test="${gmtl.rnum+0 ==1}">
 												<c:set var="l" value="One" />
 												<c:set var="n" value="1" />
 											</c:when>
-											<c:when test="${gmtl.rownum+0 ==2}">
+											<c:when test="${gmtl.rnum+0 ==2}">
 												<c:set var="l" value="Two" />
 												<c:set var="n" value="2" />
 											</c:when>
-											<c:when test="${gmtl.rownum+0 ==3}">
+											<c:when test="${gmtl.rnum+0 ==3}">
 												<c:set var="l" value="Three" />
 												<c:set var="n" value="3" />
 											</c:when>
-											<c:when test="${gmtl.rownum+0 ==4}">
+											<c:when test="${gmtl.rnum+0 ==4}">
 												<c:set var="l" value="Four" />
 												<c:set var="n" value="4" />
 											</c:when>
-											<c:when test="${gmtl.rownum+0 ==5}">
+											<c:when test="${gmtl.rnum+0 ==5}">
 												<c:set var="l" value="Five" />
 												<c:set var="n" value="5" />
 											</c:when>
-											<c:when test="${gmtl.rownum+0 ==6}">
+											<c:when test="${gmtl.rnum+0 ==6}">
 												<c:set var="l" value="Six" />
 												<c:set var="n" value="6" />
 											</c:when>
@@ -527,7 +527,7 @@ color: orange;
 																		</figure>
 																		<div class="friendz-meta">
 																			<a href="time-line.html"></a>${gml.groupnickname } <i
-																				class="__cf_email__">모임장</i>
+																				class="__cf_email__">&nbsp;</i>
 																		</div>
 																	</li>
 																</c:forEach>
@@ -1253,7 +1253,7 @@ $(function() {
                         output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                         output += "</figure><div class='friendz-meta'>";
                         output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                        output += "<i class='__cf_email__'>&nbsp;</i></div></li>";
                     })
                 $("#" + empty).append(output);
             },
@@ -1283,7 +1283,7 @@ $(function() {
                         output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                         output += "</figure><div class='friendz-meta'>";
                         output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                        output += "<i class='__cf_email__'>&nbsp;</i></div></li>";
                     })
                 $("#" + empty).append(output);
             },
@@ -1314,7 +1314,7 @@ $(function() {
                         output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                         output += "</figure><div class='friendz-meta'>";
                         output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                        output += "<i class='__cf_email__'>&nbsp;</i></div></li>";
                     })
                 $("#" + empty).append(output);
             },
@@ -1344,7 +1344,7 @@ $(function() {
                         output += "<img src='resources/images/resources/friend-avatar.jpg' alt=''>";
                         output += "</figure><div class='friendz-meta'>";
                         output += "<a href='time-line.html'></a>" + item.groupnickname;
-                        output += "<i class='__cf_email__'>모임장</i></div></li>";
+                        output += "<i class='__cf_email__'>&nbsp;</i></div></li>";
                     })
                 $("#" + empty).append(output);
             },

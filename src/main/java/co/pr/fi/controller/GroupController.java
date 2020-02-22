@@ -510,13 +510,13 @@ public class GroupController {
 			mv.setViewName("group/groupin_group_schedulelist");
 			mv.addObject("boardtype", boardtype);
 			int limit = 7;
-			int listcount = groupservice.boardListCount(boardkey);
+			int listcount = groupservice.getScheduleListCount(groupkey);;
 			int maxpage = (listcount + limit - 1) / limit;
 			int startpage = ((page - 1) / 10) * 10 + 1;
 			int endpage = startpage + 10 - 1;
 			if (endpage > maxpage)
 				endpage = maxpage;
-			List<Post> postlist = groupservice.getBoardList(page, limit, groupkey);
+			List<Post> postlist = groupservice.getBoardList(page, limit, groupkey, userkey);
 			mv.addObject("groupkey", groupkey);
 			mv.addObject("boardkey", boardkey);
 			mv.addObject("page", page);
@@ -648,21 +648,21 @@ public class GroupController {
 		int year = c.get(Calendar.YEAR);
 		int date = c.get(Calendar.DATE);
 		mv.setViewName("group/groupin_group_admin_scheduleList");
-		int limit = 6;
+		int limit = 7;
 		int listcount = groupservice.getScheduleListCount(groupkey);
 		int maxpage = (listcount + limit - 1) / limit;
 		int startpage = ((page - 1) / 10) * 10 + 1;
 		int endpage = startpage + 10 - 1;
 		if (endpage > maxpage)
 			endpage = maxpage;
+		List<Post> postlist = groupservice.getBoardList(page, limit, groupkey, userkey);
 		mv.addObject("groupkey",groupkey);
-		List<Post> postlist = groupservice.getBoardList(page, limit, groupkey);
 		mv.addObject("page", page);
 		mv.addObject("maxpage", maxpage);
 		mv.addObject("startpage", startpage);
 		mv.addObject("endpage", endpage);
 		mv.addObject("listcount", listcount);
-		mv.addObject("groupmeetinglist", postlist);
+		mv.addObject("postlist", postlist);
 		mv.addObject("limit", limit);
 		GGroupMember groupmember = groupservice.groupmember(userkey, groupkey);
 		mv.addObject("userinfo", groupmember);
@@ -876,8 +876,8 @@ public class GroupController {
 		mv.addObject("modifypost", modifypost);
 		CalendarList modifycalendar = groupservice.modifycalendar(postkey);
 		mv.addObject("modifycalendar", modifycalendar);
-		List<MemberList> smodifymember = groupservice.smodifymember(postkey);
-		List<MemberList> smodifymemberm = groupservice.smodifymemberm(postkey);
+		List<MemberList> smodifymember = groupservice.smodifymember(postkey,groupkey);
+		List<MemberList> smodifymemberm = groupservice.smodifymemberm(postkey,groupkey);
 		mv.addObject("smodifymember", smodifymember);
 		mv.addObject("smodifymembercount", smodifymember.size());
 		mv.addObject("smodifymemberm", smodifymemberm);

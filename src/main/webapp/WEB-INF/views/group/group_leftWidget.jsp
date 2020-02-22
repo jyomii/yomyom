@@ -18,7 +18,6 @@
 	</ul>
 </div>
 <!-- 그룹 게시판 위젯 -->
-
 <!-- 모임 관리 게시판 위젯 -->
 <c:if test="${userinfo.userGrade==1}">
 	<div class="widget">
